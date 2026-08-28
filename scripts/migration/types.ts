@@ -108,6 +108,7 @@ export interface SourceCompany {
   services?: (string | { title: string; description?: string })[];
   whyChooseUs?: string[];
   workingProcess?: (string | { title: string; description?: string })[];
+  values?: { name: string; text: string }[];
 }
 
 export interface OldUrlMapEntry {

@@ -36,17 +36,21 @@ export const getContactSettings = cache(async (): Promise<ContactSettings> => {
 export interface CompanySettings {
   tagline: string;
   shortAbout: string;
-  services: string[];
+  about: string;
+  services: { title: string; description?: string }[];
   whyChooseUs: string[];
   workingProcess: { title: string; description?: string }[];
+  values: { name: string; text: string }[];
 }
 
 const companyDefaults: CompanySettings = {
   tagline: site.tagline,
   shortAbout: site.description,
+  about: "",
   services: [],
   whyChooseUs: [],
   workingProcess: [],
+  values: [],
 };
 
 export const getCompanySettings = cache(async (): Promise<CompanySettings> => {

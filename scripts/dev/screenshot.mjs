@@ -19,7 +19,7 @@ const browser = await chromium.launch(
   executablePath ? { executablePath, args: ["--no-sandbox"] } : {},
 );
 const page = await browser.newPage({ viewport: { width: +width, height: +height } });
-await page.goto(url, { waitUntil: "networkidle", timeout: 45000 }).catch(() => {});
+await page.goto(url, { waitUntil: "load", timeout: 30000 }).catch(() => {});
 await page.waitForTimeout(+waitMs);
 await page.screenshot({ path: out, fullPage: full === "1" });
 await browser.close();
