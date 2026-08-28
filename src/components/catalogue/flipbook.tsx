@@ -93,7 +93,7 @@ export function PageFace({ page, pageNumber }: { page: CataloguePage; pageNumber
       >
         {page.image && (
           <div className="absolute inset-0 opacity-25">
-            <MediaImage image={page.image} alt="" fill sizes="420px" className="object-cover" />
+            <MediaImage image={page.image} alt="" fill sizes="420px" quality={55} className="object-cover" />
           </div>
         )}
         <p
@@ -140,6 +140,7 @@ export function PageFace({ page, pageNumber }: { page: CataloguePage; pageNumber
               alt={`${product.name} pack`}
               fill
               sizes="420px"
+              quality={60}
               className="object-cover"
             />
           )}

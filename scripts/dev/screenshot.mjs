@@ -21,6 +21,18 @@ const browser = await chromium.launch(
 const page = await browser.newPage({ viewport: { width: +width, height: +height } });
 await page.goto(url, { waitUntil: "load", timeout: 30000 }).catch(() => {});
 await page.waitForTimeout(+waitMs);
+if (full === "1") {
+  // Scroll through the page so in-view reveal animations have fired everywhere.
+  await page.evaluate(async () => {
+    const step = window.innerHeight * 0.7;
+    for (let y = 0; y < document.body.scrollHeight; y += step) {
+      window.scrollTo(0, y);
+      await new Promise((resolve) => setTimeout(resolve, 140));
+    }
+    window.scrollTo(0, 0);
+  });
+  await page.waitForTimeout(600);
+}
 await page.screenshot({ path: out, fullPage: full === "1" });
 await browser.close();
 console.log("saved", out);
