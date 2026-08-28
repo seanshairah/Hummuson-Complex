@@ -1,0 +1,443 @@
+[
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/AZOFIX-RHIZO_20L_620x620-323x323-1.jpg",
+    "localPath": "public/images/products/azofix-plus/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: azofix-plus | 13 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_FOSFIX-PLUS_5L_1080x1080-600x600-1.jpg",
+    "localPath": "public/images/products/fosfix-plus/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: fosfix-plus | 36 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_BACTO-K_5L_1080x1080-600x600-1.jpg",
+    "localPath": "public/images/products/bacto-k/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: bacto-k | 36 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_BACTO-SEED_5L_1080x1080-600x600-1.jpg",
+    "localPath": "public/images/products/bacto-seed/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: bacto-seed | 35 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_MASTER_5L_1080x1080-600x600-1.jpg",
+    "localPath": "public/images/products/master/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: master | 36 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_MASTER_5L_1080x1080-600x600-1-1.jpg",
+    "localPath": "public/images/products/master/2.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: master | 36 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_MAXPROLIN-BOX-1080x1080-1-600x600-1.png",
+    "localPath": "public/images/products/maxprolin/1.png",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: maxprolin | 76 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_MAXPROLIN-BOX-1080x1080-1-600x600-2.png",
+    "localPath": "public/images/products/grow-top-dressing/1.png",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: grow-top-dressing | 134 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_AZOFIX-PLUS_20L_1080x1080-600x600-1.png",
+    "localPath": "public/images/products/grow-top-dressing/2.png",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: grow-top-dressing | 334 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/c25006a7-b799-4aba-95cc-a71a045d5738-768x1026.jpg",
+    "localPath": "public/images/products/grow-top-dressing/3.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: grow-top-dressing | 99 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/22.jpg",
+    "localPath": "public/images/products/carboamin-basal-dressing/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: carboamin-basal-dressing | 116 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_AZOFIX-PLUS_20L_1080x1080-600x600.pngrrr.png",
+    "localPath": "public/images/products/carboamin-basal-dressing/2.png",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: carboamin-basal-dressing | 367 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/76856d37-b6f9-40b0-b344-f137be41e8c4-768x1026.jpg",
+    "localPath": "public/images/products/carboamin-basal-dressing/3.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: carboamin-basal-dressing | 102 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_RUINEX_5L_1080x1080-600x600-1.jpg",
+    "localPath": "public/images/products/ruinex/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: ruinex | 36 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_BACTOFORCE_5L_1080x1080-600x600-1.jpg",
+    "localPath": "public/images/products/bactoforce/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: bactoforce | 36 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bigo-uuuu-1152x1536.jpg",
+    "localPath": "public/images/products/bio-npk-powder-s/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: bio-npk-powder-s | 141 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bigo-wii-768x1024.jpg",
+    "localPath": "public/images/products/bio-npk-powder-s/2.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: bio-npk-powder-s | 57 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/fff.png",
+    "localPath": "public/images/products/bio-npk-powder-s/3.png",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: bio-npk-powder-s | 559 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/PerfectStick-1-1152x1536.jpg",
+    "localPath": "public/images/products/perfect-stick/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: perfect-stick | 84 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/PerfectStick-768x1024.jpg",
+    "localPath": "public/images/products/perfect-stick/2.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: perfect-stick | 46 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Ocean-1-1152x1536.jpg",
+    "localPath": "public/images/products/ocean/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: ocean | 79 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Ocean-768x1024.jpg",
+    "localPath": "public/images/products/ocean/2.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: ocean | 43 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/1N6--1152x1536.jpg",
+    "localPath": "public/images/products/in5/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: in5 | 78 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bigo-wff-768x1024.jpg",
+    "localPath": "public/images/products/in5/2.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: in5 | 47 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Koral-1L-1152x1536.jpg",
+    "localPath": "public/images/products/koral/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: koral | 74 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Koral-5l-2-768x1024.jpg",
+    "localPath": "public/images/products/koral/2.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: koral | 45 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Enzo-Pro-1152x1536.jpg",
+    "localPath": "public/images/products/enzo-pro/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: enzo-pro | 73 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Enzo-Pro-1-768x1024.jpg",
+    "localPath": "public/images/products/enzo-pro/2.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: enzo-pro | 45 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Mendelenium-1-1152x1536.jpg",
+    "localPath": "public/images/products/mendelenium/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: mendelenium | 77 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bigo-wnn-768x1024.jpg",
+    "localPath": "public/images/products/mendelenium/2.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: mendelenium | 41 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bora-1152x1536.jpg",
+    "localPath": "public/images/products/bora/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: bora | 72 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bora-1-768x1024.jpg",
+    "localPath": "public/images/products/bora/2.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: bora | 45 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Elais-1152x1536.jpg",
+    "localPath": "public/images/products/elais/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: elais | 71 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Elais-1-768x1024.jpg",
+    "localPath": "public/images/products/elais/2.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: elais | 46 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Silicare-1152x1536.jpg",
+    "localPath": "public/images/products/silicare/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: silicare | 87 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Silicare-1-768x1024.jpg",
+    "localPath": "public/images/products/silicare/2.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: silicare | 44 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bigo-w-2-1152x1536.jpg",
+    "localPath": "public/images/products/bigo-w/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: bigo-w | 69 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bigo-w-768x1024.jpg",
+    "localPath": "public/images/products/bigo-w/2.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: bigo-w | 41 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/uu-1152x1536.jpg",
+    "localPath": "public/images/products/a3-biostimulant/1.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: a3-biostimulant | 177 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/yuyuuy-1-768x1024.jpg",
+    "localPath": "public/images/products/a3-biostimulant/2.jpg",
+    "kind": "product",
+    "alt": null,
+    "note": "Product listing image (WooCommerce). | Product: a3-biostimulant | 75 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/logo-1-Recovered.pnbnnbbn.png",
+    "localPath": "public/images/brand/logo-1-Recovered.pnbnnbbn.png",
+    "kind": "brand",
+    "alt": null,
+    "note": "Header logo as used on the site — WHITE lettering on transparent (invisible on white backgrounds); 974x353. | 36 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/cropped-logo-1-Recovered.pnbnnbbn.png",
+    "localPath": "public/images/brand/cropped-logo-1-Recovered.pnbnnbbn.png",
+    "kind": "brand",
+    "alt": null,
+    "note": "Site icon / cropped variant of the white logo; 974x353. | 19 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/fdfdfdfd.png",
+    "localPath": "public/images/brand/fdfdfdfd.png",
+    "kind": "brand",
+    "alt": null,
+    "note": "FULL-COLOUR logo: \"HUMUSON\" in green, \"COMPLEX\" in black; 974x353. Best source for the new site’s light-background logo. | 36 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/Bioenergy_naujas-logotipas-3.jpg",
+    "localPath": "public/images/brand/Bioenergy_naujas-logotipas-3.jpg",
+    "kind": "brand",
+    "alt": null,
+    "note": "Partner brand logo: Bioenergy LT (1177x960, 1.9MB JPEG). Shown on About page. | 1914 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/433fd162-dc8d-991d-99d7-616d345eb016_150bd939-76f7-a823-4b55-601a51cafbac.jpg",
+    "localPath": "public/images/brand/partner-433fd162.jpg",
+    "kind": "brand",
+    "alt": null,
+    "note": "Partner brand logo: \"SAPROPEL ORGANICS\" (300x116). Shown on About/home pages. | 10 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/d1001aa6-ad9e-42ef-87a8-a0bea95538e2.jpg",
+    "localPath": "public/images/articles/boost-your-potato-yields-with-fulvic-acid.jpg",
+    "kind": "article",
+    "alt": null,
+    "note": "Blog post featured image. | 145 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/cc376102-e360-4742-a345-32c38392b432.jpg",
+    "localPath": "public/images/articles/soaking-seeds-in-fulvic-acids.jpg",
+    "kind": "article",
+    "alt": null,
+    "note": "Blog post featured image. | 61 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/6d8fe22f-ce28-403c-a09c-6016d8b8d8df.jpg",
+    "localPath": "public/images/articles/dead-soils-do-not-produce-desired-results.jpg",
+    "kind": "article",
+    "alt": null,
+    "note": "Blog post featured image. | 134 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688567289628.jpg",
+    "localPath": "public/images/articles/only-grow-plus-sugar-beans.jpg",
+    "kind": "article",
+    "alt": null,
+    "note": "Blog post featured image. | 107 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566270293.jpg",
+    "localPath": "public/images/articles/not-only-feed-the-plant-feed-the-soil.jpg",
+    "kind": "article",
+    "alt": null,
+    "note": "Blog post featured image. | 92 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566258433.jpg",
+    "localPath": "public/images/articles/humuson-in-seedling-nurseries.jpg",
+    "kind": "article",
+    "alt": null,
+    "note": "Blog post featured image. | 109 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/IMG_0553-Edit-scaled.jpg",
+    "localPath": "public/images/field/maize-field-IMG_0553.jpg",
+    "kind": "field-photo",
+    "alt": null,
+    "note": "Homepage hero image — real photo (IMG_0553-Edit). | 460 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/IMG_0560-Edit-1-scaled.jpg",
+    "localPath": "public/images/field/field-IMG_0560.jpg",
+    "kind": "field-photo",
+    "alt": null,
+    "note": "Real Humuson field/gallery photograph (camera or WhatsApp filename, uploads/2023/07). | 392 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/IMG_0561-Edit-scaled.jpg",
+    "localPath": "public/images/field/field-IMG_0561.jpg",
+    "kind": "field-photo",
+    "alt": null,
+    "note": "Real Humuson field/gallery photograph (camera or WhatsApp filename, uploads/2023/07). | 435 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/IMG_0565-Edit-scaled.jpg",
+    "localPath": "public/images/field/field-IMG_0565.jpg",
+    "kind": "field-photo",
+    "alt": null,
+    "note": "Real Humuson field/gallery photograph (camera or WhatsApp filename, uploads/2023/07). | 371 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/IMG_0591-Edit-scaled.jpg",
+    "localPath": "public/images/field/field-IMG_0591.jpg",
+    "kind": "field-photo",
+    "alt": null,
+    "note": "Real Humuson field/gallery photograph (camera or WhatsApp filename, uploads/2023/07). | 453 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/IMG_0594-Edit-scaled.jpg",
+    "localPath": "public/images/field/field-IMG_0594.jpg",
+    "kind": "field-photo",
+    "alt": null,
+    "note": "Real Humuson field/gallery photograph (camera or WhatsApp filename, uploads/2023/07). | 301 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/IMG_0595-Edit-scaled.jpg",
+    "localPath": "public/images/field/field-IMG_0595.jpg",
+    "kind": "field-photo",
+    "alt": null,
+    "note": "Real Humuson field/gallery photograph (camera or WhatsApp filename, uploads/2023/07). | 356 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/IMG_0597-Edit-scaled.jpg",
+    "localPath": "public/images/field/field-IMG_0597.jpg",
+    "kind": "field-photo",
+    "alt": null,
+    "note": "Real Humuson field/gallery photograph (camera or WhatsApp filename, uploads/2023/07). | 466 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/b02d6137-560a-48cb-af65-a531adf67317.jpeg",
+    "localPath": "public/images/field/peas-beans-b02d6137.jpeg",
+    "kind": "field-photo",
+    "alt": null,
+    "note": "Peas & Beans portfolio cover — real field photo (WhatsApp-style filename). | 152 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/9de482b4-d65c-4d81-94d0-eca0eee22191.jpg",
+    "localPath": "public/images/field/maize-project-9de482b4.jpg",
+    "kind": "field-photo",
+    "alt": null,
+    "note": "Maize portfolio cover — real field photo. | 74 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/985c8209-a3d8-4123-82b2-d4f55f31118a.jpg",
+    "localPath": "public/images/field/wheat-project-985c8209.jpg",
+    "kind": "field-photo",
+    "alt": null,
+    "note": "Wheat portfolio cover — real field photo. | 73 KB | verified image"
+  },
+  {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/3fb7c7d5-eb42-4a85-ba3a-3ae63b9f3dab.jpg",
+    "localPath": "public/images/field/potatoes-project-3fb7c7d5.jpg",
+    "kind": "field-photo",
+    "alt": null,
+    "note": "Potatoes portfolio cover — real field photo. | 75 KB | verified image"
+  }
+]

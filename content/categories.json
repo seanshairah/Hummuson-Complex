@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Organic",
+    "slug": "organic",
+    "description": null,
+    "count": 13
+  },
+  {
+    "name": "Physio",
+    "slug": "physio",
+    "description": null,
+    "count": 13
+  },
+  {
+    "name": "Uncategorized",
+    "slug": "uncategorized",
+    "description": null,
+    "count": 22
+  },
+  {
+    "name": "Value",
+    "slug": "value",
+    "description": null,
+    "count": 5
+  }
+]

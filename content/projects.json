@@ -1,0 +1,89 @@
+[
+  {
+    "title": "Maize",
+    "slug": "maize",
+    "crop": "maize",
+    "location": null,
+    "summary": "Photo-gallery portfolio item on the old site — no accompanying text, location or outcome was published.",
+    "bodyHtml": null,
+    "productSlugs": [],
+    "images": [
+      {
+        "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/9de482b4-d65c-4d81-94d0-eca0eee22191.jpg",
+        "localPath": "/images/field/maize-project-9de482b4.jpg"
+      }
+    ],
+    "outcome": null,
+    "sourceUrl": "https://humusoncomplex.com/portfolio/fertilizer-test/"
+  },
+  {
+    "title": "Peas & Beans",
+    "slug": "peas-beans",
+    "crop": "pea & bean",
+    "location": null,
+    "summary": "Photo-gallery portfolio item on the old site — no accompanying text, location or outcome was published.",
+    "bodyHtml": null,
+    "productSlugs": [],
+    "images": [
+      {
+        "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/b02d6137-560a-48cb-af65-a531adf67317.jpeg",
+        "localPath": "/images/field/peas-beans-b02d6137.jpeg"
+      }
+    ],
+    "outcome": null,
+    "sourceUrl": "https://humusoncomplex.com/portfolio/peas-beans/"
+  },
+  {
+    "title": "Potatoes",
+    "slug": "potatoes",
+    "crop": "potato",
+    "location": null,
+    "summary": "Photo-gallery portfolio item on the old site — no accompanying text, location or outcome was published.",
+    "bodyHtml": null,
+    "productSlugs": [],
+    "images": [
+      {
+        "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/3fb7c7d5-eb42-4a85-ba3a-3ae63b9f3dab.jpg",
+        "localPath": "/images/field/potatoes-project-3fb7c7d5.jpg"
+      }
+    ],
+    "outcome": null,
+    "sourceUrl": "https://humusoncomplex.com/portfolio/potatoes/"
+  },
+  {
+    "title": "Wheat",
+    "slug": "wheat",
+    "crop": "wheat",
+    "location": null,
+    "summary": "Photo-gallery portfolio item on the old site — no accompanying text, location or outcome was published.",
+    "bodyHtml": null,
+    "productSlugs": [],
+    "images": [
+      {
+        "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/985c8209-a3d8-4123-82b2-d4f55f31118a.jpg",
+        "localPath": "/images/field/wheat-project-985c8209.jpg"
+      }
+    ],
+    "outcome": null,
+    "sourceUrl": "https://humusoncomplex.com/portfolio/wheat/"
+  },
+  {
+    "title": "Sugar beans grown with Grow Plus top dressing (Chikombedzi)",
+    "slug": "grow-plus-sugar-beans-chikombedzi",
+    "crop": "sugar bean",
+    "location": "Chikombedzi",
+    "summary": "Field result shared on the old site’s blog: sugar beans in Chikombedzi cultivated using only Grow Plus as a top dressing.",
+    "bodyHtml": "<p>Only Grow Plus as a top dressing was used to cultivate these sugar beans all the way in Chikombedzi (we had to consult google mams to find the place 😇😊🧐). Grow Plus is our organic biostimulant renowned for its ability to enhance soil and crop health</p>",
+    "productSlugs": [
+      "grow-top-dressing"
+    ],
+    "images": [
+      {
+        "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688567289628.jpg",
+        "localPath": "/images/articles/only-grow-plus-sugar-beans.jpg"
+      }
+    ],
+    "outcome": "Only Grow Plus as a top dressing was used to cultivate these sugar beans (verbatim claim from the post; no yield figures published).",
+    "sourceUrl": "https://humusoncomplex.com/2023/07/05/only-grow-plus-as-a-top-dressing-was-used-to-cultivate-these-sugar-beans/"
+  }
+]

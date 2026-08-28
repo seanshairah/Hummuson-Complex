@@ -1,0 +1,103 @@
+[
+  {
+    "name": "maize",
+    "slug": "maize",
+    "aka": []
+  },
+  {
+    "name": "potato",
+    "slug": "potato",
+    "aka": [
+      "potatoes"
+    ]
+  },
+  {
+    "name": "wheat",
+    "slug": "wheat",
+    "aka": []
+  },
+  {
+    "name": "sugar bean",
+    "slug": "sugar-bean",
+    "aka": [
+      "sugar beans"
+    ]
+  },
+  {
+    "name": "pea",
+    "slug": "pea",
+    "aka": [
+      "peas"
+    ]
+  },
+  {
+    "name": "bean",
+    "slug": "bean",
+    "aka": [
+      "beans"
+    ]
+  },
+  {
+    "name": "tomato",
+    "slug": "tomato",
+    "aka": [
+      "greenhouse tomato"
+    ]
+  },
+  {
+    "name": "cereals",
+    "slug": "cereals",
+    "aka": [
+      "cereal"
+    ]
+  },
+  {
+    "name": "legumes",
+    "slug": "legumes",
+    "aka": [
+      "legume"
+    ]
+  },
+  {
+    "name": "oilseeds",
+    "slug": "oilseeds",
+    "aka": [
+      "oil seeds",
+      "oilseed"
+    ]
+  },
+  {
+    "name": "vegetables",
+    "slug": "vegetables",
+    "aka": [
+      "vegetable crops",
+      "vegetable"
+    ]
+  },
+  {
+    "name": "fruits",
+    "slug": "fruits",
+    "aka": [
+      "fruit"
+    ]
+  },
+  {
+    "name": "ornamentals",
+    "slug": "ornamentals",
+    "aka": [
+      "ornamental plants"
+    ]
+  },
+  {
+    "name": "berry bushes",
+    "slug": "berry-bushes",
+    "aka": [
+      "berry bush"
+    ]
+  },
+  {
+    "name": "field crops",
+    "slug": "field-crops",
+    "aka": []
+  }
+]

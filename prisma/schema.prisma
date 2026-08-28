@@ -195,6 +195,10 @@ model Product {
   /// Active ingredients / microbial strains, in order, exactly as published.
   composition String[]
 
+  /// Verbatim-faithful benefit claims from published material (display list).
+  /// Canonical, filterable benefits live in ProductBenefit.
+  benefitClaims String[]
+
   priceUsd    Decimal? @db.Decimal(10, 2)
   /// Reference into the WhatsApp Business catalogue (item id or link).
   whatsappRef String?

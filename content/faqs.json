@@ -1,0 +1,307 @@
+[
+  {
+    "question": "Do you offer discounts?",
+    "answer": "Bulk orders and loyal customers qualify for discounts.",
+    "productSlugs": [],
+    "category": "ordering",
+    "aliases": [
+      "Can I get a discount on a big order?",
+      "Is there a loyalty discount?",
+      "Do prices go down for bulk purchases?"
+    ],
+    "keywords": [
+      "discount",
+      "bulk order",
+      "loyalty",
+      "price"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  },
+  {
+    "question": "Do you offer refunds?",
+    "answer": "We are guided by refund policies.",
+    "productSlugs": [],
+    "category": "ordering",
+    "aliases": [
+      "Can I get my money back?",
+      "What is your refund policy?"
+    ],
+    "keywords": [
+      "refund",
+      "return",
+      "policy",
+      "money back"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  },
+  {
+    "question": "Do you offer delivery services?",
+    "answer": "Yes, however there are fees depending with distance.",
+    "productSlugs": [],
+    "category": "ordering",
+    "aliases": [
+      "Can you deliver to my farm?",
+      "How much is delivery?",
+      "Do you ship products?"
+    ],
+    "keywords": [
+      "delivery",
+      "shipping",
+      "transport",
+      "fees",
+      "distance"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  },
+  {
+    "question": "Do you offer consultation?",
+    "answer": "Yes, basic consultation is free of charge. Farm visits at an agreed amount.",
+    "productSlugs": [],
+    "category": "general",
+    "aliases": [
+      "Can I get agronomic advice?",
+      "Is consultation free?",
+      "Do you do farm visits?"
+    ],
+    "keywords": [
+      "consultation",
+      "agronomist",
+      "advice",
+      "farm visit"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  },
+  {
+    "question": "What if I find an issue with my products?",
+    "answer": "You can return it and get a refund or new product.",
+    "productSlugs": [],
+    "category": "ordering",
+    "aliases": [
+      "What happens if my product is faulty?",
+      "Can I exchange a defective product?"
+    ],
+    "keywords": [
+      "issue",
+      "return",
+      "refund",
+      "replacement",
+      "faulty"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  },
+  {
+    "question": "What is the shelf life of your products?",
+    "answer": "Shelf life varies 2-5 years depending on the product. Check on the packaging or get in touch with us.",
+    "productSlugs": [],
+    "category": "storage",
+    "aliases": [
+      "How long do the products last?",
+      "When do the fertilizers expire?",
+      "How should I check expiry dates?"
+    ],
+    "keywords": [
+      "shelf life",
+      "expiry",
+      "storage",
+      "packaging",
+      "2-5 years"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  },
+  {
+    "question": "How can I become your distributor?",
+    "answer": "Please get in touch with us to discuss distribution terms.",
+    "productSlugs": [],
+    "category": "general",
+    "aliases": [
+      "Do you take on resellers?",
+      "How do I stock your products in my shop?",
+      "Can I sell Humuson products in my area?"
+    ],
+    "keywords": [
+      "distributor",
+      "reseller",
+      "agent",
+      "partnership",
+      "stockist"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  },
+  {
+    "question": "Do you work on Sundays/Public holidays?",
+    "answer": "No, we do not work on these days.",
+    "productSlugs": [],
+    "category": "general",
+    "aliases": [
+      "Are you open on Sunday?",
+      "What are your working days?"
+    ],
+    "keywords": [
+      "opening hours",
+      "sunday",
+      "public holiday",
+      "working days"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  },
+  {
+    "question": "What is the composition of HUMUSON Complex?",
+    "answer": "Makroelements: organic NPK; organic carbon (humified carbon and water-soluble carbon); rich with natural vitamins: contains carotene (provitamin A), B1, B2, B3, B5, B6, B12, E, C, D, P; organic acids: folic acid, humic acids, fulvic acid; trace elements (Mn, Cu, B, Zn, I, Br, Mo, V, Cr, Be, Ni, Ag, Sn, Pb, As, Ba, Sr, Ti); amino acids (Glutamic acid, Glycine, Valine, Arginine, Aspartic acid, Alanine, Serine, Leucine, Isoleucine, Phenylalanine, Tyrosine, Lysine, Methionine, Threonine, Cystine); contains enzymes (peroxidase, reductase, protease); glycoprotein, glomalin; phytohormones (auxin and cytokinin); contains humin.",
+    "productSlugs": [
+      "grow-top-dressing",
+      "carboamin-basal-dressing"
+    ],
+    "category": "general",
+    "aliases": [
+      "What is in HUMUSON Complex?",
+      "Which nutrients does HUMUSON Complex contain?",
+      "HUMUSON Complex ingredients"
+    ],
+    "keywords": [
+      "composition",
+      "organic NPK",
+      "humic",
+      "fulvic",
+      "amino acids",
+      "trace elements",
+      "vitamins",
+      "humin"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  },
+  {
+    "question": "What does HUMUSON Complex do?",
+    "answer": "HUMUSON Complex fills the top layer of soils with beneficial, natural elements which raise the activity of microorganisms to restore soil’s chemical and physical properties. Both factors restore the soil’s natural properties of reproducing its own fertility. It improves plant metabolism and increases consumption of minerals along with root system formation.",
+    "productSlugs": [],
+    "category": "benefits",
+    "aliases": [
+      "How does HUMUSON Complex help my soil?",
+      "What effect does HUMUSON Complex have on crops?"
+    ],
+    "keywords": [
+      "soil fertility",
+      "microorganisms",
+      "plant metabolism",
+      "root system"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  },
+  {
+    "question": "What is the organic base of HUMUSON Complex?",
+    "answer": "HUMUSON Complex is a new generation 100% organic fertilizer based on SAPROPEL — centuries-old bottom sediments of freshwater lakes, which were formed from dead aquatic vegetation, remnants of living organisms, plankton and soil humus.",
+    "productSlugs": [],
+    "category": "general",
+    "aliases": [
+      "What is sapropel?",
+      "What raw material is HUMUSON Complex made from?",
+      "Is HUMUSON Complex really organic?"
+    ],
+    "keywords": [
+      "sapropel",
+      "organic",
+      "freshwater lake sediment",
+      "humus"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  },
+  {
+    "question": "How and when should HUMUSON Complex be applied?",
+    "answer": "For increased efficiency, it is best to apply on the planting station through drenching close to the plant stalk aiming the ground, but it can also be applied as a foliar. We recommend applying basal at the land preparation and/or planting stage. Grow + should be applied at 4-6 leaves stage every 10-14 days till flowering. Recommended 2-3 applications.",
+    "productSlugs": [
+      "grow-top-dressing",
+      "carboamin-basal-dressing"
+    ],
+    "category": "application",
+    "aliases": [
+      "When do I apply Grow+?",
+      "How do I apply the basal dressing?",
+      "Can HUMUSON Complex be applied as a foliar spray?"
+    ],
+    "keywords": [
+      "application",
+      "drenching",
+      "foliar",
+      "basal",
+      "top dressing",
+      "4-6 leaves",
+      "flowering",
+      "timing"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  },
+  {
+    "question": "Can HUMUSON Complex replace synthetic fertilizers?",
+    "answer": "They are not meant to replace synthetic fertilizers, but to compliment them and increase the efficiency of the synthetic ones. This will lead to a yield increase of not less than 30%. The usage of synthetic fertilizers can be reduced up to 50%. Unless a farmer wants to go the strictly organic way, then it is possible to use HUMUSON Complex only.",
+    "productSlugs": [],
+    "category": "compatibility",
+    "aliases": [
+      "Do I still need chemical fertilizer if I use HUMUSON Complex?",
+      "Can I mix it with my normal fertilizer programme?",
+      "Can I farm fully organic with HUMUSON Complex?"
+    ],
+    "keywords": [
+      "synthetic fertilizer",
+      "complement",
+      "reduce fertilizer",
+      "yield increase",
+      "organic farming"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  },
+  {
+    "question": "How does HUMUSON Complex work?",
+    "answer": "The principle of the effect of the product is based on the multiplication effect due to the involvement of all the main chains of biological bonds: the expansion of the nutrition elements in the upper soil layer; activation of the action of positive soil microorganisms and PGB bacteria; improvement of the plant’s transport system and bioavailability of nutrients.",
+    "productSlugs": [],
+    "category": "general",
+    "aliases": [
+      "What is the mode of action of HUMUSON Complex?",
+      "Why does HUMUSON Complex improve nutrition?"
+    ],
+    "keywords": [
+      "mode of action",
+      "soil microorganisms",
+      "PGB bacteria",
+      "bioavailability"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  },
+  {
+    "question": "What is unique about HUMUSON Complex?",
+    "answer": "Ecocert-certified which qualifies for export produce to EU, GB, and USA markets. Developed to improve soil’s fertility. A unique natural origin “cocktail” which contains more than 40 elements. Rapid release of nutrients. Ability to last long in the soil’s rhizosphere. It can clean the soil of chemical deposits from synthetic fertilizers.",
+    "productSlugs": [],
+    "category": "benefits",
+    "aliases": [
+      "Is HUMUSON Complex certified?",
+      "Why choose HUMUSON Complex over other fertilizers?",
+      "Is it suitable for export crops?"
+    ],
+    "keywords": [
+      "Ecocert",
+      "certification",
+      "export",
+      "EU",
+      "40 elements",
+      "rhizosphere"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  },
+  {
+    "question": "What are some of the benefits of HUMUSON Complex?",
+    "answer": "Reduces costs (at least 25%) and sharply increases efficiency (up to 80%) by raising soil fertility and nutrient assimilation. Enhances quality, yield, and taste of the crop. Creates an organic layer in contaminated soil which helps to maintain soil moisture and restores or improves soil fertility. Promotes root development and growth to enable the plant to reach the leached nutrients. No transport costs.",
+    "productSlugs": [],
+    "category": "benefits",
+    "aliases": [
+      "How much can I save with HUMUSON Complex?",
+      "What results should I expect?",
+      "Main advantages of HUMUSON Complex"
+    ],
+    "keywords": [
+      "cost reduction",
+      "efficiency",
+      "yield",
+      "soil moisture",
+      "root development"
+    ],
+    "sourceUrl": "https://humusoncomplex.com/faq/"
+  }
+]
