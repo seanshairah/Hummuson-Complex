@@ -24,22 +24,25 @@ export function VideoGrid({ videos }: { videos: VideoData[] }) {
   return (
     <div>
       {featured && (
-        <div className="mb-10">
-          <p className="text-eyebrow text-leaf-700">Featured</p>
-          <div className="mt-4 grid items-end gap-6 lg:grid-cols-[1.5fr_1fr]">
+        <div className="bg-grain relative mb-12 overflow-hidden rounded-[2rem] bg-humus-950 text-paper">
+          <div aria-hidden className="absolute inset-0 glow-leaf" />
+          <div className="relative grid items-center gap-7 p-5 sm:p-6 md:p-8 lg:grid-cols-[1.55fr_1fr] lg:gap-10">
             <VideoEmbed
               youtubeId={featured.youtubeId}
               title={featured.title}
               category={humanize(featured.category)}
-              className="lg:rounded-3xl"
             />
-            <div className="pb-1">
-              <h2 className="font-display text-2xl font-semibold tracking-tight text-ink">
+            <div className="pb-1 max-lg:px-1">
+              <p className="text-eyebrow text-leaf-400">Featured film</p>
+              <h2 className="mt-3 font-display text-2xl leading-snug font-semibold tracking-tight text-paper md:text-3xl">
                 {featured.title}
               </h2>
               {featured.description && (
-                <p className="mt-3 leading-relaxed text-ink-soft">{featured.description}</p>
+                <p className="mt-4 leading-relaxed text-paper/70">{featured.description}</p>
               )}
+              <p className="mt-6 inline-flex rounded-full border border-paper/20 px-3.5 py-1.5 text-[0.65rem] font-medium tracking-widest text-paper/75 uppercase">
+                {humanize(featured.category)}
+              </p>
             </div>
           </div>
         </div>
@@ -78,20 +81,14 @@ export function VideoGrid({ videos }: { videos: VideoData[] }) {
           className="mt-6"
         />
       ) : (
-        <div className="mt-6 grid gap-5 md:grid-cols-2">
+        <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {shown.map((video) => (
-            <div key={video.id}>
-              <VideoEmbed
-                youtubeId={video.youtubeId}
-                title={video.title}
-                category={humanize(video.category)}
-              />
-              {video.description && (
-                <p className="mt-2.5 line-clamp-2 px-1 text-sm text-ink-faint">
-                  {video.description}
-                </p>
-              )}
-            </div>
+            <VideoEmbed
+              key={video.id}
+              youtubeId={video.youtubeId}
+              title={video.title}
+              category={humanize(video.category)}
+            />
           ))}
         </div>
       )}

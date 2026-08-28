@@ -142,7 +142,8 @@ export default async function CataloguePage() {
       {/* Chapters */}
       {catalogue.sections.map((section, sectionIndex) => {
         const theme = THEMES[section.theme] ?? THEMES.soil!;
-        const products = section.entries.filter((entry) => entry.product);
+        const entries = section.entries.filter((entry) => entry.product);
+        const [lead, ...rest] = entries;
         return (
           <section
             key={section.id}
@@ -161,14 +162,16 @@ export default async function CataloguePage() {
                   )}
                 </div>
                 <p className={cn("font-display text-sm", theme.body)}>
-                  {products.length} product{products.length === 1 ? "" : "s"}
+                  {entries.length} product{entries.length === 1 ? "" : "s"}
                 </p>
               </Reveal>
 
               <div className="mt-12 space-y-6">
-                {products.map((entry, entryIndex) => {
+                {/* Chapter opening spread */}
+                {(lead ? [lead] : []).map((entry) => {
                   const product = entry.product!;
                   const flip = entry.layout === "FEATURE_RIGHT";
+                  const entryIndex = 0;
                   return (
                     <RevealGroup key={entry.id} amount={0.2}>
                       <RevealItem>
@@ -282,6 +285,80 @@ export default async function CataloguePage() {
                     </RevealGroup>
                   );
                 })}
+
+                {/* The rest of the chapter as a compact editorial grid */}
+                {rest.length > 0 && (
+                  <RevealGroup
+                    className="grid gap-5 md:grid-cols-2 xl:grid-cols-3"
+                    stagger={0.05}
+                  >
+                    {rest.map((entry, restIndex) => {
+                      const product = entry.product!;
+                      const image = entry.image ?? product.image;
+                      return (
+                        <RevealItem key={entry.id} className="h-full">
+                          <Link
+                            href={`/products/${product.slug}`}
+                            className={cn(
+                              "group flex h-full flex-col overflow-hidden rounded-3xl transition-all duration-300 hover:-translate-y-1 hover:shadow-pop",
+                              theme.card,
+                            )}
+                          >
+                            <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-paper-dim via-cream to-paper-deep">
+                              {image && (
+                                <MediaImage
+                                  image={image}
+                                  alt={`${product.name} pack`}
+                                  fill
+                                  sizes="(max-width: 768px) 92vw, 400px"
+                                  className="object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                                />
+                              )}
+                              <span
+                                aria-hidden
+                                className="absolute top-3.5 left-4 text-eyebrow text-[0.58rem] text-ink-faint/70 mix-blend-multiply"
+                              >
+                                {String(sectionIndex + 1).padStart(2, "0")}.
+                                {String(restIndex + 2).padStart(2, "0")}
+                              </span>
+                            </div>
+                            <div className="flex flex-1 flex-col p-5">
+                              <h3
+                                className={cn(
+                                  "font-display text-xl font-semibold tracking-tight",
+                                  theme.heading,
+                                )}
+                              >
+                                {product.name}
+                              </h3>
+                              {(entry.headline || product.shortDescription) && (
+                                <p
+                                  className={cn(
+                                    "mt-2 line-clamp-2 text-sm leading-relaxed",
+                                    theme.body,
+                                  )}
+                                >
+                                  {entry.headline ?? product.shortDescription}
+                                </p>
+                              )}
+                              <p
+                                className={cn(
+                                  "mt-auto flex items-center justify-between gap-3 pt-4 text-xs",
+                                  theme.body,
+                                )}
+                              >
+                                <span className="truncate">
+                                  {product.packSizes.slice(0, 3).join(" · ")}
+                                </span>
+                                <ArrowRight className="size-4 shrink-0 transition-transform group-hover:translate-x-1" />
+                              </p>
+                            </div>
+                          </Link>
+                        </RevealItem>
+                      );
+                    })}
+                  </RevealGroup>
+                )}
               </div>
             </div>
           </section>
