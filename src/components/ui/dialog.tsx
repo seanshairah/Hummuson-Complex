@@ -58,12 +58,15 @@ export function SheetContent({
   description,
   side = "right",
   className,
+  headerAction,
 }: {
   children: ReactNode;
   title: string;
   description?: string;
   side?: "right" | "bottom" | "left";
   className?: string;
+  /** Optional control rendered before the title (e.g. a back button). */
+  headerAction?: ReactNode;
 }) {
   return (
     <DialogPrimitive.Portal>
@@ -80,13 +83,16 @@ export function SheetContent({
         )}
       >
         <header className="flex items-start justify-between gap-4 border-b border-line px-5 py-4">
-          <div>
-            <DialogPrimitive.Title className="text-title text-ink">{title}</DialogPrimitive.Title>
-            {description && (
-              <DialogPrimitive.Description className="mt-0.5 text-sm text-ink-faint">
-                {description}
-              </DialogPrimitive.Description>
-            )}
+          <div className="flex min-w-0 items-start gap-2">
+            {headerAction}
+            <div className="min-w-0">
+              <DialogPrimitive.Title className="text-title text-ink">{title}</DialogPrimitive.Title>
+              {description && (
+                <DialogPrimitive.Description className="mt-0.5 text-sm text-ink-faint">
+                  {description}
+                </DialogPrimitive.Description>
+              )}
+            </div>
           </div>
           <DialogPrimitive.Close
             className="rounded-full p-2 text-ink-faint transition-colors hover:bg-ink/5 hover:text-ink"

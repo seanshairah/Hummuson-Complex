@@ -1,9 +1,17 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Sparkles, SendHorizontal, MessageCircle, Phone, ArrowRight, Leaf } from "lucide-react";
+import {
+  Sparkles,
+  SendHorizontal,
+  MessageCircle,
+  Phone,
+  ArrowLeft,
+  ArrowRight,
+  Leaf,
+} from "lucide-react";
 import Link from "next/link";
-import { Dialog, DialogTrigger, SheetContent } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogTrigger, SheetContent } from "@/components/ui/dialog";
 import { Spinner } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { whatsappLink, whatsappAdviceMessage } from "@/lib/whatsapp";
@@ -84,6 +92,17 @@ export function AskSheet({
   const [thread, setThread] = useState<AskAnswer[]>([]);
   const [loading, setLoading] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
+  // Bumped by "back" so an in-flight answer can't resurrect a cleared chat.
+  const sessionRef = useRef(0);
+
+  const inConversation = thread.length > 0 || loading;
+
+  const backToStart = () => {
+    sessionRef.current += 1;
+    setThread([]);
+    setQuestion("");
+    setLoading(false);
+  };
 
   const suggestions = productName
     ? [
@@ -97,6 +116,7 @@ export function AskSheet({
   const ask = async (q: string) => {
     const trimmed = q.trim();
     if (!trimmed || loading) return;
+    const session = sessionRef.current;
     setQuestion("");
     setLoading(true);
     try {
@@ -107,16 +127,23 @@ export function AskSheet({
       });
       if (!res.ok) throw new Error("ask failed");
       const data = (await res.json()) as Omit<AskAnswer, "id" | "question">;
+      if (session !== sessionRef.current) return;
       setThread((t) => [...t, { ...data, id: crypto.randomUUID(), question: trimmed }]);
     } catch {
+      if (session !== sessionRef.current) return;
       setThread((t) => [...t, { id: crypto.randomUUID(), question: trimmed, matched: false }]);
     } finally {
-      setLoading(false);
-      requestAnimationFrame(() =>
-        listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" }),
-      );
+      if (session === sessionRef.current) {
+        setLoading(false);
+        requestAnimationFrame(() =>
+          listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" }),
+        );
+      }
     }
   };
+
+  const backButtonClasses =
+    "mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full text-ink-faint transition-colors hover:bg-ink/5 hover:text-ink";
 
   return (
     <SheetContent
@@ -125,6 +152,30 @@ export function AskSheet({
         productName
           ? `Verified answers about ${productName}`
           : "Verified answers from our product knowledge base"
+      }
+      headerAction={
+        inConversation ? (
+          <button
+            type="button"
+            onClick={backToStart}
+            aria-label="Back to suggested questions"
+            title="Back"
+            className={backButtonClasses}
+          >
+            <ArrowLeft className="size-4.5" strokeWidth={1.9} />
+          </button>
+        ) : (
+          <DialogClose asChild>
+            <button
+              type="button"
+              aria-label="Close Ask Humuson"
+              title="Back"
+              className={backButtonClasses}
+            >
+              <ArrowLeft className="size-4.5" strokeWidth={1.9} />
+            </button>
+          </DialogClose>
+        )
       }
     >
       <div className="flex h-full flex-col">
