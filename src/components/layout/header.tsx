@@ -43,7 +43,7 @@ export function Header() {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-40 transition-all duration-300",
-        scrolled && "glass-light shadow-card",
+        scrolled && "shadow-card glass-light",
         scrolled && "supports-[backdrop-filter]:bg-cream/70",
       )}
     >
@@ -57,12 +57,13 @@ export function Header() {
           <ul
             className={cn(
               "flex items-center gap-0.5 rounded-full border p-1 transition-colors",
-              onDark ? "border-paper/15 bg-humus-950/40 backdrop-blur-md" : "border-ink/8 bg-paper-dim/70",
+              onDark
+                ? "border-paper/15 bg-humus-950/40 backdrop-blur-md"
+                : "border-ink/8 bg-paper-dim/70",
             )}
           >
             {mainNav.map((item) => {
-              const active =
-                item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+              const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
               return (
                 <li key={item.href}>
                   <Link
@@ -133,11 +134,11 @@ export function Header() {
       <div
         id="mobile-menu"
         className={cn(
-          "fixed inset-0 z-40 flex flex-col bg-humus-950 bg-grain transition-opacity duration-300 lg:hidden",
+          "bg-grain fixed inset-0 z-40 flex flex-col bg-humus-950 transition-opacity duration-300 lg:hidden",
           open ? "opacity-100" : "pointer-events-none opacity-0",
         )}
       >
-        <div className="glow-leaf absolute inset-0" aria-hidden />
+        <div className="absolute inset-0 glow-leaf" aria-hidden />
         <nav aria-label="Mobile" className="relative mt-24 flex-1 overflow-y-auto px-6 pb-10">
           <ul className="space-y-1">
             {mainNav.map((item, i) => (

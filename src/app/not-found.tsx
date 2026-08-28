@@ -3,11 +3,11 @@ import { Sprout } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center bg-humus-950 bg-grain px-6 text-center text-paper">
-      <div className="glow-leaf pointer-events-none absolute inset-0" aria-hidden />
+    <div className="bg-grain flex min-h-dvh flex-col items-center justify-center bg-humus-950 px-6 text-center text-paper">
+      <div className="pointer-events-none absolute inset-0 glow-leaf" aria-hidden />
       <Sprout className="size-12 text-leaf-400" strokeWidth={1.4} />
-      <p className="text-eyebrow mt-6 text-leaf-400">404 — nothing planted here</p>
-      <h1 className="text-display-2 mt-4 max-w-xl text-balance">
+      <p className="mt-6 text-eyebrow text-leaf-400">404 — nothing planted here</p>
+      <h1 className="mt-4 max-w-xl text-display-2 text-balance">
         This field is <em className="text-editorial text-leaf-300">fallow</em>.
       </h1>
       <p className="mt-4 max-w-md text-paper/70">

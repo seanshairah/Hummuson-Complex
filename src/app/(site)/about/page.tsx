@@ -25,9 +25,13 @@ export const metadata: Metadata = {
 export default async function AboutPage() {
   const [company, contact] = await Promise.all([getCompanySettings(), getContactSettings()]);
   const paragraphs = company.about.split("\n\n").filter(Boolean);
-  const story = paragraphs.filter((p) => !p.startsWith("Our Vision") && !p.startsWith("Our Mission"));
+  const story = paragraphs.filter(
+    (p) => !p.startsWith("Our Vision") && !p.startsWith("Our Mission"),
+  );
   const vision = paragraphs.find((p) => p.startsWith("Our Vision"))?.replace(/^Our Vision:\s*/, "");
-  const mission = paragraphs.find((p) => p.startsWith("Our Mission"))?.replace(/^Our Mission:\s*/, "");
+  const mission = paragraphs
+    .find((p) => p.startsWith("Our Mission"))
+    ?.replace(/^Our Mission:\s*/, "");
 
   return (
     <>
@@ -84,18 +88,22 @@ export default async function AboutPage() {
 
       {/* Vision & mission */}
       {(vision || mission) && (
-        <section className="bg-humus-950 bg-grain py-16 text-paper">
+        <section className="bg-grain bg-humus-950 py-16 text-paper">
           <div className="container-site grid gap-6 md:grid-cols-2">
             {vision && (
               <Reveal className="rounded-3xl border border-paper/10 bg-paper/5 p-8">
                 <p className="text-eyebrow text-leaf-400">Our vision</p>
-                <p className="text-editorial mt-4 text-xl leading-relaxed text-paper/90">{vision}</p>
+                <p className="mt-4 text-editorial text-xl leading-relaxed text-paper/90">
+                  {vision}
+                </p>
               </Reveal>
             )}
             {mission && (
               <Reveal delay={0.1} className="rounded-3xl border border-paper/10 bg-paper/5 p-8">
                 <p className="text-eyebrow text-leaf-400">Our mission</p>
-                <p className="text-editorial mt-4 text-xl leading-relaxed text-paper/90">{mission}</p>
+                <p className="mt-4 text-editorial text-xl leading-relaxed text-paper/90">
+                  {mission}
+                </p>
               </Reveal>
             )}
           </div>
@@ -145,8 +153,18 @@ export default async function AboutPage() {
             lede="Humuson Complex distributes for established European producers of organic and biological crop nutrition."
           />
           <div className="flex flex-wrap items-center justify-center gap-10">
-            <Image src={partnerBioenergy} alt="Bioenergy LT" className="h-16 w-auto rounded-lg object-contain" sizes="160px" />
-            <Image src={partnerSapropel} alt="Sapropel Organics" className="h-10 w-auto object-contain" sizes="180px" />
+            <Image
+              src={partnerBioenergy}
+              alt="Bioenergy LT"
+              className="h-16 w-auto rounded-lg object-contain"
+              sizes="160px"
+            />
+            <Image
+              src={partnerSapropel}
+              alt="Sapropel Organics"
+              className="h-10 w-auto object-contain"
+              sizes="180px"
+            />
           </div>
         </div>
       </section>

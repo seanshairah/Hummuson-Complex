@@ -24,7 +24,7 @@ export function EnquiryForm({
     return (
       <div className="flex flex-col items-center rounded-3xl border border-leaf-500/40 bg-leaf-300/20 px-6 py-14 text-center">
         <CheckCircle2 className="size-10 text-leaf-700" strokeWidth={1.6} />
-        <h3 className="text-title mt-4 text-ink">Enquiry received</h3>
+        <h3 className="mt-4 text-title text-ink">Enquiry received</h3>
         <p className="mt-2 max-w-sm text-sm leading-relaxed text-ink-soft">{state.message}</p>
       </div>
     );
@@ -50,30 +50,31 @@ export function EnquiryForm({
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Your name" required error={state.fieldErrors?.name}>
-          {(id) => <Input id={id} name="name" autoComplete="name" required />}
+          <Input name="name" autoComplete="name" required />
         </Field>
-        <Field label="Phone / WhatsApp" hint="So an adviser can reach you" error={state.fieldErrors?.phone}>
-          {(id) => <Input id={id} name="phone" type="tel" autoComplete="tel" />}
+        <Field
+          label="Phone / WhatsApp"
+          hint="So an adviser can reach you"
+          error={state.fieldErrors?.phone}
+        >
+          <Input name="phone" type="tel" autoComplete="tel" />
         </Field>
       </div>
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Email" error={state.fieldErrors?.email}>
-          {(id) => <Input id={id} name="email" type="email" autoComplete="email" />}
+          <Input name="email" type="email" autoComplete="email" />
         </Field>
         <Field label="Subject" error={state.fieldErrors?.subject}>
-          {(id) => <Input id={id} name="subject" placeholder="e.g. Maize program advice" />}
+          <Input name="subject" placeholder="e.g. Maize program advice" />
         </Field>
       </div>
       <Field label="Message" required error={state.fieldErrors?.message}>
-        {(id) => (
-          <Textarea
-            id={id}
-            name="message"
-            rows={5}
-            required
-            placeholder="Tell us about your crop, area and what you need…"
-          />
-        )}
+        <Textarea
+          name="message"
+          rows={5}
+          required
+          placeholder="Tell us about your crop, area and what you need…"
+        />
       </Field>
 
       {state.status === "error" && state.message && (

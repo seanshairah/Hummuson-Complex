@@ -42,7 +42,7 @@ export function HomeHero({
   return (
     <section
       ref={ref}
-      className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-humus-950 bg-grain"
+      className="bg-grain relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-humus-950"
     >
       {/* Layered field imagery */}
       <motion.div style={reduce ? undefined : { y: bgY }} className="absolute inset-0 -z-10">
@@ -67,7 +67,7 @@ export function HomeHero({
           className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-humus-950 to-transparent"
         />
       </motion.div>
-      <div aria-hidden className="glow-leaf absolute inset-0 -z-10" />
+      <div aria-hidden className="absolute inset-0 -z-10 glow-leaf" />
 
       <div className="container-wide flex flex-1 items-center pt-28 pb-16 md:pt-32">
         <div className="grid w-full items-center gap-12 lg:grid-cols-[1.12fr_0.88fr]">
@@ -77,13 +77,13 @@ export function HomeHero({
               initial={reduce ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: EASE }}
-              className="text-eyebrow flex items-center gap-3 text-leaf-400"
+              className="flex items-center gap-3 text-eyebrow text-leaf-400"
             >
               <span aria-hidden className="h-px w-10 bg-leaf-400/70" />
               Home of healthy soil &amp; healthy crop
             </motion.p>
 
-            <h1 className="text-display-1 mt-6">
+            <h1 className="mt-6 text-display-1">
               {lines.map((line, i) => (
                 <span key={line.text} className="block overflow-hidden">
                   <motion.span
@@ -104,9 +104,9 @@ export function HomeHero({
               transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
               className="mt-6 max-w-xl text-base leading-relaxed text-paper/75 md:text-lg"
             >
-              Humuson Complex distributes organic fertilisers, biostimulants and foliar
-              fertilisers from renowned European producers — helping Zimbabwean farmers improve
-              soil fertility, maximise crop productivity and farm sustainably.
+              Humuson Complex distributes organic fertilisers, biostimulants and foliar fertilisers
+              from renowned European producers — helping Zimbabwean farmers improve soil fertility,
+              maximise crop productivity and farm sustainably.
             </motion.p>
 
             <motion.div
@@ -167,7 +167,7 @@ export function HomeHero({
               {spotlight && (
                 <Link
                   href={`/products/${spotlight.slug}`}
-                  className="group block rounded-3xl glass-dark p-5 shadow-float transition-transform duration-300 hover:-translate-y-1"
+                  className="group block rounded-3xl p-5 shadow-float glass-dark transition-transform duration-300 hover:-translate-y-1"
                 >
                   <div className="flex items-center justify-between">
                     <p className="text-eyebrow text-[0.62rem] text-leaf-400">Product spotlight</p>
@@ -210,7 +210,8 @@ export function HomeHero({
                     </p>
                   )}
                   <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-leaf-300">
-                    View product <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+                    View product{" "}
+                    <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
                   </p>
                 </Link>
               )}
@@ -223,7 +224,7 @@ export function HomeHero({
               initial={reduce ? false : { opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.72, ease: EASE }}
-              className="mt-4 flex items-center gap-4 rounded-3xl glass-dark p-5 shadow-float transition-transform duration-300 hover:-translate-y-1 lg:ml-14"
+              className="mt-4 flex items-center gap-4 rounded-3xl p-5 shadow-float glass-dark transition-transform duration-300 hover:-translate-y-1 lg:ml-14"
             >
               <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-leaf-400 text-humus-950">
                 <MessageCircle className="size-5.5" strokeWidth={1.9} />
@@ -243,11 +244,11 @@ export function HomeHero({
               initial={reduce ? false : { opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.86, ease: EASE }}
-              className="mt-4 flex items-center justify-between gap-3 rounded-3xl glass-dark px-5 py-4 shadow-float lg:mr-10"
+              className="mt-4 flex items-center justify-between gap-3 rounded-3xl px-5 py-4 shadow-float glass-dark lg:mr-10"
             >
               <p className="text-xs leading-relaxed text-paper/70">
-                Crop programs for maize, wheat &amp; potatoes — see which product fits each
-                growth stage.
+                Crop programs for maize, wheat &amp; potatoes — see which product fits each growth
+                stage.
               </p>
               <Link
                 href="/crops"

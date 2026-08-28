@@ -20,8 +20,8 @@ import {
   type Prisma,
 } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import sanitizeHtmlLib from "sanitize-html";
 import sharp from "sharp";
+import { sanitizeRichHtml } from "../../src/lib/sanitize";
 import type {
   OldUrlMapEntry,
   SourceArticle,
@@ -43,28 +43,6 @@ function loadJson<T>(name: string): T | null {
   const file = path.join(ROOT, "content", name);
   if (!existsSync(file)) return null;
   return JSON.parse(readFileSync(file, "utf8")) as T;
-}
-
-export function sanitizeRichHtml(html: string): string {
-  return sanitizeHtmlLib(html, {
-    allowedTags: [
-      "p", "br", "h2", "h3", "h4", "ul", "ol", "li", "strong", "em", "b", "i",
-      "a", "img", "blockquote", "table", "thead", "tbody", "tr", "th", "td", "figure", "figcaption",
-    ],
-    allowedAttributes: {
-      a: ["href", "title"],
-      img: ["src", "alt", "width", "height"],
-    },
-    transformTags: {
-      a: (tagName, attribs) => {
-        // Old-site internal links keep working through the redirect map.
-        const href = attribs.href ?? "";
-        return { tagName, attribs: { ...attribs, href } };
-      },
-    },
-  })
-    .replace(/<p>\s*(&nbsp;)?\s*<\/p>/g, "")
-    .trim();
 }
 
 /** slug helper mirroring src/lib/utils (kept dependency-free for tsx). */

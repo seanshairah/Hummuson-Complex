@@ -35,26 +35,34 @@ export function PageIntro({
     <section
       className={cn(
         "relative overflow-hidden pt-28 pb-12 md:pt-36 md:pb-16",
-        dark && "bg-humus-950 bg-grain text-paper",
+        dark && "bg-grain bg-humus-950 text-paper",
         className,
       )}
     >
-      {dark && <div className="glow-leaf absolute inset-0" aria-hidden />}
-      <div className="container-site relative">
+      {dark && <div className="absolute inset-0 glow-leaf" aria-hidden />}
+      <div className="relative container-site">
         {crumbs && <Breadcrumbs crumbs={crumbs} tone={tone} className="mb-6" />}
         <Reveal y={20}>
           {eyebrow && (
             <p
               className={cn(
-                "text-eyebrow mb-4 flex items-center gap-3",
+                "mb-4 flex items-center gap-3 text-eyebrow",
                 dark ? "text-leaf-400" : "text-leaf-700",
               )}
             >
-              <span aria-hidden className={cn("h-px w-8", dark ? "bg-leaf-400/60" : "bg-leaf-700/50")} />
+              <span
+                aria-hidden
+                className={cn("h-px w-8", dark ? "bg-leaf-400/60" : "bg-leaf-700/50")}
+              />
               {eyebrow}
             </p>
           )}
-          <h1 className={cn("text-display-2 max-w-4xl text-balance", dark ? "text-paper" : "text-ink")}>
+          <h1
+            className={cn(
+              "max-w-4xl text-display-2 text-balance",
+              dark ? "text-paper" : "text-ink",
+            )}
+          >
             {title}
             {titleAccent && (
               <>

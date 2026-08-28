@@ -63,14 +63,18 @@ export default async function KnowledgePage() {
                   <div className="flex flex-wrap items-center gap-2">
                     {featured.category && <Badge variant="leaf">{featured.category.name}</Badge>}
                     {featured.readingMinutes && (
-                      <span className="text-xs text-ink-faint">{featured.readingMinutes} min read</span>
+                      <span className="text-xs text-ink-faint">
+                        {featured.readingMinutes} min read
+                      </span>
                     )}
                   </div>
-                  <h2 className="text-display-3 mt-4 text-ink group-hover:text-brand">
+                  <h2 className="mt-4 text-display-3 text-ink group-hover:text-brand">
                     {featured.title}
                   </h2>
                   {featured.excerpt && (
-                    <p className="mt-3 line-clamp-3 leading-relaxed text-ink-soft">{featured.excerpt}</p>
+                    <p className="mt-3 line-clamp-3 leading-relaxed text-ink-soft">
+                      {featured.excerpt}
+                    </p>
                   )}
                   <p className="mt-6 flex items-center gap-2 text-sm font-medium text-leaf-700">
                     Read article
@@ -102,16 +106,22 @@ export default async function KnowledgePage() {
                       <div className="flex items-center gap-2 text-[0.65rem] font-medium tracking-widest text-leaf-700 uppercase">
                         {article.category?.name ?? "Article"}
                         {article.readingMinutes && (
-                          <span className="text-ink-faint normal-case">· {article.readingMinutes} min</span>
+                          <span className="text-ink-faint normal-case">
+                            · {article.readingMinutes} min
+                          </span>
                         )}
                       </div>
                       <h3 className="mt-2 line-clamp-2 font-display text-lg font-semibold text-ink group-hover:text-brand">
                         {article.title}
                       </h3>
                       {article.excerpt && (
-                        <p className="mt-2 line-clamp-2 text-sm text-ink-faint">{article.excerpt}</p>
+                        <p className="mt-2 line-clamp-2 text-sm text-ink-faint">
+                          {article.excerpt}
+                        </p>
                       )}
-                      <p className="mt-auto pt-4 text-xs text-ink-faint">{formatDate(article.publishedAt)}</p>
+                      <p className="mt-auto pt-4 text-xs text-ink-faint">
+                        {formatDate(article.publishedAt)}
+                      </p>
                     </div>
                   </Link>
                 </RevealItem>

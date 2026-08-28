@@ -31,7 +31,9 @@ export function StickyProductActions({
           href={whatsappLink(whatsappProductMessage(productName))}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => trackClient("WHATSAPP_CLICK", { entityType: "product", entityId: productId })}
+          onClick={() =>
+            trackClient("WHATSAPP_CLICK", { entityType: "product", entityId: productId })
+          }
           className="flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-leaf-400 font-display text-sm font-medium text-humus-950"
         >
           <MessageCircle className="size-4.5" strokeWidth={1.9} /> WhatsApp

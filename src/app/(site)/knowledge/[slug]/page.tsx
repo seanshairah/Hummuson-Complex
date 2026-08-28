@@ -66,9 +66,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
               {article.readingMinutes && ` · ${article.readingMinutes} min read`}
             </span>
           </div>
-          <h1 className="text-display-2 mt-5 text-balance text-ink">{article.title}</h1>
+          <h1 className="mt-5 text-display-2 text-balance text-ink">{article.title}</h1>
           {article.excerpt && (
-            <p className="text-editorial mt-5 text-xl leading-relaxed text-ink-soft">
+            <p className="mt-5 text-editorial text-xl leading-relaxed text-ink-soft">
               {article.excerpt}
             </p>
           )}
@@ -94,7 +94,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
           {(article.products.length > 0 || article.crops.length > 0) && (
             <aside className="mt-12 rounded-3xl border border-line bg-cream p-6">
-              <p className="text-eyebrow text-[0.65rem] text-ink-faint">Mentioned in this article</p>
+              <p className="text-eyebrow text-[0.65rem] text-ink-faint">
+                Mentioned in this article
+              </p>
               <div className="mt-4 flex flex-wrap gap-2.5">
                 {article.products.map((product) => (
                   <Link
@@ -119,7 +121,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             </aside>
           )}
 
-          <div className="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-3xl bg-humus-950 bg-grain p-6 text-paper">
+          <div className="bg-grain mt-10 flex flex-wrap items-center justify-between gap-4 rounded-3xl bg-humus-950 p-6 text-paper">
             <div>
               <p className="font-display text-lg font-semibold">Questions about your own field?</p>
               <p className="mt-1 text-sm text-paper/65">Basic consultation is free.</p>

@@ -76,23 +76,25 @@ export default async function CataloguePage() {
       <ViewTracker type="CATALOGUE_VIEW" entityType="catalogue" entityId={catalogue.id} />
 
       {/* Cover */}
-      <section className="relative flex min-h-[88svh] items-end overflow-hidden bg-humus-950 bg-grain text-paper">
-        <div aria-hidden className="glow-leaf absolute inset-0" />
+      <section className="bg-grain relative flex min-h-[88svh] items-end overflow-hidden bg-humus-950 text-paper">
+        <div aria-hidden className="absolute inset-0 glow-leaf" />
         <div
           aria-hidden
-          className="text-eyebrow absolute top-28 right-0 left-0 overflow-hidden text-[clamp(4rem,14vw,11rem)] leading-none font-medium tracking-tight whitespace-nowrap text-paper/6 select-none"
+          className="absolute top-28 right-0 left-0 overflow-hidden text-eyebrow text-[clamp(4rem,14vw,11rem)] leading-none font-medium tracking-tight whitespace-nowrap text-paper/6 select-none"
         >
           {catalogue.title} · {catalogue.title}
         </div>
-        <div className="container-site relative pt-40 pb-16">
+        <div className="relative container-site pt-40 pb-16">
           <p className="text-eyebrow text-leaf-400">
             Interactive catalogue{catalogue.year ? ` · ${catalogue.year}` : ""}
           </p>
-          <h1 className="text-display-1 mt-5 max-w-4xl">
+          <h1 className="mt-5 max-w-4xl text-display-1">
             The range, as a <Em className="text-leaf-300">publication</Em>
           </h1>
           {catalogue.intro && (
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-paper/70">{catalogue.intro}</p>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-paper/70">
+              {catalogue.intro}
+            </p>
           )}
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <ButtonLink href="/catalogue/flipbook" variant="accent" size="xl">
@@ -143,7 +145,7 @@ export default async function CataloguePage() {
                   <p className={cn("text-eyebrow", theme.label)}>
                     Chapter {String(sectionIndex + 1).padStart(2, "0")}
                   </p>
-                  <h2 className={cn("text-display-2 mt-3", theme.heading)}>{section.title}</h2>
+                  <h2 className={cn("mt-3 text-display-2", theme.heading)}>{section.title}</h2>
                   {section.intro && (
                     <p className={cn("mt-4 max-w-2xl text-lg", theme.body)}>{section.intro}</p>
                   )}
@@ -185,7 +187,7 @@ export default async function CataloguePage() {
                             ) : null}
                             <span
                               aria-hidden
-                              className="text-eyebrow absolute top-4 left-5 text-[0.6rem] text-ink-faint/70 mix-blend-multiply"
+                              className="absolute top-4 left-5 text-eyebrow text-[0.6rem] text-ink-faint/70 mix-blend-multiply"
                             >
                               {String(sectionIndex + 1).padStart(2, "0")}.
                               {String(entryIndex + 1).padStart(2, "0")}
@@ -205,12 +207,25 @@ export default async function CataloguePage() {
                                 </Badge>
                               )}
                               {product.methods.slice(0, 2).map((method) => (
-                                <Badge key={method} variant="outline" className={section.theme === "biology" ? "border-paper/25 text-paper/70" : undefined}>
+                                <Badge
+                                  key={method}
+                                  variant="outline"
+                                  className={
+                                    section.theme === "biology"
+                                      ? "border-paper/25 text-paper/70"
+                                      : undefined
+                                  }
+                                >
                                   {humanize(method)}
                                 </Badge>
                               ))}
                             </div>
-                            <h3 className={cn("mt-4 font-display text-3xl font-semibold tracking-tight", theme.heading)}>
+                            <h3
+                              className={cn(
+                                "mt-4 font-display text-3xl font-semibold tracking-tight",
+                                theme.heading,
+                              )}
+                            >
                               {product.name}
                             </h3>
                             {(entry.headline || product.shortDescription) && (
@@ -218,10 +233,17 @@ export default async function CataloguePage() {
                                 {entry.headline ?? product.shortDescription}
                               </p>
                             )}
-                            <dl className={cn("mt-6 grid grid-cols-2 gap-x-6 gap-y-3 text-sm", theme.body)}>
+                            <dl
+                              className={cn(
+                                "mt-6 grid grid-cols-2 gap-x-6 gap-y-3 text-sm",
+                                theme.body,
+                              )}
+                            >
                               {product.cropNames.length > 0 && (
                                 <div>
-                                  <dt className="text-eyebrow text-[0.58rem] opacity-70">Listed for</dt>
+                                  <dt className="text-eyebrow text-[0.58rem] opacity-70">
+                                    Listed for
+                                  </dt>
                                   <dd className="mt-1 capitalize">
                                     {product.cropNames.slice(0, 4).join(", ")}
                                     {product.cropNames.length > 4 && "…"}
@@ -235,7 +257,12 @@ export default async function CataloguePage() {
                                 </div>
                               )}
                             </dl>
-                            <p className={cn("mt-auto flex items-center gap-2 pt-6 font-display text-sm font-medium", theme.label)}>
+                            <p
+                              className={cn(
+                                "mt-auto flex items-center gap-2 pt-6 font-display text-sm font-medium",
+                                theme.label,
+                              )}
+                            >
                               View product
                               <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                             </p>

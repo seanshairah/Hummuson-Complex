@@ -50,11 +50,11 @@ export default async function CropsPage() {
                     className={cn(
                       "group relative flex h-full min-h-40 flex-col justify-between overflow-hidden rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-pop",
                       i % 5 === 0
-                        ? "bg-humus-950 bg-grain text-paper"
+                        ? "bg-grain bg-humus-950 text-paper"
                         : "border border-line bg-cream text-ink shadow-card",
                     )}
                   >
-                    {i % 5 === 0 && <span aria-hidden className="glow-leaf absolute inset-0" />}
+                    {i % 5 === 0 && <span aria-hidden className="absolute inset-0 glow-leaf" />}
                     <div className="relative flex items-start justify-between">
                       <h2 className="font-display text-2xl font-semibold tracking-tight capitalize">
                         {crop.name}
@@ -76,8 +76,8 @@ export default async function CropsPage() {
                         i % 5 === 0 ? "text-paper/65" : "text-ink-faint",
                       )}
                     >
-                      {crop.productCount} listed product{crop.productCount === 1 ? "" : "s"} · growth-stage
-                      guidance · FAQs
+                      {crop.productCount} listed product{crop.productCount === 1 ? "" : "s"} ·
+                      growth-stage guidance · FAQs
                     </p>
                   </Link>
                 </RevealItem>

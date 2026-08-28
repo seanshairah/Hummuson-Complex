@@ -31,9 +31,7 @@ export function DialogContent({
           className,
         )}
       >
-        <DialogPrimitive.Title
-          className={cn("text-title pr-8 text-ink", hideTitle && "sr-only")}
-        >
+        <DialogPrimitive.Title className={cn("pr-8 text-title text-ink", hideTitle && "sr-only")}>
           {title}
         </DialogPrimitive.Title>
         {description && (

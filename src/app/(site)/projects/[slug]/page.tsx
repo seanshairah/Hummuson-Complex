@@ -62,16 +62,21 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             )}
             {project.location && <Badge variant="outline">{project.location}</Badge>}
           </div>
-          <h1 className="text-display-2 mt-5 text-ink capitalize">{project.title}</h1>
+          <h1 className="mt-5 text-display-2 text-ink capitalize">{project.title}</h1>
           {project.summary && (
-            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">{project.summary}</p>
+            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">
+              {project.summary}
+            </p>
           )}
         </header>
 
         {project.images.length > 0 && (
           <div className="container-site mt-10 max-w-5xl space-y-5">
             {project.images.map((image, i) => (
-              <figure key={image.url} className="overflow-hidden rounded-3xl border border-line bg-white shadow-card">
+              <figure
+                key={image.url}
+                className="overflow-hidden rounded-3xl border border-line bg-white shadow-card"
+              >
                 <MediaImage
                   image={image}
                   alt={image.caption ?? `${project.title} — image ${i + 1}`}
@@ -80,7 +85,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   priority={i === 0}
                 />
                 {image.caption && (
-                  <figcaption className="px-5 py-3 text-xs text-ink-faint">{image.caption}</figcaption>
+                  <figcaption className="px-5 py-3 text-xs text-ink-faint">
+                    {image.caption}
+                  </figcaption>
                 )}
               </figure>
             ))}
@@ -105,9 +112,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               </section>
             )}
             {project.testimonial && (
-              <figure className="mt-8 rounded-3xl bg-humus-950 bg-grain p-6 text-paper">
+              <figure className="bg-grain mt-8 rounded-3xl bg-humus-950 p-6 text-paper">
                 <Quote className="size-5 text-leaf-400" aria-hidden />
-                <blockquote className="text-editorial mt-3 text-lg leading-relaxed">
+                <blockquote className="mt-3 text-editorial text-lg leading-relaxed">
                   {project.testimonial.quote}
                 </blockquote>
                 <figcaption className="mt-4 text-sm text-paper/70">

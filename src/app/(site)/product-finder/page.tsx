@@ -16,12 +16,12 @@ export default async function ProductFinderPage() {
   const options = await getFilterOptions();
 
   return (
-    <div className="relative min-h-dvh overflow-hidden bg-humus-950 bg-grain">
-      <div aria-hidden className="glow-leaf absolute inset-0" />
+    <div className="bg-grain relative min-h-dvh overflow-hidden bg-humus-950">
+      <div aria-hidden className="absolute inset-0 glow-leaf" />
       <div className="relative">
         <header className="container-site pt-28 pb-10 text-center md:pt-36">
           <p className="text-eyebrow text-leaf-400">Product finder</p>
-          <h1 className="text-display-2 mx-auto mt-4 max-w-3xl text-paper">
+          <h1 className="mx-auto mt-4 max-w-3xl text-display-2 text-paper">
             Find your <Em className="text-leaf-300">solution</Em>
           </h1>
         </header>

@@ -175,7 +175,8 @@ export function SearchDialog({
         <div className="max-h-[55dvh] overflow-y-auto p-2">
           {!searched && !loading && (
             <div className="px-4 py-8 text-center text-sm text-ink-faint">
-              Try <SearchHint onPick={setQuery} q="maize" />, <SearchHint onPick={setQuery} q="root development" />,{" "}
+              Try <SearchHint onPick={setQuery} q="maize" />,{" "}
+              <SearchHint onPick={setQuery} q="root development" />,{" "}
               <SearchHint onPick={setQuery} q="foliar" /> or a product name.
             </div>
           )}
@@ -202,7 +203,7 @@ export function SearchDialog({
             return (
               <div key={`${result.href}-${i}`}>
                 {showGroup && (
-                  <p className="text-eyebrow px-3 pt-4 pb-1.5 text-[0.62rem] text-ink-faint">
+                  <p className="px-3 pt-4 pb-1.5 text-eyebrow text-[0.62rem] text-ink-faint">
                     {meta.label}
                   </p>
                 )}
@@ -219,9 +220,13 @@ export function SearchDialog({
                     <Icon className="size-4" strokeWidth={1.8} />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-medium text-ink">{result.title}</span>
+                    <span className="block truncate text-sm font-medium text-ink">
+                      {result.title}
+                    </span>
                     {result.subtitle && (
-                      <span className="block truncate text-xs text-ink-faint">{result.subtitle}</span>
+                      <span className="block truncate text-xs text-ink-faint">
+                        {result.subtitle}
+                      </span>
                     )}
                   </span>
                   {i === active && <CornerDownLeft className="size-3.5 shrink-0 text-ink-faint" />}

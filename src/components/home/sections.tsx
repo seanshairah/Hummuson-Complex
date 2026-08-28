@@ -149,7 +149,7 @@ export function FeaturedProducts({ products }: { products: ProductCardData[] }) 
       </div>
       <div className="container-wide mt-12">
         <RevealGroup
-          className="grid snap-x snap-mandatory auto-cols-[78%] grid-flow-col gap-4 overflow-x-auto pb-4 scrollbar-none sm:auto-cols-[46%] lg:auto-cols-fr lg:grid-flow-row lg:grid-cols-4 lg:overflow-visible"
+          className="scrollbar-none grid snap-x snap-mandatory auto-cols-[78%] grid-flow-col gap-4 overflow-x-auto pb-4 sm:auto-cols-[46%] lg:auto-cols-fr lg:grid-flow-row lg:grid-cols-4 lg:overflow-visible"
           stagger={0.06}
         >
           {products.slice(0, 8).map((product, i) => (
@@ -174,9 +174,9 @@ const FINDER_STEPS = [
 
 export function FinderBand() {
   return (
-    <section className="relative overflow-hidden bg-humus-950 bg-grain py-20 text-paper md:py-28">
-      <div aria-hidden className="glow-leaf absolute inset-0" />
-      <div className="container-site relative grid items-center gap-12 lg:grid-cols-2">
+    <section className="bg-grain relative overflow-hidden bg-humus-950 py-20 text-paper md:py-28">
+      <div aria-hidden className="absolute inset-0 glow-leaf" />
+      <div className="relative container-site grid items-center gap-12 lg:grid-cols-2">
         <Reveal>
           <SectionHeading
             tone="dark"
@@ -242,7 +242,10 @@ export function CropsBand({ crops }: { crops: CropListItem[] }) {
                 sizes="(max-width: 1024px) 0px, 480px"
                 className="object-cover"
               />
-              <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-humus-950/60 to-transparent" />
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-gradient-to-t from-humus-950/60 to-transparent"
+              />
               <p className="absolute bottom-4 left-5 text-sm font-medium text-paper">
                 Humuson field — vegetable production
               </p>
@@ -290,7 +293,7 @@ export function SoilStory({ claims }: { claims: string[] }) {
   const shown = claims.slice(0, 6);
   if (shown.length === 0) return null;
   return (
-    <section className="relative overflow-hidden bg-humus-950 bg-grain py-20 text-paper md:py-28">
+    <section className="bg-grain relative overflow-hidden bg-humus-950 py-20 text-paper md:py-28">
       <div className="container-site grid items-center gap-14 lg:grid-cols-2">
         <Reveal className="relative order-2 lg:order-1">
           <Parallax speed={0.08} className="relative aspect-[4/5] overflow-hidden rounded-3xl">
@@ -396,7 +399,9 @@ export function ResultsBand({
                       {project.title}
                     </h3>
                     {project.summary && (
-                      <p className="mt-1.5 line-clamp-2 text-sm text-ink-faint">{project.summary}</p>
+                      <p className="mt-1.5 line-clamp-2 text-sm text-ink-faint">
+                        {project.summary}
+                      </p>
                     )}
                   </div>
                 </Link>
@@ -411,7 +416,7 @@ export function ResultsBand({
               <RevealItem key={testimonial.id}>
                 <figure className="flex h-full flex-col rounded-2xl bg-humus-900 p-6 text-paper">
                   <Quote className="size-6 text-leaf-400" aria-hidden />
-                  <blockquote className="text-editorial mt-4 flex-1 text-lg leading-relaxed text-paper/90">
+                  <blockquote className="mt-4 flex-1 text-editorial text-lg leading-relaxed text-paper/90">
                     {testimonial.quote}
                   </blockquote>
                   <figcaption className="mt-5 flex items-center gap-3">
@@ -494,7 +499,9 @@ export function KnowledgePreview({
                       {article.title}
                     </h3>
                     {article.publishedAt && (
-                      <p className="mt-1 text-xs text-ink-faint">{formatDate(article.publishedAt)}</p>
+                      <p className="mt-1 text-xs text-ink-faint">
+                        {formatDate(article.publishedAt)}
+                      </p>
                     )}
                   </div>
                   <ArrowRight className="ml-auto size-4 shrink-0 text-ink-faint/40 transition-all group-hover:translate-x-1 group-hover:text-leaf-700" />
@@ -531,9 +538,9 @@ export function KnowledgePreview({
 export function CatalogueTeaser({ products }: { products: ProductCardData[] }) {
   const spreads = products.filter((p) => p.image).slice(0, 3);
   return (
-    <section className="relative overflow-hidden bg-humus-950 bg-grain py-20 text-paper md:py-24">
-      <div aria-hidden className="glow-leaf absolute inset-0" />
-      <div className="container-site relative grid items-center gap-12 lg:grid-cols-2">
+    <section className="bg-grain relative overflow-hidden bg-humus-950 py-20 text-paper md:py-24">
+      <div aria-hidden className="absolute inset-0 glow-leaf" />
+      <div className="relative container-site grid items-center gap-12 lg:grid-cols-2">
         <Reveal>
           <SectionHeading
             tone="dark"
@@ -575,7 +582,10 @@ export function CatalogueTeaser({ products }: { products: ProductCardData[] }) {
                   className="object-cover"
                 />
               )}
-              <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-humus-950/70 to-transparent" />
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-gradient-to-t from-humus-950/70 to-transparent"
+              />
               <p className="absolute bottom-3 left-4 font-display text-sm font-semibold text-paper">
                 {product.name}
               </p>

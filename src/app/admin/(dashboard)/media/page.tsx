@@ -1,0 +1,58 @@
+import { Images } from "lucide-react";
+import { AdminPageHeader } from "@/components/admin/page-header";
+import { UploadButton } from "@/components/admin/upload-button";
+import { MediaCard } from "@/components/admin/media-card";
+import { EmptyState } from "@/components/ui/empty-state";
+import { db } from "@/server/db";
+
+export const metadata = { title: "Media — admin" };
+
+export default async function AdminMediaPage() {
+  const media = await db.media.findMany({
+    orderBy: { createdAt: "desc" },
+    include: {
+      _count: {
+        select: {
+          productPrimary: true,
+          productGallery: true,
+          articleCovers: true,
+          cropImages: true,
+          projectImages: true,
+          catalogueSection: true,
+          catalogueEntries: true,
+        },
+      },
+    },
+  });
+
+  return (
+    <>
+      <AdminPageHeader
+        title="Media library"
+        description={`${media.length} files — product packs, field photography and uploads.`}
+        actions={<UploadButton />}
+      />
+      {media.length === 0 ? (
+        <EmptyState
+          icon={Images}
+          title="No media yet"
+          description="Upload images to use across products, articles and results."
+        />
+      ) : (
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {media.map((item) => {
+            const usage =
+              item._count.productPrimary +
+              item._count.productGallery +
+              item._count.articleCovers +
+              item._count.cropImages +
+              item._count.projectImages +
+              item._count.catalogueSection +
+              item._count.catalogueEntries;
+            return <MediaCard key={item.id} media={item} usage={usage} />;
+          })}
+        </div>
+      )}
+    </>
+  );
+}

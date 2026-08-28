@@ -48,7 +48,9 @@ export default async function SolutionsPage() {
                     {service.title}
                   </h2>
                   {service.description && (
-                    <p className="mt-2 text-sm leading-relaxed text-ink-soft">{service.description}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+                      {service.description}
+                    </p>
                   )}
                 </div>
               </RevealItem>
@@ -76,7 +78,7 @@ export default async function SolutionsPage() {
               <RevealItem key={category.slug}>
                 <Link
                   href={`/products?category=${category.slug}`}
-                  className="group flex h-full flex-col justify-between rounded-2xl bg-humus-950 bg-grain p-6 text-paper transition-all duration-300 hover:-translate-y-1 hover:shadow-pop"
+                  className="group bg-grain flex h-full flex-col justify-between rounded-2xl bg-humus-950 p-6 text-paper transition-all duration-300 hover:-translate-y-1 hover:shadow-pop"
                 >
                   <h3 className="font-display text-xl font-semibold">{category.name}</h3>
                   <p className="mt-6 flex items-center justify-between text-sm text-paper/60">
@@ -101,7 +103,12 @@ export default async function SolutionsPage() {
           <ButtonLink href="/product-finder" size="lg">
             Product finder
           </ButtonLink>
-          <WhatsAppButton message={whatsappAdviceMessage()} label="WhatsApp an adviser" size="lg" variant="outline" />
+          <WhatsAppButton
+            message={whatsappAdviceMessage()}
+            label="WhatsApp an adviser"
+            size="lg"
+            variant="outline"
+          />
         </div>
       </section>
     </>

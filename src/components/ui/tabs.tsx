@@ -9,7 +9,7 @@ export function TabsList({ className, ...props }: TabsPrimitive.TabsListProps) {
   return (
     <TabsPrimitive.List
       className={cn(
-        "inline-flex max-w-full items-center gap-1 overflow-x-auto rounded-full bg-paper-dim p-1 scrollbar-none",
+        "scrollbar-none inline-flex max-w-full items-center gap-1 overflow-x-auto rounded-full bg-paper-dim p-1",
         className,
       )}
       {...props}

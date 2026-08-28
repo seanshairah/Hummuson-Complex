@@ -2,14 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import {
-  ArrowLeft,
-  ArrowRight,
-  Check,
-  HelpCircle,
-  RotateCcw,
-  Sparkles,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, HelpCircle, RotateCcw, Sparkles } from "lucide-react";
 import { ProductCard } from "@/components/shared/product-card";
 import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import { Spinner } from "@/components/ui/skeleton";
@@ -85,7 +78,11 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
         question: "What stage is your crop?",
         hint: "Products are matched where their guidance references the stage.",
         options: [
-          ...options.stages.map((stage) => ({ value: stage.key, label: stage.name, meta: undefined })),
+          ...options.stages.map((stage) => ({
+            value: stage.key,
+            label: stage.name,
+            meta: undefined,
+          })),
           { value: "", label: "Not sure", meta: undefined },
         ],
         selected: answers.stageKey ?? (answers.stageKey === "" ? "" : undefined),
@@ -97,7 +94,11 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
         question: "Preferred application method?",
         hint: "Not sure is a perfectly good answer — we’ll include everything.",
         options: [
-          ...options.methods.map((method) => ({ value: method, label: humanize(method), meta: undefined })),
+          ...options.methods.map((method) => ({
+            value: method,
+            label: humanize(method),
+            meta: undefined,
+          })),
           { value: "NOT_SURE", label: "Not sure", meta: undefined },
         ],
         selected: answers.method,
@@ -198,7 +199,7 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
 
             {results && results.length > 0 ? (
               <>
-                <h2 className="text-display-3 mt-8 text-paper">
+                <h2 className="mt-8 text-display-3 text-paper">
                   {results.length} match{results.length === 1 ? "" : "es"} from the range
                 </h2>
                 <p className="mt-2 max-w-2xl text-sm text-paper/65">
@@ -215,10 +216,8 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
                     />
                   ))}
                 </div>
-                <div className="mt-10 flex flex-wrap items-center gap-3 rounded-3xl glass-dark p-6">
-                  <p className="text-sm text-paper/80">
-                    Want a second opinion on these matches?
-                  </p>
+                <div className="mt-10 flex flex-wrap items-center gap-3 rounded-3xl p-6 glass-dark">
+                  <p className="text-sm text-paper/80">Want a second opinion on these matches?</p>
                   <div className="ml-auto flex flex-wrap gap-3">
                     <WhatsAppButton
                       message={whatsappAdviceMessage(
@@ -235,7 +234,7 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
             ) : (
               <div className="mx-auto max-w-xl py-20 text-center">
                 <HelpCircle className="mx-auto size-10 text-leaf-400" strokeWidth={1.5} />
-                <h2 className="text-display-3 mt-5 text-paper">No confident match — yet</h2>
+                <h2 className="mt-5 text-display-3 text-paper">No confident match — yet</h2>
                 <p className="mt-3 text-sm leading-relaxed text-paper/70">
                   Nothing in the published guidance matches that exact combination, and we won’t
                   guess. A Humuson agronomist will know what fits — basic consultation is free.

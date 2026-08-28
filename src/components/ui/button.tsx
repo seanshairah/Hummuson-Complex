@@ -2,7 +2,8 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 
-type Variant = "primary" | "accent" | "outline" | "outline-light" | "ghost" | "ghost-light" | "danger";
+type Variant =
+  "primary" | "accent" | "outline" | "outline-light" | "ghost" | "ghost-light" | "danger";
 type Size = "sm" | "md" | "lg" | "xl";
 
 const base =

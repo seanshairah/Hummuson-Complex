@@ -63,7 +63,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const product = await getProductBySlug(slug);
   if (!product) notFound();
 
-  const gallery = product.gallery.length > 0 ? product.gallery : product.image ? [product.image] : [];
+  const gallery =
+    product.gallery.length > 0 ? product.gallery : product.image ? [product.image] : [];
   const sections = [
     { id: "overview", label: "Overview", show: Boolean(product.descriptionHtml) },
     { id: "composition", label: "Composition", show: product.composition.length > 0 },
@@ -113,7 +114,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 ))}
               </div>
 
-              <h1 className="text-display-2 mt-4 text-ink">{product.name}</h1>
+              <h1 className="mt-4 text-display-2 text-ink">{product.name}</h1>
               {product.shortDescription && (
                 <p className="mt-4 max-w-xl text-lg leading-relaxed text-ink-soft">
                   {product.shortDescription}
@@ -140,14 +141,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                     </dd>
                   </div>
                 )}
-                {product.priceUsd !== null && product.packageSizes.every((p) => p.priceUsd === null) && (
-                  <div>
-                    <dt className="text-eyebrow text-[0.62rem] text-ink-faint">Price</dt>
-                    <dd className="mt-1.5 font-display text-2xl font-semibold text-ink">
-                      ${product.priceUsd}
-                    </dd>
-                  </div>
-                )}
+                {product.priceUsd !== null &&
+                  product.packageSizes.every((p) => p.priceUsd === null) && (
+                    <div>
+                      <dt className="text-eyebrow text-[0.62rem] text-ink-faint">Price</dt>
+                      <dd className="mt-1.5 font-display text-2xl font-semibold text-ink">
+                        ${product.priceUsd}
+                      </dd>
+                    </div>
+                  )}
                 {product.cropNames.length > 0 && (
                   <div>
                     <dt className="text-eyebrow text-[0.62rem] text-ink-faint">Listed for</dt>
@@ -199,7 +201,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         aria-label="Product sections"
         className="sticky top-16 z-30 border-y border-line bg-paper/85 backdrop-blur-md md:top-[4.5rem]"
       >
-        <div className="container-site flex gap-1 overflow-x-auto py-2 scrollbar-none">
+        <div className="container-site scrollbar-none flex gap-1 overflow-x-auto py-2">
           {sections.map((section) => (
             <a
               key={section.id}
@@ -306,7 +308,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                             {guide.rate}
                           </Td>
                           <Td className="whitespace-nowrap">
-                            {[guide.unit, guide.crop, guide.stage, guide.method ? humanize(guide.method) : null]
+                            {[
+                              guide.unit,
+                              guide.crop,
+                              guide.stage,
+                              guide.method ? humanize(guide.method) : null,
+                            ]
                               .filter(Boolean)
                               .join(" · ") || "—"}
                           </Td>
@@ -382,7 +389,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               <Accordion type="single" collapsible className="mt-4">
                 {product.faqs.map((faq) => (
                   <AccordionItem key={faq.id} value={faq.id} trigger={faq.question}>
-                    <div className="rich-text text-sm" dangerouslySetInnerHTML={{ __html: faq.answerHtml }} />
+                    <div
+                      className="rich-text text-sm"
+                      dangerouslySetInnerHTML={{ __html: faq.answerHtml }}
+                    />
                   </AccordionItem>
                 ))}
               </Accordion>
@@ -413,7 +423,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
         {/* Sidebar */}
         <aside className="space-y-6 lg:sticky lg:top-32 lg:self-start">
-          <div className="rounded-3xl bg-humus-950 bg-grain p-6 text-paper">
+          <div className="bg-grain rounded-3xl bg-humus-950 p-6 text-paper">
             <p className="text-eyebrow text-[0.62rem] text-leaf-400">Need certainty?</p>
             <p className="mt-2.5 font-display text-lg leading-snug font-semibold">
               Talk to a Humuson agronomist about {product.name}.

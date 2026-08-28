@@ -54,7 +54,9 @@ export default async function ProductsPage({
       .map((result) => result.doc.href.split("/").pop())
       .filter((slug): slug is string => Boolean(slug));
     const bySlug = new Map(products.map((product) => [product.slug, product]));
-    products = orderedSlugs.map((slug) => bySlug.get(slug)).filter((p): p is NonNullable<typeof p> => Boolean(p));
+    products = orderedSlugs
+      .map((slug) => bySlug.get(slug))
+      .filter((p): p is NonNullable<typeof p> => Boolean(p));
   }
 
   const goalName = options.benefits.find((b) => b.slug === active.benefit)?.name;
@@ -82,7 +84,11 @@ export default async function ProductsPage({
           </p>
         )}
         {products.length > 0 ? (
-          <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" stagger={0.04} amount={0.05}>
+          <RevealGroup
+            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            stagger={0.04}
+            amount={0.05}
+          >
             {products.map((product, i) => (
               <RevealItem key={product.id}>
                 <ProductCard product={product} priority={i < 4} className="h-full" />

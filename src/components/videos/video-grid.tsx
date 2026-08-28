@@ -22,7 +22,7 @@ export function VideoGrid({ videos }: { videos: VideoData[] }) {
         <div
           role="tablist"
           aria-label="Video categories"
-          className="flex gap-2 overflow-x-auto pb-2 scrollbar-none"
+          className="scrollbar-none flex gap-2 overflow-x-auto pb-2"
         >
           {categories.map((category) => (
             <button
@@ -61,7 +61,9 @@ export function VideoGrid({ videos }: { videos: VideoData[] }) {
                 category={humanize(video.category)}
               />
               {video.description && (
-                <p className="mt-2.5 line-clamp-2 px-1 text-sm text-ink-faint">{video.description}</p>
+                <p className="mt-2.5 line-clamp-2 px-1 text-sm text-ink-faint">
+                  {video.description}
+                </p>
               )}
             </div>
           ))}

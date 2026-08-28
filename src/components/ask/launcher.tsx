@@ -1,14 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import {
-  Sparkles,
-  SendHorizontal,
-  MessageCircle,
-  Phone,
-  ArrowRight,
-  Leaf,
-} from "lucide-react";
+import { Sparkles, SendHorizontal, MessageCircle, Phone, ArrowRight, Leaf } from "lucide-react";
 import Link from "next/link";
 import { Dialog, DialogTrigger, SheetContent } from "@/components/ui/dialog";
 import { Spinner } from "@/components/ui/skeleton";
@@ -68,7 +61,7 @@ export function AskHumusonLauncher({
           {label}
         </button>
       </DialogTrigger>
-      <AskSheet productSlug={productSlug} productName={productName} open={open} />
+      <AskSheet productSlug={productSlug} productName={productName} />
     </Dialog>
   );
 }
@@ -83,11 +76,9 @@ const GENERAL_SUGGESTIONS = [
 export function AskSheet({
   productSlug,
   productName,
-  open,
 }: {
   productSlug?: string;
   productName?: string;
-  open: boolean;
 }) {
   const [question, setQuestion] = useState("");
   const [thread, setThread] = useState<AskAnswer[]>([]);
@@ -118,10 +109,7 @@ export function AskSheet({
       const data = (await res.json()) as Omit<AskAnswer, "id" | "question">;
       setThread((t) => [...t, { ...data, id: crypto.randomUUID(), question: trimmed }]);
     } catch {
-      setThread((t) => [
-        ...t,
-        { id: crypto.randomUUID(), question: trimmed, matched: false },
-      ]);
+      setThread((t) => [...t, { id: crypto.randomUUID(), question: trimmed, matched: false }]);
     } finally {
       setLoading(false);
       requestAnimationFrame(() =>
@@ -144,8 +132,8 @@ export function AskSheet({
           {thread.length === 0 && (
             <div className="rounded-2xl bg-paper-dim p-4">
               <p className="flex items-center gap-2 font-display text-sm font-medium text-ink">
-                <Leaf className="size-4 text-leaf-700" /> Hello! Ask about application, rates,
-                crops or packages.
+                <Leaf className="size-4 text-leaf-700" /> Hello! Ask about application, rates, crops
+                or packages.
               </p>
               <p className="mt-1.5 text-xs leading-relaxed text-ink-faint">
                 Answers come from Humuson’s verified product knowledge base — no guesswork. For

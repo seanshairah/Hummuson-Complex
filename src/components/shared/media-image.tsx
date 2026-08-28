@@ -33,6 +33,9 @@ export function MediaImage({
     ...(image.blurDataUrl ? { placeholder: "blur" as const, blurDataURL: image.blurDataUrl } : {}),
   };
 
-  if (fill) return <Image {...common} fill />;
-  return <Image {...common} width={image.width ?? 800} height={image.height ?? 800} />;
+  const resolvedAlt = alt ?? image.alt ?? "";
+  if (fill) return <Image {...common} alt={resolvedAlt} fill />;
+  return (
+    <Image {...common} alt={resolvedAlt} width={image.width ?? 800} height={image.height ?? 800} />
+  );
 }

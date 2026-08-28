@@ -31,7 +31,10 @@ export function Breadcrumbs({
 
   return (
     <nav aria-label="Breadcrumb" className={className}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <ol
         className={cn(
           "flex flex-wrap items-center gap-1.5 text-xs",

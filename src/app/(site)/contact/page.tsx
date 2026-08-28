@@ -42,7 +42,7 @@ export default async function ContactPage({
             href={whatsappCatalogueLink()}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-start gap-4 rounded-3xl bg-humus-950 bg-grain p-6 text-paper transition-transform hover:-translate-y-0.5"
+            className="bg-grain flex items-start gap-4 rounded-3xl bg-humus-950 p-6 text-paper transition-transform hover:-translate-y-0.5"
           >
             <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-leaf-400 text-humus-950">
               <MessageCircle className="size-5" strokeWidth={1.9} />
@@ -50,20 +50,29 @@ export default async function ContactPage({
             <span>
               <span className="block font-display text-lg font-semibold">WhatsApp</span>
               <span className="mt-1 block text-sm text-paper/70">
-                Chat, order and browse the WhatsApp catalogue — {contact.phones[0] ?? "+263 77 665 6433"}
+                Chat, order and browse the WhatsApp catalogue —{" "}
+                {contact.phones[0] ?? "+263 77 665 6433"}
               </span>
             </span>
           </a>
 
           <div className="space-y-4 rounded-3xl border border-line bg-cream p-6">
             {contact.phones.map((phone) => (
-              <a key={phone} href={`tel:${phone.replace(/[^+0-9]/g, "")}`} className="flex items-center gap-3.5 text-ink hover:text-brand">
+              <a
+                key={phone}
+                href={`tel:${phone.replace(/[^+0-9]/g, "")}`}
+                className="flex items-center gap-3.5 text-ink hover:text-brand"
+              >
                 <Phone className="size-4.5 text-leaf-700" strokeWidth={1.9} />
                 <span className="text-sm font-medium">{phone}</span>
               </a>
             ))}
             {contact.emails.map((email) => (
-              <a key={email} href={`mailto:${email}`} className="flex items-center gap-3.5 text-ink hover:text-brand">
+              <a
+                key={email}
+                href={`mailto:${email}`}
+                className="flex items-center gap-3.5 text-ink hover:text-brand"
+              >
                 <Mail className="size-4.5 text-leaf-700" strokeWidth={1.9} />
                 <span className="text-sm font-medium">{email}</span>
               </a>

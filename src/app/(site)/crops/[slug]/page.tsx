@@ -128,9 +128,7 @@ export default async function CropPage({ params }: { params: Promise<{ slug: str
         <section className="border-t border-line bg-paper-dim/60 py-16">
           <div className="container-site">
             <Reveal className="flex flex-wrap items-end justify-between gap-4">
-              <h2 className="text-display-3 text-ink">
-                Products listed for {crop.name}
-              </h2>
+              <h2 className="text-display-3 text-ink">Products listed for {crop.name}</h2>
               <Link
                 href={`/products?crop=${crop.slug}`}
                 className="mb-1 text-sm font-medium text-leaf-700 hover:underline"
@@ -160,7 +158,10 @@ export default async function CropPage({ params }: { params: Promise<{ slug: str
               <Accordion type="single" collapsible className="mt-3">
                 {crop.faqs.map((faq) => (
                   <AccordionItem key={faq.id} value={faq.id} trigger={faq.question}>
-                    <div className="rich-text text-sm" dangerouslySetInnerHTML={{ __html: faq.answerHtml }} />
+                    <div
+                      className="rich-text text-sm"
+                      dangerouslySetInnerHTML={{ __html: faq.answerHtml }}
+                    />
                   </AccordionItem>
                 ))}
               </Accordion>

@@ -70,7 +70,7 @@ export function FaqExplorer({ faqs }: { faqs: FaqData[] }) {
             className="h-12 w-full rounded-full border border-line bg-cream pr-4 pl-11 text-sm outline-none focus:border-leaf-600 focus:ring-2 focus:ring-leaf-500/25"
           />
         </label>
-        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+        <div className="scrollbar-none flex gap-2 overflow-x-auto pb-1">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -116,8 +116,15 @@ export function FaqExplorer({ faqs }: { faqs: FaqData[] }) {
               </h2>
               <Accordion type="single" collapsible className="mt-2">
                 {items.map((faq) => (
-                  <AccordionItem key={faq.id} value={faq.id} trigger={<span id={`faq-${faq.id}`}>{faq.question}</span>}>
-                    <div className="rich-text text-sm" dangerouslySetInnerHTML={{ __html: faq.answerHtml }} />
+                  <AccordionItem
+                    key={faq.id}
+                    value={faq.id}
+                    trigger={<span id={`faq-${faq.id}`}>{faq.question}</span>}
+                  >
+                    <div
+                      className="rich-text text-sm"
+                      dangerouslySetInnerHTML={{ __html: faq.answerHtml }}
+                    />
                     {faq.productSlug && (
                       <Link
                         href={`/products/${faq.productSlug}`}

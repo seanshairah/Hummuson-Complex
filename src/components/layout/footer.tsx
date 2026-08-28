@@ -29,19 +29,19 @@ export async function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-humus-950 bg-grain text-paper">
+    <footer className="bg-grain bg-humus-950 text-paper">
       {/* CTA band */}
       <div className="relative overflow-hidden border-b border-paper/10">
-        <div className="glow-leaf absolute inset-0" aria-hidden />
-        <div className="container-site relative flex flex-col items-start gap-8 py-16 md:flex-row md:items-end md:justify-between md:py-20">
+        <div className="absolute inset-0 glow-leaf" aria-hidden />
+        <div className="relative container-site flex flex-col items-start gap-8 py-16 md:flex-row md:items-end md:justify-between md:py-20">
           <div className="max-w-2xl">
             <p className="text-eyebrow text-leaf-400">Talk to an agronomist</p>
-            <h2 className="text-display-2 mt-3 text-paper">
+            <h2 className="mt-3 text-display-2 text-paper">
               Ready for <Em className="text-leaf-300">healthier soil</Em> and stronger crops?
             </h2>
             <p className="mt-4 max-w-xl text-paper/70">
-              Get product guidance, application support and field advice — directly from the
-              Humuson team on WhatsApp.
+              Get product guidance, application support and field advice — directly from the Humuson
+              team on WhatsApp.
             </p>
           </div>
           <div className="flex shrink-0 flex-wrap gap-3">
@@ -69,7 +69,7 @@ export async function Footer() {
           <Link href="/" aria-label="Humuson Complex — home">
             <Logo tone="light" />
           </Link>
-          <p className="text-editorial mt-5 text-lg text-leaf-300">{site.tagline}</p>
+          <p className="mt-5 text-editorial text-lg text-leaf-300">{site.tagline}</p>
           <p className="mt-3 max-w-sm text-sm leading-relaxed text-paper/60">{site.description}</p>
         </div>
 

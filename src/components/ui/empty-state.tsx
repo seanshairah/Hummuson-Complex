@@ -40,11 +40,18 @@ export function EmptyState({
       </span>
       <h3 className={cn("text-title", dark ? "text-paper" : "text-ink")}>{title}</h3>
       {description && (
-        <p className={cn("mt-2 max-w-md text-sm leading-relaxed", dark ? "text-paper/60" : "text-ink-faint")}>
+        <p
+          className={cn(
+            "mt-2 max-w-md text-sm leading-relaxed",
+            dark ? "text-paper/60" : "text-ink-faint",
+          )}
+        >
           {description}
         </p>
       )}
-      {action && <div className="mt-6 flex flex-wrap items-center justify-center gap-3">{action}</div>}
+      {action && (
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">{action}</div>
+      )}
     </div>
   );
 }

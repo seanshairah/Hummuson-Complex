@@ -23,7 +23,10 @@ export function WhatsAppFab() {
       className="fixed right-4 bottom-4 z-30 flex size-13 items-center justify-center rounded-full bg-leaf-400 text-humus-950 shadow-float transition-transform hover:scale-105 active:scale-95 md:right-6 md:bottom-6"
     >
       <MessageCircle className="size-6" strokeWidth={1.9} />
-      <span className="absolute inset-0 -z-10 animate-pulse-soft rounded-full bg-leaf-400/50 blur-md" aria-hidden />
+      <span
+        className="absolute inset-0 -z-10 animate-pulse-soft rounded-full bg-leaf-400/50 blur-md"
+        aria-hidden
+      />
     </a>
   );
 }

@@ -72,10 +72,13 @@ export default async function ProjectsPage() {
                       {project.title}
                     </h2>
                     {project.summary && (
-                      <p className="mt-1.5 line-clamp-3 text-sm text-ink-faint">{project.summary}</p>
+                      <p className="mt-1.5 line-clamp-3 text-sm text-ink-faint">
+                        {project.summary}
+                      </p>
                     )}
                     <p className="mt-auto flex items-center gap-1.5 pt-4 text-sm font-medium text-leaf-700">
-                      View <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+                      View{" "}
+                      <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
                     </p>
                   </div>
                 </Link>
@@ -86,7 +89,10 @@ export default async function ProjectsPage() {
       </section>
 
       {testimonials.length > 0 && (
-        <section id="testimonials" className="border-t border-line bg-humus-950 bg-grain py-16 text-paper">
+        <section
+          id="testimonials"
+          className="bg-grain border-t border-line bg-humus-950 py-16 text-paper"
+        >
           <div className="container-site">
             <h2 className="text-display-3 text-paper">What farmers say</h2>
             <p className="mt-2 text-sm text-paper/60">
@@ -94,9 +100,12 @@ export default async function ProjectsPage() {
             </p>
             <div className="mt-8 grid gap-4 md:grid-cols-2">
               {testimonials.map((testimonial) => (
-                <figure key={testimonial.id} className="rounded-2xl border border-paper/10 bg-paper/5 p-6">
+                <figure
+                  key={testimonial.id}
+                  className="rounded-2xl border border-paper/10 bg-paper/5 p-6"
+                >
                   <Quote className="size-5 text-leaf-400" aria-hidden />
-                  <blockquote className="text-editorial mt-3 leading-relaxed text-paper/90">
+                  <blockquote className="mt-3 text-editorial leading-relaxed text-paper/90">
                     {testimonial.quote}
                   </blockquote>
                   <figcaption className="mt-4 flex items-center gap-3 text-sm">

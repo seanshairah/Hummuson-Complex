@@ -1,7 +1,10 @@
-"use client";
-
 import { cn } from "@/lib/utils";
-import { forwardRef, useId, type InputHTMLAttributes, type TextareaHTMLAttributes, type SelectHTMLAttributes } from "react";
+import {
+  forwardRef,
+  type InputHTMLAttributes,
+  type TextareaHTMLAttributes,
+  type SelectHTMLAttributes,
+} from "react";
 
 const inputBase =
   "w-full rounded-lg border border-line bg-cream px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-faint/70 transition-colors focus:border-leaf-600 focus:outline-none focus:ring-2 focus:ring-leaf-500/25 disabled:opacity-60";
@@ -12,11 +15,14 @@ export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputE
   },
 );
 
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement>>(
-  function Textarea({ className, rows = 4, ...props }, ref) {
-    return <textarea ref={ref} rows={rows} className={cn(inputBase, "resize-y", className)} {...props} />;
-  },
-);
+export const Textarea = forwardRef<
+  HTMLTextAreaElement,
+  TextareaHTMLAttributes<HTMLTextAreaElement>
+>(function Textarea({ className, rows = 4, ...props }, ref) {
+  return (
+    <textarea ref={ref} rows={rows} className={cn(inputBase, "resize-y", className)} {...props} />
+  );
+});
 
 export const NativeSelect = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>>(
   function NativeSelect({ className, children, ...props }, ref) {
@@ -28,6 +34,11 @@ export const NativeSelect = forwardRef<HTMLSelectElement, SelectHTMLAttributes<H
   },
 );
 
+/**
+ * Labelled form control. The control is wrapped inside the <label> (implicit
+ * association), so no ids are needed and the component renders on either side
+ * of the server/client boundary.
+ */
 export function Field({
   label,
   hint,
@@ -40,23 +51,22 @@ export function Field({
   hint?: string;
   error?: string;
   required?: boolean;
-  children: (id: string) => React.ReactNode;
+  children: React.ReactNode;
   className?: string;
 }) {
-  const id = useId();
   return (
-    <div className={cn("space-y-1.5", className)}>
-      <label htmlFor={id} className="block text-sm font-medium text-ink">
+    <label className={cn("block space-y-1.5", className)}>
+      <span className="block text-sm font-medium text-ink">
         {label}
         {required && <span className="text-danger"> *</span>}
-      </label>
-      {children(id)}
-      {hint && !error && <p className="text-xs text-ink-faint">{hint}</p>}
+      </span>
+      {children}
+      {hint && !error && <span className="block text-xs font-normal text-ink-faint">{hint}</span>}
       {error && (
-        <p role="alert" className="text-xs font-medium text-danger">
+        <span role="alert" className="block text-xs font-medium text-danger">
           {error}
-        </p>
+        </span>
       )}
-    </div>
+    </label>
   );
 }

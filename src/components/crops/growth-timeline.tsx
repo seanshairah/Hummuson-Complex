@@ -51,7 +51,7 @@ export function GrowthTimeline({ stages, cropName }: { stages: StageData[]; crop
         <div
           role="tablist"
           aria-label={`${cropName} growth stages`}
-          className="relative flex justify-between gap-1 overflow-x-auto pb-2 scrollbar-none"
+          className="relative scrollbar-none flex justify-between gap-1 overflow-x-auto pb-2"
         >
           {stages.map((stage, i) => {
             const isActive = stage.key === active.key;
@@ -124,7 +124,9 @@ export function GrowthTimeline({ stages, cropName }: { stages: StageData[]; crop
             {active.headline ?? `${active.name}`}
           </h3>
           {active.description && (
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-soft">{active.description}</p>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-soft">
+              {active.description}
+            </p>
           )}
 
           {active.products.length > 0 ? (
@@ -137,7 +139,13 @@ export function GrowthTimeline({ stages, cropName }: { stages: StageData[]; crop
                   >
                     {product.image && (
                       <span className="relative block h-14 w-12 shrink-0 overflow-hidden rounded-lg bg-paper-dim">
-                        <MediaImage image={product.image} alt="" fill sizes="48px" className="object-cover" />
+                        <MediaImage
+                          image={product.image}
+                          alt=""
+                          fill
+                          sizes="48px"
+                          className="object-cover"
+                        />
                       </span>
                     )}
                     <span className="min-w-0">

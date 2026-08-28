@@ -24,22 +24,19 @@ export function SectionHeading({
 }) {
   const dark = tone === "dark";
   return (
-    <div
-      className={cn(
-        "max-w-3xl",
-        align === "center" && "mx-auto text-center",
-        className,
-      )}
-    >
+    <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
       {eyebrow && (
         <p
           className={cn(
-            "text-eyebrow mb-4 flex items-center gap-3",
+            "mb-4 flex items-center gap-3 text-eyebrow",
             align === "center" && "justify-center",
             dark ? "text-leaf-400" : "text-leaf-700",
           )}
         >
-          <span aria-hidden className={cn("h-px w-8", dark ? "bg-leaf-400/60" : "bg-leaf-700/50")} />
+          <span
+            aria-hidden
+            className={cn("h-px w-8", dark ? "bg-leaf-400/60" : "bg-leaf-700/50")}
+          />
           {eyebrow}
         </p>
       )}

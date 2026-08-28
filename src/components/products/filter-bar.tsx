@@ -116,7 +116,11 @@ export function ProductFilterBar({
     // Build one URL without any filter keys.
     const params = new URLSearchParams(window.location.search);
     keys.forEach((k) => params.delete(k));
-    window.history.replaceState(null, "", `${window.location.pathname}${params.size ? `?${params}` : ""}`);
+    window.history.replaceState(
+      null,
+      "",
+      `${window.location.pathname}${params.size ? `?${params}` : ""}`,
+    );
     // Trigger server re-render
     setParam("q", null);
   };
@@ -164,11 +168,15 @@ export function ProductFilterBar({
               )}
             </button>
           </DialogTrigger>
-          <SheetContent side="bottom" title="Filter products" description={`${resultCount} products match`}>
+          <SheetContent
+            side="bottom"
+            title="Filter products"
+            description={`${resultCount} products match`}
+          >
             <div className="space-y-6 pb-6">
               {dimensions.map((dimension) => (
                 <fieldset key={dimension.key}>
-                  <legend className="text-eyebrow mb-2.5 text-[0.65rem] text-ink-faint">
+                  <legend className="mb-2.5 text-eyebrow text-[0.65rem] text-ink-faint">
                     {dimension.label}
                   </legend>
                   <div className="flex flex-wrap gap-2">
@@ -282,7 +290,9 @@ function FilterPopover({
                 }}
                 className={cn(
                   "flex w-full items-center justify-between gap-2 rounded-xl px-3 py-2 text-left text-sm transition-colors",
-                  isSelected ? "bg-leaf-300/40 font-medium text-ink" : "text-ink-soft hover:bg-ink/4",
+                  isSelected
+                    ? "bg-leaf-300/40 font-medium text-ink"
+                    : "text-ink-soft hover:bg-ink/4",
                 )}
               >
                 <span className="truncate">{option.label}</span>

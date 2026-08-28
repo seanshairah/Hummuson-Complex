@@ -36,9 +36,9 @@ const THEME_DARK = new Set(["biology"]);
 export function PageFace({ page, pageNumber }: { page: CataloguePage; pageNumber: number }) {
   if (page.kind === "cover") {
     return (
-      <div className="flex h-full flex-col justify-between bg-humus-950 bg-grain p-[7%] text-paper">
-        <div className="glow-leaf pointer-events-none absolute inset-0" aria-hidden />
-        <p className="text-eyebrow relative text-[0.6em] text-leaf-400">
+      <div className="bg-grain flex h-full flex-col justify-between bg-humus-950 p-[7%] text-paper">
+        <div className="pointer-events-none absolute inset-0 glow-leaf" aria-hidden />
+        <p className="relative text-eyebrow text-[0.6em] text-leaf-400">
           Humuson Complex{page.year ? ` · ${page.year}` : ""}
         </p>
         <div className="relative">
@@ -47,9 +47,13 @@ export function PageFace({ page, pageNumber }: { page: CataloguePage; pageNumber
             <br />
             Guide
           </h2>
-          {page.intro && <p className="mt-[1em] text-[0.72em] leading-relaxed text-paper/65">{page.intro}</p>}
+          {page.intro && (
+            <p className="mt-[1em] text-[0.72em] leading-relaxed text-paper/65">{page.intro}</p>
+          )}
         </div>
-        <p className="text-eyebrow relative text-[0.55em] text-paper/40">Home of healthy soil &amp; healthy crop</p>
+        <p className="relative text-eyebrow text-[0.55em] text-paper/40">
+          Home of healthy soil &amp; healthy crop
+        </p>
       </div>
     );
   }
@@ -92,18 +96,33 @@ export function PageFace({ page, pageNumber }: { page: CataloguePage; pageNumber
             <MediaImage image={page.image} alt="" fill sizes="420px" className="object-cover" />
           </div>
         )}
-        <p className={cn("text-eyebrow relative text-[0.6em]", dark ? "text-leaf-400" : "text-leaf-800")}>
+        <p
+          className={cn(
+            "relative text-eyebrow text-[0.6em]",
+            dark ? "text-leaf-400" : "text-leaf-800",
+          )}
+        >
           Chapter {String(page.number).padStart(2, "0")}
         </p>
         <h2 className="relative mt-[0.4em] font-display text-[2.1em] leading-[1.05] font-semibold tracking-tight">
           {page.title}
         </h2>
         {page.intro && (
-          <p className={cn("relative mt-[0.8em] text-[0.72em] leading-relaxed", dark ? "text-paper/70" : "text-ink-soft")}>
+          <p
+            className={cn(
+              "relative mt-[0.8em] text-[0.72em] leading-relaxed",
+              dark ? "text-paper/70" : "text-ink-soft",
+            )}
+          >
             {page.intro}
           </p>
         )}
-        <p className={cn("relative mt-[1em] text-[0.62em]", dark ? "text-paper/50" : "text-ink-faint")}>
+        <p
+          className={cn(
+            "relative mt-[1em] text-[0.62em]",
+            dark ? "text-paper/50" : "text-ink-faint",
+          )}
+        >
           {page.productCount} product{page.productCount === 1 ? "" : "s"}
         </p>
       </div>
@@ -124,7 +143,7 @@ export function PageFace({ page, pageNumber }: { page: CataloguePage; pageNumber
               className="object-cover"
             />
           )}
-          <span className="text-eyebrow absolute top-[4%] left-[6%] text-[0.5em] text-ink-faint">
+          <span className="absolute top-[4%] left-[6%] text-eyebrow text-[0.5em] text-ink-faint">
             {page.chapterTitle}
           </span>
         </div>
@@ -140,14 +159,16 @@ export function PageFace({ page, pageNumber }: { page: CataloguePage; pageNumber
           <div className="mt-auto space-y-[0.35em] pt-[0.6em] text-[0.6em] text-ink-faint">
             {product.cropNames.length > 0 && (
               <p className="line-clamp-1 capitalize">
-                <strong className="text-ink-soft">Crops:</strong> {product.cropNames.slice(0, 5).join(", ")}
+                <strong className="text-ink-soft">Crops:</strong>{" "}
+                {product.cropNames.slice(0, 5).join(", ")}
               </p>
             )}
             <div className="flex items-center justify-between gap-[0.5em]">
               <p className="line-clamp-1">
                 {product.packSizes.length > 0 && (
                   <>
-                    <strong className="text-ink-soft">Packs:</strong> {product.packSizes.join(" · ")}
+                    <strong className="text-ink-soft">Packs:</strong>{" "}
+                    {product.packSizes.join(" · ")}
                   </>
                 )}
               </p>
@@ -168,7 +189,7 @@ export function PageFace({ page, pageNumber }: { page: CataloguePage; pageNumber
 
   // back
   return (
-    <div className="flex h-full flex-col items-center justify-center bg-humus-950 bg-grain p-[8%] text-center text-paper">
+    <div className="bg-grain flex h-full flex-col items-center justify-center bg-humus-950 p-[8%] text-center text-paper">
       {page.title && (
         <>
           <BookOpen className="size-[2.2em] text-leaf-400" strokeWidth={1.4} />
@@ -227,7 +248,11 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
       setFlipped(clamped);
       window.setTimeout(() => setTurning(null), reduce ? 0 : 850);
       const pageParam = clamped * 2;
-      window.history.replaceState(null, "", pageParam > 0 ? `?page=${pageParam}` : window.location.pathname);
+      window.history.replaceState(
+        null,
+        "",
+        pageParam > 0 ? `?page=${pageParam}` : window.location.pathname,
+      );
       trackClient("CATALOGUE_PAGE_TURN", { meta: { page: pageParam } });
     },
     [flipped, sheets.length, reduce],
@@ -281,8 +306,8 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
   const toc = pages.find((page) => page.kind === "toc");
 
   return (
-    <div ref={shellRef} className="flex min-h-dvh flex-col bg-humus-950 bg-grain">
-      <div aria-hidden className="glow-leaf pointer-events-none fixed inset-0" />
+    <div ref={shellRef} className="bg-grain flex min-h-dvh flex-col bg-humus-950">
+      <div aria-hidden className="pointer-events-none fixed inset-0 glow-leaf" />
 
       {/* Top bar */}
       <header className="relative z-10 flex items-center justify-between gap-3 px-4 pt-20 pb-2 md:px-8 md:pt-24">
@@ -299,10 +324,17 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
           <ToolButton label="Thumbnails" onClick={() => setThumbsOpen(true)}>
             <LayoutGrid className="size-4" />
           </ToolButton>
-          <ToolButton label={zoomed ? "Zoom out" : "Zoom in"} onClick={() => setZoomed((z) => !z)} className="max-md:hidden">
+          <ToolButton
+            label={zoomed ? "Zoom out" : "Zoom in"}
+            onClick={() => setZoomed((z) => !z)}
+            className="max-md:hidden"
+          >
             {zoomed ? <ZoomOut className="size-4" /> : <ZoomIn className="size-4" />}
           </ToolButton>
-          <ToolButton label={fullscreen ? "Exit fullscreen" : "Fullscreen"} onClick={toggleFullscreen}>
+          <ToolButton
+            label={fullscreen ? "Exit fullscreen" : "Fullscreen"}
+            onClick={toggleFullscreen}
+          >
             {fullscreen ? <Minimize className="size-4" /> : <Maximize className="size-4" />}
           </ToolButton>
           <ToolButton label={shared ? "Link copied" : "Share this page"} onClick={share}>
@@ -341,11 +373,19 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
             aria-label={`Catalogue, ${currentLabel}`}
           >
             {/* Book base shadow */}
-            <div aria-hidden className="absolute inset-x-8 -bottom-5 h-10 rounded-[50%] bg-black/45 blur-xl" />
+            <div
+              aria-hidden
+              className="absolute inset-x-8 -bottom-5 h-10 rounded-[50%] bg-black/45 blur-xl"
+            />
 
             {sheets.map((sheet, index) => {
               const isFlipped = index < flipped;
-              const z = turning === index ? sheets.length + 2 : isFlipped ? index + 1 : sheets.length - index;
+              const z =
+                turning === index
+                  ? sheets.length + 2
+                  : isFlipped
+                    ? index + 1
+                    : sheets.length - index;
               return (
                 <div
                   key={index}
@@ -367,7 +407,10 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
                     aria-label="Turn page forward"
                   >
                     <PageFace page={pages[sheet.front]!} pageNumber={sheet.front + 1} />
-                    <span aria-hidden className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-black/25 to-transparent" />
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-black/25 to-transparent"
+                    />
                   </div>
                   {/* Back face (left-hand page after flip) */}
                   <div
@@ -378,7 +421,10 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
                     aria-label="Turn page back"
                   >
                     <PageFace page={pages[sheet.back]!} pageNumber={sheet.back + 1} />
-                    <span aria-hidden className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-black/25 to-transparent" />
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-black/25 to-transparent"
+                    />
                   </div>
                 </div>
               );
@@ -399,7 +445,7 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
 
       {/* Mobile swipe reader */}
       <div className="relative z-10 flex-1 md:hidden">
-        <div className="flex h-full snap-x snap-mandatory gap-4 overflow-x-auto px-6 py-4 scrollbar-none">
+        <div className="scrollbar-none flex h-full snap-x snap-mandatory gap-4 overflow-x-auto px-6 py-4">
           {pages.map((page, i) => (
             <div
               key={i}
