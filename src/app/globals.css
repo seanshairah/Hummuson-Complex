@@ -333,6 +333,18 @@
   }
 }
 
+/* Admin dashboard: no visible scrollbars anywhere — every pane still
+   scrolls, but chrome stays clean (textareas and tables included). */
+.admin-shell,
+.admin-shell * {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.admin-shell::-webkit-scrollbar,
+.admin-shell *::-webkit-scrollbar {
+  display: none;
+}
+
 /* ── Rich text (article bodies, product descriptions) ─────────────────────── */
 
 @layer components {
