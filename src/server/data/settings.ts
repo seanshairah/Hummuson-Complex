@@ -5,6 +5,8 @@ import { site } from "@/lib/site";
 export interface ContactSettings {
   phones: string[];
   whatsapp: string;
+  /** Share link of the WhatsApp Business catalogue (wa.me/c/…). */
+  whatsappCatalogueUrl: string;
   emails: string[];
   address: string | null;
   hours: string | null;
@@ -14,9 +16,10 @@ export interface ContactSettings {
 }
 
 const contactDefaults: ContactSettings = {
-  phones: ["+263 776 656 433"],
+  phones: ["+263 77 665 6433"],
   whatsapp: site.whatsappNumber,
-  emails: [],
+  whatsappCatalogueUrl: site.whatsappCatalogueUrl,
+  emails: ["info@humusoncomplex.com"],
   address: null,
   hours: null,
   socials: {},

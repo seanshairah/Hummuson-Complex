@@ -60,7 +60,7 @@ export default async function HomePage() {
         spotlight={spotlight}
         productCount={products.length}
         cropCount={crops.filter((crop) => crop.productCount > 0).length}
-        partnerCount={3}
+        partnerCount={5}
       />
       <RangesBand />
       <BenefitNav options={options} />

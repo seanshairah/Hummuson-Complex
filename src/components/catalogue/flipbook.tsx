@@ -28,8 +28,9 @@ const THEME_BG: Record<string, string> = {
   biology: "bg-humus-900",
   vitality: "bg-leaf-200",
   nutrition: "bg-paper-deep",
+  canopy: "bg-[#12351f]",
 };
-const THEME_DARK = new Set(["biology"]);
+const THEME_DARK = new Set(["biology", "canopy"]);
 
 /* ── Single page face ───────────────────────────────────────────────────── */
 
@@ -130,13 +131,13 @@ export function PageFace({ page, pageNumber }: { page: CataloguePage; pageNumber
   }
 
   if (page.kind === "product") {
-    const { product } = page;
+    const { product, image } = page;
     return (
       <div className="flex h-full flex-col bg-cream">
         <div className="relative h-[52%] shrink-0 overflow-hidden bg-gradient-to-br from-paper-dim via-cream to-paper-deep">
-          {product.image && (
+          {image && (
             <MediaImage
-              image={product.image}
+              image={image}
               alt={`${product.name} pack`}
               fill
               sizes="420px"

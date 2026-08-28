@@ -16,7 +16,10 @@ export function whatsappAdviceMessage(context?: string): string {
     : "Hello Humuson Complex, I would like to speak to an agronomy adviser.";
 }
 
-/** Link to the WhatsApp Business catalogue. */
-export function whatsappCatalogueLink(number = site.whatsappNumber): string {
-  return `https://wa.me/c/${number.replace(/[^0-9]/g, "")}`;
+/**
+ * Link to the WhatsApp Business catalogue. Prefer the owner-editable value
+ * from ContactSettings where available; this is the static fallback.
+ */
+export function whatsappCatalogueLink(): string {
+  return site.whatsappCatalogueUrl;
 }

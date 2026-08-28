@@ -24,7 +24,7 @@ export function HomeHero({
   spotlight: ProductCardData | null;
   productCount: number;
   cropCount: number;
-  /** Verified European supplier brands (audit: Bioenergy LT, Sapropel Organics, IKAR). */
+  /** Verified supplier brands (labels: Bioenergy LT, Sapropel Organics, IKAR, Arvensis Agro, eMAXX). */
   partnerCount: number;
 }) {
   const reduce = useReducedMotion();
@@ -133,7 +133,7 @@ export function HomeHero({
               {[
                 { value: productCount, suffix: "", label: "Products in range" },
                 { value: cropCount, suffix: "", label: "Crops covered" },
-                { value: partnerCount, suffix: "", label: "European partner brands" },
+                { value: partnerCount, suffix: "", label: "Partner brands" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <dt className="sr-only">{stat.label}</dt>

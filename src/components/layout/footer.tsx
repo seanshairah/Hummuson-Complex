@@ -9,12 +9,14 @@ import {
   Mail,
   MapPin,
   ArrowUpRight,
+  BookOpen,
 } from "lucide-react";
 import { footerNav } from "@/lib/nav";
 import { site } from "@/lib/site";
 import { Logo } from "@/components/layout/logo";
 import { Em } from "@/components/ui/section-heading";
 import { getContactSettings } from "@/server/data/settings";
+import { googleMapsLink } from "@/lib/maps";
 import { whatsappLink, whatsappAdviceMessage } from "@/lib/whatsapp";
 
 const SOCIAL_ICONS = {
@@ -107,13 +109,24 @@ export async function Footer() {
             ))}
             <li>
               <a
-                href={whatsappLink()}
+                href={whatsappLink(whatsappAdviceMessage())}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 transition-colors hover:text-leaf-300"
               >
                 <MessageCircle className="size-4 shrink-0 text-leaf-400" strokeWidth={1.8} />
-                WhatsApp catalogue & chat
+                Chat on WhatsApp
+              </a>
+            </li>
+            <li>
+              <a
+                href={contact.whatsappCatalogueUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2.5 transition-colors hover:text-leaf-300"
+              >
+                <BookOpen className="size-4 shrink-0 text-leaf-400" strokeWidth={1.8} />
+                WhatsApp catalogue
               </a>
             </li>
             {contact.emails.map((email) => (
@@ -128,9 +141,16 @@ export async function Footer() {
               </li>
             ))}
             {contact.address && (
-              <li className="flex items-start gap-2.5">
-                <MapPin className="mt-0.5 size-4 shrink-0 text-leaf-400" strokeWidth={1.8} />
-                <span>{contact.address}</span>
+              <li>
+                <a
+                  href={googleMapsLink(`${site.name}, ${contact.address}`)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-2.5 transition-colors hover:text-leaf-300"
+                >
+                  <MapPin className="mt-0.5 size-4 shrink-0 text-leaf-400" strokeWidth={1.8} />
+                  <span>{contact.address}</span>
+                </a>
               </li>
             )}
           </ul>

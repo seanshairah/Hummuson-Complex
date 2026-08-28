@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { ArrowUpRight, Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { PageIntro } from "@/components/shared/page-intro";
 import { EnquiryForm } from "@/components/contact/enquiry-form";
+import { LocationMap } from "@/components/contact/location-map";
 import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import { getContactSettings } from "@/server/data/settings";
 import { getProductBySlug } from "@/server/data/products";
-import { whatsappAdviceMessage, whatsappCatalogueLink } from "@/lib/whatsapp";
+import { site } from "@/lib/site";
+import { googleMapsLink } from "@/lib/maps";
+import { whatsappAdviceMessage } from "@/lib/whatsapp";
 
 export const revalidate = 300;
 
@@ -24,6 +27,8 @@ export default async function ContactPage({
   const params = await searchParams;
   const contact = await getContactSettings();
   const product = params.product ? await getProductBySlug(params.product) : null;
+  const address = contact.address ?? "78 Lomagundi Rd, Harare, Zimbabwe";
+  const mapsQuery = `${site.name}, ${address}`;
 
   return (
     <>
@@ -39,7 +44,7 @@ export default async function ContactPage({
         {/* Details */}
         <div className="space-y-4">
           <a
-            href={whatsappCatalogueLink()}
+            href={contact.whatsappCatalogueUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-grain flex items-start gap-4 rounded-3xl bg-humus-950 p-6 text-paper transition-transform hover:-translate-y-0.5"
@@ -48,10 +53,15 @@ export default async function ContactPage({
               <MessageCircle className="size-5" strokeWidth={1.9} />
             </span>
             <span>
-              <span className="block font-display text-lg font-semibold">WhatsApp</span>
+              <span className="block font-display text-lg font-semibold">
+                WhatsApp catalogue
+              </span>
               <span className="mt-1 block text-sm text-paper/70">
-                Chat, order and browse the WhatsApp catalogue —{" "}
+                Chat, order and browse the full range on WhatsApp —{" "}
                 {contact.phones[0] ?? "+263 77 665 6433"}
+              </span>
+              <span className="mt-2.5 inline-flex items-center gap-1.5 text-sm font-medium text-leaf-300">
+                View catalogue <ArrowUpRight className="size-4" />
               </span>
             </span>
           </a>
@@ -77,12 +87,15 @@ export default async function ContactPage({
                 <span className="text-sm font-medium">{email}</span>
               </a>
             ))}
-            {contact.address && (
-              <p className="flex items-start gap-3.5 text-ink">
-                <MapPin className="mt-0.5 size-4.5 shrink-0 text-leaf-700" strokeWidth={1.9} />
-                <span className="text-sm">{contact.address}</span>
-              </p>
-            )}
+            <a
+              href={googleMapsLink(mapsQuery)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-start gap-3.5 text-ink hover:text-brand"
+            >
+              <MapPin className="mt-0.5 size-4.5 shrink-0 text-leaf-700" strokeWidth={1.9} />
+              <span className="text-sm">{address}</span>
+            </a>
             {contact.hours && (
               <p className="flex items-start gap-3.5 text-ink">
                 <Clock className="mt-0.5 size-4.5 shrink-0 text-leaf-700" strokeWidth={1.9} />
@@ -90,6 +103,8 @@ export default async function ContactPage({
               </p>
             )}
           </div>
+
+          <LocationMap query={mapsQuery} address={address} />
 
           <div className="rounded-3xl border border-dashed border-line p-6 text-sm leading-relaxed text-ink-faint">
             Free basic consultation · farm visits at an agreed amount · delivery available (fees

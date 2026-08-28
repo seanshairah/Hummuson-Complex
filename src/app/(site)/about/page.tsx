@@ -6,6 +6,8 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import { ButtonLink } from "@/components/ui/button";
 import { getCompanySettings, getContactSettings } from "@/server/data/settings";
+import { googleMapsLink } from "@/lib/maps";
+import { site } from "@/lib/site";
 import { whatsappAdviceMessage } from "@/lib/whatsapp";
 import { organizationJsonLd } from "@/lib/seo";
 import partnerBioenergy from "../../../../public/images/brand/Bioenergy_naujas-logotipas-3.jpg";
@@ -174,7 +176,14 @@ export default async function AboutPage() {
         <div>
           <h2 className="text-display-3 text-ink">Come and talk crops</h2>
           <p className="mt-3 max-w-xl text-ink-soft">
-            {contact.address ?? "Harare, Zimbabwe"}
+            <a
+              href={googleMapsLink(`${site.name}, ${contact.address ?? "Harare, Zimbabwe"}`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-leaf-600/40 underline-offset-4 transition-colors hover:text-brand"
+            >
+              {contact.address ?? "Harare, Zimbabwe"}
+            </a>
             {contact.hours && (
               <>
                 <br />

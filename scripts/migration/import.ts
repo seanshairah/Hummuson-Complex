@@ -14,13 +14,13 @@ import path from "node:path";
 import {
   ApplicationMethod,
   FaqCategory,
-  PrismaClient,
   PublishStatus,
   VideoCategory,
   type Prisma,
 } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import sharp from "sharp";
+import { createPrismaClient } from "./client";
 import { sanitizeRichHtml } from "../../src/lib/sanitize";
 import type {
   OldUrlMapEntry,
@@ -36,7 +36,7 @@ import type {
   SourceVideo,
 } from "./types";
 
-const prisma = new PrismaClient();
+const prisma = createPrismaClient();
 const ROOT = process.cwd();
 
 function loadJson<T>(name: string): T | null {
@@ -179,6 +179,9 @@ async function ensureMedia(
 
 // ─── Import steps ────────────────────────────────────────────────────────────
 
+/** product.id → media.id of its role:"catalogue" image (filled by importProducts). */
+const catalogueImageByProduct = new Map<string, string>();
+
 async function importUsers() {
   const email = process.env.ADMIN_EMAIL ?? "admin@humusoncomplex.com";
   const password = process.env.ADMIN_PASSWORD ?? "change-me-immediately";
@@ -277,8 +280,8 @@ async function importProducts(products: SourceProduct[]) {
     }
 
     // A product may carry several old-shop categories; pick the most specific
-    // as its primary (Value sachet line > Liquid range > Organic > Physio).
-    const CATEGORY_PRIORITY = ["value", "liquid-fertilisers", "organic", "physio"];
+    // as its primary (Value sachet line > Biostimulants > Liquid > Organic > Physio).
+    const CATEGORY_PRIORITY = ["value", "biostimulants", "liquid-fertilisers", "organic", "physio"];
     const primaryCategorySlug =
       CATEGORY_PRIORITY.find((slug) => source.categorySlugs.includes(slug)) ??
       source.categorySlugs[0];
@@ -326,9 +329,14 @@ async function importProducts(products: SourceProduct[]) {
     });
     order += 1;
 
-    // Images
+    // Images. Roles steer placement: "primary" wins the hero slot, a
+    // "catalogue" shot becomes that product's flipbook/catalogue plate
+    // (recorded here, applied in buildDefaultCatalogue), everything else is
+    // gallery. Without roles the first image stays primary, as before.
     await prisma.productImage.deleteMany({ where: { productId: product.id } });
-    let primaryImageId: string | null = null;
+    let explicitPrimaryId: string | null = null;
+    let firstNonCatalogueId: string | null = null;
+    let firstImageId: string | null = null;
     let imageOrder = 0;
     for (const image of source.images) {
       const mediaId = await ensureMedia(
@@ -336,13 +344,21 @@ async function importProducts(products: SourceProduct[]) {
         "product",
       );
       if (!mediaId) continue;
-      if (!primaryImageId) primaryImageId = mediaId;
+      if (!firstImageId) firstImageId = mediaId;
+      if (image.role === "primary" && !explicitPrimaryId) explicitPrimaryId = mediaId;
+      if (image.role !== "catalogue" && !firstNonCatalogueId) firstNonCatalogueId = mediaId;
+      if (image.role === "catalogue" && !catalogueImageByProduct.has(product.id)) {
+        catalogueImageByProduct.set(product.id, mediaId);
+      }
       await prisma.productImage.create({
         data: { productId: product.id, mediaId, order: imageOrder },
       });
       imageOrder += 1;
     }
-    await prisma.product.update({ where: { id: product.id }, data: { primaryImageId } });
+    await prisma.product.update({
+      where: { id: product.id },
+      data: { primaryImageId: explicitPrimaryId ?? firstNonCatalogueId ?? firstImageId },
+    });
 
     // Package sizes
     await prisma.packageSize.deleteMany({ where: { productId: product.id } });
@@ -533,6 +549,7 @@ async function importVideos(videos: SourceVideo[]) {
         title: source.title ?? `Humuson video ${source.youtubeId}`,
         description: source.description ?? null,
         category: VIDEO_CATEGORY_MAP[source.category ?? ""] ?? VideoCategory.AGRONOMY_EDUCATION,
+        featured: source.featured ?? false,
         order,
       },
       create: {
@@ -542,6 +559,7 @@ async function importVideos(videos: SourceVideo[]) {
         description: source.description ?? null,
         thumbnailUrl: `https://img.youtube.com/vi/${source.youtubeId}/hqdefault.jpg`,
         category: VIDEO_CATEGORY_MAP[source.category ?? ""] ?? VideoCategory.AGRONOMY_EDUCATION,
+        featured: source.featured ?? false,
         status: PublishStatus.PUBLISHED,
         order,
       },
@@ -629,29 +647,20 @@ async function importCompany(company: SourceCompany | null) {
   ): { title: string; description?: string }[] =>
     (items ?? []).map((item) => (typeof item === "string" ? { title: item } : item));
 
+  const contactValue = {
+    phones: company.phones ?? [],
+    whatsapp: (company.whatsappNumbers?.[0] ?? "263776656433").replace(/[^0-9]/g, ""),
+    // Provided by the owner (WhatsApp Business catalogue share link).
+    whatsappCatalogueUrl: "https://wa.me/c/80084060872727",
+    emails: company.emails ?? [],
+    address: company.address ?? null,
+    hours: company.hours ?? null,
+    socials: company.socials ?? {},
+  };
   await prisma.siteSetting.upsert({
     where: { key: "contact" },
-    update: {
-      value: {
-        phones: company.phones ?? [],
-        whatsapp: company.whatsappNumbers?.[0] ?? "263776656433",
-        emails: company.emails ?? [],
-        address: company.address ?? null,
-        hours: company.hours ?? null,
-        socials: company.socials ?? {},
-      },
-    },
-    create: {
-      key: "contact",
-      value: {
-        phones: company.phones ?? [],
-        whatsapp: company.whatsappNumbers?.[0] ?? "263776656433",
-        emails: company.emails ?? [],
-        address: company.address ?? null,
-        hours: company.hours ?? null,
-        socials: company.socials ?? {},
-      },
-    },
+    update: { value: contactValue },
+    create: { key: "contact", value: contactValue },
   });
   await prisma.siteSetting.upsert({
     where: { key: "company" },
@@ -690,6 +699,7 @@ const SECTION_THEMES: Record<string, string> = {
   physio: "biology",
   value: "vitality",
   "liquid-fertilisers": "nutrition",
+  biostimulants: "canopy",
 };
 
 async function buildDefaultCatalogue() {
@@ -743,6 +753,9 @@ async function buildDefaultCatalogue() {
         data: {
           sectionId: section.id,
           productId: product.id,
+          // The dedicated catalogue shot (role:"catalogue"), when the product
+          // has one — the flipbook/explore plate; product hero otherwise.
+          imageId: catalogueImageByProduct.get(product.id) ?? null,
           layout: entryOrder % 2 === 0 ? "FEATURE_LEFT" : "FEATURE_RIGHT",
           order: entryOrder,
         },

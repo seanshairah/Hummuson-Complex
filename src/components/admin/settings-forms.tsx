@@ -56,6 +56,17 @@ export function ContactSettingsForm({ contact }: { contact: ContactSettings }) {
       >
         <Input name="whatsapp" defaultValue={contact.whatsapp} />
       </Field>
+      <Field
+        label="WhatsApp catalogue link"
+        hint="Share link of the WhatsApp Business catalogue (wa.me/c/…) — used by every “View catalogue” action"
+      >
+        <Input
+          name="whatsappCatalogueUrl"
+          type="url"
+          defaultValue={contact.whatsappCatalogueUrl}
+          placeholder="https://wa.me/c/…"
+        />
+      </Field>
       <Field label="Email addresses">
         <ListInput
           name="emails"

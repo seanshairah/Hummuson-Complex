@@ -24,6 +24,7 @@ import { StickyProductActions } from "@/components/products/sticky-actions";
 import { ViewTracker } from "@/components/products/view-tracker";
 import { AskHumusonLauncher } from "@/components/ask/launcher";
 import { getProductBySlug, getProductSlugs } from "@/server/data/products";
+import { getContactSettings } from "@/server/data/settings";
 import { faqJsonLd, productJsonLd } from "@/lib/seo";
 import { humanize } from "@/lib/utils";
 import { whatsappProductMessage } from "@/lib/whatsapp";
@@ -60,7 +61,7 @@ const CONFIRM_NOTE =
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const product = await getProductBySlug(slug);
+  const [product, contact] = await Promise.all([getProductBySlug(slug), getContactSettings()]);
   if (!product) notFound();
 
   const gallery =
@@ -445,6 +446,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               >
                 Request advice
               </Link>
+              <a
+                href={contact.whatsappCatalogueUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-1.5 pt-1 text-sm font-medium text-leaf-300 transition-colors hover:text-leaf-200"
+              >
+                Browse the WhatsApp catalogue <ArrowRight className="size-3.5" />
+              </a>
             </div>
           </div>
 

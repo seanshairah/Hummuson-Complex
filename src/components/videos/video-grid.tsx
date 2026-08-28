@@ -9,15 +9,41 @@ import { cn, humanize } from "@/lib/utils";
 import type { VideoData } from "@/server/data/content";
 
 export function VideoGrid({ videos }: { videos: VideoData[] }) {
+  const featured = videos.find((video) => video.featured) ?? null;
+  const rest = useMemo(
+    () => videos.filter((video) => video.id !== featured?.id),
+    [videos, featured],
+  );
   const categories = useMemo(() => {
-    const present = [...new Set(videos.map((video) => video.category))];
+    const present = [...new Set(rest.map((video) => video.category))];
     return ["ALL", ...present];
-  }, [videos]);
+  }, [rest]);
   const [active, setActive] = useState("ALL");
-  const shown = active === "ALL" ? videos : videos.filter((video) => video.category === active);
+  const shown = active === "ALL" ? rest : rest.filter((video) => video.category === active);
 
   return (
     <div>
+      {featured && (
+        <div className="mb-10">
+          <p className="text-eyebrow text-leaf-700">Featured</p>
+          <div className="mt-4 grid items-end gap-6 lg:grid-cols-[1.5fr_1fr]">
+            <VideoEmbed
+              youtubeId={featured.youtubeId}
+              title={featured.title}
+              category={humanize(featured.category)}
+              className="lg:rounded-3xl"
+            />
+            <div className="pb-1">
+              <h2 className="font-display text-2xl font-semibold tracking-tight text-ink">
+                {featured.title}
+              </h2>
+              {featured.description && (
+                <p className="mt-3 leading-relaxed text-ink-soft">{featured.description}</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
       {categories.length > 2 && (
         <div
           role="tablist"

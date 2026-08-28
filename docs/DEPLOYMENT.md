@@ -12,6 +12,15 @@ Target: **Vercel** (app) + **Neon** (PostgreSQL). Any Node host with PostgreSQL 
    npm run db:seed          # imports content/*.json (idempotent)
    ```
 
+**Restricted networks** (outbound Postgres/5432 blocked, only 443 open): the same
+two steps work over Neon's serverless driver instead —
+```bash
+DATABASE_URL=… npx tsx scripts/migration/deploy-neon.ts   # migrations over WebSocket
+NEON_WS=1 DATABASE_URL=… npm run db:seed                  # seed over WebSocket
+```
+`deploy-neon.ts` records applied migrations in `_prisma_migrations` exactly like
+the Prisma CLI, so the two paths are interchangeable.
+
 ## 2. Environment variables (Vercel → Settings → Environment Variables)
 
 | Variable                       | Notes                                             |

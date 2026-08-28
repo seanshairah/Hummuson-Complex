@@ -8,6 +8,12 @@ export interface SourceImage {
   sourceUrl: string;
   localPath: string; // e.g. "images/products/in5/1.jpg" (under /public)
   alt?: string | null;
+  /**
+   * "primary"   → product hero/card image
+   * "catalogue" → the plate used on this product's catalogue/flipbook page
+   * "gallery"/unset → ordinary gallery image
+   */
+  role?: "primary" | "catalogue" | "gallery" | (string & {}) | null;
 }
 
 export interface SourceProduct {
@@ -71,6 +77,7 @@ export interface SourceVideo {
   title: string | null;
   description?: string | null;
   category?: string;
+  featured?: boolean;
   sourceUrl?: string;
 }
 

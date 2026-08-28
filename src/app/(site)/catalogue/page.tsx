@@ -53,7 +53,17 @@ const THEMES: Record<
     body: "text-ink-soft",
     card: "border border-soil-400/30 bg-cream",
   },
+  canopy: {
+    section: "bg-grain bg-[#12351f] text-paper",
+    label: "text-leaf-300",
+    heading: "text-paper",
+    body: "text-paper/70",
+    card: "border border-paper/12 bg-paper/5 backdrop-blur-sm",
+  },
 };
+
+/** Themes rendered on a dark ground — badges/labels need light variants. */
+const DARK_THEMES = new Set(["biology", "canopy"]);
 
 export default async function CataloguePage() {
   const catalogue = await getPublishedCatalogue();
@@ -176,9 +186,9 @@ export default async function CataloguePage() {
                               flip && "md:order-2",
                             )}
                           >
-                            {product.image ? (
+                            {(entry.image ?? product.image) ? (
                               <MediaImage
-                                image={product.image}
+                                image={(entry.image ?? product.image)!}
                                 alt={`${product.name} pack`}
                                 fill
                                 sizes="(max-width: 768px) 92vw, 500px"
@@ -202,7 +212,7 @@ export default async function CataloguePage() {
                           <div className="flex flex-col p-6 md:p-9">
                             <div className="flex flex-wrap items-center gap-2">
                               {product.category && (
-                                <Badge variant={section.theme === "biology" ? "glass" : "leaf"}>
+                                <Badge variant={DARK_THEMES.has(section.theme) ? "glass" : "leaf"}>
                                   {product.category.name}
                                 </Badge>
                               )}
@@ -211,7 +221,7 @@ export default async function CataloguePage() {
                                   key={method}
                                   variant="outline"
                                   className={
-                                    section.theme === "biology"
+                                    DARK_THEMES.has(section.theme)
                                       ? "border-paper/25 text-paper/70"
                                       : undefined
                                   }

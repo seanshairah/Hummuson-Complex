@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { db } from "@/server/db";
 import { requireAdmin, requireUser } from "@/server/auth";
 import { updateSetting } from "@/server/data/settings";
+import { site } from "@/lib/site";
 import type { AdminActionState } from "@/lib/admin-state";
 import { formList, formOptional, formString, revalidateContent } from "./helpers";
 
@@ -35,6 +36,8 @@ export async function saveContactSettings(
   await updateSetting("contact", {
     phones: formList(formData, "phones"),
     whatsapp: formString(formData, "whatsapp").replace(/[^0-9]/g, ""),
+    whatsappCatalogueUrl:
+      formOptional(formData, "whatsappCatalogueUrl") ?? site.whatsappCatalogueUrl,
     emails: formList(formData, "emails"),
     address: formOptional(formData, "address"),
     hours: formOptional(formData, "hours"),

@@ -20,7 +20,14 @@ export type CataloguePage =
       image: ImageData | null;
       productCount: number;
     }
-  | { kind: "product"; product: ProductCardData; theme: string; chapterTitle: string }
+  | {
+      kind: "product";
+      product: ProductCardData;
+      /** Entry's dedicated catalogue plate when set, else the product hero. */
+      image: ImageData | null;
+      theme: string;
+      chapterTitle: string;
+    }
   | { kind: "back"; title: string };
 
 export function buildCataloguePages(catalogue: CatalogueData): CataloguePage[] {
@@ -39,9 +46,10 @@ export function buildCataloguePages(catalogue: CatalogueData): CataloguePage[] {
   const tocEntries: { title: string; page: number; slug: string }[] = [];
 
   catalogue.sections.forEach((section, sectionIndex) => {
-    const products = section.entries
-      .map((entry) => entry.product)
-      .filter((product): product is ProductCardData => Boolean(product));
+    const entries = section.entries.filter(
+      (entry): entry is (typeof section.entries)[number] & { product: ProductCardData } =>
+        Boolean(entry.product),
+    );
 
     tocEntries.push({ title: section.title, page: pages.length, slug: section.slug });
     pages.push({
@@ -51,14 +59,15 @@ export function buildCataloguePages(catalogue: CatalogueData): CataloguePage[] {
       intro: section.intro,
       theme: section.theme,
       slug: section.slug,
-      image: section.image ?? products[0]?.image ?? null,
-      productCount: products.length,
+      image: section.image ?? entries[0]?.image ?? entries[0]?.product.image ?? null,
+      productCount: entries.length,
     });
 
-    for (const product of products) {
+    for (const entry of entries) {
       pages.push({
         kind: "product",
-        product,
+        product: entry.product,
+        image: entry.image ?? entry.product.image,
         theme: section.theme,
         chapterTitle: section.title,
       });

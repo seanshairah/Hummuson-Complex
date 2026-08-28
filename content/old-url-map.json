@@ -1,541 +1,576 @@
 [
-  {
-    "oldUrl": "https://humusoncomplex.com/",
-    "pageType": "page",
-    "newPath": "/",
-    "redirect": false,
-    "notes": "Homepage. Same path on the new site."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/shop/",
-    "pageType": "page",
-    "newPath": "/products",
-    "redirect": true,
-    "notes": "WooCommerce shop archive (rendered by theme; empty in REST)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/shop-wide/",
-    "pageType": "page",
-    "newPath": "/products",
-    "redirect": true,
-    "notes": "Duplicate shop layout page (\"Shop No Sidebar\"; empty content)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/pricing/",
-    "pageType": "page",
-    "newPath": "/products",
-    "redirect": true,
-    "notes": "PLACEHOLDER PAGE: unedited theme pricing table (Basic/Standard/Advance/Premium $24-99/month SaaS copy). Nothing to migrate."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/purchase/",
-    "pageType": "page",
-    "newPath": "/products",
-    "redirect": true,
-    "notes": "Empty page (no content in REST)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/get-an-offer/",
-    "pageType": "page",
-    "newPath": "/contact",
-    "redirect": true,
-    "notes": "Main-nav \"Products\" target: a shop grid + \"Get A Quote\" popup. Quote intent → /contact (product browsing lives at /products)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/our-blog/",
-    "pageType": "page",
-    "newPath": "/knowledge",
-    "redirect": true,
-    "notes": "Blog index (\"News & Updates\")."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/services/",
-    "pageType": "page",
-    "newPath": "/solutions",
-    "redirect": true,
-    "notes": "Page body is theme placeholder (stock testimonials); real service facts came from FAQ/contact form and are in company.json services[]."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/about-us/",
-    "pageType": "page",
-    "newPath": "/about",
-    "redirect": true,
-    "notes": "Real content: history, vision, mission, values, team, stats, videos, gallery."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/working-process/",
-    "pageType": "page",
-    "newPath": "/about",
-    "redirect": true,
-    "notes": "PLACEHOLDER PAGE: unedited \"Landscape Design And Planting Process\" theme demo with lorem ipsum and template phone 1800 567 8990. Nothing to migrate."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/commitment-why-choose-us/",
-    "pageType": "page",
-    "newPath": "/about",
-    "redirect": true,
-    "notes": "Real content: history + \"Benefits of Our fertilizers\" bullets (in company.json whyChooseUs)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/reviews/",
-    "pageType": "page",
-    "newPath": "/projects",
-    "redirect": true,
-    "notes": "Testimonials page (4 named quotes with locations) + \"leave a testimonial\" CTA. Quotes preserved in testimonials.json."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/projects/",
-    "pageType": "page",
-    "newPath": "/projects",
-    "redirect": true,
-    "notes": "Portfolio grid with crop filters (Fertilizers, Peas & Beans, Potatoes, Wheat, Maize)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/faq/",
-    "pageType": "page",
-    "newPath": "/faq",
-    "redirect": true,
-    "notes": "16 real Q&As extracted to faqs.json."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/videos/",
-    "pageType": "page",
-    "newPath": "/videos",
-    "redirect": true,
-    "notes": "5 YouTube embeds extracted to videos.json."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/contact-us/",
-    "pageType": "page",
-    "newPath": "/contact",
-    "redirect": true,
-    "notes": "Contact info + enquiry form (service choices: Consultation, Project Management, Fertilizers Delivery)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/cart/",
-    "pageType": "system",
-    "newPath": "/contact",
-    "redirect": true,
-    "notes": "No online checkout in v1 — WhatsApp commerce instead."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/checkout/",
-    "pageType": "system",
-    "newPath": "/contact",
-    "redirect": true,
-    "notes": "No online checkout in v1 — WhatsApp commerce instead."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/my-account/",
-    "pageType": "system",
-    "newPath": "/contact",
-    "redirect": true,
-    "notes": "No customer accounts in v1 — WhatsApp commerce instead."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/2023/07/15/boost-your-potato-yields-with-fulvic-acid/",
-    "pageType": "post",
-    "newPath": "/knowledge/boost-your-potato-yields-with-fulvic-acid",
-    "redirect": true,
-    "notes": "Blog post → knowledge article."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/2023/07/15/soaking-seeds-in-fulvic-acids/",
-    "pageType": "post",
-    "newPath": "/knowledge/soaking-seeds-in-fulvic-acids",
-    "redirect": true,
-    "notes": "Blog post → knowledge article."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/2023/07/15/dead-soils-do-not-produce-desired-results/",
-    "pageType": "post",
-    "newPath": "/knowledge/dead-soils-do-not-produce-desired-results",
-    "redirect": true,
-    "notes": "Blog post → knowledge article."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/2023/07/05/only-grow-plus-as-a-top-dressing-was-used-to-cultivate-these-sugar-beans/",
-    "pageType": "post",
-    "newPath": "/knowledge/only-grow-plus-as-a-top-dressing-was-used-to-cultivate-these-sugar-beans",
-    "redirect": true,
-    "notes": "Blog post → knowledge article."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/2023/07/05/not-only-feed-the-plant-feed-the-soil/",
-    "pageType": "post",
-    "newPath": "/knowledge/not-only-feed-the-plant-feed-the-soil",
-    "redirect": true,
-    "notes": "Blog post → knowledge article."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/2023/07/05/have-you-tried-using-humuson-complex-products-in-your-seedling-nurseries/",
-    "pageType": "post",
-    "newPath": "/knowledge/have-you-tried-using-humuson-complex-products-in-your-seedling-nurseries",
-    "redirect": true,
-    "notes": "Blog post → knowledge article."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/azofix-plus/",
-    "pageType": "product",
-    "newPath": "/products/azofix-plus",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/fosfix-plus/",
-    "pageType": "product",
-    "newPath": "/products/fosfix-plus",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/bacto-k/",
-    "pageType": "product",
-    "newPath": "/products/bacto-k",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/bacto-seed/",
-    "pageType": "product",
-    "newPath": "/products/bacto-seed",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/master/",
-    "pageType": "product",
-    "newPath": "/products/master",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/maxprolin/",
-    "pageType": "product",
-    "newPath": "/products/maxprolin",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/grow-top-dressing/",
-    "pageType": "product",
-    "newPath": "/products/grow-top-dressing",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/grow-top-dressing-sachet/",
-    "pageType": "product",
-    "newPath": "/products/grow-top-dressing",
-    "redirect": true,
-    "notes": "Duplicate/variant listing merged into canonical product \"grow-top-dressing\" (pack-size variant or misspelled slug)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/carboamin-basal-dressing/",
-    "pageType": "product",
-    "newPath": "/products/carboamin-basal-dressing",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/carboamin-basal-dressing-sachet/",
-    "pageType": "product",
-    "newPath": "/products/carboamin-basal-dressing",
-    "redirect": true,
-    "notes": "Duplicate/variant listing merged into canonical product \"carboamin-basal-dressing\" (pack-size variant or misspelled slug)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/ruinex/",
-    "pageType": "product",
-    "newPath": "/products/ruinex",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/bactoforce/",
-    "pageType": "product",
-    "newPath": "/products/bactoforce",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/bio-npk-powder-s/",
-    "pageType": "product",
-    "newPath": "/products/bio-npk-powder-s",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/4287/",
-    "pageType": "product",
-    "newPath": "/products/bio-npk-powder-s",
-    "redirect": true,
-    "notes": "Duplicate/variant listing merged into canonical product \"bio-npk-powder-s\" (pack-size variant or misspelled slug)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/perfect-stick/",
-    "pageType": "product",
-    "newPath": "/products/perfect-stick",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/perfect-stick-2/",
-    "pageType": "product",
-    "newPath": "/products/perfect-stick",
-    "redirect": true,
-    "notes": "Duplicate/variant listing merged into canonical product \"perfect-stick\" (pack-size variant or misspelled slug)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/ocean/",
-    "pageType": "product",
-    "newPath": "/products/ocean",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/ocean-2/",
-    "pageType": "product",
-    "newPath": "/products/ocean",
-    "redirect": true,
-    "notes": "Duplicate/variant listing merged into canonical product \"ocean\" (pack-size variant or misspelled slug)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/in5/",
-    "pageType": "product",
-    "newPath": "/products/in5",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/in5-2/",
-    "pageType": "product",
-    "newPath": "/products/in5",
-    "redirect": true,
-    "notes": "Duplicate/variant listing merged into canonical product \"in5\" (pack-size variant or misspelled slug)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/koral/",
-    "pageType": "product",
-    "newPath": "/products/koral",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/koral-2/",
-    "pageType": "product",
-    "newPath": "/products/koral",
-    "redirect": true,
-    "notes": "Duplicate/variant listing merged into canonical product \"koral\" (pack-size variant or misspelled slug)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/enzo-pro/",
-    "pageType": "product",
-    "newPath": "/products/enzo-pro",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/enzo-pro-2/",
-    "pageType": "product",
-    "newPath": "/products/enzo-pro",
-    "redirect": true,
-    "notes": "Duplicate/variant listing merged into canonical product \"enzo-pro\" (pack-size variant or misspelled slug)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/mendelenium/",
-    "pageType": "product",
-    "newPath": "/products/mendelenium",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/mendelenium-2/",
-    "pageType": "product",
-    "newPath": "/products/mendelenium",
-    "redirect": true,
-    "notes": "Duplicate/variant listing merged into canonical product \"mendelenium\" (pack-size variant or misspelled slug)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/bora/",
-    "pageType": "product",
-    "newPath": "/products/bora",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/bora-2/",
-    "pageType": "product",
-    "newPath": "/products/bora",
-    "redirect": true,
-    "notes": "Duplicate/variant listing merged into canonical product \"bora\" (pack-size variant or misspelled slug)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/elais/",
-    "pageType": "product",
-    "newPath": "/products/elais",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/elais-2/",
-    "pageType": "product",
-    "newPath": "/products/elais",
-    "redirect": true,
-    "notes": "Duplicate/variant listing merged into canonical product \"elais\" (pack-size variant or misspelled slug)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/silicare/",
-    "pageType": "product",
-    "newPath": "/products/silicare",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/silicare-2/",
-    "pageType": "product",
-    "newPath": "/products/silicare",
-    "redirect": true,
-    "notes": "Duplicate/variant listing merged into canonical product \"silicare\" (pack-size variant or misspelled slug)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/bigo-w/",
-    "pageType": "product",
-    "newPath": "/products/bigo-w",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/bico-w/",
-    "pageType": "product",
-    "newPath": "/products/bigo-w",
-    "redirect": true,
-    "notes": "Duplicate/variant listing merged into canonical product \"bigo-w\" (pack-size variant or misspelled slug)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product/a3-biostimulant/",
-    "pageType": "product",
-    "newPath": "/products/a3-biostimulant",
-    "redirect": true,
-    "notes": "Canonical product listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/portfolio/fertilizer-test/",
-    "pageType": "portfolio",
-    "newPath": "/projects/maize",
-    "redirect": true,
-    "notes": "Portfolio item titled \"Maize\" (slug was fertilizer-test). Photo gallery only."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/portfolio/peas-beans/",
-    "pageType": "portfolio",
-    "newPath": "/projects/peas-beans",
-    "redirect": true,
-    "notes": "Photo gallery only."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/portfolio/potatoes/",
-    "pageType": "portfolio",
-    "newPath": "/projects/potatoes",
-    "redirect": true,
-    "notes": "Photo gallery only."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/portfolio/wheat/",
-    "pageType": "portfolio",
-    "newPath": "/projects/wheat",
-    "redirect": true,
-    "notes": "Photo gallery only."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/portfolio-category/fertilizers/",
-    "pageType": "taxonomy",
-    "newPath": "/projects",
-    "redirect": true,
-    "notes": "Portfolio category archive."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/category/fertilizers/",
-    "pageType": "taxonomy",
-    "newPath": "/knowledge",
-    "redirect": true,
-    "notes": "Blog category archive (all 6 posts are in \"Fertilizers\")."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product-category/organic/",
-    "pageType": "taxonomy",
-    "newPath": "/products?category=organic",
-    "redirect": true,
-    "notes": "Product category archive. If query filters are not implemented, redirect to /products."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product-category/physio/",
-    "pageType": "taxonomy",
-    "newPath": "/products?category=physio",
-    "redirect": true,
-    "notes": "Product category archive."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product-category/value/",
-    "pageType": "taxonomy",
-    "newPath": "/products?category=value",
-    "redirect": true,
-    "notes": "Product category archive."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product-category/uncategorized/",
-    "pageType": "taxonomy",
-    "newPath": "/products",
-    "redirect": true,
-    "notes": "Default bucket holding the 22 uncategorized 2025-line listings."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product-tag/bio-energy/",
-    "pageType": "taxonomy",
-    "newPath": "/products",
-    "redirect": true,
-    "notes": "Tag on Bioenergy LT line (fosfix-plus, ruinex, bactoforce)."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product-tag/new-stock/",
-    "pageType": "taxonomy",
-    "newPath": "/products",
-    "redirect": true,
-    "notes": "Tag on the 4287 Bio NPK Powder S listing."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/product-tag/satchets/",
-    "pageType": "taxonomy",
-    "newPath": "/products",
-    "redirect": true,
-    "notes": "Tag on the two sachet listings (note original misspelling \"satchets\")."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/author/yiwxlrgo/",
-    "pageType": "taxonomy",
-    "newPath": "/knowledge",
-    "redirect": true,
-    "notes": "Author archive (machine username). No equivalent on new site."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/footer/footer-builder-gallery/",
-    "pageType": "system",
-    "newPath": "/",
-    "redirect": true,
-    "notes": "Internal Elementor footer template exposed in sitemap. Should 301 to home and be noindexed."
-  },
-  {
-    "oldUrl": "https://humusoncomplex.com/footer/footer-builder-phone/",
-    "pageType": "system",
-    "newPath": "/",
-    "redirect": true,
-    "notes": "Internal Elementor footer template exposed in sitemap. Should 301 to home and be noindexed."
-  },
-  {
-    "oldUrl": "https://wa.me/c/263776656433",
-    "pageType": "external",
-    "newPath": "/catalogue",
-    "redirect": false,
-    "notes": "WhatsApp Business catalogue for +263 77 665 6433. Not crawlable server-side (returns a JS error shell); the new /catalogue page should link out to it. Programmatic sync would require the WhatsApp Business / Meta Commerce APIs."
-  }
+ {
+  "oldUrl": "https://humusoncomplex.com/",
+  "pageType": "page",
+  "newPath": "/",
+  "redirect": false,
+  "notes": "Homepage. Same path on the new site."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/shop/",
+  "pageType": "page",
+  "newPath": "/products",
+  "redirect": true,
+  "notes": "WooCommerce shop archive (rendered by theme; empty in REST)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/shop-wide/",
+  "pageType": "page",
+  "newPath": "/products",
+  "redirect": true,
+  "notes": "Duplicate shop layout page (\"Shop No Sidebar\"; empty content)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/pricing/",
+  "pageType": "page",
+  "newPath": "/products",
+  "redirect": true,
+  "notes": "PLACEHOLDER PAGE: unedited theme pricing table (Basic/Standard/Advance/Premium $24-99/month SaaS copy). Nothing to migrate."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/purchase/",
+  "pageType": "page",
+  "newPath": "/products",
+  "redirect": true,
+  "notes": "Empty page (no content in REST)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/get-an-offer/",
+  "pageType": "page",
+  "newPath": "/contact",
+  "redirect": true,
+  "notes": "Main-nav \"Products\" target: a shop grid + \"Get A Quote\" popup. Quote intent → /contact (product browsing lives at /products)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/our-blog/",
+  "pageType": "page",
+  "newPath": "/knowledge",
+  "redirect": true,
+  "notes": "Blog index (\"News & Updates\")."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/services/",
+  "pageType": "page",
+  "newPath": "/solutions",
+  "redirect": true,
+  "notes": "Page body is theme placeholder (stock testimonials); real service facts came from FAQ/contact form and are in company.json services[]."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/about-us/",
+  "pageType": "page",
+  "newPath": "/about",
+  "redirect": true,
+  "notes": "Real content: history, vision, mission, values, team, stats, videos, gallery."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/working-process/",
+  "pageType": "page",
+  "newPath": "/about",
+  "redirect": true,
+  "notes": "PLACEHOLDER PAGE: unedited \"Landscape Design And Planting Process\" theme demo with lorem ipsum and template phone 1800 567 8990. Nothing to migrate."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/commitment-why-choose-us/",
+  "pageType": "page",
+  "newPath": "/about",
+  "redirect": true,
+  "notes": "Real content: history + \"Benefits of Our fertilizers\" bullets (in company.json whyChooseUs)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/reviews/",
+  "pageType": "page",
+  "newPath": "/projects",
+  "redirect": true,
+  "notes": "Testimonials page (4 named quotes with locations) + \"leave a testimonial\" CTA. Quotes preserved in testimonials.json."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/projects/",
+  "pageType": "page",
+  "newPath": "/projects",
+  "redirect": true,
+  "notes": "Portfolio grid with crop filters (Fertilizers, Peas & Beans, Potatoes, Wheat, Maize)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/faq/",
+  "pageType": "page",
+  "newPath": "/faq",
+  "redirect": true,
+  "notes": "16 real Q&As extracted to faqs.json."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/videos/",
+  "pageType": "page",
+  "newPath": "/videos",
+  "redirect": true,
+  "notes": "5 YouTube embeds extracted to videos.json."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/contact-us/",
+  "pageType": "page",
+  "newPath": "/contact",
+  "redirect": true,
+  "notes": "Contact info + enquiry form (service choices: Consultation, Project Management, Fertilizers Delivery)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/cart/",
+  "pageType": "system",
+  "newPath": "/contact",
+  "redirect": true,
+  "notes": "No online checkout in v1 — WhatsApp commerce instead."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/checkout/",
+  "pageType": "system",
+  "newPath": "/contact",
+  "redirect": true,
+  "notes": "No online checkout in v1 — WhatsApp commerce instead."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/my-account/",
+  "pageType": "system",
+  "newPath": "/contact",
+  "redirect": true,
+  "notes": "No customer accounts in v1 — WhatsApp commerce instead."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/2023/07/15/boost-your-potato-yields-with-fulvic-acid/",
+  "pageType": "post",
+  "newPath": "/knowledge/boost-your-potato-yields-with-fulvic-acid",
+  "redirect": true,
+  "notes": "Blog post → knowledge article."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/2023/07/15/soaking-seeds-in-fulvic-acids/",
+  "pageType": "post",
+  "newPath": "/knowledge/soaking-seeds-in-fulvic-acids",
+  "redirect": true,
+  "notes": "Blog post → knowledge article."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/2023/07/15/dead-soils-do-not-produce-desired-results/",
+  "pageType": "post",
+  "newPath": "/knowledge/dead-soils-do-not-produce-desired-results",
+  "redirect": true,
+  "notes": "Blog post → knowledge article."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/2023/07/05/only-grow-plus-as-a-top-dressing-was-used-to-cultivate-these-sugar-beans/",
+  "pageType": "post",
+  "newPath": "/knowledge/only-grow-plus-as-a-top-dressing-was-used-to-cultivate-these-sugar-beans",
+  "redirect": true,
+  "notes": "Blog post → knowledge article."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/2023/07/05/not-only-feed-the-plant-feed-the-soil/",
+  "pageType": "post",
+  "newPath": "/knowledge/not-only-feed-the-plant-feed-the-soil",
+  "redirect": true,
+  "notes": "Blog post → knowledge article."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/2023/07/05/have-you-tried-using-humuson-complex-products-in-your-seedling-nurseries/",
+  "pageType": "post",
+  "newPath": "/knowledge/have-you-tried-using-humuson-complex-products-in-your-seedling-nurseries",
+  "redirect": true,
+  "notes": "Blog post → knowledge article."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/azofix-plus/",
+  "pageType": "product",
+  "newPath": "/products/azofix-plus",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/fosfix-plus/",
+  "pageType": "product",
+  "newPath": "/products/fosfix-plus",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/bacto-k/",
+  "pageType": "product",
+  "newPath": "/products/bacto-k",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/bacto-seed/",
+  "pageType": "product",
+  "newPath": "/products/bacto-seed",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/master/",
+  "pageType": "product",
+  "newPath": "/products/master",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/maxprolin/",
+  "pageType": "product",
+  "newPath": "/products/maxprolin",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/grow-top-dressing/",
+  "pageType": "product",
+  "newPath": "/products/grow-top-dressing",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/grow-top-dressing-sachet/",
+  "pageType": "product",
+  "newPath": "/products/grow-top-dressing",
+  "redirect": true,
+  "notes": "Duplicate/variant listing merged into canonical product \"grow-top-dressing\" (pack-size variant or misspelled slug)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/carboamin-basal-dressing/",
+  "pageType": "product",
+  "newPath": "/products/carboamin-basal-dressing",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/carboamin-basal-dressing-sachet/",
+  "pageType": "product",
+  "newPath": "/products/carboamin-basal-dressing",
+  "redirect": true,
+  "notes": "Duplicate/variant listing merged into canonical product \"carboamin-basal-dressing\" (pack-size variant or misspelled slug)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/ruinex/",
+  "pageType": "product",
+  "newPath": "/products/ruinex",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/bactoforce/",
+  "pageType": "product",
+  "newPath": "/products/bactoforce",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/bio-npk-powder-s/",
+  "pageType": "product",
+  "newPath": "/products/bio-npk-powder-s",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/4287/",
+  "pageType": "product",
+  "newPath": "/products/bio-npk-powder-s",
+  "redirect": true,
+  "notes": "Duplicate/variant listing merged into canonical product \"bio-npk-powder-s\" (pack-size variant or misspelled slug)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/perfect-stick/",
+  "pageType": "product",
+  "newPath": "/products/perfect-stick",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/perfect-stick-2/",
+  "pageType": "product",
+  "newPath": "/products/perfect-stick",
+  "redirect": true,
+  "notes": "Duplicate/variant listing merged into canonical product \"perfect-stick\" (pack-size variant or misspelled slug)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/ocean/",
+  "pageType": "product",
+  "newPath": "/products/ocean",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/ocean-2/",
+  "pageType": "product",
+  "newPath": "/products/ocean",
+  "redirect": true,
+  "notes": "Duplicate/variant listing merged into canonical product \"ocean\" (pack-size variant or misspelled slug)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/in5/",
+  "pageType": "product",
+  "newPath": "/products/in5",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/in5-2/",
+  "pageType": "product",
+  "newPath": "/products/in5",
+  "redirect": true,
+  "notes": "Duplicate/variant listing merged into canonical product \"in5\" (pack-size variant or misspelled slug)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/koral/",
+  "pageType": "product",
+  "newPath": "/products/koral",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/koral-2/",
+  "pageType": "product",
+  "newPath": "/products/koral",
+  "redirect": true,
+  "notes": "Duplicate/variant listing merged into canonical product \"koral\" (pack-size variant or misspelled slug)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/enzo-pro/",
+  "pageType": "product",
+  "newPath": "/products/enzo-pro",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/enzo-pro-2/",
+  "pageType": "product",
+  "newPath": "/products/enzo-pro",
+  "redirect": true,
+  "notes": "Duplicate/variant listing merged into canonical product \"enzo-pro\" (pack-size variant or misspelled slug)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/mendelenium/",
+  "pageType": "product",
+  "newPath": "/products/mendelenium",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/mendelenium-2/",
+  "pageType": "product",
+  "newPath": "/products/mendelenium",
+  "redirect": true,
+  "notes": "Duplicate/variant listing merged into canonical product \"mendelenium\" (pack-size variant or misspelled slug)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/bora/",
+  "pageType": "product",
+  "newPath": "/products/bora",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/bora-2/",
+  "pageType": "product",
+  "newPath": "/products/bora",
+  "redirect": true,
+  "notes": "Duplicate/variant listing merged into canonical product \"bora\" (pack-size variant or misspelled slug)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/elais/",
+  "pageType": "product",
+  "newPath": "/products/elais",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/elais-2/",
+  "pageType": "product",
+  "newPath": "/products/elais",
+  "redirect": true,
+  "notes": "Duplicate/variant listing merged into canonical product \"elais\" (pack-size variant or misspelled slug)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/silicare/",
+  "pageType": "product",
+  "newPath": "/products/silicare",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/silicare-2/",
+  "pageType": "product",
+  "newPath": "/products/silicare",
+  "redirect": true,
+  "notes": "Duplicate/variant listing merged into canonical product \"silicare\" (pack-size variant or misspelled slug)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/bigo-w/",
+  "pageType": "product",
+  "newPath": "/products/bigo-w",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/bico-w/",
+  "pageType": "product",
+  "newPath": "/products/bigo-w",
+  "redirect": true,
+  "notes": "Duplicate/variant listing merged into canonical product \"bigo-w\" (pack-size variant or misspelled slug)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/a3-biostimulant/",
+  "pageType": "product",
+  "newPath": "/products/a3-biostimulant",
+  "redirect": true,
+  "notes": "Canonical product listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/portfolio/fertilizer-test/",
+  "pageType": "portfolio",
+  "newPath": "/projects/maize",
+  "redirect": true,
+  "notes": "Portfolio item titled \"Maize\" (slug was fertilizer-test). Photo gallery only."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/portfolio/peas-beans/",
+  "pageType": "portfolio",
+  "newPath": "/projects/peas-beans",
+  "redirect": true,
+  "notes": "Photo gallery only."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/portfolio/potatoes/",
+  "pageType": "portfolio",
+  "newPath": "/projects/potatoes",
+  "redirect": true,
+  "notes": "Photo gallery only."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/portfolio/wheat/",
+  "pageType": "portfolio",
+  "newPath": "/projects/wheat",
+  "redirect": true,
+  "notes": "Photo gallery only."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/portfolio-category/fertilizers/",
+  "pageType": "taxonomy",
+  "newPath": "/projects",
+  "redirect": true,
+  "notes": "Portfolio category archive."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/category/fertilizers/",
+  "pageType": "taxonomy",
+  "newPath": "/knowledge",
+  "redirect": true,
+  "notes": "Blog category archive (all 6 posts are in \"Fertilizers\")."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product-category/organic/",
+  "pageType": "taxonomy",
+  "newPath": "/products?category=organic",
+  "redirect": true,
+  "notes": "Product category archive. If query filters are not implemented, redirect to /products."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product-category/physio/",
+  "pageType": "taxonomy",
+  "newPath": "/products?category=physio",
+  "redirect": true,
+  "notes": "Product category archive."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product-category/value/",
+  "pageType": "taxonomy",
+  "newPath": "/products?category=value",
+  "redirect": true,
+  "notes": "Product category archive."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product-category/uncategorized/",
+  "pageType": "taxonomy",
+  "newPath": "/products",
+  "redirect": true,
+  "notes": "Default bucket holding the 22 uncategorized 2025-line listings."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product-tag/bio-energy/",
+  "pageType": "taxonomy",
+  "newPath": "/products",
+  "redirect": true,
+  "notes": "Tag on Bioenergy LT line (fosfix-plus, ruinex, bactoforce)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product-tag/new-stock/",
+  "pageType": "taxonomy",
+  "newPath": "/products",
+  "redirect": true,
+  "notes": "Tag on the 4287 Bio NPK Powder S listing."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product-tag/satchets/",
+  "pageType": "taxonomy",
+  "newPath": "/products",
+  "redirect": true,
+  "notes": "Tag on the two sachet listings (note original misspelling \"satchets\")."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/author/yiwxlrgo/",
+  "pageType": "taxonomy",
+  "newPath": "/knowledge",
+  "redirect": true,
+  "notes": "Author archive (machine username). No equivalent on new site."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/footer/footer-builder-gallery/",
+  "pageType": "system",
+  "newPath": "/",
+  "redirect": true,
+  "notes": "Internal Elementor footer template exposed in sitemap. Should 301 to home and be noindexed."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/footer/footer-builder-phone/",
+  "pageType": "system",
+  "newPath": "/",
+  "redirect": true,
+  "notes": "Internal Elementor footer template exposed in sitemap. Should 301 to home and be noindexed."
+ },
+ {
+  "oldUrl": "https://wa.me/c/263776656433",
+  "pageType": "external",
+  "newPath": "/catalogue",
+  "redirect": false,
+  "notes": "WhatsApp Business catalogue for +263 77 665 6433. Not crawlable server-side (returns a JS error shell); the new /catalogue page should link out to it. Programmatic sync would require the WhatsApp Business / Meta Commerce APIs."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/emaxx-ultra/",
+  "pageType": "product",
+  "newPath": "/products/emaxx-ultra",
+  "redirect": false,
+  "notes": "New product (no legacy URL)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/fortik-solid/",
+  "pageType": "product",
+  "newPath": "/products/fortik-solid",
+  "redirect": false,
+  "notes": "New product (no legacy URL)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/kalisto/",
+  "pageType": "product",
+  "newPath": "/products/kalisto",
+  "redirect": false,
+  "notes": "New product (no legacy URL)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/fosto/",
+  "pageType": "product",
+  "newPath": "/products/fosto",
+  "redirect": false,
+  "notes": "New product (no legacy URL)."
+ },
+ {
+  "oldUrl": "https://humusoncomplex.com/product/npk-12-11-30-te/",
+  "pageType": "product",
+  "newPath": "/products/npk-12-11-30-te",
+  "redirect": false,
+  "notes": "New product (no legacy URL)."
+ }
 ]
