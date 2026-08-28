@@ -35,8 +35,9 @@ the Prisma CLI, so the two paths are interchangeable.
 
 ## 3. App
 
-- Import the repo in Vercel; framework auto-detected. Build = `next build`
-  (`postinstall`-free; Prisma client generates via the build).
+- Import the repo in Vercel; framework auto-detected. Build =
+  `prisma generate && next build`, so the Prisma client is always fresh even
+  when the host restores cached dependencies.
 - The build statically generates public pages against the database, so
   `DATABASE_URL` must be reachable at build time (Neon is).
 - After content edits in `/admin`, pages revalidate instantly via cache tags —
