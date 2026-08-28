@@ -298,8 +298,14 @@ async function importProducts(products: SourceProduct[]) {
       if (pattern.test(fullText) && !methods.includes(method)) methods.push(method);
     }
 
-    const category = source.categorySlugs[0]
-      ? await prisma.productCategory.findUnique({ where: { slug: source.categorySlugs[0] } })
+    // A product may carry several old-shop categories; pick the most specific
+    // as its primary (Value sachet line > Liquid range > Organic > Physio).
+    const CATEGORY_PRIORITY = ["value", "liquid-fertilisers", "organic", "physio"];
+    const primaryCategorySlug =
+      CATEGORY_PRIORITY.find((slug) => source.categorySlugs.includes(slug)) ??
+      source.categorySlugs[0];
+    const category = primaryCategorySlug
+      ? await prisma.productCategory.findUnique({ where: { slug: primaryCategorySlug } })
       : null;
 
     const descriptionHtml = source.descriptionHtml ? sanitizeRichHtml(source.descriptionHtml) : null;
@@ -426,6 +432,13 @@ async function importProducts(products: SourceProduct[]) {
     }
   }
   console.log(`✓ products (${products.length})`);
+}
+
+async function pruneEmptyCategories() {
+  const removed = await prisma.productCategory.deleteMany({
+    where: { products: { none: {} } },
+  });
+  if (removed.count > 0) console.log(`✓ pruned ${removed.count} empty categories`);
 }
 
 async function linkRelatedProducts() {
@@ -695,13 +708,10 @@ async function importCompany(company: SourceCompany | null) {
 
 /** Chapter themes for the generated catalogue (presentation only). */
 const SECTION_THEMES: Record<string, string> = {
-  "organic-fertilisers": "soil",
-  "organic-fertilizers": "soil",
-  biofertilisers: "biology",
-  biofertilizers: "biology",
-  biostimulants: "vitality",
-  "foliar-fertilisers": "nutrition",
-  "foliar-fertilizers": "nutrition",
+  organic: "soil",
+  physio: "biology",
+  value: "vitality",
+  "liquid-fertilisers": "nutrition",
 };
 
 async function buildDefaultCatalogue() {
@@ -784,6 +794,7 @@ export async function runImport() {
   if (categories) await importCategories(categories);
   if (crops) await importCrops(crops);
   if (products) await importProducts(products);
+  if (products) await pruneEmptyCategories();
   if (products) await linkRelatedProducts();
   if (faqs) await importFaqs(faqs);
   if (articles) await importArticles(articles);

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { MessageCircle, Menu, X, Search } from "lucide-react";
+import { MessageCircle, Menu, X } from "lucide-react";
 import { mainNav, secondaryNav } from "@/lib/nav";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/layout/logo";
@@ -12,14 +12,16 @@ import { AskHumusonLauncher } from "@/components/ask/launcher";
 import { SearchLauncher } from "@/components/search/launcher";
 
 /** Routes that open with a dark immersive hero → header starts light-on-dark. */
-const DARK_ROUTES = new Set<string>(["/", "/catalogue", "/product-finder"]);
+const DARK_ROUTE_PREFIXES = ["/catalogue", "/product-finder"];
 
 export function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const onDark = DARK_ROUTES.has(pathname) && !scrolled;
+  const onDarkRoute =
+    pathname === "/" || DARK_ROUTE_PREFIXES.some((prefix) => pathname.startsWith(prefix));
+  const onDark = onDarkRoute && !scrolled;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);

@@ -15,7 +15,11 @@ const twMerge = extendTailwindMerge({
         "text-display-3",
         "text-title",
         "text-eyebrow",
+        "text-editorial",
       ],
+      // bg-grain paints a noise *image*, not a color — without this, cn()
+      // would drop the background color next to it.
+      "bg-image": ["bg-grain"],
     },
   },
 });
