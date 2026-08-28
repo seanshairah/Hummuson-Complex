@@ -1,5 +1,24 @@
 import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { extendTailwindMerge } from "tailwind-merge";
+
+/**
+ * tailwind-merge must learn our custom typography utilities, otherwise it
+ * mistakes them for text-color classes and drops them when a color class is
+ * present in the same cn() call (e.g. "text-display-2 text-ink").
+ */
+const twMerge = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      "font-size": [
+        "text-display-1",
+        "text-display-2",
+        "text-display-3",
+        "text-title",
+        "text-eyebrow",
+      ],
+    },
+  },
+});
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

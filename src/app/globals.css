@@ -8,6 +8,9 @@
    ──────────────────────────────────────────────────────────────────────────── */
 
 @theme {
+  /* Humuson logo green (extracted from the original brand mark) */
+  --color-brand: #005820;
+
   /* Brand core */
   --color-humus-950: #08110b;
   --color-humus-900: #0c1810;
