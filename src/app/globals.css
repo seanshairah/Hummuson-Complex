@@ -1,0 +1,377 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Humuson Complex design tokens
+   Deep humus greens (dark ground) → luminous leaf accents → warm paper &
+   earth neutrals. Derived from the Humuson brand and expanded into a full
+   scale. See docs/DESIGN-SYSTEM.md.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+@theme {
+  /* Brand core */
+  --color-humus-950: #08110b;
+  --color-humus-900: #0c1810;
+  --color-humus-800: #122418;
+  --color-humus-700: #1a3322;
+  --color-humus-600: #24452e;
+  --color-humus-500: #2f583b;
+  --color-humus-400: #3f7350;
+  --color-humus-300: #5c9670;
+
+  /* Luminous leaf accent */
+  --color-leaf-200: #ddf6b8;
+  --color-leaf-300: #c4ee8e;
+  --color-leaf-400: #a5e05f;
+  --color-leaf-500: #84cc35;
+  --color-leaf-600: #65a824;
+  --color-leaf-700: #4d831c;
+  --color-leaf-800: #3c6518;
+
+  /* Earth & soil */
+  --color-soil-300: #c9a678;
+  --color-soil-400: #b0885a;
+  --color-soil-500: #8f6a41;
+  --color-soil-600: #6f5031;
+  --color-soil-700: #523a24;
+
+  /* Warm paper neutrals (light surfaces) */
+  --color-paper: #f6f4ec;
+  --color-paper-dim: #eeeadd;
+  --color-paper-deep: #e4dfcd;
+  --color-cream: #fbfaf5;
+
+  /* Ink (text on light) */
+  --color-ink: #131a12;
+  --color-ink-soft: #3d4539;
+  --color-ink-faint: #6b7264;
+
+  /* Lines */
+  --color-line: #d9d4c2;
+  --color-line-dark: #24382a;
+
+  /* Semantic */
+  --color-danger: #c2410c;
+  --color-success: #4d831c;
+
+  /* Typography */
+  --font-display: var(--font-space-grotesk), "Space Grotesk", system-ui, sans-serif;
+  --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
+  --font-editorial: var(--font-fraunces), "Fraunces", Georgia, serif;
+
+  /* Radii — restrained; large radii reserved for pills & floating cards */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  /* Shadows */
+  --shadow-card: 0 1px 2px rgb(19 26 18 / 0.05), 0 8px 24px -12px rgb(19 26 18 / 0.18);
+  --shadow-float: 0 2px 8px rgb(8 17 11 / 0.24), 0 24px 48px -16px rgb(8 17 11 / 0.42);
+  --shadow-pop: 0 1px 3px rgb(19 26 18 / 0.1), 0 16px 40px -12px rgb(19 26 18 / 0.28);
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --animate-marquee: marquee 42s linear infinite;
+  --animate-pulse-soft: pulse-soft 3.2s ease-in-out infinite;
+  --animate-float-y: float-y 7s ease-in-out infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes pulse-soft {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes float-y {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
+
+/* ── Base ──────────────────────────────────────────────────────────────────── */
+
+@layer base {
+  * {
+    min-width: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-leaf-300);
+    color: var(--color-humus-900);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-leaf-500);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ── Composition utilities ────────────────────────────────────────────────── */
+
+@utility container-site {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility container-wide {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 90rem;
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Editorial type — confident display scale */
+@utility text-display-1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 2rem + 4.6vw, 6rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+}
+
+@utility text-display-2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 1.7rem + 2.8vw, 4.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+}
+
+@utility text-display-3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.45rem + 1.6vw, 2.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+
+@utility text-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.15rem + 0.6vw, 1.625rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-weight: 500;
+}
+
+@utility text-eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility text-editorial {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-weight: 480;
+  letter-spacing: -0.01em;
+}
+
+/* Organic grain — adds tactility to dark immersive sections */
+@utility bg-grain {
+  position: relative;
+  isolation: isolate;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  }
+}
+
+/* Floating glass card on imagery — used sparingly */
+@utility glass-dark {
+  background: rgb(10 20 13 / 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgb(255 255 255 / 0.12);
+}
+
+@utility glass-light {
+  background: rgb(251 250 245 / 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgb(19 26 18 / 0.08);
+}
+
+/* Soft luminous glow for dark sections */
+@utility glow-leaf {
+  background:
+    radial-gradient(42rem 26rem at 78% 12%, rgb(132 204 53 / 0.14), transparent 60%),
+    radial-gradient(36rem 24rem at 12% 88%, rgb(47 88 59 / 0.35), transparent 65%);
+}
+
+/* Hide scrollbar but keep scrollability (mobile filter rows etc.) */
+@utility scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── Rich text (article bodies, product descriptions) ─────────────────────── */
+
+@layer components {
+  .rich-text {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--color-ink-soft);
+  }
+  .rich-text > * + * {
+    margin-top: 1.1em;
+  }
+  .rich-text h2,
+  .rich-text h3,
+  .rich-text h4 {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    letter-spacing: -0.015em;
+    font-weight: 500;
+    margin-top: 1.9em;
+  }
+  .rich-text h2 {
+    font-size: 1.55em;
+    line-height: 1.2;
+  }
+  .rich-text h3 {
+    font-size: 1.25em;
+    line-height: 1.3;
+  }
+  .rich-text h4 {
+    font-size: 1.05em;
+  }
+  .rich-text strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .rich-text a {
+    color: var(--color-leaf-700);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgb(101 168 36 / 0.4);
+  }
+  .rich-text a:hover {
+    text-decoration-color: currentColor;
+  }
+  .rich-text ul,
+  .rich-text ol {
+    padding-left: 1.4em;
+  }
+  .rich-text ul {
+    list-style: disc;
+  }
+  .rich-text ol {
+    list-style: decimal;
+  }
+  .rich-text li {
+    margin-top: 0.45em;
+  }
+  .rich-text li::marker {
+    color: var(--color-leaf-600);
+  }
+  .rich-text blockquote {
+    border-left: 3px solid var(--color-leaf-500);
+    padding-left: 1.25em;
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-size: 1.15em;
+    color: var(--color-ink);
+  }
+  .rich-text img {
+    border-radius: var(--radius-lg);
+    margin-block: 1.5em;
+  }
+  .rich-text table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em;
+  }
+  .rich-text th,
+  .rich-text td {
+    border: 1px solid var(--color-line);
+    padding: 0.6em 0.8em;
+    text-align: left;
+  }
+  .rich-text th {
+    background: var(--color-paper-dim);
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  /* Dark-surface variant */
+  .rich-text-invert {
+    color: rgb(246 244 236 / 0.78);
+  }
+  .rich-text-invert h2,
+  .rich-text-invert h3,
+  .rich-text-invert h4,
+  .rich-text-invert strong,
+  .rich-text-invert blockquote {
+    color: var(--color-paper);
+  }
+  .rich-text-invert a {
+    color: var(--color-leaf-400);
+  }
+}

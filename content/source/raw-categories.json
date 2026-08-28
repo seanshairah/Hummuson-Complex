@@ -1,0 +1,46 @@
+[
+  {
+    "id": 13,
+    "name": "Organic",
+    "slug": "organic",
+    "description": "",
+    "parent": 0,
+    "count": 13,
+    "image": null,
+    "review_count": 0,
+    "permalink": "https://humusoncomplex.com/product-category/organic/"
+  },
+  {
+    "id": 37,
+    "name": "Physio",
+    "slug": "physio",
+    "description": "",
+    "parent": 0,
+    "count": 13,
+    "image": null,
+    "review_count": 0,
+    "permalink": "https://humusoncomplex.com/product-category/physio/"
+  },
+  {
+    "id": 64,
+    "name": "Uncategorized",
+    "slug": "uncategorized",
+    "description": "",
+    "parent": 0,
+    "count": 22,
+    "image": null,
+    "review_count": 0,
+    "permalink": "https://humusoncomplex.com/product-category/uncategorized/"
+  },
+  {
+    "id": 59,
+    "name": "Value",
+    "slug": "value",
+    "description": "",
+    "parent": 0,
+    "count": 5,
+    "image": null,
+    "review_count": 0,
+    "permalink": "https://humusoncomplex.com/product-category/value/"
+  }
+]

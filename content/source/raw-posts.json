@@ -1,0 +1,2246 @@
+[
+  {
+    "id": 4252,
+    "date": "2023-07-15T04:32:36",
+    "date_gmt": "2023-07-15T04:32:36",
+    "guid": {
+      "rendered": "http://humusoncomplex.com/?p=4252"
+    },
+    "modified": "2023-07-15T04:32:36",
+    "modified_gmt": "2023-07-15T04:32:36",
+    "slug": "boost-your-potato-yields-with-fulvic-acid",
+    "status": "publish",
+    "type": "post",
+    "link": "https://humusoncomplex.com/2023/07/15/boost-your-potato-yields-with-fulvic-acid/",
+    "title": {
+      "rendered": "Boost Your Potato Yields with Fulvic Acid!"
+    },
+    "content": {
+      "rendered": "<p>Are you a potato farmer looking to maximize your yield ? Look no further than the incredible benefits of using Carbo amin in potato farming. This product is enriched with humic and fulvic acids and can revolutionize your potato production systems. Here are the advantages and how it addresses the weaknesses of traditional fertilizers:</p>\n<p>1. Minimize Fertilizer Losses: Potatoes have high fertilizer requirements, but unfortunately, nitrates and phosphates are often from lost the root zone, leading to financial losses for farmers. With Carboamin&#8217;s humic and fulvic acids, nutrients are bound, minimizing leaching and ensuring that more fertilizer is utilized by the plant.</p>\n<p>2. Accelerate Nutrient Uptake: The chelating properties of humic, fulvic acids, and amino acids in Carboamin speed up the uptake of nutrients by your potato plants. This means that essential elements are readily available promoting, healthy growth and maximizing yield potential.</p>\n<p>3. Stimulate Root Growth: Root development is crucial for nutrient and water absorption. Carboamin&#8217;s blend of humic, fulvic acids, and phytohormones works wonders in promoting potato roots system, expanding the area for nutrient and water uptake. Stronger roots mean healthier plants and improved overall productivity.</p>\n<p>4. Enhance Nutrient Utilization: Understanding how soil holds nutrients and how potato crops utilize them is central to potato nutrition. This is where Carboamin comes in! By integrating Carboamin with synthetic fertilizers at planting, you not only improve the utilization efficiency of the synthetic fertilizers but also influence root growth parameters and stimulate beneficial biology that enhances nutrient utilization.</p>\n<p>Humuson Carbo amin product is designed to improve efficiency, reduce losses, and promote sustainable potato production.</p>\n",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Are you a potato farmer looking to maximize your yield ? Look no further than the incredible benefits of using Carbo amin in potato farming. This product is enriched with humic and fulvic acids and can revolutionize your potato production systems. Here are the advantages and how it addresses the weaknesses of traditional fertilizers: 1. [&hellip;]</p>\n",
+      "protected": false
+    },
+    "author": 1,
+    "featured_media": 4253,
+    "comment_status": "open",
+    "ping_status": "open",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_jetpack_memberships_contains_paid_content": false,
+      "footnotes": ""
+    },
+    "categories": [
+      55
+    ],
+    "tags": [],
+    "class_list": [
+      "post-4252",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-fertilizers"
+    ],
+    "jetpack_featured_media_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/d1001aa6-ad9e-42ef-87a8-a0bea95538e2.jpg",
+    "jetpack_sharing_enabled": true,
+    "_links": {
+      "self": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4252",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/comments?post=4252"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 1,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4252/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 4254,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4252/revisions/4254"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/media/4253"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/media?parent=4252"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/categories?post=4252"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/tags?post=4252"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    },
+    "_embedded": {
+      "author": [
+        {
+          "id": 1,
+          "name": "Humuson Complex",
+          "url": "https://humusoncomplex.com",
+          "description": "",
+          "link": "https://humusoncomplex.com/author/yiwxlrgo/",
+          "slug": "yiwxlrgo",
+          "avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=24&d=mm&r=g",
+            "48": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=48&d=mm&r=g",
+            "96": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=96&d=mm&r=g"
+          },
+          "is_super_admin": true,
+          "woocommerce_meta": {
+            "variable_product_tour_shown": "",
+            "activity_panel_inbox_last_read": "",
+            "activity_panel_reviews_last_read": "",
+            "categories_report_columns": "",
+            "coupons_report_columns": "",
+            "customers_report_columns": "",
+            "orders_report_columns": "",
+            "products_report_columns": "",
+            "revenue_report_columns": "",
+            "taxes_report_columns": "",
+            "variations_report_columns": "",
+            "dashboard_sections": "",
+            "dashboard_chart_type": "",
+            "dashboard_chart_interval": "",
+            "dashboard_leaderboard_rows": "",
+            "order_attribution_install_banner_dismissed": "",
+            "homepage_layout": "",
+            "homepage_stats": "",
+            "task_list_tracked_started_tasks": "{\"payments\":1,\"tax\":1,\"marketing\":1,\"appearance\":2}",
+            "android_app_banner_dismissed": "\"yes\"",
+            "launch_your_store_tour_hidden": "",
+            "coming_soon_banner_dismissed": ""
+          },
+          "_links": {
+            "self": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users"
+              }
+            ]
+          }
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "id": 4253,
+          "date": "2023-07-15T04:32:27",
+          "slug": "d1001aa6-ad9e-42ef-87a8-a0bea95538e2",
+          "type": "attachment",
+          "link": "https://humusoncomplex.com/2023/07/15/boost-your-potato-yields-with-fulvic-acid/d1001aa6-ad9e-42ef-87a8-a0bea95538e2/",
+          "title": {
+            "rendered": "d1001aa6-ad9e-42ef-87a8-a0bea95538e2"
+          },
+          "author": 1,
+          "featured_media": 0,
+          "jetpack_sharing_enabled": true,
+          "caption": {
+            "rendered": ""
+          },
+          "alt_text": "",
+          "media_type": "image",
+          "mime_type": "image/jpeg",
+          "media_details": {
+            "width": 540,
+            "height": 540,
+            "file": "2023/07/d1001aa6-ad9e-42ef-87a8-a0bea95538e2.jpg",
+            "filesize": 148502,
+            "sizes": {
+              "medium": {
+                "file": "d1001aa6-ad9e-42ef-87a8-a0bea95538e2-300x300.jpg",
+                "width": 300,
+                "height": 300,
+                "filesize": 29497,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/d1001aa6-ad9e-42ef-87a8-a0bea95538e2-300x300.jpg"
+              },
+              "thumbnail": {
+                "file": "d1001aa6-ad9e-42ef-87a8-a0bea95538e2-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "filesize": 8551,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/d1001aa6-ad9e-42ef-87a8-a0bea95538e2-150x150.jpg"
+              },
+              "woocommerce_thumbnail": {
+                "file": "d1001aa6-ad9e-42ef-87a8-a0bea95538e2-300x300.jpg",
+                "width": 300,
+                "height": 300,
+                "filesize": 29497,
+                "uncropped": false,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/d1001aa6-ad9e-42ef-87a8-a0bea95538e2-300x300.jpg"
+              },
+              "woocommerce_gallery_thumbnail": {
+                "file": "d1001aa6-ad9e-42ef-87a8-a0bea95538e2-370x420.jpg",
+                "width": 370,
+                "height": 420,
+                "filesize": 44988,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/d1001aa6-ad9e-42ef-87a8-a0bea95538e2-370x420.jpg"
+              },
+              "full": {
+                "file": "d1001aa6-ad9e-42ef-87a8-a0bea95538e2.jpg",
+                "width": 540,
+                "height": 540,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/d1001aa6-ad9e-42ef-87a8-a0bea95538e2.jpg"
+              }
+            },
+            "image_meta": {
+              "aperture": "0",
+              "credit": "",
+              "camera": "",
+              "caption": "",
+              "created_timestamp": "0",
+              "copyright": "",
+              "focal_length": "0",
+              "iso": "0",
+              "shutter_speed": "0",
+              "title": "",
+              "orientation": "0",
+              "keywords": []
+            }
+          },
+          "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/d1001aa6-ad9e-42ef-87a8-a0bea95538e2.jpg",
+          "_links": {
+            "self": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/media/4253",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/media"
+              }
+            ],
+            "about": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/types/attachment"
+              }
+            ],
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "replies": [
+              {
+                "embeddable": true,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/comments?post=4253"
+              }
+            ],
+            "wp:attached-to": [
+              {
+                "embeddable": true,
+                "post_type": "post",
+                "id": 4252,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4252"
+              }
+            ],
+            "curies": [
+              {
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+              }
+            ]
+          }
+        }
+      ],
+      "wp:term": [
+        [
+          {
+            "id": 55,
+            "link": "https://humusoncomplex.com/category/fertilizers/",
+            "name": "Fertilizers",
+            "slug": "fertilizers",
+            "taxonomy": "category",
+            "_links": {
+              "self": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/categories/55",
+                  "targetHints": {
+                    "allow": [
+                      "GET"
+                    ]
+                  }
+                }
+              ],
+              "collection": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/categories"
+                }
+              ],
+              "about": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/taxonomies/category"
+                }
+              ],
+              "wp:post_type": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/posts?categories=55"
+                }
+              ],
+              "curies": [
+                {
+                  "name": "wp",
+                  "href": "https://api.w.org/{rel}",
+                  "templated": true
+                }
+              ]
+            }
+          }
+        ],
+        []
+      ]
+    }
+  },
+  {
+    "id": 4249,
+    "date": "2023-07-15T04:30:50",
+    "date_gmt": "2023-07-15T04:30:50",
+    "guid": {
+      "rendered": "http://humusoncomplex.com/?p=4249"
+    },
+    "modified": "2023-07-15T04:30:50",
+    "modified_gmt": "2023-07-15T04:30:50",
+    "slug": "soaking-seeds-in-fulvic-acids",
+    "status": "publish",
+    "type": "post",
+    "link": "https://humusoncomplex.com/2023/07/15/soaking-seeds-in-fulvic-acids/",
+    "title": {
+      "rendered": "Soaking seeds in fulvic acids"
+    },
+    "content": {
+      "rendered": "<p>Soaking seeds in fulvic acids, which are a type of organic acid derived from humus, can provide several benefits for seed germination and plant growth. Here are some potential advantages of using fulvic acids for seed soaking:</p>\n<p>1. Enhanced seed germination: Fulvic acids can stimulate seed germination by promoting enzymatic activity and providing essential nutrients. Soaking seeds in fulvic acids can potentially result in improved germination rates, faster seedling emergence, and more uniform growth.</p>\n<p>2. Nutrient uptake and availability: Fulvic acids have the ability to chelate or bind with essential nutrients, making them more available for plant uptake. Soaking seeds in fulvic acids can help solubilize and mobilize nutrients in the soil, making them easier for the emerging seedlings to absorb. This can lead to improved nutrient uptake and utilization, promoting healthy plant growth.</p>\n<p>3. Root development and branching: Fulvic acids can stimulate root growth and development. Soaking seeds in fulvic acids can enhance early root elongation, increase the number of root hairs, and promote lateral root branching. This results in a more extensive root system, improving nutrient and water uptake, and overall plant vigor.</p>\n<p>4. Stress tolerance: Fulvic acids have been reported to enhance plant tolerance to various abiotic stresses, including drought, salinity, and heavy metal toxicity. Soaking seeds in fulvic acids can potentially prime the seedlings&#8217; stress response mechanisms, improving their ability to withstand adverse environmental conditions.</p>\n<p>5. Enzymatic activity and hormonal regulation: Fulvic acids can act as natural biostimulants, promoting enzymatic activity and hormonal regulation in plants. Soaking seeds in fulvic acids can enhance the production of growth-promoting hormones, such as auxins and cytokinins, leading to improved seedling vigor, root development, and overall growth performance.</p>\n<p>6. Disease resistance: Fulvic acids have been shown to possess antimicrobial properties and can help enhance plant defense mechanisms against certain pathogens. Soaking seeds in fulvic acids can potentially provide a protective barrier and improve the seedlings&#8217; resistance to seed-borne or soil-borne diseases.</p>\n<p>It&#8217;s important to note that the effectiveness of fulvic acid seed soaking may vary depending on the specific crop, soil conditions, and concentration of fulvic acids used. It&#8217;s advisable to consult with agricultural experts or conduct small-scale trials to determine the optimal application rates and methods for achieving the desired benefits.</p>\n",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Soaking seeds in fulvic acids, which are a type of organic acid derived from humus, can provide several benefits for seed germination and plant growth. Here are some potential advantages of using fulvic acids for seed soaking: 1. Enhanced seed germination: Fulvic acids can stimulate seed germination by promoting enzymatic activity and providing essential nutrients. [&hellip;]</p>\n",
+      "protected": false
+    },
+    "author": 1,
+    "featured_media": 4250,
+    "comment_status": "open",
+    "ping_status": "open",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_jetpack_memberships_contains_paid_content": false,
+      "footnotes": ""
+    },
+    "categories": [
+      55
+    ],
+    "tags": [],
+    "class_list": [
+      "post-4249",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-fertilizers"
+    ],
+    "jetpack_featured_media_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/cc376102-e360-4742-a345-32c38392b432.jpg",
+    "jetpack_sharing_enabled": true,
+    "_links": {
+      "self": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4249",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/comments?post=4249"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 1,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4249/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 4251,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4249/revisions/4251"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/media/4250"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/media?parent=4249"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/categories?post=4249"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/tags?post=4249"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    },
+    "_embedded": {
+      "author": [
+        {
+          "id": 1,
+          "name": "Humuson Complex",
+          "url": "https://humusoncomplex.com",
+          "description": "",
+          "link": "https://humusoncomplex.com/author/yiwxlrgo/",
+          "slug": "yiwxlrgo",
+          "avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=24&d=mm&r=g",
+            "48": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=48&d=mm&r=g",
+            "96": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=96&d=mm&r=g"
+          },
+          "is_super_admin": true,
+          "woocommerce_meta": {
+            "variable_product_tour_shown": "",
+            "activity_panel_inbox_last_read": "",
+            "activity_panel_reviews_last_read": "",
+            "categories_report_columns": "",
+            "coupons_report_columns": "",
+            "customers_report_columns": "",
+            "orders_report_columns": "",
+            "products_report_columns": "",
+            "revenue_report_columns": "",
+            "taxes_report_columns": "",
+            "variations_report_columns": "",
+            "dashboard_sections": "",
+            "dashboard_chart_type": "",
+            "dashboard_chart_interval": "",
+            "dashboard_leaderboard_rows": "",
+            "order_attribution_install_banner_dismissed": "",
+            "homepage_layout": "",
+            "homepage_stats": "",
+            "task_list_tracked_started_tasks": "{\"payments\":1,\"tax\":1,\"marketing\":1,\"appearance\":2}",
+            "android_app_banner_dismissed": "\"yes\"",
+            "launch_your_store_tour_hidden": "",
+            "coming_soon_banner_dismissed": ""
+          },
+          "_links": {
+            "self": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users"
+              }
+            ]
+          }
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "id": 4250,
+          "date": "2023-07-15T04:30:41",
+          "slug": "cc376102-e360-4742-a345-32c38392b432",
+          "type": "attachment",
+          "link": "https://humusoncomplex.com/2023/07/15/soaking-seeds-in-fulvic-acids/cc376102-e360-4742-a345-32c38392b432/",
+          "title": {
+            "rendered": "cc376102-e360-4742-a345-32c38392b432"
+          },
+          "author": 1,
+          "featured_media": 0,
+          "jetpack_sharing_enabled": true,
+          "caption": {
+            "rendered": ""
+          },
+          "alt_text": "",
+          "media_type": "image",
+          "mime_type": "image/jpeg",
+          "media_details": {
+            "width": 368,
+            "height": 368,
+            "file": "2023/07/cc376102-e360-4742-a345-32c38392b432.jpg",
+            "filesize": 62634,
+            "sizes": {
+              "medium": {
+                "file": "cc376102-e360-4742-a345-32c38392b432-300x300.jpg",
+                "width": 300,
+                "height": 300,
+                "filesize": 23388,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/cc376102-e360-4742-a345-32c38392b432-300x300.jpg"
+              },
+              "thumbnail": {
+                "file": "cc376102-e360-4742-a345-32c38392b432-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "filesize": 8175,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/cc376102-e360-4742-a345-32c38392b432-150x150.jpg"
+              },
+              "woocommerce_thumbnail": {
+                "file": "cc376102-e360-4742-a345-32c38392b432-300x300.jpg",
+                "width": 300,
+                "height": 300,
+                "filesize": 23388,
+                "uncropped": false,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/cc376102-e360-4742-a345-32c38392b432-300x300.jpg"
+              },
+              "full": {
+                "file": "cc376102-e360-4742-a345-32c38392b432.jpg",
+                "width": 368,
+                "height": 368,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/cc376102-e360-4742-a345-32c38392b432.jpg"
+              }
+            },
+            "image_meta": {
+              "aperture": "0",
+              "credit": "",
+              "camera": "",
+              "caption": "",
+              "created_timestamp": "0",
+              "copyright": "",
+              "focal_length": "0",
+              "iso": "0",
+              "shutter_speed": "0",
+              "title": "",
+              "orientation": "0",
+              "keywords": []
+            }
+          },
+          "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/cc376102-e360-4742-a345-32c38392b432.jpg",
+          "_links": {
+            "self": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/media/4250",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/media"
+              }
+            ],
+            "about": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/types/attachment"
+              }
+            ],
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "replies": [
+              {
+                "embeddable": true,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/comments?post=4250"
+              }
+            ],
+            "wp:attached-to": [
+              {
+                "embeddable": true,
+                "post_type": "post",
+                "id": 4249,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4249"
+              }
+            ],
+            "curies": [
+              {
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+              }
+            ]
+          }
+        }
+      ],
+      "wp:term": [
+        [
+          {
+            "id": 55,
+            "link": "https://humusoncomplex.com/category/fertilizers/",
+            "name": "Fertilizers",
+            "slug": "fertilizers",
+            "taxonomy": "category",
+            "_links": {
+              "self": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/categories/55",
+                  "targetHints": {
+                    "allow": [
+                      "GET"
+                    ]
+                  }
+                }
+              ],
+              "collection": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/categories"
+                }
+              ],
+              "about": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/taxonomies/category"
+                }
+              ],
+              "wp:post_type": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/posts?categories=55"
+                }
+              ],
+              "curies": [
+                {
+                  "name": "wp",
+                  "href": "https://api.w.org/{rel}",
+                  "templated": true
+                }
+              ]
+            }
+          }
+        ],
+        []
+      ]
+    }
+  },
+  {
+    "id": 4246,
+    "date": "2023-07-15T04:29:15",
+    "date_gmt": "2023-07-15T04:29:15",
+    "guid": {
+      "rendered": "http://humusoncomplex.com/?p=4246"
+    },
+    "modified": "2023-07-15T04:29:15",
+    "modified_gmt": "2023-07-15T04:29:15",
+    "slug": "dead-soils-do-not-produce-desired-results",
+    "status": "publish",
+    "type": "post",
+    "link": "https://humusoncomplex.com/2023/07/15/dead-soils-do-not-produce-desired-results/",
+    "title": {
+      "rendered": "Dead Soils Do Not Produce Desired Results!"
+    },
+    "content": {
+      "rendered": "<p>Failure to prioritize and maintain soil fertility can have detrimental effects on farm productivity and profitability. Soil fertility loss occurs when essential nutrients are depleted or imbalanced, leading to decreased crop yields and overall poor plant health.</p>\n<p>To prevent such a decline in farm productivity, you need to start prioritizing and maintaining soil fertility through effective management practices. One such practice is the replenishment of nutrients using organic products like Humuson Grow Plus, Carbon amin, or Maxprolin. These products provide the necessary nutrients to ensure optimal crop growth.</p>\n<p>In addition to nutrient replenishment, incorporating organic matter into the soil and implementing soil conservation techniques are vital for sustaining soil fertility.</p>\n<p>Investing in the health of your soil is an investment not an expense. By prioritizing soil fertility, you can maximize productivity, increase profitability, reduce fertilizer costs and meet the ever-growing demands of the market. Don&#8217;t let your soil become a barrier to success; take action now!</p>\n",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Failure to prioritize and maintain soil fertility can have detrimental effects on farm productivity and profitability. Soil fertility loss occurs when essential nutrients are depleted or imbalanced, leading to decreased crop yields and overall poor plant health. To prevent such a decline in farm productivity, you need to start prioritizing and maintaining soil fertility through [&hellip;]</p>\n",
+      "protected": false
+    },
+    "author": 1,
+    "featured_media": 4247,
+    "comment_status": "open",
+    "ping_status": "open",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_jetpack_memberships_contains_paid_content": false,
+      "footnotes": ""
+    },
+    "categories": [
+      55
+    ],
+    "tags": [],
+    "class_list": [
+      "post-4246",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-fertilizers"
+    ],
+    "jetpack_featured_media_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/6d8fe22f-ce28-403c-a09c-6016d8b8d8df.jpg",
+    "jetpack_sharing_enabled": true,
+    "_links": {
+      "self": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4246",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/comments?post=4246"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 1,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4246/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 4248,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4246/revisions/4248"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/media/4247"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/media?parent=4246"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/categories?post=4246"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/tags?post=4246"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    },
+    "_embedded": {
+      "author": [
+        {
+          "id": 1,
+          "name": "Humuson Complex",
+          "url": "https://humusoncomplex.com",
+          "description": "",
+          "link": "https://humusoncomplex.com/author/yiwxlrgo/",
+          "slug": "yiwxlrgo",
+          "avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=24&d=mm&r=g",
+            "48": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=48&d=mm&r=g",
+            "96": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=96&d=mm&r=g"
+          },
+          "is_super_admin": true,
+          "woocommerce_meta": {
+            "variable_product_tour_shown": "",
+            "activity_panel_inbox_last_read": "",
+            "activity_panel_reviews_last_read": "",
+            "categories_report_columns": "",
+            "coupons_report_columns": "",
+            "customers_report_columns": "",
+            "orders_report_columns": "",
+            "products_report_columns": "",
+            "revenue_report_columns": "",
+            "taxes_report_columns": "",
+            "variations_report_columns": "",
+            "dashboard_sections": "",
+            "dashboard_chart_type": "",
+            "dashboard_chart_interval": "",
+            "dashboard_leaderboard_rows": "",
+            "order_attribution_install_banner_dismissed": "",
+            "homepage_layout": "",
+            "homepage_stats": "",
+            "task_list_tracked_started_tasks": "{\"payments\":1,\"tax\":1,\"marketing\":1,\"appearance\":2}",
+            "android_app_banner_dismissed": "\"yes\"",
+            "launch_your_store_tour_hidden": "",
+            "coming_soon_banner_dismissed": ""
+          },
+          "_links": {
+            "self": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users"
+              }
+            ]
+          }
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "id": 4247,
+          "date": "2023-07-15T04:29:06",
+          "slug": "6d8fe22f-ce28-403c-a09c-6016d8b8d8df",
+          "type": "attachment",
+          "link": "https://humusoncomplex.com/2023/07/15/dead-soils-do-not-produce-desired-results/6d8fe22f-ce28-403c-a09c-6016d8b8d8df/",
+          "title": {
+            "rendered": "6d8fe22f-ce28-403c-a09c-6016d8b8d8df"
+          },
+          "author": 1,
+          "featured_media": 0,
+          "jetpack_sharing_enabled": true,
+          "caption": {
+            "rendered": ""
+          },
+          "alt_text": "",
+          "media_type": "image",
+          "mime_type": "image/jpeg",
+          "media_details": {
+            "width": 720,
+            "height": 720,
+            "file": "2023/07/6d8fe22f-ce28-403c-a09c-6016d8b8d8df.jpg",
+            "filesize": 136721,
+            "sizes": {
+              "medium": {
+                "file": "6d8fe22f-ce28-403c-a09c-6016d8b8d8df-300x300.jpg",
+                "width": 300,
+                "height": 300,
+                "filesize": 20403,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/6d8fe22f-ce28-403c-a09c-6016d8b8d8df-300x300.jpg"
+              },
+              "thumbnail": {
+                "file": "6d8fe22f-ce28-403c-a09c-6016d8b8d8df-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "filesize": 6645,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/6d8fe22f-ce28-403c-a09c-6016d8b8d8df-150x150.jpg"
+              },
+              "woocommerce_thumbnail": {
+                "file": "6d8fe22f-ce28-403c-a09c-6016d8b8d8df-300x300.jpg",
+                "width": 300,
+                "height": 300,
+                "filesize": 20403,
+                "uncropped": false,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/6d8fe22f-ce28-403c-a09c-6016d8b8d8df-300x300.jpg"
+              },
+              "woocommerce_single": {
+                "file": "6d8fe22f-ce28-403c-a09c-6016d8b8d8df-600x600.jpg",
+                "width": 600,
+                "height": 600,
+                "filesize": 58645,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/6d8fe22f-ce28-403c-a09c-6016d8b8d8df-600x600.jpg"
+              },
+              "woocommerce_gallery_thumbnail": {
+                "file": "6d8fe22f-ce28-403c-a09c-6016d8b8d8df-370x420.jpg",
+                "width": 370,
+                "height": 420,
+                "filesize": 30645,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/6d8fe22f-ce28-403c-a09c-6016d8b8d8df-370x420.jpg"
+              },
+              "full": {
+                "file": "6d8fe22f-ce28-403c-a09c-6016d8b8d8df.jpg",
+                "width": 720,
+                "height": 720,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/6d8fe22f-ce28-403c-a09c-6016d8b8d8df.jpg"
+              }
+            },
+            "image_meta": {
+              "aperture": "0",
+              "credit": "",
+              "camera": "",
+              "caption": "",
+              "created_timestamp": "0",
+              "copyright": "",
+              "focal_length": "0",
+              "iso": "0",
+              "shutter_speed": "0",
+              "title": "",
+              "orientation": "0",
+              "keywords": []
+            }
+          },
+          "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/6d8fe22f-ce28-403c-a09c-6016d8b8d8df.jpg",
+          "_links": {
+            "self": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/media/4247",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/media"
+              }
+            ],
+            "about": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/types/attachment"
+              }
+            ],
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "replies": [
+              {
+                "embeddable": true,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/comments?post=4247"
+              }
+            ],
+            "wp:attached-to": [
+              {
+                "embeddable": true,
+                "post_type": "post",
+                "id": 4246,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4246"
+              }
+            ],
+            "curies": [
+              {
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+              }
+            ]
+          }
+        }
+      ],
+      "wp:term": [
+        [
+          {
+            "id": 55,
+            "link": "https://humusoncomplex.com/category/fertilizers/",
+            "name": "Fertilizers",
+            "slug": "fertilizers",
+            "taxonomy": "category",
+            "_links": {
+              "self": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/categories/55",
+                  "targetHints": {
+                    "allow": [
+                      "GET"
+                    ]
+                  }
+                }
+              ],
+              "collection": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/categories"
+                }
+              ],
+              "about": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/taxonomies/category"
+                }
+              ],
+              "wp:post_type": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/posts?categories=55"
+                }
+              ],
+              "curies": [
+                {
+                  "name": "wp",
+                  "href": "https://api.w.org/{rel}",
+                  "templated": true
+                }
+              ]
+            }
+          }
+        ],
+        []
+      ]
+    }
+  },
+  {
+    "id": 4061,
+    "date": "2023-07-05T14:33:48",
+    "date_gmt": "2023-07-05T14:33:48",
+    "guid": {
+      "rendered": "http://humusoncomplex.com/?p=4061"
+    },
+    "modified": "2023-07-05T14:33:48",
+    "modified_gmt": "2023-07-05T14:33:48",
+    "slug": "only-grow-plus-as-a-top-dressing-was-used-to-cultivate-these-sugar-beans",
+    "status": "publish",
+    "type": "post",
+    "link": "https://humusoncomplex.com/2023/07/05/only-grow-plus-as-a-top-dressing-was-used-to-cultivate-these-sugar-beans/",
+    "title": {
+      "rendered": "Only Grow Plus as a top dressing was used to cultivate these sugar beans"
+    },
+    "content": {
+      "rendered": "<p>Only Grow Plus as a top dressing was used to cultivate these sugar beans all the way in Chikombedzi (we had to consult google mams to find the place 😇😊🧐). Grow Plus is our organic biostimulant renowned for its ability to enhance soil and crop health</p>\n",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Only Grow Plus as a top dressing was used to cultivate these sugar beans all the way in Chikombedzi (we had to consult google mams to find the place 😇😊🧐). Grow Plus is our organic biostimulant renowned for its ability to enhance soil and crop health</p>\n",
+      "protected": false
+    },
+    "author": 1,
+    "featured_media": 4064,
+    "comment_status": "open",
+    "ping_status": "open",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_jetpack_memberships_contains_paid_content": false,
+      "footnotes": ""
+    },
+    "categories": [
+      55
+    ],
+    "tags": [],
+    "class_list": [
+      "post-4061",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-fertilizers"
+    ],
+    "jetpack_featured_media_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688567289628.jpg",
+    "jetpack_sharing_enabled": true,
+    "_links": {
+      "self": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4061",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/comments?post=4061"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 1,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4061/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 4065,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4061/revisions/4065"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/media/4064"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/media?parent=4061"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/categories?post=4061"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/tags?post=4061"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    },
+    "_embedded": {
+      "author": [
+        {
+          "id": 1,
+          "name": "Humuson Complex",
+          "url": "https://humusoncomplex.com",
+          "description": "",
+          "link": "https://humusoncomplex.com/author/yiwxlrgo/",
+          "slug": "yiwxlrgo",
+          "avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=24&d=mm&r=g",
+            "48": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=48&d=mm&r=g",
+            "96": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=96&d=mm&r=g"
+          },
+          "is_super_admin": true,
+          "woocommerce_meta": {
+            "variable_product_tour_shown": "",
+            "activity_panel_inbox_last_read": "",
+            "activity_panel_reviews_last_read": "",
+            "categories_report_columns": "",
+            "coupons_report_columns": "",
+            "customers_report_columns": "",
+            "orders_report_columns": "",
+            "products_report_columns": "",
+            "revenue_report_columns": "",
+            "taxes_report_columns": "",
+            "variations_report_columns": "",
+            "dashboard_sections": "",
+            "dashboard_chart_type": "",
+            "dashboard_chart_interval": "",
+            "dashboard_leaderboard_rows": "",
+            "order_attribution_install_banner_dismissed": "",
+            "homepage_layout": "",
+            "homepage_stats": "",
+            "task_list_tracked_started_tasks": "{\"payments\":1,\"tax\":1,\"marketing\":1,\"appearance\":2}",
+            "android_app_banner_dismissed": "\"yes\"",
+            "launch_your_store_tour_hidden": "",
+            "coming_soon_banner_dismissed": ""
+          },
+          "_links": {
+            "self": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users"
+              }
+            ]
+          }
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "id": 4064,
+          "date": "2023-07-05T14:33:18",
+          "slug": "fb_img_1688567289628",
+          "type": "attachment",
+          "link": "https://humusoncomplex.com/2023/07/05/only-grow-plus-as-a-top-dressing-was-used-to-cultivate-these-sugar-beans/fb_img_1688567289628/",
+          "title": {
+            "rendered": "FB_IMG_1688567289628"
+          },
+          "author": 1,
+          "featured_media": 0,
+          "jetpack_sharing_enabled": true,
+          "caption": {
+            "rendered": ""
+          },
+          "alt_text": "",
+          "media_type": "image",
+          "mime_type": "image/jpeg",
+          "media_details": {
+            "width": 720,
+            "height": 960,
+            "file": "2023/07/FB_IMG_1688567289628.jpg",
+            "filesize": 109722,
+            "sizes": {
+              "medium": {
+                "file": "FB_IMG_1688567289628-225x300.jpg",
+                "width": 225,
+                "height": 300,
+                "filesize": 21087,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688567289628-225x300.jpg"
+              },
+              "thumbnail": {
+                "file": "FB_IMG_1688567289628-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "filesize": 7986,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688567289628-150x150.jpg"
+              },
+              "landmaster-medium": {
+                "file": "FB_IMG_1688567289628-720x768.jpg",
+                "width": 720,
+                "height": 768,
+                "filesize": 114360,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688567289628-720x768.jpg"
+              },
+              "woocommerce_thumbnail": {
+                "file": "FB_IMG_1688567289628-300x300.jpg",
+                "width": 300,
+                "height": 300,
+                "filesize": 27937,
+                "uncropped": false,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688567289628-300x300.jpg"
+              },
+              "woocommerce_single": {
+                "file": "FB_IMG_1688567289628-600x800.jpg",
+                "width": 600,
+                "height": 800,
+                "filesize": 114742,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688567289628-600x800.jpg"
+              },
+              "woocommerce_gallery_thumbnail": {
+                "file": "FB_IMG_1688567289628-370x420.jpg",
+                "width": 370,
+                "height": 420,
+                "filesize": 45608,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688567289628-370x420.jpg"
+              },
+              "full": {
+                "file": "FB_IMG_1688567289628.jpg",
+                "width": 720,
+                "height": 960,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688567289628.jpg"
+              }
+            },
+            "image_meta": {
+              "aperture": "0",
+              "credit": "",
+              "camera": "",
+              "caption": "",
+              "created_timestamp": "0",
+              "copyright": "",
+              "focal_length": "0",
+              "iso": "0",
+              "shutter_speed": "0",
+              "title": "",
+              "orientation": "0",
+              "keywords": []
+            }
+          },
+          "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688567289628.jpg",
+          "_links": {
+            "self": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/media/4064",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/media"
+              }
+            ],
+            "about": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/types/attachment"
+              }
+            ],
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "replies": [
+              {
+                "embeddable": true,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/comments?post=4064"
+              }
+            ],
+            "wp:attached-to": [
+              {
+                "embeddable": true,
+                "post_type": "post",
+                "id": 4061,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4061"
+              }
+            ],
+            "curies": [
+              {
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+              }
+            ]
+          }
+        }
+      ],
+      "wp:term": [
+        [
+          {
+            "id": 55,
+            "link": "https://humusoncomplex.com/category/fertilizers/",
+            "name": "Fertilizers",
+            "slug": "fertilizers",
+            "taxonomy": "category",
+            "_links": {
+              "self": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/categories/55",
+                  "targetHints": {
+                    "allow": [
+                      "GET"
+                    ]
+                  }
+                }
+              ],
+              "collection": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/categories"
+                }
+              ],
+              "about": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/taxonomies/category"
+                }
+              ],
+              "wp:post_type": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/posts?categories=55"
+                }
+              ],
+              "curies": [
+                {
+                  "name": "wp",
+                  "href": "https://api.w.org/{rel}",
+                  "templated": true
+                }
+              ]
+            }
+          }
+        ],
+        []
+      ]
+    }
+  },
+  {
+    "id": 4055,
+    "date": "2023-07-05T14:22:25",
+    "date_gmt": "2023-07-05T14:22:25",
+    "guid": {
+      "rendered": "http://humusoncomplex.com/?p=4055"
+    },
+    "modified": "2023-07-05T14:23:48",
+    "modified_gmt": "2023-07-05T14:23:48",
+    "slug": "not-only-feed-the-plant-feed-the-soil",
+    "status": "publish",
+    "type": "post",
+    "link": "https://humusoncomplex.com/2023/07/05/not-only-feed-the-plant-feed-the-soil/",
+    "title": {
+      "rendered": "Not only feed the plant, feed the soil!"
+    },
+    "content": {
+      "rendered": "<p>Healthy soil results in healthy crops. The key to continuous success in farming is nourishing the soil. Healthy soil, full of earthworms, fungi, and bacteria or organic matter, provides crops with everything they need to thrive. So instead of focusing on fertilizing plants, focus your efforts on building rich, organic soil.</p>\n<p>The organic component of the soil acts as a reservoir for nutrients and habitat for soil microorganisms. In the long run, you will put minimal effort into taking care of the crops from nutrient deficiency or from pests and diseases.</p>\n",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>Healthy soil results in healthy crops. The key to continuous success in farming is nourishing the soil. Healthy soil, full of earthworms, fungi, and bacteria or organic matter, provides crops with everything they need to thrive. So instead of focusing on fertilizing plants, focus your efforts on building rich, organic soil. The organic component of [&hellip;]</p>\n",
+      "protected": false
+    },
+    "author": 1,
+    "featured_media": 4056,
+    "comment_status": "open",
+    "ping_status": "open",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_jetpack_memberships_contains_paid_content": false,
+      "footnotes": ""
+    },
+    "categories": [
+      55
+    ],
+    "tags": [],
+    "class_list": [
+      "post-4055",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-fertilizers"
+    ],
+    "jetpack_featured_media_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566270293.jpg",
+    "jetpack_sharing_enabled": true,
+    "_links": {
+      "self": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4055",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/comments?post=4055"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 1,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4055/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 4057,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4055/revisions/4057"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/media/4056"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/media?parent=4055"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/categories?post=4055"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/tags?post=4055"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    },
+    "_embedded": {
+      "author": [
+        {
+          "id": 1,
+          "name": "Humuson Complex",
+          "url": "https://humusoncomplex.com",
+          "description": "",
+          "link": "https://humusoncomplex.com/author/yiwxlrgo/",
+          "slug": "yiwxlrgo",
+          "avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=24&d=mm&r=g",
+            "48": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=48&d=mm&r=g",
+            "96": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=96&d=mm&r=g"
+          },
+          "is_super_admin": true,
+          "woocommerce_meta": {
+            "variable_product_tour_shown": "",
+            "activity_panel_inbox_last_read": "",
+            "activity_panel_reviews_last_read": "",
+            "categories_report_columns": "",
+            "coupons_report_columns": "",
+            "customers_report_columns": "",
+            "orders_report_columns": "",
+            "products_report_columns": "",
+            "revenue_report_columns": "",
+            "taxes_report_columns": "",
+            "variations_report_columns": "",
+            "dashboard_sections": "",
+            "dashboard_chart_type": "",
+            "dashboard_chart_interval": "",
+            "dashboard_leaderboard_rows": "",
+            "order_attribution_install_banner_dismissed": "",
+            "homepage_layout": "",
+            "homepage_stats": "",
+            "task_list_tracked_started_tasks": "{\"payments\":1,\"tax\":1,\"marketing\":1,\"appearance\":2}",
+            "android_app_banner_dismissed": "\"yes\"",
+            "launch_your_store_tour_hidden": "",
+            "coming_soon_banner_dismissed": ""
+          },
+          "_links": {
+            "self": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users"
+              }
+            ]
+          }
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "id": 4056,
+          "date": "2023-07-05T14:21:59",
+          "slug": "fb_img_1688566270293",
+          "type": "attachment",
+          "link": "https://humusoncomplex.com/2023/07/05/not-only-feed-the-plant-feed-the-soil/fb_img_1688566270293/",
+          "title": {
+            "rendered": "FB_IMG_1688566270293"
+          },
+          "author": 1,
+          "featured_media": 0,
+          "jetpack_sharing_enabled": true,
+          "caption": {
+            "rendered": ""
+          },
+          "alt_text": "",
+          "media_type": "image",
+          "mime_type": "image/jpeg",
+          "media_details": {
+            "width": 720,
+            "height": 960,
+            "file": "2023/07/FB_IMG_1688566270293.jpg",
+            "filesize": 94282,
+            "sizes": {
+              "medium": {
+                "file": "FB_IMG_1688566270293-225x300.jpg",
+                "width": 225,
+                "height": 300,
+                "filesize": 20167,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566270293-225x300.jpg"
+              },
+              "thumbnail": {
+                "file": "FB_IMG_1688566270293-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "filesize": 8481,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566270293-150x150.jpg"
+              },
+              "landmaster-medium": {
+                "file": "FB_IMG_1688566270293-720x768.jpg",
+                "width": 720,
+                "height": 768,
+                "filesize": 97984,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566270293-720x768.jpg"
+              },
+              "woocommerce_thumbnail": {
+                "file": "FB_IMG_1688566270293-300x300.jpg",
+                "width": 300,
+                "height": 300,
+                "filesize": 27529,
+                "uncropped": false,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566270293-300x300.jpg"
+              },
+              "woocommerce_single": {
+                "file": "FB_IMG_1688566270293-600x800.jpg",
+                "width": 600,
+                "height": 800,
+                "filesize": 100210,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566270293-600x800.jpg"
+              },
+              "woocommerce_gallery_thumbnail": {
+                "file": "FB_IMG_1688566270293-370x420.jpg",
+                "width": 370,
+                "height": 420,
+                "filesize": 42797,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566270293-370x420.jpg"
+              },
+              "full": {
+                "file": "FB_IMG_1688566270293.jpg",
+                "width": 720,
+                "height": 960,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566270293.jpg"
+              }
+            },
+            "image_meta": {
+              "aperture": "0",
+              "credit": "",
+              "camera": "",
+              "caption": "",
+              "created_timestamp": "0",
+              "copyright": "",
+              "focal_length": "0",
+              "iso": "0",
+              "shutter_speed": "0",
+              "title": "",
+              "orientation": "0",
+              "keywords": []
+            }
+          },
+          "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566270293.jpg",
+          "_links": {
+            "self": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/media/4056",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/media"
+              }
+            ],
+            "about": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/types/attachment"
+              }
+            ],
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "replies": [
+              {
+                "embeddable": true,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/comments?post=4056"
+              }
+            ],
+            "wp:attached-to": [
+              {
+                "embeddable": true,
+                "post_type": "post",
+                "id": 4055,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4055"
+              }
+            ],
+            "curies": [
+              {
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+              }
+            ]
+          }
+        }
+      ],
+      "wp:term": [
+        [
+          {
+            "id": 55,
+            "link": "https://humusoncomplex.com/category/fertilizers/",
+            "name": "Fertilizers",
+            "slug": "fertilizers",
+            "taxonomy": "category",
+            "_links": {
+              "self": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/categories/55",
+                  "targetHints": {
+                    "allow": [
+                      "GET"
+                    ]
+                  }
+                }
+              ],
+              "collection": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/categories"
+                }
+              ],
+              "about": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/taxonomies/category"
+                }
+              ],
+              "wp:post_type": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/posts?categories=55"
+                }
+              ],
+              "curies": [
+                {
+                  "name": "wp",
+                  "href": "https://api.w.org/{rel}",
+                  "templated": true
+                }
+              ]
+            }
+          }
+        ],
+        []
+      ]
+    }
+  },
+  {
+    "id": 4052,
+    "date": "2023-07-05T14:20:35",
+    "date_gmt": "2023-07-05T14:20:35",
+    "guid": {
+      "rendered": "http://humusoncomplex.com/?p=4052"
+    },
+    "modified": "2023-07-05T14:20:35",
+    "modified_gmt": "2023-07-05T14:20:35",
+    "slug": "have-you-tried-using-humuson-complex-products-in-your-seedling-nurseries",
+    "status": "publish",
+    "type": "post",
+    "link": "https://humusoncomplex.com/2023/07/05/have-you-tried-using-humuson-complex-products-in-your-seedling-nurseries/",
+    "title": {
+      "rendered": "Have you tried using Humuson Complex products in your seedling nurseries?"
+    },
+    "content": {
+      "rendered": "<p>&nbsp;</p>\n<p>Our organic biostimulants are designed to enhance plant growth, increase nutrient uptake, and improve overall plant health. Your seedlings will love the rich blend of amino acids, plant hormones and micronutrients that Humuson Complex offers.</p>\n<p>Our products are easy to use and can be integrated into your current growing protocols.</p>\n<p>Give your plants the best possible start with Humuson Complex &#8211; your go-to source for healthier, happier plants!</p>\n",
+      "protected": false
+    },
+    "excerpt": {
+      "rendered": "<p>&nbsp; Our organic biostimulants are designed to enhance plant growth, increase nutrient uptake, and improve overall plant health. Your seedlings will love the rich blend of amino acids, plant hormones and micronutrients that Humuson Complex offers. Our products are easy to use and can be integrated into your current growing protocols. Give your plants the [&hellip;]</p>\n",
+      "protected": false
+    },
+    "author": 1,
+    "featured_media": 4053,
+    "comment_status": "open",
+    "ping_status": "open",
+    "sticky": false,
+    "template": "",
+    "format": "standard",
+    "meta": {
+      "_jetpack_memberships_contains_paid_content": false,
+      "footnotes": ""
+    },
+    "categories": [
+      55
+    ],
+    "tags": [],
+    "class_list": [
+      "post-4052",
+      "post",
+      "type-post",
+      "status-publish",
+      "format-standard",
+      "has-post-thumbnail",
+      "hentry",
+      "category-fertilizers"
+    ],
+    "jetpack_featured_media_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566258433.jpg",
+    "jetpack_sharing_enabled": true,
+    "_links": {
+      "self": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4052",
+          "targetHints": {
+            "allow": [
+              "GET"
+            ]
+          }
+        }
+      ],
+      "collection": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts"
+        }
+      ],
+      "about": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/types/post"
+        }
+      ],
+      "author": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1"
+        }
+      ],
+      "replies": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/comments?post=4052"
+        }
+      ],
+      "version-history": [
+        {
+          "count": 1,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4052/revisions"
+        }
+      ],
+      "predecessor-version": [
+        {
+          "id": 4054,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4052/revisions/4054"
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/media/4053"
+        }
+      ],
+      "wp:attachment": [
+        {
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/media?parent=4052"
+        }
+      ],
+      "wp:term": [
+        {
+          "taxonomy": "category",
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/categories?post=4052"
+        },
+        {
+          "taxonomy": "post_tag",
+          "embeddable": true,
+          "href": "https://humusoncomplex.com/wp-json/wp/v2/tags?post=4052"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    },
+    "_embedded": {
+      "author": [
+        {
+          "id": 1,
+          "name": "Humuson Complex",
+          "url": "https://humusoncomplex.com",
+          "description": "",
+          "link": "https://humusoncomplex.com/author/yiwxlrgo/",
+          "slug": "yiwxlrgo",
+          "avatar_urls": {
+            "24": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=24&d=mm&r=g",
+            "48": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=48&d=mm&r=g",
+            "96": "https://secure.gravatar.com/avatar/12253b8a37d4862faa653d889c3b43e9533a05d73bfb383a9feaa8143bb67aa5?s=96&d=mm&r=g"
+          },
+          "is_super_admin": true,
+          "woocommerce_meta": {
+            "variable_product_tour_shown": "",
+            "activity_panel_inbox_last_read": "",
+            "activity_panel_reviews_last_read": "",
+            "categories_report_columns": "",
+            "coupons_report_columns": "",
+            "customers_report_columns": "",
+            "orders_report_columns": "",
+            "products_report_columns": "",
+            "revenue_report_columns": "",
+            "taxes_report_columns": "",
+            "variations_report_columns": "",
+            "dashboard_sections": "",
+            "dashboard_chart_type": "",
+            "dashboard_chart_interval": "",
+            "dashboard_leaderboard_rows": "",
+            "order_attribution_install_banner_dismissed": "",
+            "homepage_layout": "",
+            "homepage_stats": "",
+            "task_list_tracked_started_tasks": "{\"payments\":1,\"tax\":1,\"marketing\":1,\"appearance\":2}",
+            "android_app_banner_dismissed": "\"yes\"",
+            "launch_your_store_tour_hidden": "",
+            "coming_soon_banner_dismissed": ""
+          },
+          "_links": {
+            "self": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users"
+              }
+            ]
+          }
+        }
+      ],
+      "wp:featuredmedia": [
+        {
+          "id": 4053,
+          "date": "2023-07-05T14:20:11",
+          "slug": "fb_img_1688566258433",
+          "type": "attachment",
+          "link": "https://humusoncomplex.com/2023/07/05/have-you-tried-using-humuson-complex-products-in-your-seedling-nurseries/fb_img_1688566258433/",
+          "title": {
+            "rendered": "FB_IMG_1688566258433"
+          },
+          "author": 1,
+          "featured_media": 0,
+          "jetpack_sharing_enabled": true,
+          "caption": {
+            "rendered": ""
+          },
+          "alt_text": "",
+          "media_type": "image",
+          "mime_type": "image/jpeg",
+          "media_details": {
+            "width": 720,
+            "height": 960,
+            "file": "2023/07/FB_IMG_1688566258433.jpg",
+            "filesize": 111534,
+            "sizes": {
+              "medium": {
+                "file": "FB_IMG_1688566258433-225x300.jpg",
+                "width": 225,
+                "height": 300,
+                "filesize": 21904,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566258433-225x300.jpg"
+              },
+              "thumbnail": {
+                "file": "FB_IMG_1688566258433-150x150.jpg",
+                "width": 150,
+                "height": 150,
+                "filesize": 8191,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566258433-150x150.jpg"
+              },
+              "landmaster-medium": {
+                "file": "FB_IMG_1688566258433-720x768.jpg",
+                "width": 720,
+                "height": 768,
+                "filesize": 107576,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566258433-720x768.jpg"
+              },
+              "woocommerce_thumbnail": {
+                "file": "FB_IMG_1688566258433-300x300.jpg",
+                "width": 300,
+                "height": 300,
+                "filesize": 27312,
+                "uncropped": false,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566258433-300x300.jpg"
+              },
+              "woocommerce_single": {
+                "file": "FB_IMG_1688566258433-600x800.jpg",
+                "width": 600,
+                "height": 800,
+                "filesize": 116692,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566258433-600x800.jpg"
+              },
+              "woocommerce_gallery_thumbnail": {
+                "file": "FB_IMG_1688566258433-370x420.jpg",
+                "width": 370,
+                "height": 420,
+                "filesize": 44857,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566258433-370x420.jpg"
+              },
+              "full": {
+                "file": "FB_IMG_1688566258433.jpg",
+                "width": 720,
+                "height": 960,
+                "mime_type": "image/jpeg",
+                "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566258433.jpg"
+              }
+            },
+            "image_meta": {
+              "aperture": "0",
+              "credit": "",
+              "camera": "",
+              "caption": "",
+              "created_timestamp": "0",
+              "copyright": "",
+              "focal_length": "0",
+              "iso": "0",
+              "shutter_speed": "0",
+              "title": "",
+              "orientation": "0",
+              "keywords": []
+            }
+          },
+          "source_url": "https://humusoncomplex.com/wp-content/uploads/2023/07/FB_IMG_1688566258433.jpg",
+          "_links": {
+            "self": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/media/4053",
+                "targetHints": {
+                  "allow": [
+                    "GET"
+                  ]
+                }
+              }
+            ],
+            "collection": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/media"
+              }
+            ],
+            "about": [
+              {
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/types/attachment"
+              }
+            ],
+            "author": [
+              {
+                "embeddable": true,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/users/1"
+              }
+            ],
+            "replies": [
+              {
+                "embeddable": true,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/comments?post=4053"
+              }
+            ],
+            "wp:attached-to": [
+              {
+                "embeddable": true,
+                "post_type": "post",
+                "id": 4052,
+                "href": "https://humusoncomplex.com/wp-json/wp/v2/posts/4052"
+              }
+            ],
+            "curies": [
+              {
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+              }
+            ]
+          }
+        }
+      ],
+      "wp:term": [
+        [
+          {
+            "id": 55,
+            "link": "https://humusoncomplex.com/category/fertilizers/",
+            "name": "Fertilizers",
+            "slug": "fertilizers",
+            "taxonomy": "category",
+            "_links": {
+              "self": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/categories/55",
+                  "targetHints": {
+                    "allow": [
+                      "GET"
+                    ]
+                  }
+                }
+              ],
+              "collection": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/categories"
+                }
+              ],
+              "about": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/taxonomies/category"
+                }
+              ],
+              "wp:post_type": [
+                {
+                  "href": "https://humusoncomplex.com/wp-json/wp/v2/posts?categories=55"
+                }
+              ],
+              "curies": [
+                {
+                  "name": "wp",
+                  "href": "https://api.w.org/{rel}",
+                  "templated": true
+                }
+              ]
+            }
+          }
+        ],
+        []
+      ]
+    }
+  }
+]

@@ -1,0 +1,674 @@
+// Humuson Complex — platform data model
+// PostgreSQL (Neon in production, local cluster in development).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Enums
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum Role {
+  ADMIN
+  EDITOR
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+/// Application methods actually used across the Humuson range.
+enum ApplicationMethod {
+  FOLIAR
+  SOIL
+  SEED_TREATMENT
+  TOP_DRESSING
+  BASAL_DRESSING
+  FERTIGATION
+  DRENCH
+  OTHER
+}
+
+enum FaqCategory {
+  APPLICATION
+  DOSAGE
+  COMPATIBILITY
+  CROPS
+  BENEFITS
+  STORAGE
+  AVAILABILITY
+  ORDERING
+  PACKAGES
+  GENERAL
+}
+
+enum VideoCategory {
+  HOW_TO_APPLY
+  PRODUCT_DEMONSTRATION
+  FARMER_RESULTS
+  AGRONOMY_EDUCATION
+  EVENTS
+  HUMUSON_STORIES
+}
+
+enum EnquirySource {
+  CONTACT_FORM
+  PRODUCT_PAGE
+  PRODUCT_FINDER
+  ASK_HUMUSON
+  CATALOGUE
+  CROP_PAGE
+  OTHER
+}
+
+enum EnquiryStatus {
+  NEW
+  IN_PROGRESS
+  RESOLVED
+  ARCHIVED
+}
+
+enum SearchSource {
+  GLOBAL
+  PRODUCTS
+  FAQ
+  ASK_HUMUSON
+}
+
+enum AnalyticsType {
+  PRODUCT_VIEW
+  ARTICLE_VIEW
+  CROP_VIEW
+  PROJECT_VIEW
+  VIDEO_PLAY
+  CATALOGUE_VIEW
+  CATALOGUE_PAGE_TURN
+  WHATSAPP_CLICK
+  FINDER_STARTED
+  FINDER_COMPLETED
+  ENQUIRY_SUBMITTED
+  ASK_OPENED
+  PDF_DOWNLOAD
+}
+
+enum CatalogueLayout {
+  CHAPTER_COVER
+  FEATURE_LEFT
+  FEATURE_RIGHT
+  GRID
+  QUOTE
+  FULL_IMAGE
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Users & auth
+// ─────────────────────────────────────────────────────────────────────────────
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  role         Role      @default(EDITOR)
+  active       Boolean   @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  articles Article[]
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Media
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Media {
+  id          String   @id @default(cuid())
+  /// Public path ("/images/products/in5/1.jpg") or absolute URL.
+  url         String   @unique
+  alt         String?
+  width       Int?
+  height      Int?
+  /// Tiny base64 preview for blur-up loading.
+  blurDataUrl String?
+  kind        String? // "logo" | "product" | "article" | "field-photo" | ...
+  filename    String?
+  sizeBytes   Int?
+  /// Where this asset came from (e.g. old site URL) — provenance for audits.
+  sourceUrl   String?
+  createdAt   DateTime @default(now())
+
+  productPrimary   Product[]          @relation("ProductPrimaryImage")
+  productGallery   ProductImage[]
+  articleCovers    Article[]
+  cropImages       Crop[]
+  projectImages    ProjectImage[]
+  testimonials     Testimonial[]
+  catalogueSection CatalogueSection[]
+  catalogueEntries CatalogueEntry[]
+  catalogueCovers  Catalogue[]
+  categoryImages   ProductCategory[]
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Product catalogue
+// ─────────────────────────────────────────────────────────────────────────────
+
+model ProductCategory {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String  @unique
+  description String?
+  imageId     String?
+  image       Media?  @relation(fields: [imageId], references: [id])
+  order       Int     @default(0)
+
+  products Product[]
+}
+
+model Product {
+  id       String        @id @default(cuid())
+  name     String
+  slug     String        @unique
+  sku      String?
+  status   PublishStatus @default(DRAFT)
+  featured Boolean       @default(false)
+  order    Int           @default(0)
+
+  tagline          String?
+  shortDescription String?
+  /// Full description as sanitized HTML (rendered on the product page).
+  descriptionHtml  String?
+  /// "How it works" — mechanism / operating principle.
+  operatingPrinciple String?
+  /// "How to apply" — instructions as sanitized HTML.
+  instructionsHtml String?
+
+  /// Active ingredients / microbial strains, in order, exactly as published.
+  composition String[]
+
+  priceUsd    Decimal? @db.Decimal(10, 2)
+  /// Reference into the WhatsApp Business catalogue (item id or link).
+  whatsappRef String?
+
+  applicationMethods ApplicationMethod[]
+
+  categoryId String?
+  category   ProductCategory? @relation(fields: [categoryId], references: [id])
+  tags       String[]
+
+  primaryImageId String?
+  primaryImage   Media?         @relation("ProductPrimaryImage", fields: [primaryImageId], references: [id])
+  gallery        ProductImage[]
+
+  packageSizes      PackageSize[]
+  applicationGuides ApplicationGuide[]
+  crops             ProductCrop[]
+  benefits          ProductBenefit[]
+  growthStages      ProductGrowthStage[]
+  faqs              Faq[]
+  documents         ProductDocument[]
+  enquiries         Enquiry[]
+  catalogueEntries  CatalogueEntry[]
+
+  related   Product[] @relation("RelatedProducts")
+  relatedTo Product[] @relation("RelatedProducts")
+
+  articles Article[]
+  videos   Video[]
+  projects Project[]
+
+  seoTitle       String?
+  seoDescription String?
+
+  /// Old-site provenance (product URL(s) merged into this record).
+  sourceUrls String[]
+  notes      String?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+
+  @@index([status, featured])
+  @@index([categoryId])
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  mediaId   String
+  media     Media   @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  order     Int     @default(0)
+
+  @@unique([productId, mediaId])
+}
+
+model PackageSize {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  /// e.g. "50g", "1L", "5L", "25kg"
+  size      String
+  priceUsd  Decimal? @db.Decimal(10, 2)
+  order     Int      @default(0)
+}
+
+/// A verified application recommendation row: product × (crop?) × (stage?) ×
+/// (method?) → rate. Only rows published by Humuson are stored — the UI shows
+/// "confirm with technical support" when no row exists.
+model ApplicationGuide {
+  id            String             @id @default(cuid())
+  productId     String
+  product       Product            @relation(fields: [productId], references: [id], onDelete: Cascade)
+  cropId        String?
+  crop          Crop?              @relation(fields: [cropId], references: [id])
+  growthStageId String?
+  growthStage   GrowthStage?       @relation(fields: [growthStageId], references: [id])
+  method        ApplicationMethod?
+  /// e.g. "50g", "2L", "20ml"
+  rate          String
+  /// e.g. "per ha", "per 20L knapsack", "per kg of seed"
+  unit          String?
+  notes         String?
+  order         Int                @default(0)
+
+  @@index([productId])
+}
+
+model ProductDocument {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  title     String
+  url       String
+  order     Int     @default(0)
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Agronomy: crops, growth stages, benefits
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Crop {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String  @unique
+  /// Alternative names used in search ("mealies" → maize).
+  aka         String[]
+  description String?
+  imageId     String?
+  image       Media?  @relation(fields: [imageId], references: [id])
+  order       Int     @default(0)
+  featured    Boolean @default(false)
+
+  products          ProductCrop[]
+  stages            CropStage[]
+  applicationGuides ApplicationGuide[]
+  faqs              FaqCrop[]
+  articles          Article[]
+  videos            Video[]
+  projects          Project[]
+}
+
+model ProductCrop {
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  cropId    String
+  crop      Crop    @relation(fields: [cropId], references: [id], onDelete: Cascade)
+  /// Optional crop-specific note, exactly as published.
+  notes     String?
+
+  @@id([productId, cropId])
+}
+
+/// Global growth-stage dictionary (seed → maturity) used by the finder,
+/// application guides and crop timelines.
+model GrowthStage {
+  id          String  @id @default(cuid())
+  key         String  @unique // "seed" | "emergence" | "vegetative" | "flowering" | "grain-fill" | "maturity"
+  name        String
+  description String?
+  order       Int     @default(0)
+
+  products          ProductGrowthStage[]
+  applicationGuides ApplicationGuide[]
+  cropStages        CropStage[]
+}
+
+model ProductGrowthStage {
+  productId     String
+  product       Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  growthStageId String
+  growthStage   GrowthStage @relation(fields: [growthStageId], references: [id], onDelete: Cascade)
+
+  @@id([productId, growthStageId])
+}
+
+/// Per-crop stage narrative shown on the crop timeline (only where real
+/// guidance exists).
+model CropStage {
+  id            String      @id @default(cuid())
+  cropId        String
+  crop          Crop        @relation(fields: [cropId], references: [id], onDelete: Cascade)
+  growthStageId String
+  growthStage   GrowthStage @relation(fields: [growthStageId], references: [id], onDelete: Cascade)
+  headline      String?
+  description   String?
+
+  @@unique([cropId, growthStageId])
+}
+
+model Benefit {
+  id          String  @id @default(cuid())
+  name        String
+  slug        String  @unique
+  description String?
+  order       Int     @default(0)
+
+  products ProductBenefit[]
+}
+
+model ProductBenefit {
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  benefitId String
+  benefit   Benefit @relation(fields: [benefitId], references: [id], onDelete: Cascade)
+  order     Int     @default(0)
+
+  @@id([productId, benefitId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Knowledge: FAQ, articles, videos
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Faq {
+  id         String        @id @default(cuid())
+  question   String
+  answerHtml String
+  category   FaqCategory   @default(GENERAL)
+  status     PublishStatus @default(PUBLISHED)
+  /// Alternative phrasings matched by the retrieval engine.
+  aliases    String[]
+  keywords   String[]
+  order      Int           @default(0)
+
+  productId String?
+  product   Product?  @relation(fields: [productId], references: [id])
+  crops     FaqCrop[]
+
+  questionEvents QuestionEvent[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, category])
+}
+
+model FaqCrop {
+  faqId  String
+  faq    Faq    @relation(fields: [faqId], references: [id], onDelete: Cascade)
+  cropId String
+  crop   Crop   @relation(fields: [cropId], references: [id], onDelete: Cascade)
+
+  @@id([faqId, cropId])
+}
+
+model ArticleCategory {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  order    Int       @default(0)
+  articles Article[]
+}
+
+model Article {
+  id             String        @id @default(cuid())
+  title          String
+  slug           String        @unique
+  excerpt        String?
+  /// Sanitized HTML (TipTap output).
+  bodyHtml       String
+  status         PublishStatus @default(DRAFT)
+  featured       Boolean       @default(false)
+  readingMinutes Int?
+
+  coverImageId String?
+  coverImage   Media?  @relation(fields: [coverImageId], references: [id])
+
+  categoryId String?
+  category   ArticleCategory? @relation(fields: [categoryId], references: [id])
+  tags       String[]
+
+  authorId String?
+  author   User?   @relation(fields: [authorId], references: [id])
+
+  products Product[]
+  crops    Crop[]
+
+  seoTitle       String?
+  seoDescription String?
+  sourceUrl      String?
+
+  publishedAt DateTime?
+  scheduledAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([status, publishedAt])
+}
+
+model Video {
+  id           String        @id @default(cuid())
+  youtubeId    String        @unique
+  youtubeUrl   String
+  title        String
+  description  String?
+  thumbnailUrl String?
+  category     VideoCategory @default(AGRONOMY_EDUCATION)
+  status       PublishStatus @default(PUBLISHED)
+  featured     Boolean       @default(false)
+  order        Int           @default(0)
+  durationSec  Int?
+
+  products Product[]
+  crops    Crop[]
+
+  publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([status, category])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Evidence: projects / results & testimonials
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Project {
+  id       String        @id @default(cuid())
+  title    String
+  slug     String        @unique
+  status   PublishStatus @default(DRAFT)
+  featured Boolean       @default(false)
+
+  cropId   String?
+  crop     Crop?   @relation(fields: [cropId], references: [id])
+  location String?
+
+  /// Case-study narrative — every field verbatim-faithful to published material.
+  summary     String?
+  problem     String?
+  application String?
+  outcome     String?
+  bodyHtml    String?
+
+  images   ProjectImage[]
+  products Product[]
+
+  testimonialId String?
+  testimonial   Testimonial? @relation(fields: [testimonialId], references: [id])
+
+  sourceUrl   String?
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model ProjectImage {
+  id        String  @id @default(cuid())
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  mediaId   String
+  media     Media   @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  caption   String?
+  /// "before" | "after" | null — enables before/after sliders.
+  phase     String?
+  order     Int     @default(0)
+}
+
+model Testimonial {
+  id       String        @id @default(cuid())
+  name     String
+  role     String?
+  location String?
+  quote    String
+  avatarId String?
+  avatar   Media?        @relation(fields: [avatarId], references: [id])
+  status   PublishStatus @default(PUBLISHED)
+  order    Int           @default(0)
+
+  projects Project[]
+
+  createdAt DateTime @default(now())
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Interactive catalogue
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Catalogue {
+  id           String        @id @default(cuid())
+  title        String
+  slug         String        @unique
+  year         Int?
+  status       PublishStatus @default(DRAFT)
+  intro        String?
+  coverImageId String?
+  coverImage   Media?        @relation(fields: [coverImageId], references: [id])
+  /// Path to a downloadable PDF export, when generated.
+  pdfUrl       String?
+
+  sections CatalogueSection[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CatalogueSection {
+  id          String    @id @default(cuid())
+  catalogueId String
+  catalogue   Catalogue @relation(fields: [catalogueId], references: [id], onDelete: Cascade)
+  title       String
+  slug        String
+  intro       String?
+  /// Visual theme key for the chapter ("soil", "roots", "nutrition", ...).
+  theme       String?
+  imageId     String?
+  image       Media?    @relation(fields: [imageId], references: [id])
+  order       Int       @default(0)
+
+  entries CatalogueEntry[]
+
+  @@unique([catalogueId, slug])
+}
+
+model CatalogueEntry {
+  id        String           @id @default(cuid())
+  sectionId String
+  section   CatalogueSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  productId String?
+  product   Product?         @relation(fields: [productId], references: [id])
+  headline  String?
+  body      String?
+  layout    CatalogueLayout  @default(FEATURE_LEFT)
+  imageId   String?
+  image     Media?           @relation(fields: [imageId], references: [id])
+  order     Int              @default(0)
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Enquiries, settings, analytics
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Enquiry {
+  id         String        @id @default(cuid())
+  name       String
+  email      String?
+  phone      String?
+  subject    String?
+  message    String
+  source     EnquirySource @default(CONTACT_FORM)
+  status     EnquiryStatus @default(NEW)
+  productId  String?
+  product    Product?      @relation(fields: [productId], references: [id])
+  /// Free-form context (e.g. finder answers) — audit trail, not content.
+  meta       Json?
+  adminNotes String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, createdAt])
+}
+
+model SiteSetting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+model SearchEvent {
+  id          String       @id @default(cuid())
+  query       String
+  normalized  String
+  resultCount Int
+  source      SearchSource @default(GLOBAL)
+  createdAt   DateTime     @default(now())
+
+  @@index([createdAt])
+  @@index([resultCount])
+}
+
+model QuestionEvent {
+  id          String   @id @default(cuid())
+  question    String
+  matched     Boolean
+  faqId       String?
+  faq         Faq?     @relation(fields: [faqId], references: [id])
+  productSlug String?
+  createdAt   DateTime @default(now())
+
+  @@index([matched, createdAt])
+}
+
+model AnalyticsEvent {
+  id         String        @id @default(cuid())
+  type       AnalyticsType
+  path       String?
+  entityType String?
+  entityId   String?
+  meta       Json?
+  createdAt  DateTime      @default(now())
+
+  @@index([type, createdAt])
+  @@index([entityType, entityId])
+}
