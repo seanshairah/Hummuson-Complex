@@ -12,7 +12,7 @@ import { AskHumusonLauncher } from "@/components/ask/launcher";
 import { SearchLauncher } from "@/components/search/launcher";
 
 /** Routes that open with a dark immersive hero → header starts light-on-dark. */
-const DARK_ROUTE_PREFIXES = ["/catalogue", "/product-finder"];
+const DARK_ROUTE_PREFIXES = ["/catalogue", "/product-finder", "/about"];
 
 export function Header() {
   const pathname = usePathname();
