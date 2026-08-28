@@ -18,6 +18,7 @@ export const secondaryNav: NavItem[] = [
   { label: "Videos", href: "/videos" },
   { label: "Results", href: "/projects" },
   { label: "FAQ", href: "/faq" },
+  { label: "Search", href: "/search" },
   { label: "Contact", href: "/contact" },
 ];
 

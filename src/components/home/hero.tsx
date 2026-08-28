@@ -83,7 +83,7 @@ export function HomeHero({
               Home of healthy soil &amp; healthy crop
             </motion.p>
 
-            <h1 className="mt-6 text-display-1">
+            <h1 className="mt-6 text-display-1 max-sm:text-[2.5rem] max-sm:leading-[1.06]">
               {lines.map((line, i) => (
                 <span key={line.text} className="block overflow-hidden">
                   <motion.span

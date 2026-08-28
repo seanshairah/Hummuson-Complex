@@ -166,11 +166,12 @@ export function Header() {
             ))}
           </ul>
           <div className="mt-10 flex flex-col gap-3">
+            <AskHumusonLauncher tone="light" variant="wide" />
             <a
               href={whatsappLink(whatsappAdviceMessage())}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-12 items-center justify-center gap-2 rounded-full bg-leaf-400 font-display font-medium text-humus-950"
+              className="flex h-12 items-center justify-center gap-2 rounded-full border border-paper/25 font-display font-medium text-paper"
             >
               <MessageCircle className="size-5" strokeWidth={1.8} /> WhatsApp Humuson
             </a>

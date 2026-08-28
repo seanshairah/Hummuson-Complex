@@ -1,8 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 import {
   Search,
   Package,
@@ -13,8 +14,9 @@ import {
   Images,
   ArrowRight,
   CornerDownLeft,
+  X,
 } from "lucide-react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog } from "@/components/ui/dialog";
 import { Spinner } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
@@ -136,6 +138,16 @@ export function SearchDialog({
     }
   }, [open]);
 
+  // Group by type (keeping each type's first-appearance rank) so a section
+  // label like “Products” never repeats when scores interleave types.
+  const ordered = useMemo(() => {
+    const rank = new Map<string, number>();
+    for (const result of results) {
+      if (!rank.has(result.type)) rank.set(result.type, rank.size);
+    }
+    return [...results].sort((a, b) => rank.get(a.type)! - rank.get(b.type)!);
+  }, [results]);
+
   const go = (href: string) => {
     onOpenChange(false);
     router.push(href);
@@ -143,36 +155,45 @@ export function SearchDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        title="Search Humuson"
-        hideTitle
-        className="top-24 max-w-xl translate-y-0 p-0 data-[state=open]:animate-fade-in"
-      >
-        <div className="flex items-center gap-3 border-b border-line px-5">
-          <Search className="size-5 shrink-0 text-ink-faint" strokeWidth={1.8} />
-          <input
-            autoFocus
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "ArrowDown") {
-                e.preventDefault();
-                setActive((a) => Math.min(a + 1, results.length - 1));
-              } else if (e.key === "ArrowUp") {
-                e.preventDefault();
-                setActive((a) => Math.max(a - 1, 0));
-              } else if (e.key === "Enter" && results[active]) {
-                go(results[active].href);
-              }
-            }}
-            placeholder="Search products, crops, questions, articles…"
-            aria-label="Search"
-            className="h-14 w-full bg-transparent text-base text-ink outline-none placeholder:text-ink-faint/60"
-          />
-          {loading && <Spinner className="text-leaf-600" />}
-        </div>
+      <DialogPrimitive.Portal>
+        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-humus-950/60 backdrop-blur-sm data-[state=open]:animate-fade-in max-sm:hidden" />
+        {/* Full-screen sheet on phones; centred palette from sm up (no
+            transform positioning — a mispositioned search box is unusable). */}
+        <DialogPrimitive.Content
+          className="fixed inset-0 z-50 flex flex-col bg-cream focus:outline-none data-[state=open]:animate-fade-in sm:inset-x-4 sm:top-20 sm:bottom-auto sm:mx-auto sm:block sm:w-auto sm:max-w-xl sm:overflow-hidden sm:rounded-2xl sm:shadow-pop"
+        >
+          <DialogPrimitive.Title className="sr-only">Search Humuson</DialogPrimitive.Title>
+          <div className="flex items-center gap-3 border-b border-line pr-3 pl-5">
+            <Search className="size-5 shrink-0 text-ink-faint" strokeWidth={1.8} />
+            <input
+              autoFocus
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "ArrowDown") {
+                  e.preventDefault();
+                  setActive((a) => Math.min(a + 1, ordered.length - 1));
+                } else if (e.key === "ArrowUp") {
+                  e.preventDefault();
+                  setActive((a) => Math.max(a - 1, 0));
+                } else if (e.key === "Enter" && ordered[active]) {
+                  go(ordered[active].href);
+                }
+              }}
+              placeholder="Search products, crops, questions…"
+              aria-label="Search"
+              className="h-14 w-full min-w-0 bg-transparent text-base text-ink outline-none placeholder:text-ink-faint/60"
+            />
+            {loading && <Spinner className="shrink-0 text-leaf-600" />}
+            <DialogPrimitive.Close
+              aria-label="Close search"
+              className="flex size-9 shrink-0 items-center justify-center rounded-full text-ink-faint transition-colors hover:bg-ink/5 hover:text-ink"
+            >
+              <X className="size-4.5" />
+            </DialogPrimitive.Close>
+          </div>
 
-        <div className="max-h-[55dvh] overflow-y-auto p-2">
+          <div className="min-h-0 flex-1 overflow-y-auto p-2 sm:max-h-[55dvh] sm:flex-none">
           {!searched && !loading && (
             <div className="px-4 py-8 text-center text-sm text-ink-faint">
               Try <SearchHint onPick={setQuery} q="maize" />,{" "}
@@ -195,10 +216,10 @@ export function SearchDialog({
               </Link>
             </div>
           )}
-          {results.map((result, i) => {
+          {ordered.map((result, i) => {
             const meta = TYPE_META[result.type] ?? TYPE_META.page!;
             const Icon = meta.icon;
-            const prev = results[i - 1];
+            const prev = ordered[i - 1];
             const showGroup = !prev || prev.type !== result.type;
             return (
               <div key={`${result.href}-${i}`}>
@@ -234,8 +255,9 @@ export function SearchDialog({
               </div>
             );
           })}
-        </div>
-      </DialogContent>
+          </div>
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Portal>
     </Dialog>
   );
 }

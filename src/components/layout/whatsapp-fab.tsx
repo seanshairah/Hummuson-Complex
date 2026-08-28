@@ -7,11 +7,18 @@ import { trackClient } from "@/lib/analytics-client";
 
 /**
  * Floating WhatsApp action. Hidden on product detail pages (they carry their
- * own sticky action bar) and in the finder flow.
+ * own sticky action bar), in the finder flow, and in the flipbook, where it
+ * would sit on top of each page's own actions on small screens.
  */
 export function WhatsAppFab() {
   const pathname = usePathname();
-  if (/^\/products\/[^/]+/.test(pathname) || pathname.startsWith("/product-finder")) return null;
+  if (
+    /^\/products\/[^/]+/.test(pathname) ||
+    pathname.startsWith("/product-finder") ||
+    pathname.startsWith("/catalogue/flipbook")
+  ) {
+    return null;
+  }
 
   return (
     <a

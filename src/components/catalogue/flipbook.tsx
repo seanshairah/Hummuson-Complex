@@ -315,9 +315,9 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
       <header className="relative z-10 flex items-center justify-between gap-3 px-4 pt-20 pb-2 md:px-8 md:pt-24">
         <Link
           href="/catalogue"
-          className="flex items-center gap-2 rounded-full border border-paper/20 px-4 py-2 text-sm font-medium text-paper/85 transition-colors hover:border-paper/50"
+          className="flex shrink-0 items-center gap-2 rounded-full border border-paper/20 px-3 py-2 text-sm font-medium whitespace-nowrap text-paper/85 transition-colors hover:border-paper/50 sm:px-4"
         >
-          <ArrowLeft className="size-4" /> Explore mode
+          <ArrowLeft className="size-4" /> Explore<span className="max-sm:hidden"> mode</span>
         </Link>
         <div className="flex items-center gap-1.5">
           <ToolButton label="Contents" onClick={() => setTocOpen(true)}>
