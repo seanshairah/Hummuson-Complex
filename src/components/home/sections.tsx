@@ -147,7 +147,7 @@ export function FeaturedProducts({ products }: { products: ProductCardData[] }) 
           </ButtonLink>
         </Reveal>
       </div>
-      <div className="container-wide mt-12">
+      <div className="container-site mt-12">
         <RevealGroup
           className="scrollbar-none grid snap-x snap-mandatory auto-cols-[78%] grid-flow-col gap-4 overflow-x-auto pb-4 sm:auto-cols-[46%] lg:auto-cols-fr lg:grid-flow-row lg:grid-cols-4 lg:overflow-visible"
           stagger={0.06}

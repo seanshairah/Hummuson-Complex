@@ -23,15 +23,18 @@ await page.goto(url, { waitUntil: "load", timeout: 30000 }).catch(() => {});
 await page.waitForTimeout(+waitMs);
 if (full === "1") {
   // Scroll through the page so in-view reveal animations have fired everywhere.
+  // Small steps + real pauses: IntersectionObserver needs frames to dispatch.
   await page.evaluate(async () => {
-    const step = window.innerHeight * 0.7;
+    const step = window.innerHeight * 0.45;
     for (let y = 0; y < document.body.scrollHeight; y += step) {
       window.scrollTo(0, y);
-      await new Promise((resolve) => setTimeout(resolve, 140));
+      await new Promise((resolve) => setTimeout(resolve, 260));
     }
+    window.scrollTo(0, document.body.scrollHeight);
+    await new Promise((resolve) => setTimeout(resolve, 500));
     window.scrollTo(0, 0);
   });
-  await page.waitForTimeout(600);
+  await page.waitForTimeout(1000);
 }
 await page.screenshot({ path: out, fullPage: full === "1" });
 await browser.close();

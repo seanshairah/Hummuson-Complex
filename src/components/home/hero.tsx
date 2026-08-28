@@ -69,8 +69,8 @@ export function HomeHero({
       </motion.div>
       <div aria-hidden className="absolute inset-0 -z-10 glow-leaf" />
 
-      <div className="container-wide flex flex-1 items-center pt-28 pb-16 md:pt-32">
-        <div className="grid w-full items-center gap-12 lg:grid-cols-[1.12fr_0.88fr]">
+      <div className="container-site flex flex-1 items-center pt-28 pb-16 md:pt-32">
+        <div className="grid w-full items-center gap-10 lg:grid-cols-[1.2fr_0.8fr] xl:gap-14">
           {/* Copy */}
           <div>
             <motion.p
@@ -157,7 +157,7 @@ export function HomeHero({
           {/* Floating information cards */}
           <motion.div
             style={reduce ? undefined : { y: cardsY }}
-            className="relative mx-auto w-full max-w-md lg:max-w-none"
+            className="relative mx-auto w-full max-w-md lg:mx-0 lg:ml-auto lg:max-w-[27rem]"
           >
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 32, rotate: -1.5 }}
@@ -224,7 +224,7 @@ export function HomeHero({
               initial={reduce ? false : { opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.72, ease: EASE }}
-              className="mt-4 flex items-center gap-4 rounded-3xl p-5 shadow-float glass-dark transition-transform duration-300 hover:-translate-y-1 lg:ml-14"
+              className="mt-4 flex items-center gap-4 rounded-3xl p-5 shadow-float glass-dark transition-transform duration-300 hover:-translate-y-1"
             >
               <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-leaf-400 text-humus-950">
                 <MessageCircle className="size-5.5" strokeWidth={1.9} />
@@ -244,7 +244,7 @@ export function HomeHero({
               initial={reduce ? false : { opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.86, ease: EASE }}
-              className="mt-4 flex items-center justify-between gap-3 rounded-3xl px-5 py-4 shadow-float glass-dark lg:mr-10"
+              className="mt-4 flex items-center justify-between gap-4 rounded-3xl p-5 shadow-float glass-dark"
             >
               <p className="text-xs leading-relaxed text-paper/70">
                 Crop programs for maize, wheat &amp; potatoes — see which product fits each growth

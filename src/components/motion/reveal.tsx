@@ -13,7 +13,7 @@ export function Reveal({
   y = 28,
   once = true,
   className,
-  amount = 0.25,
+  amount = 0.12,
 }: {
   children: ReactNode;
   delay?: number;
@@ -29,7 +29,9 @@ export function Reveal({
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, amount, margin: "0px 0px -8% 0px" }}
+      // Low threshold, no negative margin: tall sections must never sit
+      // blank while a fast scroll waits for a large visible fraction.
+      viewport={{ once, amount }}
       transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
@@ -42,7 +44,7 @@ export function RevealGroup({
   children,
   className,
   stagger = 0.08,
-  amount = 0.15,
+  amount = 0.1,
 }: {
   children: ReactNode;
   className?: string;
