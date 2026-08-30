@@ -24,7 +24,7 @@ export function HomeHero({
   spotlight: ProductCardData | null;
   productCount: number;
   cropCount: number;
-  /** Verified supplier brands (labels: Bioenergy LT, Sapropel Organics, IKAR, Arvensis Agro, eMAXX). */
+  /** Verified supplier brands — length of companySettings.partnerBrands, never a literal. */
   partnerCount: number;
 }) {
   const reduce = useReducedMotion();

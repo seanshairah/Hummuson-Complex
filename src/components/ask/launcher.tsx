@@ -25,6 +25,8 @@ interface AskAnswer {
   id: string;
   question: string;
   matched: boolean;
+  /** The request itself failed — this is NOT a statement about our guidance. */
+  failed?: boolean;
   answerHtml?: string;
   sources?: AskSource[];
   related?: { title: string; href: string }[];
@@ -131,7 +133,10 @@ export function AskSheet({
       setThread((t) => [...t, { ...data, id: crypto.randomUUID(), question: trimmed }]);
     } catch {
       if (session !== sessionRef.current) return;
-      setThread((t) => [...t, { id: crypto.randomUUID(), question: trimmed, matched: false }]);
+      setThread((t) => [
+        ...t,
+        { id: crypto.randomUUID(), question: trimmed, matched: false, failed: true },
+      ]);
     } finally {
       if (session === sessionRef.current) {
         setLoading(false);
@@ -252,8 +257,9 @@ export function AskSheet({
               ) : (
                 <div className="w-fit max-w-[95%] rounded-2xl rounded-bl-md border border-line bg-cream px-4 py-3">
                   <p className="text-sm text-ink-soft">
-                    I don’t currently have verified guidance for that question. Please contact a
-                    Humuson agronomy adviser — they’ll be glad to help.
+                    {entry.failed
+                      ? "Something went wrong reaching our guidance — this isn’t an answer about your question. Please try again, or contact a Humuson agronomy adviser."
+                      : "I don’t currently have verified guidance for that question. Please contact a Humuson agronomy adviser — they’ll be glad to help."}
                   </p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     <a

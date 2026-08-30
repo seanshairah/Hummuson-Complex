@@ -674,6 +674,7 @@ async function importCompany(company: SourceCompany | null) {
         whyChooseUs: company.whyChooseUs ?? [],
         workingProcess: normalize(company.workingProcess),
         values: company.values ?? [],
+        partnerBrands: company.partnerBrands ?? [],
       },
     },
     create: {
@@ -687,6 +688,7 @@ async function importCompany(company: SourceCompany | null) {
         whyChooseUs: company.whyChooseUs ?? [],
         workingProcess: normalize(company.workingProcess),
         values: company.values ?? [],
+        partnerBrands: company.partnerBrands ?? [],
       },
     },
   });

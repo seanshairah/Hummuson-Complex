@@ -2,7 +2,15 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowLeft, ArrowRight, Check, HelpCircle, RotateCcw, Sparkles } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  CloudOff,
+  HelpCircle,
+  RotateCcw,
+  Sparkles,
+} from "lucide-react";
 import { ProductCard } from "@/components/shared/product-card";
 import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import { Spinner } from "@/components/ui/skeleton";
@@ -15,8 +23,8 @@ import type { ProductCardData } from "@/server/data/products";
 export interface FinderOptions {
   crops: { slug: string; name: string; count: number }[];
   benefits: { slug: string; name: string; count: number }[];
-  stages: { key: string; name: string }[];
-  methods: string[];
+  stages: { key: string; name: string; count: number }[];
+  methods: { key: string; count: number }[];
 }
 
 interface Answers {
@@ -33,11 +41,21 @@ interface ResultEntry {
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
+/** Plain-language names for criteria the finder had to set aside. */
+const RELAXED_LABELS: Record<string, string> = {
+  method: "application method",
+  stageKey: "crop stage",
+  cropSlug: "crop",
+  benefitSlug: "the outcome you chose",
+};
+
 export function FinderWizard({ options }: { options: FinderOptions }) {
   const reduce = useReducedMotion();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
   const [results, setResults] = useState<ResultEntry[] | null>(null);
+  const [relaxed, setRelaxed] = useState<string[]>([]);
+  const [failed, setFailed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [started, setStarted] = useState(false);
 
@@ -81,7 +99,7 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
           ...options.stages.map((stage) => ({
             value: stage.key,
             label: stage.name,
-            meta: undefined,
+            meta: `${stage.count} product${stage.count === 1 ? "" : "s"}`,
           })),
           { value: "", label: "Not sure", meta: undefined },
         ],
@@ -95,9 +113,9 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
         hint: "Not sure is a perfectly good answer — we’ll include everything.",
         options: [
           ...options.methods.map((method) => ({
-            value: method,
-            label: humanize(method),
-            meta: undefined,
+            value: method.key,
+            label: humanize(method.key),
+            meta: `${method.count} product${method.count === 1 ? "" : "s"}`,
           })),
           { value: "NOT_SURE", label: "Not sure", meta: undefined },
         ],
@@ -118,9 +136,15 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(finalAnswers),
       });
-      const data = res.ok ? ((await res.json()) as { results: ResultEntry[] }) : { results: [] };
+      if (!res.ok) throw new Error("finder request failed");
+      const data = (await res.json()) as { results: ResultEntry[]; relaxed?: string[] };
+      setFailed(false);
+      setRelaxed(data.relaxed ?? []);
       setResults(data.results);
     } catch {
+      // A failed request is not "no match" — say so, and let them retry.
+      setFailed(true);
+      setRelaxed([]);
       setResults([]);
     } finally {
       setLoading(false);
@@ -150,6 +174,8 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
   const restart = () => {
     setAnswers({});
     setResults(null);
+    setRelaxed([]);
+    setFailed(false);
     setStep(0);
   };
 
@@ -203,9 +229,25 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
                   {results.length} match{results.length === 1 ? "" : "es"} from the range
                 </h2>
                 <p className="mt-2 max-w-2xl text-sm text-paper/65">
-                  Ranked by how closely each product’s published guidance matches your answers.
-                  Always confirm application details with Humuson technical support.
+                  Every product below is listed in Humuson’s published guidance for the answers
+                  shown. Always confirm application details with Humuson technical support.
                 </p>
+                {relaxed.length > 0 && (
+                  <p className="mt-4 flex max-w-2xl items-start gap-2 rounded-2xl border border-leaf-400/30 bg-leaf-400/10 px-4 py-3 text-sm text-paper/85">
+                    <HelpCircle
+                      className="mt-0.5 size-4 shrink-0 text-leaf-300"
+                      strokeWidth={1.8}
+                    />
+                    <span>
+                      No product in the range matches every answer, so{" "}
+                      <strong className="font-semibold text-paper">
+                        {relaxed.map((key) => RELAXED_LABELS[key] ?? key).join(" and ")}
+                      </strong>{" "}
+                      {relaxed.length === 1 ? "was" : "were"} set aside. These matches satisfy
+                      everything else you told us.
+                    </span>
+                  </p>
+                )}
                 <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {results.map((entry) => (
                     <ProductCard
@@ -231,6 +273,28 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
                   </div>
                 </div>
               </>
+            ) : failed ? (
+              <div className="mx-auto max-w-xl py-20 text-center">
+                <CloudOff className="mx-auto size-10 text-leaf-400" strokeWidth={1.5} />
+                <h2 className="mt-5 text-display-3 text-paper">We couldn’t reach the range</h2>
+                <p className="mt-3 text-sm leading-relaxed text-paper/70">
+                  Something went wrong on our side, so these aren’t your results — we haven’t
+                  matched anything yet. Try again, or ask an adviser directly.
+                </p>
+                <div className="mt-7 flex flex-wrap justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => void submit(answers)}
+                    className="inline-flex h-11 items-center rounded-full bg-leaf-400 px-6 font-display text-sm font-medium text-humus-950 transition-transform hover:scale-[1.02]"
+                  >
+                    Try again
+                  </button>
+                  <WhatsAppButton
+                    message={whatsappAdviceMessage(summaryChips.join(", ") || "my crop")}
+                    label="WhatsApp an adviser"
+                  />
+                </div>
+              </div>
             ) : (
               <div className="mx-auto max-w-xl py-20 text-center">
                 <HelpCircle className="mx-auto size-10 text-leaf-400" strokeWidth={1.5} />

@@ -30,7 +30,7 @@ export default async function ProductFinderPage() {
             crops: options.crops,
             benefits: options.benefits,
             stages: options.stages,
-            methods: options.methods.map((method) => method.key),
+            methods: options.methods,
           }}
         />
       </div>

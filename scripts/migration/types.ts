@@ -116,6 +116,7 @@ export interface SourceCompany {
   whyChooseUs?: string[];
   workingProcess?: (string | { title: string; description?: string })[];
   values?: { name: string; text: string }[];
+  partnerBrands?: { name: string; note?: string }[];
 }
 
 export interface OldUrlMapEntry {

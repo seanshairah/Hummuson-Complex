@@ -2,7 +2,7 @@
   "name": "humuson-complex-platform",
   "version": "1.0.0",
   "private": true,
-  "description": "Humuson Complex — digital agronomy platform: product discovery, knowledge engine, interactive catalogue and admin CMS.",
+  "description": "Humuson Complex \u2014 digital agronomy platform: product discovery, knowledge engine, interactive catalogue and admin CMS.",
   "engines": {
     "node": ">=20.0.0"
   },
@@ -25,7 +25,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "e2e": "playwright test",
-    "catalogue:pdf": "tsx scripts/generate-catalogue-pdf.ts"
+    "catalogue:pdf": "tsx scripts/generate-catalogue-pdf.ts",
+    "qa:data": "tsx scripts/qa/validate-data.ts",
+    "qa:finder": "tsx scripts/qa/finder-matrix.ts",
+    "qa:browser": "node scripts/qa/browser-qa.mjs"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

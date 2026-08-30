@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { recommend } from "@/lib/finder/scoring";
+import { recommendWithFallback } from "@/lib/finder/scoring";
 import { getFinderCandidates, getAllProducts, getFilterOptions } from "@/server/data/products";
 import { recordEvent } from "@/server/analytics";
 
@@ -37,7 +37,12 @@ export async function POST(request: NextRequest) {
       : undefined,
   };
 
-  const recommendations = recommend(candidates, answers, labels, 6);
+  const { results: recommendations, relaxed } = recommendWithFallback(
+    candidates,
+    answers,
+    labels,
+    6,
+  );
   const byId = new Map(products.map((product) => [product.id, product]));
 
   await recordEvent({
@@ -46,6 +51,7 @@ export async function POST(request: NextRequest) {
   });
 
   return NextResponse.json({
+    relaxed,
     results: recommendations
       .map((recommendation) => ({
         product: byId.get(recommendation.candidate.id) ?? null,

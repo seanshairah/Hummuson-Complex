@@ -30,13 +30,15 @@ export interface ProductCardData {
   hasRates: boolean;
 }
 
-function toImage(media: {
-  url: string;
-  alt: string | null;
-  width: number | null;
-  height: number | null;
-  blurDataUrl: string | null;
-} | null): ImageData | null {
+function toImage(
+  media: {
+    url: string;
+    alt: string | null;
+    width: number | null;
+    height: number | null;
+    blurDataUrl: string | null;
+  } | null,
+): ImageData | null {
   if (!media) return null;
   const { url, alt, width, height, blurDataUrl } = media;
   return { url, alt, width, height, blurDataUrl };
@@ -66,7 +68,9 @@ export const getAllProducts = unstable_cache(
       name: product.name,
       tagline: product.tagline,
       shortDescription: product.shortDescription,
-      category: product.category ? { name: product.category.name, slug: product.category.slug } : null,
+      category: product.category
+        ? { name: product.category.name, slug: product.category.slug }
+        : null,
       image: toImage(product.primaryImage),
       priceUsd: product.priceUsd ? Number(product.priceUsd) : null,
       packSizes: product.packageSizes.map((p) => p.size),
@@ -94,7 +98,10 @@ export interface ProductFilterParams {
 }
 
 /** Pure filter over the cached product list. */
-export function filterProducts(products: ProductCardData[], params: ProductFilterParams): ProductCardData[] {
+export function filterProducts(
+  products: ProductCardData[],
+  params: ProductFilterParams,
+): ProductCardData[] {
   return products.filter((product) => {
     if (params.category && product.category?.slug !== params.category) return false;
     if (params.crop && !product.cropSlugs.includes(params.crop)) return false;
@@ -137,17 +144,26 @@ export const getFilterOptions = unstable_cache(
     };
 
     const categoryMap = count(
-      products.flatMap((p) => (p.category ? [[p.category.slug, p.category.name] as [string, string]] : [])),
+      products.flatMap((p) =>
+        p.category ? [[p.category.slug, p.category.name] as [string, string]] : [],
+      ),
     );
     const cropMap = count(
-      products.flatMap((p) => p.cropSlugs.map((slug, i) => [slug, p.cropNames[i] ?? slug] as [string, string])),
+      products.flatMap((p) =>
+        p.cropSlugs.map((slug, i) => [slug, p.cropNames[i] ?? slug] as [string, string]),
+      ),
     );
     const benefitMap = count(
-      products.flatMap((p) => p.benefitSlugs.map((slug, i) => [slug, p.benefitNames[i] ?? slug] as [string, string])),
+      products.flatMap((p) =>
+        p.benefitSlugs.map((slug, i) => [slug, p.benefitNames[i] ?? slug] as [string, string]),
+      ),
     );
-    const methodMap = count(products.flatMap((p) => p.methods.map((m) => [m, m] as [string, string])));
+    const methodMap = count(
+      products.flatMap((p) => p.methods.map((m) => [m, m] as [string, string])),
+    );
     const stageCounts = new Map<string, number>();
-    for (const p of products) for (const key of p.stageKeys) stageCounts.set(key, (stageCounts.get(key) ?? 0) + 1);
+    for (const p of products)
+      for (const key of p.stageKeys) stageCounts.set(key, (stageCounts.get(key) ?? 0) + 1);
 
     return {
       categories: [...categoryMap].map(([slug, v]) => ({ slug, name: v.label, count: v.count })),
@@ -156,7 +172,13 @@ export const getFilterOptions = unstable_cache(
         .sort((a, b) => b.count - a.count),
       benefits: [...benefitMap].map(([slug, v]) => ({ slug, name: v.label, count: v.count })),
       methods: [...methodMap].map(([key, v]) => ({ key, count: v.count })),
-      stages: stages.map((s) => ({ key: s.key, name: s.name, count: stageCounts.get(s.key) ?? 0 })),
+      // Only stages that can actually return a product are offered. Crops,
+      // benefits and methods are derived from products and are already
+      // self-limiting; stages come from their own table, so they need the
+      // same guard or the finder would offer a dead-end answer.
+      stages: stages
+        .map((s) => ({ key: s.key, name: s.name, count: stageCounts.get(s.key) ?? 0 }))
+        .filter((s) => s.count > 0),
     };
   },
   ["product-filter-options"],
@@ -208,13 +230,16 @@ export const getProductBySlug = (slug: string) =>
             where: { status: "PUBLISHED" },
             include: productListInclude,
           },
-          articles: { where: { status: "PUBLISHED" }, select: { title: true, slug: true, excerpt: true } },
+          articles: {
+            where: { status: "PUBLISHED" },
+            select: { title: true, slug: true, excerpt: true },
+          },
           videos: { where: { status: "PUBLISHED" }, select: { youtubeId: true, title: true } },
         },
       });
       if (!product) return null;
 
-      const toCard = (p: typeof product.related[number]): ProductCardData => ({
+      const toCard = (p: (typeof product.related)[number]): ProductCardData => ({
         id: p.id,
         slug: p.slug,
         name: p.name,
@@ -258,7 +283,11 @@ export const getProductBySlug = (slug: string) =>
           stage: guide.growthStage?.name ?? null,
           method: guide.method,
         })),
-        faqs: product.faqs.map((faq) => ({ id: faq.id, question: faq.question, answerHtml: faq.answerHtml })),
+        faqs: product.faqs.map((faq) => ({
+          id: faq.id,
+          question: faq.question,
+          answerHtml: faq.answerHtml,
+        })),
         documents: product.documents.map((d) => ({ title: d.title, url: d.url })),
         related: product.related.map(toCard),
         articles: product.articles,
@@ -285,6 +314,42 @@ export const getFinderCandidates = unstable_cache(
     }));
   },
   ["finder-candidates"],
+  { tags: ["products"], revalidate: 600 },
+);
+
+export interface CatalogueStats {
+  /** Unique published products. */
+  products: number;
+  /** Crops with at least one published product listed for them. */
+  crops: number;
+  /** Categories with at least one published product. */
+  categories: number;
+  /** Intended outcomes with at least one published product. */
+  benefits: number;
+  /** Application methods represented in the published range. */
+  methods: number;
+  /** Growth stages with at least one published product. */
+  stages: number;
+}
+
+/**
+ * The single source of every product-derived headline figure on the site.
+ * Homepage stats, catalogue copy and the finder all read from here, so a
+ * number can never be stale in one place and correct in another.
+ */
+export const getCatalogueStats = unstable_cache(
+  async (): Promise<CatalogueStats> => {
+    const [products, options] = await Promise.all([getAllProducts(), getFilterOptions()]);
+    return {
+      products: new Set(products.map((product) => product.id)).size,
+      crops: options.crops.filter((crop) => crop.count > 0).length,
+      categories: options.categories.filter((category) => category.count > 0).length,
+      benefits: options.benefits.filter((benefit) => benefit.count > 0).length,
+      methods: options.methods.filter((method) => method.count > 0).length,
+      stages: options.stages.filter((stage) => stage.count > 0).length,
+    };
+  },
+  ["catalogue-stats"],
   { tags: ["products"], revalidate: 600 },
 );
 

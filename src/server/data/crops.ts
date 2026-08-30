@@ -2,6 +2,21 @@ import { unstable_cache } from "next/cache";
 import { db } from "@/server/db";
 import { getAllProducts, type ImageData, type ProductCardData, filterProducts } from "./products";
 
+/**
+ * Unique published products per crop slug. Every crop count on the site is
+ * derived from this one helper so the homepage, crop cards, crop pages and the
+ * product finder can never disagree.
+ */
+export function countProductsByCropSlug(products: ProductCardData[]): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const product of products) {
+    for (const slug of new Set(product.cropSlugs)) {
+      counts.set(slug, (counts.get(slug) ?? 0) + 1);
+    }
+  }
+  return counts;
+}
+
 export interface CropListItem {
   id: string;
   slug: string;
@@ -14,10 +29,16 @@ export interface CropListItem {
 
 export const getAllCrops = unstable_cache(
   async (): Promise<CropListItem[]> => {
-    const crops = await db.crop.findMany({
-      orderBy: [{ featured: "desc" }, { order: "asc" }],
-      include: { image: true, _count: { select: { products: true } } },
-    });
+    const [crops, products] = await Promise.all([
+      db.crop.findMany({
+        orderBy: [{ featured: "desc" }, { order: "asc" }],
+        include: { image: true },
+      }),
+      getAllProducts(),
+    ]);
+    // Counts come from the canonical published-product list, never from a raw
+    // join-row count — a drafted product must disappear from every count at once.
+    const productCounts = countProductsByCropSlug(products);
     return crops.map((crop) => ({
       id: crop.id,
       slug: crop.slug,
@@ -32,7 +53,7 @@ export const getAllCrops = unstable_cache(
             blurDataUrl: crop.image.blurDataUrl,
           }
         : null,
-      productCount: crop._count.products,
+      productCount: productCounts.get(crop.slug) ?? 0,
       featured: crop.featured,
     }));
   },
@@ -74,7 +95,6 @@ export const getCropBySlug = (slug: string) =>
             where: { status: "PUBLISHED" },
             select: { title: true, slug: true, summary: true },
           },
-          _count: { select: { products: true } },
         },
       });
       if (!crop) return null;
@@ -99,7 +119,7 @@ export const getCropBySlug = (slug: string) =>
               blurDataUrl: crop.image.blurDataUrl,
             }
           : null,
-        productCount: crop._count.products,
+        productCount: cropProducts.length,
         featured: crop.featured,
         stages: allStages.map((stage) => ({
           key: stage.key,

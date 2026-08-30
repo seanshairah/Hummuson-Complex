@@ -5,6 +5,12 @@ import { useEffect, useRef } from "react";
 
 /**
  * Counts up to a real value when scrolled into view.
+ *
+ * The true figure is what renders on the server and what any non-JS or
+ * pre-hydration visitor sees — the count-up is decoration layered on top of a
+ * correct number, never a placeholder standing in for one. Showing "0" until
+ * hydration would be a wrong statistic, not a loading state.
+ *
  * Only ever fed verified numbers — never invented statistics.
  */
 export function Counter({
@@ -27,6 +33,8 @@ export function Counter({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // Until the element scrolls into view the server-rendered true value stays
+    // on screen; the animation only ever replaces a correct number.
     if (!inView) return;
     if (reduce) {
       el.textContent = `${prefix}${value.toLocaleString()}${suffix}`;
@@ -44,7 +52,9 @@ export function Counter({
 
   return (
     <span ref={ref} className={className}>
-      {prefix}0{suffix}
+      {prefix}
+      {value.toLocaleString()}
+      {suffix}
     </span>
   );
 }

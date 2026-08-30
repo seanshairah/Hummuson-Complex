@@ -227,6 +227,7 @@ export async function deleteMedia(id: string): Promise<{ error?: string } | void
     db.projectImage.count({ where: { mediaId: id } }),
   ]);
   const uses = products + gallery + articles + crops + projectImages;
-  if (uses > 0) return { error: `This file is used in ${uses} place(s). Remove those references first.` };
+  if (uses > 0)
+    return { error: `This file is used in ${uses} place(s). Remove those references first.` };
   await db.media.delete({ where: { id } });
 }

@@ -11,7 +11,7 @@ import {
   ResultsBand,
   SoilStory,
 } from "@/components/home/sections";
-import { getAllProducts, getFeaturedProducts, getFilterOptions } from "@/server/data/products";
+import { getCatalogueStats, getFeaturedProducts, getFilterOptions } from "@/server/data/products";
 import { getAllCrops } from "@/server/data/crops";
 import {
   getAllArticles,
@@ -32,9 +32,9 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [products, featured, options, crops, articles, videos, projects, testimonials, company] =
+  const [stats, featured, options, crops, articles, videos, projects, testimonials, company] =
     await Promise.all([
-      getAllProducts(),
+      getCatalogueStats(),
       getFeaturedProducts(8),
       getFilterOptions(),
       getAllCrops(),
@@ -58,9 +58,9 @@ export default async function HomePage() {
       />
       <HomeHero
         spotlight={spotlight}
-        productCount={products.length}
-        cropCount={crops.filter((crop) => crop.productCount > 0).length}
-        partnerCount={5}
+        productCount={stats.products}
+        cropCount={stats.crops}
+        partnerCount={company.partnerBrands.length}
       />
       <RangesBand />
       <BenefitNav options={options} />

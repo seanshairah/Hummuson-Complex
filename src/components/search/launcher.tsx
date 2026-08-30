@@ -93,6 +93,7 @@ export function SearchDialog({
   const [loading, setLoading] = useState(false);
   const [active, setActive] = useState(0);
   const [searched, setSearched] = useState(false);
+  const [failed, setFailed] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
 
   const run = useCallback(async (q: string) => {
@@ -100,6 +101,7 @@ export function SearchDialog({
     if (q.trim().length < 2) {
       setResults([]);
       setSearched(false);
+      setFailed(false);
       setLoading(false);
       return;
     }
@@ -115,10 +117,12 @@ export function SearchDialog({
       setResults(data.results);
       setActive(0);
       setSearched(true);
+      setFailed(false);
     } catch (err) {
       if (!(err instanceof DOMException && err.name === "AbortError")) {
         setResults([]);
         setSearched(true);
+        setFailed(true);
       }
     } finally {
       setLoading(false);
@@ -135,6 +139,7 @@ export function SearchDialog({
       setQuery("");
       setResults([]);
       setSearched(false);
+      setFailed(false);
     }
   }, [open]);
 
@@ -159,9 +164,7 @@ export function SearchDialog({
         <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-humus-950/60 backdrop-blur-sm data-[state=open]:animate-fade-in max-sm:hidden" />
         {/* Full-screen sheet on phones; centred palette from sm up (no
             transform positioning — a mispositioned search box is unusable). */}
-        <DialogPrimitive.Content
-          className="fixed inset-0 z-50 flex flex-col bg-cream focus:outline-none data-[state=open]:animate-fade-in sm:inset-x-4 sm:top-20 sm:bottom-auto sm:mx-auto sm:block sm:w-auto sm:max-w-xl sm:overflow-hidden sm:rounded-2xl sm:shadow-pop"
-        >
+        <DialogPrimitive.Content className="fixed inset-0 z-50 flex flex-col bg-cream focus:outline-none data-[state=open]:animate-fade-in sm:inset-x-4 sm:top-20 sm:bottom-auto sm:mx-auto sm:block sm:w-auto sm:max-w-xl sm:overflow-hidden sm:rounded-2xl sm:shadow-pop">
           <DialogPrimitive.Title className="sr-only">Search Humuson</DialogPrimitive.Title>
           <div className="flex items-center gap-3 border-b border-line pr-3 pl-5">
             <Search className="size-5 shrink-0 text-ink-faint" strokeWidth={1.8} />
@@ -194,67 +197,85 @@ export function SearchDialog({
           </div>
 
           <div className="min-h-0 flex-1 overflow-y-auto p-2 sm:max-h-[55dvh] sm:flex-none">
-          {!searched && !loading && (
-            <div className="px-4 py-8 text-center text-sm text-ink-faint">
-              Try <SearchHint onPick={setQuery} q="maize" />,{" "}
-              <SearchHint onPick={setQuery} q="root development" />,{" "}
-              <SearchHint onPick={setQuery} q="foliar" /> or a product name.
-            </div>
-          )}
-          {searched && results.length === 0 && !loading && (
-            <div className="px-4 py-8 text-center">
-              <p className="text-sm font-medium text-ink">No results for “{query}”.</p>
-              <p className="mt-1 text-sm text-ink-faint">
-                Try a crop, a product name or a problem — or ask us directly.
-              </p>
-              <Link
-                href="/contact"
-                onClick={() => onOpenChange(false)}
-                className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-leaf-700 hover:underline"
-              >
-                Request advice <ArrowRight className="size-3.5" />
-              </Link>
-            </div>
-          )}
-          {ordered.map((result, i) => {
-            const meta = TYPE_META[result.type] ?? TYPE_META.page!;
-            const Icon = meta.icon;
-            const prev = ordered[i - 1];
-            const showGroup = !prev || prev.type !== result.type;
-            return (
-              <div key={`${result.href}-${i}`}>
-                {showGroup && (
-                  <p className="px-3 pt-4 pb-1.5 text-eyebrow text-[0.62rem] text-ink-faint">
-                    {meta.label}
-                  </p>
-                )}
+            {!searched && !loading && (
+              <div className="px-4 py-8 text-center text-sm text-ink-faint">
+                Try <SearchHint onPick={setQuery} q="maize" />,{" "}
+                <SearchHint onPick={setQuery} q="root development" />,{" "}
+                <SearchHint onPick={setQuery} q="foliar" /> or a product name.
+              </div>
+            )}
+            {searched && failed && !loading && (
+              <div className="px-4 py-8 text-center">
+                <p className="text-sm font-medium text-ink">Search is unavailable right now.</p>
+                <p className="mt-1 text-sm text-ink-faint">
+                  This isn’t an empty result — we couldn’t reach the catalogue. Try again in a
+                  moment.
+                </p>
                 <button
                   type="button"
-                  onClick={() => go(result.href)}
-                  onMouseEnter={() => setActive(i)}
-                  className={cn(
-                    "flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors",
-                    i === active ? "bg-leaf-300/30" : "hover:bg-ink/4",
-                  )}
+                  onClick={() => void run(query)}
+                  className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-leaf-700 hover:underline"
                 >
-                  <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-paper-dim text-ink-soft">
-                    <Icon className="size-4" strokeWidth={1.8} />
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-medium text-ink">
-                      {result.title}
-                    </span>
-                    {result.subtitle && (
-                      <span className="block truncate text-xs text-ink-faint">
-                        {result.subtitle}
-                      </span>
-                    )}
-                  </span>
-                  {i === active && <CornerDownLeft className="size-3.5 shrink-0 text-ink-faint" />}
+                  Retry search
                 </button>
               </div>
-            );
-          })}
+            )}
+            {searched && !failed && results.length === 0 && !loading && (
+              <div className="px-4 py-8 text-center">
+                <p className="text-sm font-medium text-ink">No results for “{query}”.</p>
+                <p className="mt-1 text-sm text-ink-faint">
+                  Try a crop, a product name or a problem — or ask us directly.
+                </p>
+                <Link
+                  href="/contact"
+                  onClick={() => onOpenChange(false)}
+                  className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-leaf-700 hover:underline"
+                >
+                  Request advice <ArrowRight className="size-3.5" />
+                </Link>
+              </div>
+            )}
+            {ordered.map((result, i) => {
+              const meta = TYPE_META[result.type] ?? TYPE_META.page!;
+              const Icon = meta.icon;
+              const prev = ordered[i - 1];
+              const showGroup = !prev || prev.type !== result.type;
+              return (
+                <div key={`${result.href}-${i}`}>
+                  {showGroup && (
+                    <p className="px-3 pt-4 pb-1.5 text-eyebrow text-[0.62rem] text-ink-faint">
+                      {meta.label}
+                    </p>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => go(result.href)}
+                    onMouseEnter={() => setActive(i)}
+                    className={cn(
+                      "flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors",
+                      i === active ? "bg-leaf-300/30" : "hover:bg-ink/4",
+                    )}
+                  >
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-paper-dim text-ink-soft">
+                      <Icon className="size-4" strokeWidth={1.8} />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-sm font-medium text-ink">
+                        {result.title}
+                      </span>
+                      {result.subtitle && (
+                        <span className="block truncate text-xs text-ink-faint">
+                          {result.subtitle}
+                        </span>
+                      )}
+                    </span>
+                    {i === active && (
+                      <CornerDownLeft className="size-3.5 shrink-0 text-ink-faint" />
+                    )}
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </DialogPrimitive.Content>
       </DialogPrimitive.Portal>

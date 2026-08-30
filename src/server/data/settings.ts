@@ -44,6 +44,11 @@ export interface CompanySettings {
   whyChooseUs: string[];
   workingProcess: { title: string; description?: string }[];
   values: { name: string; text: string }[];
+  /**
+   * Verified European supplier brands, from the content audit. The homepage
+   * "Partner brands" figure is the length of this list — never a literal.
+   */
+  partnerBrands: { name: string; note?: string }[];
 }
 
 const companyDefaults: CompanySettings = {
@@ -54,6 +59,7 @@ const companyDefaults: CompanySettings = {
   whyChooseUs: [],
   workingProcess: [],
   values: [],
+  partnerBrands: [],
 };
 
 export const getCompanySettings = cache(async (): Promise<CompanySettings> => {
