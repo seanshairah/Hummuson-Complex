@@ -130,21 +130,28 @@ export function HomeHero({
               transition={{ duration: 0.8, delay: 0.85 }}
               className="mt-12 flex flex-wrap gap-x-10 gap-y-5"
             >
+              {/*
+                A count of zero here means the underlying data is missing, not
+                that the range is empty — so the stat is dropped rather than
+                rendered as a wrong "0". Every figure shown is a real one.
+              */}
               {[
                 { value: productCount, suffix: "", label: "Products in range" },
                 { value: cropCount, suffix: "", label: "Crops covered" },
                 { value: partnerCount, suffix: "", label: "Partner brands" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <dt className="sr-only">{stat.label}</dt>
-                  <dd className="font-display text-3xl font-semibold text-paper">
-                    <Counter value={stat.value} suffix={stat.suffix} />
-                  </dd>
-                  <dd className="mt-0.5 text-xs tracking-wide text-paper/55 uppercase">
-                    {stat.label}
-                  </dd>
-                </div>
-              ))}
+              ]
+                .filter((stat) => stat.value > 0)
+                .map((stat) => (
+                  <div key={stat.label}>
+                    <dt className="sr-only">{stat.label}</dt>
+                    <dd className="font-display text-3xl font-semibold text-paper">
+                      <Counter value={stat.value} suffix={stat.suffix} />
+                    </dd>
+                    <dd className="mt-0.5 text-xs tracking-wide text-paper/55 uppercase">
+                      {stat.label}
+                    </dd>
+                  </div>
+                ))}
               <div>
                 <dd className="font-display text-3xl font-semibold text-leaf-300">Free</dd>
                 <dd className="mt-0.5 text-xs tracking-wide text-paper/55 uppercase">
