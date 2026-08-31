@@ -28,7 +28,30 @@ test.describe("admin", () => {
     await page.goto("/admin/faqs");
     await page.getByRole("textbox", { name: "Test question" }).fill("What is the shelf life?");
     await page.getByRole("button", { name: "Test" }).click();
-    await expect(page.getByText(/would answer|no confident match/i)).toBeVisible({ timeout: 15000 });
+    await expect(page.getByText(/would answer|no confident match/i)).toBeVisible({
+      timeout: 15000,
+    });
+  });
+
+  test("signs in when autofill leaves whitespace or odd case in the email", async ({ page }) => {
+    // Reported from production: a pasted/autofilled address with a stray space
+    // failed .email() validation and surfaced as "invalid email or password".
+    await page.goto("/admin/login");
+    await page.fill('input[name="email"]', `  ${ADMIN_EMAIL.toUpperCase()} `);
+    await page.fill('input[name="password"]', ADMIN_PASSWORD);
+    await page.click('button[type="submit"]');
+    await page.waitForURL("**/admin");
+    await expect(page.getByRole("heading", { name: "Overview" })).toBeVisible();
+  });
+
+  test("a rejected sign-in keeps the email so it need not be retyped", async ({ page }) => {
+    await page.goto("/admin/login");
+    await page.fill('input[name="email"]', ADMIN_EMAIL);
+    await page.fill('input[name="password"]', "wrong-password");
+    await page.click('button[type="submit"]');
+    await expect(page.getByText(/invalid email or password/i)).toBeVisible();
+    await expect(page.locator('input[name="email"]')).toHaveValue(ADMIN_EMAIL);
+    await expect(page.locator('input[name="password"]')).toHaveValue("");
   });
 
   test("wrong credentials are rejected", async ({ page }) => {

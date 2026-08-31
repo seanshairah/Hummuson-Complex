@@ -18,7 +18,11 @@ declare module "next-auth" {
 }
 
 const credentialsSchema = z.object({
-  email: z.string().email(),
+  // Trim the email: autofill, paste and mobile keyboards routinely add a
+  // leading or trailing space, and an untrimmed value fails .email() outright
+  // — which the sign-in form can only report as "invalid email or password".
+  // The password is never trimmed; whitespace there can be deliberate.
+  email: z.string().trim().toLowerCase().email(),
   password: z.string().min(1),
 });
 
@@ -34,7 +38,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(raw) {
         const parsed = credentialsSchema.safeParse(raw);
         if (!parsed.success) return null;
-        const user = await db.user.findUnique({ where: { email: parsed.data.email.toLowerCase() } });
+        const user = await db.user.findUnique({ where: { email: parsed.data.email } });
         if (!user || !user.active) return null;
         const valid = await bcrypt.compare(parsed.data.password, user.passwordHash);
         if (!valid) return null;
