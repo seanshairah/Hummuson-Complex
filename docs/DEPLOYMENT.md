@@ -21,6 +21,14 @@ NEON_WS=1 DATABASE_URL=… npm run db:seed                  # seed over WebSocke
 `deploy-neon.ts` records applied migrations in `_prisma_migrations` exactly like
 the Prisma CLI, so the two paths are interchangeable.
 
+**Migrations are applied by the build.** `npm run build` runs
+`scripts/migration/apply-pending.mjs` before `next build`, which picks the
+WebSocket path for Neon connection strings and the Prisma CLI for anything
+else. Schema and code therefore deploy together, and a migration that fails
+fails the build, leaving the previous deployment serving rather than shipping
+code that queries tables the database has never heard of. The commands above
+are still what you want for a first-time setup or a manual run.
+
 ## 2. Environment variables (Vercel → Settings → Environment Variables)
 
 | Variable                       | Notes                                             |
