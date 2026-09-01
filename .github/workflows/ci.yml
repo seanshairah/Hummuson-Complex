@@ -51,6 +51,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Dependency audit
+        run: node scripts/qa/audit-gate.mjs
+
       - name: Lint
         run: npm run lint
 

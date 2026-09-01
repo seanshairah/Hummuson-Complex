@@ -1,0 +1,37 @@
+name: CodeQL
+
+# Static analysis of the application's own code, as opposed to its
+# dependencies — that is what the audit gate in ci.yml covers. Runs on every
+# push and pull request, plus weekly so that newly published queries are
+# applied to code that has not changed.
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  schedule:
+    - cron: "0 4 * * 1"
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+          # security-extended adds the queries that matter for a web
+          # application — injection, path traversal, unsafe deserialization —
+          # beyond the default set.
+          queries: security-extended
+
+      - uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:javascript-typescript"
