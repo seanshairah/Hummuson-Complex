@@ -2,7 +2,8 @@
 // PostgreSQL (Neon in production, local cluster in development).
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
@@ -120,6 +121,21 @@ model User {
   role         Role      @default(EDITOR)
   active       Boolean   @default(true)
   lastLoginAt  DateTime?
+  /// Sessions issued before this instant are refused. Bumped on a password
+  /// change, a role change and on deactivation, which makes "sign out
+  /// everywhere" a single field update rather than a session store to build.
+  sessionsValidFrom DateTime @default(now())
+
+  /// Base32 TOTP secret. Present from the moment enrolment starts; the factor
+  /// is only actually required once totpConfirmedAt is set, so an abandoned
+  /// enrolment cannot lock anyone out of their own account.
+  totpSecret      String?
+  totpConfirmedAt DateTime?
+  /// bcrypt hashes of single-use recovery codes. Hashed rather than stored,
+  /// because a recovery code is a password that bypasses the second factor.
+  recoveryCodes   String[]
+
+  mfaChallenges MfaChallenge[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
@@ -194,6 +210,10 @@ model Product {
 
   /// Active ingredients / microbial strains, in order, exactly as published.
   composition String[]
+
+  /// Verbatim-faithful benefit claims from published material (display list).
+  /// Canonical, filterable benefits live in ProductBenefit.
+  benefitClaims String[]
 
   priceUsd    Decimal? @db.Decimal(10, 2)
   /// Reference into the WhatsApp Business catalogue (item id or link).
@@ -671,4 +691,76 @@ model AnalyticsEvent {
 
   @@index([type, createdAt])
   @@index([entityType, entityId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Abuse control
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// Fixed-window counters for rate limiting. Kept in the database rather than in
+/// process memory because the app runs as serverless functions: an in-memory
+/// counter would be per-instance, so an attacker gets the limit multiplied by
+/// however many instances happen to be warm.
+model RateLimit {
+  key         String   @id
+  count       Int      @default(0)
+  windowStart DateTime @default(now())
+  expiresAt   DateTime
+
+  @@index([expiresAt])
+}
+
+/// Append-only record of who did what, when, and from where.
+///
+/// Enforced append-only by a database trigger (see the accompanying
+/// migration), not merely by convention: a log the application can rewrite is
+/// not evidence. Rows may be deleted once they are past the retention window,
+/// which is what makes pruning possible without making tampering possible.
+model AuditEvent {
+  id     String @id @default(cuid())
+  /// "<subject>.<verb>", e.g. "user.deactivated", "product.published".
+  action String
+
+  /// Null for a failed sign-in, where there may be no account behind it.
+  actorId    String?
+  /// Denormalised on purpose: the record has to outlive the account.
+  actorEmail String?
+
+  entityType String?
+  entityId   String?
+  /// What the thing was called at the time — names change, and a log that
+  /// only holds an id stops meaning anything once the row is gone.
+  entityLabel String?
+
+  ip        String?
+  userAgent String?
+  /// Structured context: which fields changed, why an attempt was refused.
+  meta      Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([action, createdAt])
+  @@index([actorId, createdAt])
+  @@index([entityType, entityId])
+}
+
+/// A password step that has been passed but is waiting on a second factor.
+///
+/// Exists so the second step does not have to carry the password back to the
+/// server — the row is proof that the password was accepted, is single use,
+/// and expires in minutes.
+model MfaChallenge {
+  id         String    @id @default(cuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt  DateTime
+  consumedAt DateTime?
+  /// Wrong codes entered against this challenge. Caps guessing at a fixed
+  /// number of attempts even within the challenge's short life.
+  attempts   Int       @default(0)
+  createdAt  DateTime  @default(now())
+
+  @@index([userId, createdAt])
+  @@index([expiresAt])
 }

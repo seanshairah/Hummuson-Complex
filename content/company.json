@@ -1,0 +1,133 @@
+{
+  "name": "Humuson Complex",
+  "legalName": "MKM Fertilisers (origin name per About page: \"MKM fertilisers was birthed upon realising a gap...\"; legal registration not stated on site)",
+  "taglines": [
+    "Home Of Healthy Soil & Healthy Crop",
+    "Distributor of organic fertilizers, bio stimulants and foliar fertilizers of renowned European brands",
+    "Humuson Complex – Fertilizer Distributor"
+  ],
+  "about": "Zimbabwe’s economy is agro-based and its agricultural produce heavily depends on fertilisers for increased crop production. However, the agriculture industry has been heavily dominated by chemical fertilisers which weakened productivity of the soil, hence the need for organic fertilisers to restore the soil among other benefits. MKM fertilisers was birthed upon realising a gap in the inconsistency and inadequate supply of organic fertilisers in Zimbabwe.\n\nOur Vision: To be the preferred supplier of organic fertilizers for the promotion of profitable and sustainable agricultural practices in Zimbabwe and beyond.\n\nOur Mission: To deliver to the Southern African Market high quality fertilizers that maximize crop productivity, improve soil fertility and are eco friendly.",
+  "whatsappNumbers": [
+    "+263 77 665 6433"
+  ],
+  "whatsappGroupUrl": "https://chat.whatsapp.com/GgyfZKp9j0dEHTeETbVZJW",
+  "whatsappCatalogueUrl": "https://wa.me/c/263776656433",
+  "phones": [
+    "+263 77 665 6433"
+  ],
+  "emails": [
+    "info@humusoncomplex.com"
+  ],
+  "address": "78 Lomagundi Rd, Harare, Zimbabwe",
+  "socials": {
+    "facebook": "https://www.facebook.com/humusoncomplex",
+    "instagram": "https://instagram.com/humuson_complex",
+    "youtube": null,
+    "linkedin": null,
+    "twitter": null,
+    "tiktok": null
+  },
+  "hours": "Mon–Fri 8:00–16:30, Sat 8:30–13:00, Sun closed",
+  "services": [
+    "Supply of organic fertilizers, biostimulants and foliar fertilizers (Value, Physio & Organic ranges)",
+    "Fertilizers delivery (fees depend on distance — per site FAQ)",
+    "Basic consultation, free of charge (per site FAQ)",
+    "Farm visits at an agreed amount (per site FAQ)",
+    "Project management (offered as a service option on the contact form)",
+    "Distribution partnerships (contact to discuss terms — per site FAQ)"
+  ],
+  "whyChooseUs": [
+    "Our high-quality inputs and services will help improve your farming practice by reducing costs and increasing yield",
+    "Sharply reduces fertiliser cost",
+    "Improves yield, quality & soil fertility",
+    "Longer & more efficient moisture retention capacity",
+    "Ideal for home garden and landscaping",
+    "Promotes root development & growth",
+    "Boost output on commercial farms & greenhouses",
+    "No transport costs",
+    "Quality Products — Consultancy — Proven Results (homepage strengths)"
+  ],
+  "workingProcess": [],
+  "values": [
+    {
+      "name": "Commitment",
+      "text": "We keep our promises to our customers, employees and suppliers. We are committed to their success."
+    },
+    {
+      "name": "Passion",
+      "text": "Desire for success is only exceeded by our commitment. We are dedicated to our persistent drive for excellency."
+    },
+    {
+      "name": "Customer Centered",
+      "text": "Our customers come first in our efforts in time, energy, products, services and safety."
+    },
+    {
+      "name": "Honesty",
+      "text": "We desire to be open and straightforward in all relationships. We believe honesty is the foundation of trust, trust the foundation for good agribusinesses."
+    },
+    {
+      "name": "Respect",
+      "text": "Business relations are developed and sustained with a desire to satisfy needs and exceed expectations ethically and professionally."
+    }
+  ],
+  "team": [
+    {
+      "name": "Vaida Kontrimaite",
+      "role": "Director",
+      "bio": "With 15 years experience in the field of development cooperation with focus on community and organisational development."
+    },
+    {
+      "name": "Bybit R. Sewera",
+      "role": "Head Of Zambian Office",
+      "bio": null
+    },
+    {
+      "name": "Ronald Rusere",
+      "role": "Technical Agronomist",
+      "bio": null
+    },
+    {
+      "name": "Blessing Mandimutsira",
+      "role": "Technical Agronomist",
+      "bio": null
+    },
+    {
+      "name": "Tinashe Mutengwa",
+      "role": "Sales Agronomist",
+      "bio": null
+    }
+  ],
+  "stats": [
+    {
+      "label": "Years Of Experience",
+      "value": 15
+    },
+    {
+      "label": "Company Existence",
+      "value": 15
+    },
+    {
+      "label": "Products Sold",
+      "value": 1000
+    },
+    {
+      "label": "Team Members",
+      "value": 10
+    }
+  ],
+  "partnerBrands": [
+    {
+      "name": "Bioenergy LT",
+      "note": "European supplier brand — logo shown on About page; 2023 product line (Azofix Plus, Fosfix Plus, Bacto-K, Bacto-Seed, Master, Maxprolin, Ruinex, Bactoforce) links to bioenergy.lt datasheets."
+    },
+    {
+      "name": "Sapropel Organics",
+      "note": "Logo shown on About/home pages; matches the sapropel-based HUMUSON Complex organic base described in the FAQ."
+    },
+    {
+      "name": "IKAR Liquid Fertilizers",
+      "note": "Brand visible on the 2025 foliar line pack photos (Ocean, IN5, Koral, Enzo Pro, Mendelenium, Bora, Elais, Silicare, Bigo W, Perfect Stick). Not named in site text."
+    }
+  ],
+  "notes": "workingProcess is [] because /working-process/ contains only unedited gardening-theme placeholder text (see audit). \"Company Existence: 15\" and \"Years Of Experience: 15\" are the literal counter values configured on the About page — they conflict with the site’s 2023 launch and should be verified. team/values/stats/partnerBrands/whatsappGroupUrl/whatsappCatalogueUrl are extra fields beyond the base contract, provided because the data is real and useful."
+}

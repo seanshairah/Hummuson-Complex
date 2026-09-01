@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Organic",
+    "slug": "organic",
+    "description": null,
+    "count": 13
+  },
+  {
+    "name": "Physio",
+    "slug": "physio",
+    "description": null,
+    "count": 13
+  },
+  {
+    "name": "Value",
+    "slug": "value",
+    "description": null,
+    "count": 5
+  },
+  {
+    "name": "Liquid Fertilisers",
+    "slug": "liquid-fertilisers",
+    "description": null,
+    "count": 11,
+    "note": "Grouping added during migration: the 2025 liquid range (IKAR-branded packs) had no category on the old site; every product in it is described as a liquid fertilizer in its own listing."
+  },
+  {
+    "name": "Biostimulants",
+    "slug": "biostimulants",
+    "description": "Amino-acid, seaweed and speciality formulations that help crops grow through stress and perform consistently.",
+    "count": 4,
+    "note": "Category added during the August 2026 catalogue update to group the biostimulant range (A3, Maxprolin, eMAXX Ultra, Fortik Solid)."
+  }
+]

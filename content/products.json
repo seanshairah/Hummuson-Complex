@@ -1,0 +1,2020 @@
+[
+ {
+  "name": "Azofix Plus",
+  "displayMark": false,
+  "slug": "azofix-plus",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/azofix-plus/"
+  ],
+  "categorySlugs": [
+   "organic",
+   "physio"
+  ],
+  "shortDescription": "Plant microbial biostimulant for more efficient fixation of atmospheric nitrogen — its bacteria fix nitrogen in a form accessible to the plant and promote the biological activity of soils.",
+  "descriptionHtml": "<p>Azofix Plus is a plant microbial biostimulant built around the nitrogen-fixing bacterium <em>Paenibacillus polymyxa</em> MVY-024, enriched with B-group vitamins and microelements. Its bacteria fix atmospheric nitrogen in a form that is accessible to the plant and promote the biological activity of soils — feeding the crop by first feeding the soil.</p><p>Registered with Ecocert and FiBL and approved for organic farming, it is applied to the soil from before sowing up to the crop covering the ground, at 1–5 L/ha depending on the crop.</p>",
+  "composition": [
+   "Paenibacillus polymyxa MVY-024 (1.2×10¹⁰ CFU/L)",
+   "B-group vitamins: B1, B3, B6",
+   "Microelements: Cu, Co, Fe, Mn, Mo, Zn (max 0.02 %)",
+   "K — 7 140 mg/L",
+   "Na — 1 880 mg/L",
+   "Ca — 1 500 mg/L",
+   "S — 1 170 mg/L",
+   "P — 278 mg/L",
+   "Mg — 275 mg/L"
+  ],
+  "packSizes": [
+   {
+    "size": "5 L",
+    "priceUsd": null
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "Cereals · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–30 (per label)"
+   },
+   {
+    "context": "Rapeseed · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–30 (per label)"
+   },
+   {
+    "context": "Corn & sunflower · per ha",
+    "rate": "1–5 L",
+    "notes": "Growth window BBCH 01–16 (per label)"
+   },
+   {
+    "context": "Sugar beet · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–16 (per label)"
+   },
+   {
+    "context": "Vegetables · per ha",
+    "rate": "1–5 L",
+    "notes": "Growth window BBCH 01–40 (per label)"
+   },
+   {
+    "context": "Fruit trees & fruit bushes · per ha",
+    "rate": "1–4 L",
+    "notes": "Growth window BBCH 01–59 — on the soil before planting or until flowering (per label)"
+   },
+   {
+    "context": "Berries · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–59 — on the soil before planting or until flowering (per label)"
+   }
+  ],
+  "applicationMethods": [
+   "soil application",
+   "foliar spray"
+  ],
+  "suitableCrops": [
+   "cereals",
+   "rapeseed",
+   "maize",
+   "sunflower",
+   "sugar beet",
+   "vegetables",
+   "fruits",
+   "berry bushes"
+  ],
+  "benefits": [
+   "Fixes atmospheric nitrogen in a form accessible to the plant",
+   "Promotes the biological activity of soils",
+   "Approved for organic farming (Ecocert & FiBL registered)",
+   "Product is non-toxic and has no irritating compounds"
+  ],
+  "priceUsd": 150,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/AZOFIX-RHIZO_20L_620x620-323x323-1.jpg",
+    "localPath": "/images/products/azofix-plus/1.jpg",
+    "alt": "Azofix Plus — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.51 (1).jpeg",
+    "localPath": "/images/products/azofix-plus/wa-label-5l.jpg",
+    "alt": "Azofix Plus — Humuson Complex product photograph",
+    "role": "catalogue"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.53.jpeg",
+    "localPath": "/images/products/azofix-plus/wa-label-alt.jpg",
+    "alt": "Azofix Plus — product label",
+    "role": "gallery"
+   }
+  ],
+  "featured": false,
+  "notes": "Bioenergy LT product line (description links to bioenergy.lt PDF). Pack size not stated in listing text; product photo filename suggests a 20L pack — confirm with Humuson before publishing a size. Label data transcribed from the August 2026 product photo set supplied by Humuson Complex.",
+  "sourceUrl": "https://humusoncomplex.com/product/azofix-plus/",
+  "tagline": "For nitrogen fixation",
+  "instructionsHtml": "<h3>Application requirements</h3><ul><li>Spray on the soil before sowing, or until the plants no longer leave the soil surface uncovered. In other cases, consult a Humuson sales representative.</li><li>Sprayer pressure 1–10 bar (15–145 psi); nozzle size at least 50 µm.</li><li>Can be mixed with all kinds of fertilisers and pesticides unless their manufacturer states otherwise. May contain natural sediments.</li></ul><h3>Storage &amp; safety</h3><ul><li>Avoid storage above 30 °C. Once opened, use Azofix Plus as soon as possible — or refrigerate at 4 °C and use within 72 hours.</li><li>Non-toxic, with no irritating compounds; no risk to humans, animals or the environment. Rinse with running water after skin or eye contact.</li></ul><p><em>Manufactured by Bioenergy LT, Panevėžys, Lithuania. Laboratory quality certificate; approved for organic farming.</em></p>"
+ },
+ {
+  "name": "Fosfix Plus",
+  "displayMark": false,
+  "slug": "fosfix-plus",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/fosfix-plus/"
+  ],
+  "categorySlugs": [
+   "organic",
+   "physio"
+  ],
+  "shortDescription": "Plant microbial biostimulant that increases the amount of available phosphorus in the soil for optimal phosphorus uptake by the crop.",
+  "descriptionHtml": "<p>Fosfix Plus is a plant microbial biostimulant powered by <em>Bacillus aryabhattai</em> MVY-004. The bacteria unlock phosphorus already present in the soil, increasing the amount available to the crop — phosphorus that drives energy transfer, rooting and flowering.</p><p>Ecocert and FiBL registered and approved for organic farming, it is applied to the soil from before sowing until canopy closure at 1–5 L/ha depending on the crop.</p>",
+  "composition": [
+   "Bacillus aryabhattai MVY-004 (1.2×10¹⁰ CFU/L)",
+   "K — 1 506 mg/L",
+   "Na — 738 mg/L",
+   "S — 608 mg/L",
+   "Ca — 137 mg/L",
+   "P — 100 mg/L",
+   "Mg — 0.5 mg/L"
+  ],
+  "packSizes": [],
+  "applicationRates": [
+   {
+    "context": "Cereals · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–30 (per label)"
+   },
+   {
+    "context": "Rapeseed · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–30 (per label)"
+   },
+   {
+    "context": "Corn & sunflower · per ha",
+    "rate": "1–5 L",
+    "notes": "Growth window BBCH 01–16 (per label)"
+   },
+   {
+    "context": "Sugar beet · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–16 (per label)"
+   },
+   {
+    "context": "Vegetables · per ha",
+    "rate": "1–5 L",
+    "notes": "Growth window BBCH 01–40 (per label)"
+   },
+   {
+    "context": "Fruit trees & fruit bushes · per ha",
+    "rate": "1–4 L",
+    "notes": "Growth window BBCH 01–59 — on the soil before planting or until flowering (per label)"
+   },
+   {
+    "context": "Berries · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–59 — on the soil before planting or until flowering (per label)"
+   }
+  ],
+  "applicationMethods": [
+   "soil application",
+   "foliar spray"
+  ],
+  "suitableCrops": [
+   "cereals",
+   "rapeseed",
+   "maize",
+   "sunflower",
+   "sugar beet",
+   "vegetables",
+   "fruits",
+   "berry bushes"
+  ],
+  "benefits": [
+   "Increases the amount of available phosphorus in the soil",
+   "Supports early root development through better phosphorus nutrition",
+   "Approved for organic farming (Ecocert & FiBL registered)",
+   "Product is non-toxic and has no irritating compounds"
+  ],
+  "priceUsd": 150,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_FOSFIX-PLUS_5L_1080x1080-600x600-1.jpg",
+    "localPath": "/images/products/fosfix-plus/1.jpg",
+    "alt": "Fosfix Plus — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.52.jpeg",
+    "localPath": "/images/products/fosfix-plus/wa-jerrican.jpg",
+    "alt": "Fosfix Plus — Humuson Complex product photograph",
+    "role": "catalogue"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.52 (1).jpeg",
+    "localPath": "/images/products/fosfix-plus/wa-label.jpg",
+    "alt": "Fosfix Plus — product label",
+    "role": "gallery"
+   }
+  ],
+  "featured": false,
+  "notes": "Bioenergy LT product line (tag \"bio-energy\"). Bacteria modify complex phosphorus compounds into plant-available forms and synthesize thiamine, pyridoxine, biotin, pantothenic and nicotinic acids (per description). Pack size not stated in listing text; photo filename suggests 5L — confirm. Label data transcribed from the August 2026 product photo set supplied by Humuson Complex.",
+  "sourceUrl": "https://humusoncomplex.com/product/fosfix-plus/",
+  "tagline": "For optimal phosphorus uptake",
+  "instructionsHtml": "<h3>Application requirements</h3><ul><li>Spray on the soil before sowing, or until the plants no longer leave the soil surface uncovered. In other cases, consult a Humuson sales representative.</li><li>Sprayer pressure 1–10 bar (15–145 psi); nozzle size at least 50 µm.</li><li>Can be mixed with all kinds of fertilisers and pesticides unless their manufacturer states otherwise. May contain natural sediments.</li></ul><h3>Storage &amp; safety</h3><ul><li>Avoid storage above 30 °C. Once opened, use Fosfix Plus as soon as possible — or refrigerate at 4 °C and use within 72 hours.</li><li>Non-toxic, with no irritating compounds; no risk to humans, animals or the environment. Rinse with running water after skin or eye contact.</li></ul><p><em>Manufactured by Bioenergy LT, Panevėžys, Lithuania. Laboratory quality certificate; approved for organic farming.</em></p>"
+ },
+ {
+  "name": "Bacto-K",
+  "displayMark": false,
+  "slug": "bacto-k",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/bacto-k/"
+  ],
+  "categorySlugs": [
+   "organic",
+   "physio"
+  ],
+  "shortDescription": "Plant microbial biostimulant that improves potassium assimilation and potassium balance in the soil, and increases resistance to droughts and frost.",
+  "descriptionHtml": "<p>Bacto-K is a plant microbial biostimulant built on <em>Bacillus megaterium</em> MVY-011, a potassium-mobilising bacterium. It improves potassium assimilation and the potassium balance of the soil — the nutrient behind water regulation, standing power and stress tolerance — helping crops resist drought and frost.</p><p>FiBL registered and approved for organic farming, it is applied to the soil from before sowing until canopy closure at 1–5 L/ha depending on the crop.</p>",
+  "composition": [
+   "Bacillus megaterium MVY-011 (1.2×10¹⁰ CFU/L)",
+   "Na — 4 823 mg/L",
+   "S — 2 908 mg/L",
+   "K — 1 729 mg/L",
+   "P — 723 mg/L",
+   "Mg — 137 mg/L",
+   "Ca — 134 mg/L"
+  ],
+  "packSizes": [],
+  "applicationRates": [
+   {
+    "context": "Cereals · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–30 (per label)"
+   },
+   {
+    "context": "Rapeseed · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–30 (per label)"
+   },
+   {
+    "context": "Corn & sunflower · per ha",
+    "rate": "1–5 L",
+    "notes": "Growth window BBCH 01–16 (per label)"
+   },
+   {
+    "context": "Sugar beet · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–16 (per label)"
+   },
+   {
+    "context": "Vegetables · per ha",
+    "rate": "1–5 L",
+    "notes": "Growth window BBCH 01–40 (per label)"
+   },
+   {
+    "context": "Fruit trees & fruit bushes · per ha",
+    "rate": "1–4 L",
+    "notes": "Growth window BBCH 01–59 — on the soil before planting or until flowering (per label)"
+   },
+   {
+    "context": "Berries · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–59 — on the soil before planting or until flowering (per label)"
+   }
+  ],
+  "applicationMethods": [
+   "soil application",
+   "foliar spray"
+  ],
+  "suitableCrops": [
+   "cereals",
+   "rapeseed",
+   "maize",
+   "sunflower",
+   "sugar beet",
+   "vegetables",
+   "fruits",
+   "berry bushes"
+  ],
+  "benefits": [
+   "Improves potassium assimilation and potassium balance in the soil",
+   "Increases resistance to droughts and frost",
+   "Approved for organic farming (FiBL registered)",
+   "Product is non-toxic and has no irritating compounds"
+  ],
+  "priceUsd": 150,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_BACTO-K_5L_1080x1080-600x600-1.jpg",
+    "localPath": "/images/products/bacto-k/1.jpg",
+    "alt": "Bacto-K — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.53 (1).jpeg",
+    "localPath": "/images/products/bacto-k/wa-jerrican.jpg",
+    "alt": "Bacto-K — Humuson Complex product photograph",
+    "role": "catalogue"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.53 (2).jpeg",
+    "localPath": "/images/products/bacto-k/wa-label.jpg",
+    "alt": "Bacto-K — product label",
+    "role": "gallery"
+   }
+  ],
+  "featured": false,
+  "notes": "Bioenergy LT product line. Active microorganisms decompose silicates and mobilize potassium into absorbable forms (per description). Pack size not stated in listing text; photo filename suggests 5L — confirm. Label data transcribed from the August 2026 product photo set supplied by Humuson Complex.",
+  "sourceUrl": "https://humusoncomplex.com/product/bacto-k/",
+  "tagline": "For healthy soil",
+  "instructionsHtml": "<h3>Application requirements</h3><ul><li>Spray on the soil before sowing, or until the plants no longer leave the soil surface uncovered. In other cases, consult a Humuson sales representative.</li><li>Sprayer pressure 1–10 bar (15–145 psi); nozzle size at least 50 µm.</li><li>Can be mixed with all kinds of fertilisers and pesticides unless their manufacturer states otherwise. May contain natural sediments.</li></ul><h3>Storage &amp; safety</h3><ul><li>Avoid storage above 30 °C. Once opened, use Bacto-K as soon as possible — or refrigerate at 4 °C and use within 72 hours.</li><li>Non-toxic, with no irritating compounds; no risk to humans, animals or the environment. Rinse with running water after skin or eye contact.</li></ul><p><em>Manufactured by Bioenergy LT, Panevėžys, Lithuania. Laboratory quality certificate; approved for organic farming.</em></p>"
+ },
+ {
+  "name": "Bacto-Seed",
+  "displayMark": false,
+  "slug": "bacto-seed",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/bacto-seed/"
+  ],
+  "categorySlugs": [
+   "organic",
+   "physio"
+  ],
+  "shortDescription": "Contains a bacterial complex that promotes seed viability and germination and improves growth and development of the root system.",
+  "descriptionHtml": "<h4>Why Bacto-Seed?</h4>\n<ul>\n<li>Promotes seed viability and germination;</li>\n<li>Improves growth and development of root system;</li>\n<li>Bacto-Seed enhances the uptake of phosphorus and potassium from the soil;</li>\n<li>Improves soil structure.</li>\n</ul>\n<h4>Operating principle:</h4>\n<p>Bacto-Seed product contains a bacterial complex that releases biologically active substances that promote seed germination and the development of young plants, balancing vital metabolic processes and increasing resistance to stress.</p>\n\n<p>Additional Information: <a href=\"https://www.bioenergy.lt/wp-content/uploads/2021/03/Bacto-Seed_Onepage-INFO-WEB.pdf\"><strong>Click Me</strong></a></p>",
+  "composition": [],
+  "packSizes": [],
+  "applicationRates": [],
+  "applicationMethods": [],
+  "suitableCrops": [],
+  "benefits": [
+   "Promotes seed viability and germination",
+   "Improves growth and development of root system",
+   "Enhances the uptake of phosphorus and potassium from the soil",
+   "Improves soil structure"
+  ],
+  "priceUsd": 150,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_BACTO-SEED_5L_1080x1080-600x600-1.jpg",
+    "localPath": "/images/products/bacto-seed/1.jpg",
+    "alt": "Bacto-Seed — product pack"
+   }
+  ],
+  "featured": false,
+  "notes": "Bioenergy LT product line. Original description repeated one passage twice (copy-paste error) — duplicate removed, wording untouched. Pack size not stated in listing text; photo filename suggests 5L — confirm.",
+  "sourceUrl": "https://humusoncomplex.com/product/bacto-seed/"
+ },
+ {
+  "name": "Master",
+  "displayMark": false,
+  "slug": "master",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/master/"
+  ],
+  "categorySlugs": [
+   "organic",
+   "physio"
+  ],
+  "shortDescription": "Promotes soil biological and enzymatic activity and increases the amount of phosphorus and potassium available to plants.",
+  "descriptionHtml": "<h4>Why Master?</h4>\n<ul>\n<li>Promotes soil biological and enzymatic activity;</li>\n<li>Increases the amount of phosphorus and potassium available to plants;</li>\n<li>Increases N reserves in soil;</li>\n<li>Promotes plant growth and accordingly, better resistance to stress;</li>\n<li>Improves soil structure.</li>\n</ul>\n<h4>Operating principle:</h4>\n<p>The product contains a complex of bacteria that exudes biologically active substances, vitamins, enzymes, plant hormones that promote plant development and secrete micro and macro elements that are especially needed by plants. Improving the physical and chemical properties of the soil and the uptake of nutrients by plants. Its action begins immediately after contact with the soil or parts of the plant and acts under favorable physiological conditions for up to 8 weeks.</p>\n<p>Additional Information: <a href=\"https://www.bioenergy.lt/wp-content/uploads/2021/03/Master-Onepage-INFO-WEB.pdf\"><strong>Click Me</strong></a></p>",
+  "composition": [],
+  "packSizes": [],
+  "applicationRates": [],
+  "applicationMethods": [],
+  "suitableCrops": [],
+  "benefits": [
+   "Promotes soil biological and enzymatic activity",
+   "Increases the amount of phosphorus and potassium available to plants",
+   "Increases N reserves in soil",
+   "Promotes plant growth and accordingly, better resistance to stress",
+   "Improves soil structure",
+   "Approved for use in organic farming according to EU Regulation 2018/848 and 2021/1165"
+  ],
+  "priceUsd": 150,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_MASTER_5L_1080x1080-600x600-1.jpg",
+    "localPath": "/images/products/master/1.jpg",
+    "alt": "Master — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_MASTER_5L_1080x1080-600x600-1-1.jpg",
+    "localPath": "/images/products/master/2.jpg",
+    "alt": "Master — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.37.jpeg",
+    "localPath": "/images/products/master/wa-front.jpg",
+    "alt": "Master — Humuson Complex product photograph",
+    "role": "catalogue"
+   }
+  ],
+  "featured": false,
+  "notes": "Bioenergy LT product line. Acts for up to 8 weeks after contact with soil or plant parts (per description). Pack size not stated in listing text; photo filename suggests 5L — confirm. Front-of-pack details transcribed from the August 2026 photo set.",
+  "sourceUrl": "https://humusoncomplex.com/product/master/",
+  "tagline": "For improvement of soil fertility"
+ },
+ {
+  "name": "Maxprolin",
+  "displayMark": false,
+  "slug": "maxprolin",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/maxprolin/"
+  ],
+  "categorySlugs": [
+   "biostimulants"
+  ],
+  "shortDescription": "Improves plant response to cold weather, frost, waterlogging or drought by increasing the concentration of proline in plants.",
+  "descriptionHtml": "<p>Maxprolin is pure L-proline — the amino acid plants accumulate when they face stress. Applied before or during stress periods it helps the crop reduce biotic and abiotic stress, regulates the uptake of micro- and macro-elements and stimulates the plant's natural defence mechanisms.</p><p><em>Purpose translated from the manufacturer's label (Bioenergy LT, Lithuania).</em></p><h4>Why <strong>Maxprolin</strong>?</h4>\n<ul>\n<li>Improves plant response to cold weather, frost, waterlogging, or drought;</li>\n<li>Promotes seed germination, root hairs formation regulates water circulation in the plant;</li>\n<li>Promotes the formation of chlorophyll b in plants, increases the photosynthesis process;</li>\n<li>Increases sugar accumulation in cells and intercellular transport processes, therefore better response to winter conditions;</li>\n<li>Increases yield and crop quality.</li>\n</ul>\n<h4>Operating principle:</h4>\n<p>Proline is accumulated in cells of plants under unfavorable plant growth conditions. The experimental data let us draw the conclusion that the accumulation of proline in plants has a protective function. The application of MaxProlin increases the concentration of proline in plants. It is scientifically proved that proline metabolism affects plant response to stress (cold, heat, drought): the plant growth is optimized and resistance to adverse environmental factors is increased.</p>\n<p><em>Additional Information: <a href=\"https://www.bioenergy.lt/wp-content/uploads/2021/03/Maxprolin-Onepage-INFO-WEB.pdf\"><strong>Click Me</strong></a></em></p>",
+  "composition": [
+   "Pure L-proline (Grynas L-prolinas)"
+  ],
+  "packSizes": [
+   {
+    "size": "10g (covers 1 ha)",
+    "priceUsd": 20
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "per Ha",
+    "rate": "10g covers 1 ha",
+    "notes": "From the listing short description."
+   }
+  ],
+  "applicationMethods": [],
+  "suitableCrops": [],
+  "benefits": [
+   "Reduces biotic and abiotic plant stress",
+   "Regulates the uptake of micro- and macro-elements",
+   "Stimulates the plant's natural defence mechanisms"
+  ],
+  "priceUsd": 20,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_MAXPROLIN-BOX-1080x1080-1-600x600-1.png",
+    "localPath": "/images/products/maxprolin/1.png",
+    "alt": "Maxprolin — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.44 (1).jpeg",
+    "localPath": "/images/products/maxprolin/wa-box.jpg",
+    "alt": "Maxprolin — Humuson Complex product photograph",
+    "role": "catalogue"
+   }
+  ],
+  "featured": false,
+  "notes": "Bioenergy LT product line. Active principle described as proline accumulation (\"The application of MaxProlin increases the concentration of proline in plants\") — no percentage composition stated. Label data transcribed from the August 2026 product photo set supplied by Humuson Complex.",
+  "sourceUrl": "https://humusoncomplex.com/product/maxprolin/",
+  "tagline": "Pure L-proline"
+ },
+ {
+  "name": "Grow+ Top Dressing",
+  "displayMark": false,
+  "slug": "grow-top-dressing",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/grow-top-dressing/",
+   "https://humusoncomplex.com/product/grow-top-dressing-sachet/"
+  ],
+  "categorySlugs": [
+   "organic",
+   "physio",
+   "value"
+  ],
+  "shortDescription": "Organic top dressing containing humified and water-soluble organic carbon, natural vitamins, organic acids, enzymes and more than 40 natural-origin nutrition elements.",
+  "descriptionHtml": "<ul>\n  <li>ORGANIC CARBON (HUMIFIED AND WATER SOLUBLE)</li>\n  <li>VITAMINS (CAROTENE, B1, B2, B3, B5, B6, B12, E, C, D, P)</li>\n  <li>ORGANIC ACIDS (FOLIC, HUMIC, FULVIC)</li>\n  <li>ENZYMES (CATALASE, PEROXIDASE, REDUCTASE, PROTEASE)</li>\n  <li>MORE THAN 40 DIFFERENT, NATURAL ORIGINAL NUTRITION ELEMENTS (Co., Mn, Cu, B, Zn, I, Br, Mo, V, Cr, Be, Ni&#8230;)</li>\n</ul>",
+  "composition": [
+   "Enzymes, phytohormones and L-α-amino acids (17 different amino acids, incl. L-glutamic and L-aspartic acid)",
+   "Humic substances, humic acids and fulvic acids",
+   "N — 5.0 ± 0.5 % w/w",
+   "P₂O₅ — 0.5 % w/w",
+   "K₂O — 15 ± 0.5 % w/w",
+   "Natural micro-elements: Zn, B, Mn, Fe, Cu, Mo, Mg"
+  ],
+  "packSizes": [
+   {
+    "size": "80 ml sachet (per 16 L knapsack)",
+    "priceUsd": null
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "per 16 L knapsack",
+    "rate": "80 ml",
+    "notes": "Mix 80 ml with 1 L of water, stir thoroughly, then dilute with 15 L of water (per sachet label)."
+   }
+  ],
+  "applicationMethods": [
+   "top dressing",
+   "foliar spray",
+   "drench"
+  ],
+  "suitableCrops": [],
+  "benefits": [
+   "Bio-organic activator for soil regeneration",
+   "Increases the vitality and absorption of mineral fertilisers",
+   "Improves pollination and growth",
+   "Contains 17 different amino acids with humic and fulvic acids",
+   "Approved by Ecocert — premium Sapropel product"
+  ],
+  "priceUsd": 25,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_MAXPROLIN-BOX-1080x1080-1-600x600-2.png",
+    "localPath": "/images/products/grow-top-dressing/1.png",
+    "alt": "Grow+ Top Dressing — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_AZOFIX-PLUS_20L_1080x1080-600x600-1.png",
+    "localPath": "/images/products/grow-top-dressing/2.png",
+    "alt": "Grow+ Top Dressing — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/c25006a7-b799-4aba-95cc-a71a045d5738-768x1026.jpg",
+    "localPath": "/images/products/grow-top-dressing/3.jpg",
+    "alt": "Grow+ Top Dressing — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.44 (2).jpeg",
+    "localPath": "/images/products/grow-top-dressing/wa-bottle.jpg",
+    "alt": "Grow+ Top Dressing — Humuson Complex product photograph",
+    "role": "catalogue"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.41.jpeg",
+    "localPath": "/images/products/grow-top-dressing/wa-sachets.jpg",
+    "alt": "Grow+ Top Dressing — product label",
+    "role": "gallery"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.46 (2).jpeg",
+    "localPath": "/images/products/grow-top-dressing/wa-sachet-back.jpg",
+    "alt": "Grow+ Top Dressing — product label",
+    "role": "gallery"
+   }
+  ],
+  "featured": true,
+  "notes": "Merged duplicate of /product/grow-top-dressing-sachet/ ($3.00 sachet listing, tag \"satchets\", empty description). Main-pack size not stated ($25.00). Site FAQ states: \"Grow + should be applied at 4-6 leaves stage every 10-14 days till flowering. Recommended 2-3 applications.\" Blog calls Grow Plus \"our organic biostimulant renowned for its ability to enhance soil and crop health\". Part of the HUMUSON Complex / Sapropel Organics range. Label data transcribed from the August 2026 product photo set supplied by Humuson Complex.",
+  "sourceUrl": "https://humusoncomplex.com/product/grow-top-dressing/",
+  "tagline": "Organic top dressing fertiliser",
+  "instructionsHtml": "<h3>Preparation</h3><p>Mix 80 ml of Grow+ with 1 litre of water and stir thoroughly. Mix the resulting concentrate with 15 litres of water — one 16 L knapsack.</p><h3>Application</h3><p>Apply from the 4–6 leaf stage and repeat every 10–14 days; up to 7 applications are recommended per season. Suitable for drenching or foliar application.</p><h3>Usage</h3><p>Grow+ can be used simultaneously with mineral fertilisers, fungicides and insecticides. After a herbicide application, wait 7 days before applying.</p><p><em>Producer: Sapropel Organics Ltd, Lithuania (EU). Approved by Ecocert. Distributed by MKM Fertilizers Pvt Ltd t/a Humuson Complex.</em></p>"
+ },
+ {
+  "name": "CarboAmin Basal Dressing",
+  "displayMark": false,
+  "slug": "carboamin-basal-dressing",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/carboamin-basal-dressing/",
+   "https://humusoncomplex.com/product/carboamin-basal-dressing-sachet/"
+  ],
+  "categorySlugs": [
+   "organic",
+   "physio",
+   "value"
+  ],
+  "shortDescription": "Basal dressing containing humic and fulvic acids, amino acids and phytohormones — prevents nitrogen leaching, stabilizes phosphorus and increases nutrient availability and absorption.",
+  "descriptionHtml": "<p>CONTAINS HUMIC &amp; FULVIC ACIDS</p>\n<ul>\n  <li>Prevent nitrogen leaching</li>\n  <li>Provides food for the microbes</li>\n  <li>Stabilizes phosphorus</li>\n  <li>Increases nutrient availability and absorption</li>\n  <li>Enhances for growth</li>\n  <li>Increase water retention</li>\n  <li>Improve overall soil structure</li>\n  <li>Improve soil CEC</li>\n  <li>Improves crop vigor</li>\n  <li>Improves seed germination</li>\n  <li>Increase iron uptake</li>\n</ul>\n<p>BIOSTIMULANT PROPERTIES — NUTRITIONAL COMPONENTS</p>\n<ul>\n  <li>Contains 17 essential amino acids</li>\n  <li>Phytohormones (Auxins and cytokinins)</li>\n  <li>Chelating agents (Amino acids, fulvic acid and humic acids)</li>\n  <li>Micro and Macro Nutrients</li>\n</ul>\n<ul>\n  <li>Makroelements: organic NPK</li>\n  <li>organic carbon (humified carbon and watersoluble carbon)</li>\n  <li>rich with natural vitamins: contains carotene (provitamin A), B1 B2 B3 B5 B6 B12 E, C, D, P)</li>\n  <li>organic acids: folic acid, humic acids fulvic acid</li>\n  <li>trace elements (Mn, Cu, B, Zn, I, Br, Mo, V, Cr, Be, Ni, Ag, Sn, Pb As, Ba, Sr, Ti)</li>\n  <li>amino acids (Glutamic acid, Glycine, Valine, Arginine, Aspartic acid, Alanine, Serine, Leucine, Isoleucine, Phenylalanine, Tyrosine, Lysine, Methionine, Threonine, Cystine)</li>\n  <li>contains enzymes ( peroxidase, reductase, protease)</li>\n  <li>glycoprotein, glomalin</li>\n  <li>phytohormones (auxin and cytokinin)</li>\n</ul>\n<p><strong>Humic acids</strong></p>\n<p>Here are some potential advantages of using humic acids for seed soaking:</p>\n<ol>\n  <li>Enhanced seed germination: Humic acids can help stimulate seed germination by breaking seed dormancy and promoting the activation of enzymes involved in germination processes. Soaking seeds in humic acids can potentially result in faster and more uniform germination rates.</li>\n  <li>Improved nutrient availability: Humic acids have the ability to chelate or bind with essential nutrients, such as iron, zinc, and manganese, making them more available for plant uptake. By soaking seeds in humic acids, the nutrients bound to these compounds can be released and absorbed more efficiently by the emerging seedlings, promoting healthy growth.</li>\n  <li>Increased root development: Humic acids can stimulate root growth and development. Soaking seeds in humic acids can help initiate root elongation, increase the number of root hairs, and enhance lateral root branching. This can lead to improved nutrient and water uptake, as well as better anchorage and overall plant vigor</li>\n  <li>Stress tolerance: Humic acids have been reported to enhance plant tolerance to various abiotic stresses, including drought, salinity, and heavy metal toxicity. Soaking seeds in humic acids can potentially prime the seedlings stress response mechanisms, allowing them to better withstand adverse environmental conditions.</li>\n  <li>Microbial activity promotion: Humic acids can act as a food source and stimulant for beneficial soil microorganisms. Soaking seeds in humic acids can promote the growth and activity of beneficial bacteria and fungi in the rhizosphere, leading to improved nutrient cycling, disease suppression, and overall soil health.</li>\n  <li>Seedling vigor and establishment: By providing a nutrient-rich and conducive environment for seed germination, humic acid seed soaking can result in stronger and more vigorous seedlings. This can lead to better establishment in the field, higher survival rates, and improved early growth stages</li>\n</ol>",
+  "composition": [
+   "Humic & fulvic acids",
+   "17 essential amino acids (Glutamic acid, Glycine, Valine, Arginine, Aspartic acid, Alanine, Serine, Leucine, Isoleucine, Phenylalanine, Tyrosine, Lysine, Methionine, Threonine, Cystine)",
+   "Phytohormones (auxins and cytokinins)",
+   "Chelating agents (amino acids, fulvic acid and humic acids)",
+   "Micro and macro nutrients — macroelements: organic NPK",
+   "Organic carbon (humified carbon and water-soluble carbon)",
+   "Natural vitamins: carotene (provitamin A), B1, B2, B3, B5, B6, B12, E, C, D, P",
+   "Organic acids: folic acid, humic acids, fulvic acid",
+   "Trace elements (Mn, Cu, B, Zn, I, Br, Mo, V, Cr, Be, Ni, Ag, Sn, Pb, As, Ba, Sr, Ti)",
+   "Enzymes (peroxidase, reductase, protease)",
+   "Glycoprotein, glomalin"
+  ],
+  "packSizes": [
+   {
+    "size": "160 ml sachet (per 16 L knapsack)",
+    "priceUsd": null
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "per 16 L knapsack",
+    "rate": "160 ml",
+    "notes": "Dilute 160 ml in 1 L of water, then mix with 15 L of water (per sachet label)."
+   }
+  ],
+  "applicationMethods": [
+   "basal dressing",
+   "soil application"
+  ],
+  "suitableCrops": [],
+  "benefits": [
+   "Bio-organic activator for soil regeneration",
+   "Increases the vitality and absorption of mineral elements",
+   "Improves seed germination and promotes root formation",
+   "Approved by Ecocert — premium Sapropel product"
+  ],
+  "priceUsd": 40,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/22.jpg",
+    "localPath": "/images/products/carboamin-basal-dressing/1.jpg",
+    "alt": "CarboAmin Basal Dressing — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_AZOFIX-PLUS_20L_1080x1080-600x600.pngrrr.png",
+    "localPath": "/images/products/carboamin-basal-dressing/2.png",
+    "alt": "CarboAmin Basal Dressing — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/76856d37-b6f9-40b0-b344-f137be41e8c4-768x1026.jpg",
+    "localPath": "/images/products/carboamin-basal-dressing/3.jpg",
+    "alt": "CarboAmin Basal Dressing — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.47 (1).jpeg",
+    "localPath": "/images/products/carboamin-basal-dressing/wa-jerrican.jpg",
+    "alt": "CarboAmin Basal Dressing — Humuson Complex product photograph",
+    "role": "catalogue"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.45.jpeg",
+    "localPath": "/images/products/carboamin-basal-dressing/wa-sachets.jpg",
+    "alt": "CarboAmin Basal Dressing — product label",
+    "role": "gallery"
+   }
+  ],
+  "featured": true,
+  "notes": "Merged duplicate of /product/carboamin-basal-dressing-sachet/ ($3.00 sachet listing, tag \"satchets\", empty description). Main-pack size not stated ($40.00). Site FAQ states: \"We recommend applying basal at the land preparation and/or planting stage.\" Description also carries a long passage on the advantages of humic-acid seed soaking (kept in descriptionHtml). Part of the HUMUSON Complex / Sapropel Organics range. Label data transcribed from the August 2026 product photo set supplied by Humuson Complex.",
+  "sourceUrl": "https://humusoncomplex.com/product/carboamin-basal-dressing/",
+  "tagline": "Organic basal fertiliser",
+  "instructionsHtml": "<h3>Preparation</h3><p>Dilute 160 ml of CarboAmin+ in 1 litre of water, then mix the concentrate with 15 litres of water — one 16 L knapsack.</p><h3>Application</h3><p>Applied for soil conditioning after harvesting, or as a basal fertiliser at the planting stage.</p><p><em>Producer: Sapropel Organics Ltd, Lithuania (EU). Approved by Ecocert. Distributed by MKM Fertilizers Pvt Ltd t/a Humuson Complex.</em></p>"
+ },
+ {
+  "name": "Ruinex",
+  "displayMark": false,
+  "slug": "ruinex",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/ruinex/"
+  ],
+  "categorySlugs": [
+   "organic",
+   "physio"
+  ],
+  "shortDescription": "Increases mineralisation of crop residues, enhancing decomposition of lignin and cellulose and the change of vegetal residues into humus.",
+  "descriptionHtml": "<h4>Why Ruinex?</h4>\n<ul>\n<li>Increases mineralisation of crop residues;</li>\n<li>Enhances decomposition of lignin, cellulose and other organic polymers;</li>\n<li>Enhances change of vegetal residues into humus;</li>\n<li>Re-establishes soil balance and creates unfavourable soil environment for the spread of pathogens;</li>\n<li>Promotes biological activity of soils.</li>\n</ul>\n<h4>Operating principle:</h4>\n<p>The microorganisms in the biological preparation act as agents for a breakdown of lignin and cellulose by secreting specific enzymes. This process also releases antibiotics that increase plant resistance to pathogens.</p>\n<p>Additional Information: <strong><a href=\"https://www.bioenergy.lt/wp-content/uploads/2021/03/Ruinex-Onepage-INFO-WEB.pdf\">Click Here</a></strong></p>",
+  "composition": [],
+  "packSizes": [],
+  "applicationRates": [],
+  "applicationMethods": [],
+  "suitableCrops": [],
+  "benefits": [
+   "Increases mineralisation of crop residues",
+   "Enhances decomposition of lignin, cellulose and other organic polymers",
+   "Enhances change of vegetal residues into humus",
+   "Re-establishes soil balance and creates unfavourable soil environment for the spread of pathogens",
+   "Promotes biological activity of soils"
+  ],
+  "priceUsd": 150,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_RUINEX_5L_1080x1080-600x600-1.jpg",
+    "localPath": "/images/products/ruinex/1.jpg",
+    "alt": "Ruinex — product pack"
+   }
+  ],
+  "featured": false,
+  "notes": "Bioenergy LT product line (tag \"bio-energy\"). Pack size not stated in listing text; photo filename suggests 5L — confirm.",
+  "sourceUrl": "https://humusoncomplex.com/product/ruinex/"
+ },
+ {
+  "name": "Bactoforce",
+  "displayMark": false,
+  "slug": "bactoforce",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/bactoforce/"
+  ],
+  "categorySlugs": [
+   "organic",
+   "physio"
+  ],
+  "shortDescription": "Plant microbial biostimulant for healthy soil and plants, applied from before sowing right up to flowering.",
+  "descriptionHtml": "<p>Bactoforce is a plant microbial biostimulant based on <em>Bacillus mojavensis</em> MVY-007 — a resilient beneficial bacterium that supports healthy soil biology and vigorous plants.</p><p>It offers one of the widest application windows in the Bioenergy range: from spraying on the soil before ploughing right up to flowering (BBCH 59), at 1–5 L/ha depending on the crop. Approved for organic farming.</p>",
+  "composition": [
+   "Bacillus mojavensis MVY-007 (1.2×10¹⁰ CFU/L)",
+   "Na — 1 284 mg/L",
+   "K — 814 mg/L",
+   "P — 323 mg/L",
+   "S — 289 mg/L",
+   "Mg — 84 mg/L",
+   "Ca — 51 mg/L"
+  ],
+  "packSizes": [],
+  "applicationRates": [
+   {
+    "context": "Cereals · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–59 (per label)"
+   },
+   {
+    "context": "Rapeseed · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–59 (per label)"
+   },
+   {
+    "context": "Corn & sunflower · per ha",
+    "rate": "1–5 L",
+    "notes": "Growth window BBCH 01–39 (per label)"
+   },
+   {
+    "context": "Sugar beet · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–39 (per label)"
+   },
+   {
+    "context": "Vegetables · per ha",
+    "rate": "1–5 L",
+    "notes": "Growth window BBCH 01–59 (per label)"
+   },
+   {
+    "context": "Fruit trees & fruit bushes · per ha",
+    "rate": "1–4 L",
+    "notes": "Growth window BBCH 01–59 (per label)"
+   },
+   {
+    "context": "Berries · per ha",
+    "rate": "1–3 L",
+    "notes": "Growth window BBCH 01–59 (per label)"
+   }
+  ],
+  "applicationMethods": [
+   "soil application",
+   "foliar spray"
+  ],
+  "suitableCrops": [
+   "cereals",
+   "rapeseed",
+   "maize",
+   "sunflower",
+   "sugar beet",
+   "vegetables",
+   "fruits",
+   "berry bushes"
+  ],
+  "benefits": [
+   "Supports healthy soil and plants through beneficial Bacillus mojavensis",
+   "Wide application window — from soil preparation until flowering",
+   "Approved for organic farming (laboratory quality certificate)",
+   "Product is non-toxic and has no irritating compounds"
+  ],
+  "priceUsd": 150,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_BACTOFORCE_5L_1080x1080-600x600-1.jpg",
+    "localPath": "/images/products/bactoforce/1.jpg",
+    "alt": "Bactoforce — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.52 (2).jpeg",
+    "localPath": "/images/products/bactoforce/wa-jerrican.jpg",
+    "alt": "Bactoforce — Humuson Complex product photograph",
+    "role": "catalogue"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.51 (2).jpeg",
+    "localPath": "/images/products/bactoforce/wa-label.jpg",
+    "alt": "Bactoforce — product label",
+    "role": "gallery"
+   }
+  ],
+  "featured": false,
+  "notes": "Bioenergy LT product line (tag \"bio-energy\"). Pack size not stated in listing text; photo filename suggests 5L — confirm. Label data transcribed from the August 2026 product photo set supplied by Humuson Complex.",
+  "sourceUrl": "https://humusoncomplex.com/product/bactoforce/",
+  "tagline": "For healthy soil and plants",
+  "instructionsHtml": "<h3>Application requirements</h3><ul><li>Spray on the soil before sowing, or until the plants no longer leave the soil surface uncovered. In other cases, consult a Humuson sales representative.</li><li>Sprayer pressure 1–10 bar (15–145 psi); nozzle size at least 50 µm.</li><li>Can be mixed with all kinds of fertilisers and pesticides unless their manufacturer states otherwise. May contain natural sediments.</li></ul><h3>Storage &amp; safety</h3><ul><li>Avoid storage above 30 °C. Once opened, use Bactoforce as soon as possible — or refrigerate at 4 °C and use within 72 hours.</li><li>Non-toxic, with no irritating compounds; no risk to humans, animals or the environment. Rinse with running water after skin or eye contact.</li></ul><p><em>Manufactured by Bioenergy LT, Panevėžys, Lithuania. Laboratory quality certificate; approved for organic farming.</em></p>"
+ },
+ {
+  "name": "Bio NPK Powder S",
+  "displayMark": true,
+  "slug": "bio-npk-powder-s",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/bio-npk-powder-s/",
+   "https://humusoncomplex.com/product/4287/"
+  ],
+  "categorySlugs": [
+   "organic",
+   "physio",
+   "value"
+  ],
+  "shortDescription": "Microbial powder for seed dressing and soil application, formulated with beneficial bacteria and fungi that provide plants with nitrogen, phosphorus, potassium and silicon through natural microbial processes.",
+  "descriptionHtml": "<ul>\n  <li>Paenibacillus azotofixans</li>\n  <li>Bacillus megaterium Bacillus mucilaginosus Bacillus subtilis</li>\n  <li>Trichoderma viride</li>\n  <li>Mycorrhizal fungi</li>\n</ul>\n<p>BioNPK Powder S is a microbial powder for seed dressing and soil application, formulated with beneficial bacteria and fungi. The product provides plants with nitrogen, phosphorus, potassium and silicon through natural microbial processes. It enhances plant resistance to environmental stresses including drought and low temperatures, while promoting root system development and nutrient uptake efficiency. The powder strengthens plants&#8217; natural defenses against diseases, reduces lodging risk and improves the utilization of mineral fertilizers. The microbial consortium activates soil nutrients and supports vigorous plant growth throughout the development cycle. Ideal for cereals, oilseeds, potatoes, maize, legumes and vegetable crops.</p>\n<p>Package Size: 50g</p>\n<p>Rate per Ha: 50g depending on crop and application method</p>",
+  "composition": [
+   "Paenibacillus azotofixans",
+   "Bacillus licheniformis",
+   "Bacillus megaterium",
+   "Bacillus subtilis",
+   "Bacillus mucilaginosus",
+   "Bacillus mycoides",
+   "Trichoderma viride",
+   "Mycorrhizal fungi",
+   "Carrier material: dextrose",
+   "Total concentration: no less than 1.0×10¹⁰ CFU/g"
+  ],
+  "packSizes": [
+   {
+    "size": "50g",
+    "priceUsd": 28
+   },
+   {
+    "size": "pack size not stated (\"Covers 4 hectares\")",
+    "priceUsd": 120
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "per Ha",
+    "rate": "50g",
+    "notes": "Depending on crop and application method."
+   }
+  ],
+  "applicationMethods": [
+   "seed dressing",
+   "soil application"
+  ],
+  "suitableCrops": [
+   "cereals",
+   "oilseeds",
+   "potato",
+   "maize",
+   "legumes",
+   "vegetables"
+  ],
+  "benefits": [
+   "Enhances plant resistance to environmental stresses including drought and low temperatures",
+   "Promotes root system development and nutrient uptake efficiency",
+   "Strengthens plants’ natural defenses against diseases",
+   "Reduces lodging risk",
+   "Improves the utilization of mineral fertilizers",
+   "Activates soil nutrients and supports vigorous plant growth throughout the development cycle",
+   "Promotes soil biodiversity",
+   "Boosts plant vigour and yield potential"
+  ],
+  "priceUsd": 28,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bigo-uuuu-1152x1536.jpg",
+    "localPath": "/images/products/bio-npk-powder-s/1.jpg",
+    "alt": "Bio NPK Powder S — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bigo-wii-768x1024.jpg",
+    "localPath": "/images/products/bio-npk-powder-s/2.jpg",
+    "alt": "Bio NPK Powder S — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/fff.png",
+    "localPath": "/images/products/bio-npk-powder-s/3.png",
+    "alt": "Bio NPK Powder S — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.30.jpeg",
+    "localPath": "/images/products/bio-npk-powder-s/wa-front.jpg",
+    "alt": "Bio NPK Powder S — Humuson Complex product photograph",
+    "role": "catalogue"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.30 (2).jpeg",
+    "localPath": "/images/products/bio-npk-powder-s/wa-back.jpg",
+    "alt": "Bio NPK Powder S — product label",
+    "role": "gallery"
+   }
+  ],
+  "featured": true,
+  "notes": "Merged duplicate of /product/4287/ (a second \"Bio NPK Powder S\" listing at $120.00 whose short description says only \"Covers 4 hectares\"; its own description is empty and its pack size is not stated — at the stated 50g/ha rate 4 ha implies a larger pack, but this is NOT stated on the site). Category slugs organic/physio/value come from the 4287 listing; the 50g listing (canonical) is uncategorized. Name shown with ® on the 50g listing. Label data transcribed from the August 2026 product photo set supplied by Humuson Complex.",
+  "sourceUrl": "https://humusoncomplex.com/product/bio-npk-powder-s/"
+ },
+ {
+  "name": "Perfect Stick",
+  "displayMark": true,
+  "slug": "perfect-stick",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/perfect-stick/",
+   "https://humusoncomplex.com/product/perfect-stick-2/"
+  ],
+  "categorySlugs": [
+   "liquid-fertilisers"
+  ],
+  "shortDescription": "Silicone-based, non-toxic and environmentally friendly penetrating substance (spray adjuvant) designed to enhance the absorption and effectiveness of foliar applications.",
+  "descriptionHtml": "<ul>\n  <li>Polyether Modified Siloxane: 80.0%</li>\n  <li>pH(1:10 H20):5.0-7.0</li>\n  <li>Density (20°C): 1.01-1.03 g/ml</li>\n</ul>\n<p>Perfect Stick is a silicone-based non-toxic and environmentally friendly penetrating substance designed to enhance the absorption and effectiveness of foliar applications. It improves the penetration and spreading of solutions (pesticides and foliar fertilizers) through the leaf surface ensuring better coverage and reducing losses of applied products. It also helps maintain nutrient balance in plants and increases the efficiency of foliar treatments. Ideal for use with growth regulators herbicides fungicides and foliar fertilizers..</p>\n<p>Package Size: 1L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
+  "composition": [
+   "Polyether Modified Siloxane: 80.0%",
+   "pH (1:10 H2O): 5.0–7.0",
+   "Density (20°C): 1.01–1.03 g/ml"
+  ],
+  "packSizes": [
+   {
+    "size": "5L",
+    "priceUsd": 110
+   },
+   {
+    "size": "1L",
+    "priceUsd": 25
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "per Ha",
+    "rate": "0.5L – 1L",
+    "notes": "Depending on crop and application method."
+   }
+  ],
+  "applicationMethods": [
+   "foliar spray"
+  ],
+  "suitableCrops": [],
+  "benefits": [
+   "Improves the penetration and spreading of solutions (pesticides and foliar fertilizers) through the leaf surface",
+   "Ensures better coverage and reduces losses of applied products",
+   "Helps maintain nutrient balance in plants",
+   "Increases the efficiency of foliar treatments",
+   "Ideal for use with growth regulators, herbicides, fungicides and foliar fertilizers"
+  ],
+  "priceUsd": 110,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/PerfectStick-1-1152x1536.jpg",
+    "localPath": "/images/products/perfect-stick/1.jpg",
+    "alt": "Perfect Stick — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/PerfectStick-768x1024.jpg",
+    "localPath": "/images/products/perfect-stick/2.jpg",
+    "alt": "Perfect Stick — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.48 (2).jpeg",
+    "localPath": "/images/products/perfect-stick/wa-bottle.jpg",
+    "alt": "Perfect Stick — Humuson Complex product photograph",
+    "role": "catalogue"
+   }
+  ],
+  "featured": false,
+  "notes": "Merged duplicate of /product/perfect-stick-2/ (1L, $25.00; carries the composition data). Canonical 5L listing is $110.00. IKAR product line (visible on pack photos). Not a fertilizer — a spray adjuvant used with foliar applications.",
+  "sourceUrl": "https://humusoncomplex.com/product/perfect-stick/"
+ },
+ {
+  "name": "Ocean",
+  "displayMark": true,
+  "slug": "ocean",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/ocean/",
+   "https://humusoncomplex.com/product/ocean-2/"
+  ],
+  "categorySlugs": [
+   "liquid-fertilisers"
+  ],
+  "shortDescription": "Liquid fertilizer with a high concentration of seaweed extract and amino acids, designed for foliar application or watering.",
+  "descriptionHtml": "<p>Ocean is a liquid fertilizer with a high concentration of seaweed extract and amino acids, designed for foliar application or watering. Seaweed extract strengthens the plant&#8217;s immune system, provides energy for early growth, and enhances stress tolerance. The fertilizer promotes protein formation, sugar accumulation and water balance, while improving soil moisture retention and microbial activity. Ideal for cereals, legumes, maize, potatoes, vegetables, berry bushes and ornamentals.</p>\n<p>Package Size: 5L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
+  "composition": [
+   "Seaweed extract (high concentration; percentage not stated)",
+   "Amino acids (percentage not stated)"
+  ],
+  "packSizes": [
+   {
+    "size": "5L",
+    "priceUsd": 90
+   },
+   {
+    "size": "1L",
+    "priceUsd": 18
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "per Ha",
+    "rate": "0.5L – 1L",
+    "notes": "Depending on crop and application method."
+   }
+  ],
+  "applicationMethods": [
+   "foliar spray",
+   "watering"
+  ],
+  "suitableCrops": [
+   "cereals",
+   "legumes",
+   "maize",
+   "potato",
+   "vegetables",
+   "berry bushes",
+   "ornamentals"
+  ],
+  "benefits": [
+   "Strengthens the plant’s immune system",
+   "Provides energy for early growth",
+   "Enhances stress tolerance",
+   "Promotes protein formation, sugar accumulation and water balance",
+   "Improves soil moisture retention and microbial activity",
+   "Increases resistance of plants to stresses related to temperature fluctuations",
+   "Activates root hair activity and nutrient uptake",
+   "Improves the protective layer of the leaf, thus increasing resistance for plants from pathogens"
+  ],
+  "priceUsd": 90,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Ocean-1-1152x1536.jpg",
+    "localPath": "/images/products/ocean/1.jpg",
+    "alt": "Ocean — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Ocean-768x1024.jpg",
+    "localPath": "/images/products/ocean/2.jpg",
+    "alt": "Ocean — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.50.jpeg",
+    "localPath": "/images/products/ocean/wa-bottle.jpg",
+    "alt": "Ocean — Humuson Complex product photograph",
+    "role": "catalogue"
+   }
+  ],
+  "featured": true,
+  "notes": "Merged duplicate of /product/ocean-2/ (1L, $18.00). Benefits aggregated from both the 5L and 1L listing descriptions (both are site text). \"Berry bushes\" and \"ornamentals\" appear in the 5L listing; the 1L listing omits berry bushes. IKAR product line (visible on pack photos).",
+  "sourceUrl": "https://humusoncomplex.com/product/ocean/"
+ },
+ {
+  "name": "IN5",
+  "displayMark": true,
+  "slug": "in5",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/in5/",
+   "https://humusoncomplex.com/product/in5-2/"
+  ],
+  "categorySlugs": [
+   "liquid-fertilisers"
+  ],
+  "shortDescription": "Liquid phosphorus and zinc fertilizer designed to enhance root development, flowering and nutrient uptake.",
+  "descriptionHtml": "<ul>\n  <li>Phosphorus (P205): 30.0%</li>\n  <li>Nitrogen (N):3.0%</li>\n  <li>zinc (Zn):0.5%</li>\n</ul>\n<p>IN5 is a liquid phosphorus and zinc fertilizer designed to enhance root development, flowering and nutrient uptake. Phosphorus is crucial for energy transfer, root growth and flowering, while zinc supports enzyme activity, chlorophyll synthesis and carbohydrate metabolism. IN5 improves germination, stimulates tillering and enhances the efficiency of macronutrient absorption, ensuring healthy plant growth and high-quality yields. Ideal for cereals, oilseeds, legumes, maize, potatoes, vegetables and ornamentals.</p>\n<p>Package Size: 5L</p>\n<p>Rate per Ha: 1L- 3L depending on crop and application method</p>",
+  "composition": [
+   "Phosphorus (P2O5): 30.0%",
+   "Nitrogen (N): 3.0%",
+   "Zinc (Zn): 0.5%"
+  ],
+  "packSizes": [
+   {
+    "size": "1L",
+    "priceUsd": null
+   },
+   {
+    "size": "5L",
+    "priceUsd": 54
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "per Ha",
+    "rate": "1L – 3L",
+    "notes": "Depending on crop and application method."
+   }
+  ],
+  "applicationMethods": [],
+  "suitableCrops": [
+   "cereals",
+   "oilseeds",
+   "legumes",
+   "maize",
+   "potato",
+   "vegetables",
+   "ornamentals"
+  ],
+  "benefits": [
+   "Improves germination",
+   "Stimulates tillering",
+   "Enhances the efficiency of macronutrient absorption, ensuring healthy plant growth and high-quality yields",
+   "Phosphorus is crucial for energy transfer, root growth and flowering; zinc supports enzyme activity, chlorophyll synthesis and carbohydrate metabolism"
+  ],
+  "priceUsd": null,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/1N6--1152x1536.jpg",
+    "localPath": "/images/products/in5/1.jpg",
+    "alt": "IN5 — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bigo-wff-768x1024.jpg",
+    "localPath": "/images/products/in5/2.jpg",
+    "alt": "IN5 — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.47.jpeg",
+    "localPath": "/images/products/in5/wa-bottle.jpg",
+    "alt": "IN5 — Humuson Complex product photograph",
+    "role": "catalogue"
+   }
+  ],
+  "featured": true,
+  "notes": "Merged duplicate of /product/in5-2/ (5L, $54.00; carries the composition data). The canonical 1L listing shows $0.00 — treated as price not set (priceUsd null). Oxide notation normalized from the listing’s \"P205\"/\"K20\" OCR style. IKAR product line.",
+  "sourceUrl": "https://humusoncomplex.com/product/in5/"
+ },
+ {
+  "name": "Koral",
+  "displayMark": true,
+  "slug": "koral",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/koral/",
+   "https://humusoncomplex.com/product/koral-2/"
+  ],
+  "categorySlugs": [
+   "liquid-fertilisers"
+  ],
+  "shortDescription": "Liquid calcium fertilizer enriched with amino acids, designed to strengthen plant tissues and cell walls and improve overall plant health.",
+  "descriptionHtml": "<ul>\n  <li>Calcium (CaO):14.0%</li>\n  <li>Nitrate Nitrogen (N-NO3):8.0%</li>\n  <li>Potassium (K20):5.0%</li>\n  <li>Boron (B):0.2%</li>\n  <li>Polysaccharides: 4.5%</li>\n  <li>Amino Acid L-Alanine: 0.05%</li>\n  <li>Amino Acid L-Methionine: 0.05%</li>\n  <li>Amino Acid L-Valine:0.05%</li>\n</ul>\n<p>Koral is a liquid calcium fertilizer enriched with amino acids designed to strengthen plant tissues, enhance metabolic processes and improve overall plant health. Calcium ensures structural integrity and elasticity of cell walls, activates enzymes and supports hormone regulation. Amino acids enhance photosynthesis, increase chlorophyll content and improve pollination efficiency.</p>\n<p>Polysaccharides provide energy for faster recovery from stress. Ideal for fruits, vegetables and field crops, improving quality, shelf life and resilience.</p>\n<p>Package Size:1L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
+  "composition": [
+   "Calcium (CaO): 14.0%",
+   "Nitrate Nitrogen (N-NO3): 8.0%",
+   "Potassium (K2O): 5.0%",
+   "Boron (B): 0.2%",
+   "Polysaccharides: 4.5%",
+   "Amino Acid L-Alanine: 0.05%",
+   "Amino Acid L-Methionine: 0.05%",
+   "Amino Acid L-Valine: 0.05%"
+  ],
+  "packSizes": [
+   {
+    "size": "1L",
+    "priceUsd": 12
+   },
+   {
+    "size": "5L",
+    "priceUsd": 54
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "per Ha",
+    "rate": "0.5L – 1L",
+    "notes": "Depending on crop and application method."
+   }
+  ],
+  "applicationMethods": [],
+  "suitableCrops": [
+   "fruits",
+   "vegetables",
+   "field crops",
+   "cereals",
+   "oilseeds",
+   "legumes",
+   "maize",
+   "potato",
+   "ornamentals"
+  ],
+  "benefits": [
+   "Calcium ensures structural integrity and elasticity of cell walls, activates enzymes and supports hormone regulation",
+   "Amino acids enhance photosynthesis, increase chlorophyll content and improve pollination efficiency",
+   "Polysaccharides provide energy for faster recovery from stress",
+   "Strengthens cell walls, improves membrane integrity and enhances plant resistance to rot",
+   "Supports pollen viability and growth, ensuring better fertilization and fruit quality",
+   "Improves quality, shelf life and resilience"
+  ],
+  "priceUsd": 12,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Koral-1L-1152x1536.jpg",
+    "localPath": "/images/products/koral/1.jpg",
+    "alt": "Koral — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Koral-5l-2-768x1024.jpg",
+    "localPath": "/images/products/koral/2.jpg",
+    "alt": "Koral — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.51.jpeg",
+    "localPath": "/images/products/koral/wa-bottle.jpg",
+    "alt": "Koral — Humuson Complex product photograph",
+    "role": "catalogue"
+   }
+  ],
+  "featured": true,
+  "notes": "Merged duplicate of /product/koral-2/ (5L, $54.00). The two listings word the description differently (1L: \"fruits, vegetables and field crops\"; 5L: \"cereals, oilseeds, legumes, maize, potatoes, vegetables and ornamentals\") — crops and benefits are the union of both. Oxide notation normalized (K20 → K2O). IKAR product line.",
+  "sourceUrl": "https://humusoncomplex.com/product/koral/"
+ },
+ {
+  "name": "Enzo Pro",
+  "displayMark": true,
+  "slug": "enzo-pro",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/enzo-pro/",
+   "https://humusoncomplex.com/product/enzo-pro-2/"
+  ],
+  "categorySlugs": [
+   "liquid-fertilisers"
+  ],
+  "shortDescription": "Liquid fertilizer enriched with manganese, zinc, copper and the amino acid L-Proline, designed to enhance plant growth and development.",
+  "descriptionHtml": "<ul>\n  <li>Manganese (Mn): 9.2%</li>\n  <li>Zinc (Zn):4.6%</li>\n  <li>Nitrogen (N):7.0%</li>\n  <li>Nitrate Nitrogen (N-NO3): 7.0%</li>\n  <li>Copper (Cu): 1.35%</li>\n  <li>Amino Acid L-Proline:0.34%</li>\n</ul>\n<p>Enzo Pro is a liquid fertilizer enriched with manganese, zinc, copper and the amino acid L-Proline, designed to enhance plant growth and development. Manganese is essential for enzyme activity and oxidation-reduction reactions, while zinc supports energy and nutrient metabolism, particularly during early growth stages. Copper strengthens plant cell walls, increasing resistance to fungal and bacterial diseases. L-Proline aids in regulating osmotic pressure, chlorophyll formation and pollen germination. Enzo Pro improves plant resistance to pathogens, stimulates root and stem development, enhances sugar production and transport, and reduces the risk of chlorosis. Ideal for a wide range of crops, including cereals, oilseeds, vegetables, maize and ornamental plants.</p>\n<p>Package Size:5L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
+  "composition": [
+   "Manganese (Mn): 9.2%",
+   "Zinc (Zn): 4.6%",
+   "Nitrogen (N): 7.0%",
+   "Nitrate Nitrogen (N-NO3): 7.0%",
+   "Copper (Cu): 1.35%",
+   "Amino Acid L-Proline: 0.34%"
+  ],
+  "packSizes": [
+   {
+    "size": "1L",
+    "priceUsd": 17
+   },
+   {
+    "size": "5L",
+    "priceUsd": 81
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "per Ha",
+    "rate": "0.5L – 1L",
+    "notes": "Depending on crop and application method."
+   }
+  ],
+  "applicationMethods": [],
+  "suitableCrops": [
+   "cereals",
+   "oilseeds",
+   "vegetables",
+   "maize",
+   "ornamentals"
+  ],
+  "benefits": [
+   "Improves plant resistance to pathogens",
+   "Stimulates root and stem development",
+   "Enhances sugar production and transport",
+   "Reduces the risk of chlorosis",
+   "Copper strengthens plant cell walls, increasing resistance to fungal and bacterial diseases",
+   "L-Proline aids in regulating osmotic pressure, chlorophyll formation and pollen germination"
+  ],
+  "priceUsd": 17,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Enzo-Pro-1152x1536.jpg",
+    "localPath": "/images/products/enzo-pro/1.jpg",
+    "alt": "Enzo Pro — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Enzo-Pro-1-768x1024.jpg",
+    "localPath": "/images/products/enzo-pro/2.jpg",
+    "alt": "Enzo Pro — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.43 (1).jpeg",
+    "localPath": "/images/products/enzo-pro/wa-bottle.jpg",
+    "alt": "Enzo Pro — Humuson Complex product photograph",
+    "role": "catalogue"
+   }
+  ],
+  "featured": false,
+  "notes": "Merged duplicate of /product/enzo-pro-2/ (5L, $81.00). The 1L listing’s description had a contact form accidentally embedded mid-word (\"ap...plication method\") — the clean 5L text is used. IKAR product line.",
+  "sourceUrl": "https://humusoncomplex.com/product/enzo-pro/"
+ },
+ {
+  "name": "Mendelenium",
+  "displayMark": true,
+  "slug": "mendelenium",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/mendelenium/",
+   "https://humusoncomplex.com/product/mendelenium-2/"
+  ],
+  "categorySlugs": [
+   "liquid-fertilisers"
+  ],
+  "shortDescription": "Liquid trace element fertilizer containing sulphur, boron, iron, manganese, molybdenum, zinc and the amino acid L-Proline.",
+  "descriptionHtml": "<ul>\n  <li>Iron (Fe):4%</li>\n  <li>Sulphur (SO3):10%</li>\n  <li>Boron (B):0.7%</li>\n  <li>Manganese (Mn):2%</li>\n  <li>Molybdenum (Mo):0.35%</li>\n  <li>zinc (Zn):0.7%</li>\n  <li>Amino Acid L-Proline: 0.37%</li>\n</ul>\n<p>Mendelenium is a liquid trace element fertilizer containing sulphur, boron, iron, manganese, molybdenum, zinc, and the amino acid L-Proline.</p>\n<p>Sulphur enhances protein synthesis, enzyme activation and chlorophyll formation, while also improving nitrogen metabolism and stress resistance. The nutrients in Mendelenium strengthen cell walls, improve membrane integrity and enhance resistance to rot, drought, and pathogens. It supports chlorophyll formation, carbohydrate metabolism and pollen viability, ensuring healthy growth and high-quality yields.</p>\n<p>Ideal for cereals, oilseeds, legumes, maize, potatoes, vegetables and ornamentals.</p>\n<p>Package Size: 1L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
+  "composition": [
+   "Iron (Fe): 4%",
+   "Sulphur (SO3): 10%",
+   "Boron (B): 0.7%",
+   "Manganese (Mn): 2%",
+   "Molybdenum (Mo): 0.35%",
+   "Zinc (Zn): 0.7%",
+   "Amino Acid L-Proline: 0.37%"
+  ],
+  "packSizes": [
+   {
+    "size": "1L",
+    "priceUsd": null
+   },
+   {
+    "size": "5L",
+    "priceUsd": 79
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "per Ha",
+    "rate": "0.5L – 1L",
+    "notes": "Depending on crop and application method."
+   }
+  ],
+  "applicationMethods": [],
+  "suitableCrops": [
+   "cereals",
+   "oilseeds",
+   "legumes",
+   "maize",
+   "potato",
+   "vegetables",
+   "ornamentals"
+  ],
+  "benefits": [
+   "Sulphur enhances protein synthesis, enzyme activation and chlorophyll formation, while also improving nitrogen metabolism and stress resistance",
+   "Strengthens cell walls, improves membrane integrity and enhances resistance to rot, drought, and pathogens",
+   "Supports chlorophyll formation, carbohydrate metabolism and pollen viability, ensuring healthy growth and high-quality yields"
+  ],
+  "priceUsd": null,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Mendelenium-1-1152x1536.jpg",
+    "localPath": "/images/products/mendelenium/1.jpg",
+    "alt": "Mendelenium — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bigo-wnn-768x1024.jpg",
+    "localPath": "/images/products/mendelenium/2.jpg",
+    "alt": "Mendelenium — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.50 (1).jpeg",
+    "localPath": "/images/products/mendelenium/wa-bottle.jpg",
+    "alt": "Mendelenium — Humuson Complex product photograph",
+    "role": "catalogue"
+   }
+  ],
+  "featured": false,
+  "notes": "Merged duplicate of /product/mendelenium-2/ (5L, $79.00). The canonical 1L listing shows $0.00 — treated as price not set (priceUsd null). IKAR product line.",
+  "sourceUrl": "https://humusoncomplex.com/product/mendelenium/"
+ },
+ {
+  "name": "Bora",
+  "displayMark": true,
+  "slug": "bora",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/bora/",
+   "https://humusoncomplex.com/product/bora-2/"
+  ],
+  "categorySlugs": [
+   "liquid-fertilisers"
+  ],
+  "shortDescription": "Liquid concentrated boron-molybdenum-cobalt fertilizer designed for legumes.",
+  "descriptionHtml": "<ul>\n  <li>Boron(B):11%</li>\n  <li>Molybdenum (Mo):0.5%</li>\n  <li>Cobalt (Co): 0.0002%</li>\n  <li>Polysaccharides: 2%</li>\n</ul>\n<p>Bora is a liquid concentrated boron-molybdenum-cobalt fertilizer designed for legumes. Boron stimulates the formation of generative plant parts seed and fruit growth and root system development. Molybdenum enhances nitrogen fixation in legume roots while cobalt supports enzyme activity protein synthesis and drought resistance. Bora improves flower formation pollen viability and resistance to fungal diseases and drought. Ideal for cereals oilseeds, legumes, maize, potatoes and vegetables.</p>\n<p>Package Size: 1L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
+  "composition": [
+   "Boron (B): 11%",
+   "Molybdenum (Mo): 0.5%",
+   "Cobalt (Co): 0.0002%",
+   "Polysaccharides: 2%"
+  ],
+  "packSizes": [
+   {
+    "size": "1L",
+    "priceUsd": 17
+   },
+   {
+    "size": "5L",
+    "priceUsd": 72
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "per Ha",
+    "rate": "0.5L – 1L",
+    "notes": "Depending on crop and application method."
+   }
+  ],
+  "applicationMethods": [],
+  "suitableCrops": [
+   "legumes",
+   "cereals",
+   "oilseeds",
+   "maize",
+   "potato",
+   "vegetables"
+  ],
+  "benefits": [
+   "Boron stimulates the formation of generative plant parts, seed and fruit growth and root system development",
+   "Molybdenum enhances nitrogen fixation in legume roots",
+   "Cobalt supports enzyme activity, protein synthesis and drought resistance",
+   "Improves flower formation, pollen viability and resistance to fungal diseases and drought"
+  ],
+  "priceUsd": 17,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bora-1152x1536.jpg",
+    "localPath": "/images/products/bora/1.jpg",
+    "alt": "Bora — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bora-1-768x1024.jpg",
+    "localPath": "/images/products/bora/2.jpg",
+    "alt": "Bora — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.49 (1).jpeg",
+    "localPath": "/images/products/bora/wa-bottle.jpg",
+    "alt": "Bora — Humuson Complex product photograph",
+    "role": "catalogue"
+   }
+  ],
+  "featured": false,
+  "notes": "Merged duplicate of /product/bora-2/ (5L, $72.00). IKAR product line.",
+  "sourceUrl": "https://humusoncomplex.com/product/bora/"
+ },
+ {
+  "name": "Elais",
+  "displayMark": true,
+  "slug": "elais",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/elais/",
+   "https://humusoncomplex.com/product/elais-2/"
+  ],
+  "categorySlugs": [
+   "liquid-fertilisers"
+  ],
+  "shortDescription": "Sulphur and nitrogen fertilizer enriched with molybdenum, designed to enhance photosynthesis, chlorophyll production and nitrogen metabolism.",
+  "descriptionHtml": "<ul>\n  <li>Sulphur (S):22%</li>\n  <li>Sulphur (SO3):55%</li>\n  <li>Nitrogen (N):15%</li>\n  <li>Ammonia Nitrogen (N-NH4):10%</li>\n  <li>Amide Nitrogen (N-NH2):5%</li>\n  <li>Molybdenum (Mo): 0.4%</li>\n</ul>\n<p>Elais is a sulphur and nitrogen fertilizer enriched with molybdenum designed to enhance photosynthesis chlorophyll production and nitrogen metabolism.</p>\n<p>Sulphur supports protein synthesis enzyme activation and chlorophyll formation while nitrogen regulates growth and development. Molybdenum improves nitrogen and phosphorus efficiency boosting crop quality and yield. Elais enhances the taste smell and overall quality of produce making it ideal for cereals, potatoes, oilseeds, legumes vegetables and maize.</p>\n<p>Package Size: 1L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
+  "composition": [
+   "Sulphur (S): 22%",
+   "Sulphur (SO3): 55%",
+   "Nitrogen (N): 15%",
+   "Ammonia Nitrogen (N-NH4): 10%",
+   "Amide Nitrogen (N-NH2): 5%",
+   "Molybdenum (Mo): 0.4%"
+  ],
+  "packSizes": [
+   {
+    "size": "1L",
+    "priceUsd": 12
+   },
+   {
+    "size": "5L",
+    "priceUsd": 50
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "per Ha",
+    "rate": "0.5L – 1L",
+    "notes": "As stated on the 1L listing; depending on crop and application method."
+   },
+   {
+    "context": "per Ha",
+    "rate": "2L – 3L",
+    "notes": "As stated on the 5L listing; depending on crop and application method. The two listings state different rates — confirm with technical support."
+   }
+  ],
+  "applicationMethods": [],
+  "suitableCrops": [
+   "cereals",
+   "potato",
+   "oilseeds",
+   "legumes",
+   "vegetables",
+   "maize"
+  ],
+  "benefits": [
+   "Sulphur supports protein synthesis, enzyme activation and chlorophyll formation",
+   "Nitrogen regulates growth and development",
+   "Molybdenum improves nitrogen and phosphorus efficiency, boosting crop quality and yield",
+   "Enhances the taste, smell and overall quality of produce"
+  ],
+  "priceUsd": 12,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Elais-1152x1536.jpg",
+    "localPath": "/images/products/elais/1.jpg",
+    "alt": "Elais — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Elais-1-768x1024.jpg",
+    "localPath": "/images/products/elais/2.jpg",
+    "alt": "Elais — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.49.jpeg",
+    "localPath": "/images/products/elais/wa-bottle.jpg",
+    "alt": "Elais — Humuson Complex product photograph",
+    "role": "catalogue"
+   }
+  ],
+  "featured": false,
+  "notes": "Merged duplicate of /product/elais-2/ (5L, $50.00). NOTE: the 1L listing states a rate of 0.5–1 L/Ha while the 5L listing states 2–3 L/Ha — both kept verbatim; flag for technical confirmation. IKAR product line.",
+  "sourceUrl": "https://humusoncomplex.com/product/elais/"
+ },
+ {
+  "name": "Silicare",
+  "displayMark": true,
+  "slug": "silicare",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/silicare/",
+   "https://humusoncomplex.com/product/silicare-2/"
+  ],
+  "categorySlugs": [
+   "liquid-fertilisers"
+  ],
+  "shortDescription": "Liquid fertilizer containing potassium, phosphorus and silicon, designed to enhance plant resilience and nutrient efficiency.",
+  "descriptionHtml": "<ul>\n  <li>Silicon (Sio2): 8%</li>\n  <li>Water-Soluble Silicon (SiO2):2.8%</li>\n  <li>Potassium (K20):20%</li>\n  <li>Phosphorus (P205):10%</li>\n  <li>Amino Acid L-Proline: 0.3%</li>\n  <li>Algae Extract: 0.1%</li>\n</ul>\n<p>Silicare is a liquid fertilizer containing potassium, phosphorus and silicon, designed to enhance plant resilience and nutrient efficiency. Silicon strengthens plant tissues, improves stress resistance and boosts photosynthesis, while potassium and phosphorus support fluid balance and energy metabolism. L-Proline enhances natural immunity and pollen viability. Silicare promotes robust growth and higher yields. Ideal for cereals, legumes, maize, potatoes, vegetables and ornamentals.</p>\n<p>Package Size:5L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
+  "composition": [
+   "Silicon (SiO2): 8%",
+   "Water-Soluble Silicon (SiO2): 2.8%",
+   "Potassium (K2O): 20%",
+   "Phosphorus (P2O5): 10%",
+   "Amino Acid L-Proline: 0.3%",
+   "Algae Extract: 0.1%"
+  ],
+  "packSizes": [
+   {
+    "size": "5L",
+    "priceUsd": 69
+   },
+   {
+    "size": "1L",
+    "priceUsd": 15
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "per Ha",
+    "rate": "0.5L – 1L",
+    "notes": "Depending on crop and application method."
+   }
+  ],
+  "applicationMethods": [],
+  "suitableCrops": [
+   "cereals",
+   "legumes",
+   "maize",
+   "potato",
+   "vegetables",
+   "ornamentals"
+  ],
+  "benefits": [
+   "Silicon strengthens plant tissues, improves stress resistance and boosts photosynthesis",
+   "Potassium and phosphorus support fluid balance and energy metabolism",
+   "L-Proline enhances natural immunity and pollen viability",
+   "Promotes robust growth and higher yields"
+  ],
+  "priceUsd": 69,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Silicare-1152x1536.jpg",
+    "localPath": "/images/products/silicare/1.jpg",
+    "alt": "Silicare — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Silicare-1-768x1024.jpg",
+    "localPath": "/images/products/silicare/2.jpg",
+    "alt": "Silicare — product pack"
+   }
+  ],
+  "featured": true,
+  "notes": "Merged duplicate of /product/silicare-2/ (1L, $15.00; its description had a \"[contact-form]\" shortcode embedded mid-word — the clean 5L text is used). Canonical listing here is the 5L. Oxide notation normalized (Sio2/K20/P205 → SiO2/K2O/P2O5). IKAR product line.",
+  "sourceUrl": "https://humusoncomplex.com/product/silicare/"
+ },
+ {
+  "name": "Bigo W",
+  "displayMark": true,
+  "slug": "bigo-w",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/bigo-w/",
+   "https://humusoncomplex.com/product/bico-w/"
+  ],
+  "categorySlugs": [
+   "liquid-fertilisers"
+  ],
+  "shortDescription": "Liquid fertilizer with biostimulants, amino acids and seaweed extract, designed to strengthen root systems, boost plant immunity and provide energy for early growth.",
+  "descriptionHtml": "<ul>\n  <li>Polysaccharides: 5%</li>\n  <li>Biostimulants: 0.45%</li>\n  <li>Seaweed Extract: 2%</li>\n  <li>Amino Acids: 5%</li>\n  <li>Nitrogen (N):5%</li>\n  <li>Phosphosphorus (P205):5%</li>\n  <li>Potassium (K20):5%</li>\n</ul>\n<p>Micronutrients (B, Fe, Mn, Mo, Zn, Cu): 0.01-0.2% Bigo W is a liquid fertilizer designed to strengthen root systems, boost plant immunity and provide energy for early growth. It contains biostimulants, amino acids and seaweed extract, which enhance nutrient uptake, photosynthesis and stress resistance. Bigo W is ideal for improving plant resilience and productivity under adverse conditions. Suitable for cereals, legumes, maize, potatoes, oil seeds, vegetables.</p>\n<p>Package Size: 1L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
+  "composition": [
+   "Polysaccharides: 5%",
+   "Biostimulants: 0.45%",
+   "Seaweed Extract: 2%",
+   "Amino Acids: 5%",
+   "Nitrogen (N): 5%",
+   "Phosphorus (P2O5): 5%",
+   "Potassium (K2O): 5%",
+   "Micronutrients (B, Fe, Mn, Mo, Zn, Cu): 0.01–0.2%"
+  ],
+  "packSizes": [
+   {
+    "size": "1L",
+    "priceUsd": 24
+   },
+   {
+    "size": "5L",
+    "priceUsd": 121
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "per Ha",
+    "rate": "0.5L – 1L",
+    "notes": "Depending on crop and application method."
+   }
+  ],
+  "applicationMethods": [],
+  "suitableCrops": [
+   "cereals",
+   "legumes",
+   "maize",
+   "potato",
+   "oilseeds",
+   "vegetables"
+  ],
+  "benefits": [
+   "Strengthens root systems, boosts plant immunity and provides energy for early growth",
+   "Biostimulants, amino acids and seaweed extract enhance nutrient uptake, photosynthesis and stress resistance",
+   "Ideal for improving plant resilience and productivity under adverse conditions"
+  ],
+  "priceUsd": 24,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bigo-w-2-1152x1536.jpg",
+    "localPath": "/images/products/bigo-w/1.jpg",
+    "alt": "Bigo W — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bigo-w-768x1024.jpg",
+    "localPath": "/images/products/bigo-w/2.jpg",
+    "alt": "Bigo W — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.49 (2).jpeg",
+    "localPath": "/images/products/bigo-w/wa-bottle.jpg",
+    "alt": "Bigo W — Humuson Complex product photograph",
+    "role": "catalogue"
+   }
+  ],
+  "featured": false,
+  "notes": "Merged duplicate of /product/bico-w/ (5L, $121.00 — a misspelled slug \"bico-w\" for the same BIGO W product). Canonical slug normalized to \"bigo-w\" (1L listing). Crops are the union of both listings (5L says \"cereals, legumes, maize and more\"). 1L listing misprints \"Phosphosphorus\" — normalized in composition. IKAR product line.",
+  "sourceUrl": "https://humusoncomplex.com/product/bigo-w/"
+ },
+ {
+  "name": "A3 Biostimulant",
+  "displayMark": true,
+  "slug": "a3-biostimulant",
+  "oldUrls": [
+   "https://humusoncomplex.com/product/a3-biostimulant/"
+  ],
+  "categorySlugs": [
+   "biostimulants"
+  ],
+  "shortDescription": "High-performance organo-mineral biostimulant designed to enhance stress tolerance, improve nutrient absorption and stimulate robust root and shoot growth.",
+  "descriptionHtml": "<ul>\n  <li>Amino Acids: 30%</li>\n  <li>Seaweed Extract: 30%</li>\n  <li>Humic. &amp; Fulvic Acids: 30%</li>\n  <li>Potassium Oxide (K20): 13%</li>\n  <li>Organic.Nitrogen (N): 5%</li>\n  <li>Magnesium (Mg): 2%</li>\n  <li>Mannitol: 1.4%</li>\n  <li>Alginiç Acid: 0.5%</li>\n  <li>Organic Matter:57%</li>\n</ul>\n<p>A3 Biostimulant is a high-performance organo-mineral biostimulant designed to enhance stress tolerance, improve nutrient absorption and stimulate robust root and shoot growth. It optimizes metabolic processes, strengthens soil health and boosts plant resilience against abiotic stressors like drought, salinity and extreme temperatures. A3 Biostimulant is critical for increasing crop yield, quality and adaptability across diverse conditions, making it suitable for cereals, fruits, vegetables,</p>\n<p>Package Size:1 KG</p>\n<p>Rate per Ha: 1kg-1.5kg (soil application) 100g/100L of water (foliar application) depending on crop and application method</p>",
+  "composition": [
+   "Total amino acids — 30 % w/w (free amino acids 30 % w/w)",
+   "Total nitrogen — 5 % w/w (organic nitrogen 5 % w/w)",
+   "Algae extracts (Ascophyllum nodosum) — 30 % w/w",
+   "Mannitol — 1.4 % w/w · Alginic acid — 0.5 % w/w",
+   "Potassium oxide (K₂O) soluble in water — 13 % w/w",
+   "Total humic extract — 30 % w/w (fulvic acids 30 % w/w)",
+   "Magnesium (Mg) soluble in water — 2 % w/w",
+   "Organic matter 57 % w/w · dry matter 96 % w/w · pH 3–5",
+   "Ingredients: seaweed (Ascophyllum nodosum), hydrolysed vegetable amino acids, leonardite, potassium hydroxide, magnesium sulphate"
+  ],
+  "packSizes": [
+   {
+    "size": "250 g",
+    "priceUsd": null
+   },
+   {
+    "size": "1 kg",
+    "priceUsd": 35
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "soil application · per ha",
+    "rate": "1–1.5 kg",
+    "notes": "General dose per label."
+   },
+   {
+    "context": "foliar application · per ha",
+    "rate": "0.25–0.5 kg",
+    "notes": "General dose per label."
+   },
+   {
+    "context": "per Ha (soil application)",
+    "rate": "1kg – 1.5kg",
+    "notes": "Depending on crop and application method."
+   },
+   {
+    "context": "foliar application",
+    "rate": "100g / 100L of water",
+    "notes": "Depending on crop and application method."
+   }
+  ],
+  "applicationMethods": [
+   "soil application",
+   "foliar spray"
+  ],
+  "suitableCrops": [
+   "cereals",
+   "fruits",
+   "vegetables"
+  ],
+  "benefits": [
+   "30 % amino acids with algae extracts and humic substances in one formulation",
+   "Supports flowering, fruit set and recovery through stress periods",
+   "Low doses: 0.25–0.5 kg/ha foliar or 1–1.5 kg/ha to the soil"
+  ],
+  "priceUsd": 35,
+  "images": [
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/uu-1152x1536.jpg",
+    "localPath": "/images/products/a3-biostimulant/1.jpg",
+    "alt": "A3 Biostimulant — product pack"
+   },
+   {
+    "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/yuyuuy-1-768x1024.jpg",
+    "localPath": "/images/products/a3-biostimulant/2.jpg",
+    "alt": "A3 Biostimulant — product pack"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.32 (2).jpeg",
+    "localPath": "/images/products/a3-biostimulant/wa-250g.jpg",
+    "alt": "A3 Biostimulant — Humuson Complex product photograph",
+    "role": "catalogue"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.40 (1).jpeg",
+    "localPath": "/images/products/a3-biostimulant/wa-1kg-back.jpg",
+    "alt": "A3 Biostimulant — product label",
+    "role": "gallery"
+   }
+  ],
+  "featured": true,
+  "notes": "The listing’s crop sentence ends mid-list (\"suitable for cereals, fruits, vegetables,\") — only those three kept. Two pack photos on the listing. Oxide notation normalized (K20 → K2O). Label data transcribed from the August 2026 product photo set supplied by Humuson Complex.",
+  "sourceUrl": "https://humusoncomplex.com/product/a3-biostimulant/",
+  "tagline": "Amino acids · algae · humics",
+  "instructionsHtml": "<h3>Crop guidance (per label)</h3><ul><li><strong>Fruit trees, olives &amp; citrus:</strong> 1st application in pre-flowering, 2nd at fruit set, 3rd during fruit fattening.</li><li><strong>Tomato:</strong> apply at each flowering interval (every 20–30 days).</li><li><strong>Peppers:</strong> before pre-flowering, continuing every 20 days.</li><li><strong>Leafy vegetables:</strong> apply when 2–4 true leaves are visible; repeat after 20 days.</li><li><strong>Berries:</strong> in pre-flowering, repeating every 20 days.</li><li><strong>Ornamentals:</strong> 2–4 treatments during the growing season.</li></ul><p>Store between +5 °C and +40 °C. Do not mix with copper, strong acids or alkaline-reaction products. Use only in case of recognised need and do not exceed the recommended dose.</p><p><em>Manufactured by Arvensis Agro S.A. (Zaragoza, Spain).</em></p>"
+ },
+ {
+  "name": "eMAXX Ultra",
+  "displayMark": true,
+  "slug": "emaxx-ultra",
+  "oldUrls": [],
+  "categorySlugs": [
+   "biostimulants"
+  ],
+  "tagline": "Plant growth enhancer",
+  "shortDescription": "Cold-processed, full-spectrum Ecklonia maxima (kelp) formulation enhanced with selected bioactives — for stronger plant growth, abiotic stress resilience and consistent crop performance.",
+  "descriptionHtml": "<p>eMAXX Ultra is a plant growth enhancer built on a cold-processed, full-spectrum <em>Ecklonia maxima</em> seaweed formulation, enhanced with selected bioactives to support stronger plant growth, abiotic stress resilience and consistent crop performance.</p><p>Registered in South Africa (Reg. No. M494, Act No. 36 of 1947) and under Zimbabwe's Fertilizers, Farm Feeds and Remedies Act [Chapter 18:12] of 1996.</p>",
+  "composition": [
+   "Cold-processed full-spectrum Ecklonia maxima (kelp) extract",
+   "Selected bioactives supporting growth and stress resilience"
+  ],
+  "packSizes": [
+   {
+    "size": "1 L",
+    "priceUsd": null
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "fruit & nut trees · per ha",
+    "rate": "2–3 L",
+    "notes": "Apply at the start of the growing season and repeat every 2–4 weeks; additionally spray during phases of plant stress (per label)."
+   },
+   {
+    "context": "grain & cereal crops · per ha",
+    "rate": "1 L",
+    "notes": "In furrow at planting, or full-cover foliar spray 2–3 weeks after emergence; repeat 1–2 times in vegetative stages every 2–3 weeks (per label)."
+   },
+   {
+    "context": "vegetable crops · per ha",
+    "rate": "1 L",
+    "notes": "As a drench at transplanting, or two weeks after transplanting as a foliar spray; repeat 1–2 times in vegetative stages every 2–3 weeks (per label)."
+   }
+  ],
+  "applicationMethods": [
+   "foliar spray",
+   "drench",
+   "soil application"
+  ],
+  "suitableCrops": [
+   "fruits",
+   "cereals",
+   "maize",
+   "vegetables"
+  ],
+  "benefits": [
+   "Supports stronger plant growth and consistent crop performance",
+   "Improves abiotic stress resilience",
+   "Cold-processed to preserve the full spectrum of kelp bioactives"
+  ],
+  "priceUsd": null,
+  "images": [
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.33 (2).jpeg",
+    "localPath": "/images/products/emaxx-ultra/wa-front.jpg",
+    "alt": "emaxx-ultra product photograph",
+    "role": "primary"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.34.jpeg",
+    "localPath": "/images/products/emaxx-ultra/wa-angle.jpg",
+    "alt": "emaxx-ultra label",
+    "role": "gallery"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.36.jpeg",
+    "localPath": "/images/products/emaxx-ultra/wa-back-top.jpg",
+    "alt": "emaxx-ultra label",
+    "role": "gallery"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.33 (1).jpeg",
+    "localPath": "/images/products/emaxx-ultra/wa-back-bottom.jpg",
+    "alt": "emaxx-ultra label",
+    "role": "gallery"
+   }
+  ],
+  "featured": true,
+  "notes": "New product from the August 2026 catalogue photo set; details transcribed from the bottle label. Storage: keep in the original, well-sealed container away from direct sunlight in a cool, dry environment; the container can be triple-rinsed and reused.",
+  "sourceUrl": ""
+ },
+ {
+  "name": "Fortik Solid",
+  "displayMark": false,
+  "slug": "fortik-solid",
+  "oldUrls": [],
+  "categorySlugs": [
+   "biostimulants"
+  ],
+  "tagline": "NK (Mg) 3-40 (2) with boron — foliar & irrigation",
+  "shortDescription": "High-potassium NK (Mg) 3-40 (2) fertiliser with boron for foliar and irrigation application — recommended to improve fruit quality and production.",
+  "descriptionHtml": "<p>Fortik Solid is a water-soluble NK (Mg) 3-40 (2) fertiliser with boron from Arvensis Agro, designed for foliar and irrigation application. Its application is highly recommended to improve fruit development and increase production without reducing the strength of cell walls.</p><p>Potassium drives photosynthesis and the transport of sugars from leaves to fruits; because potassium programmes can induce magnesium deficiency in certain crops, Fortik Solid is further formulated with magnesium to prevent that secondary deficiency.</p>",
+  "composition": [
+   "Total nitrogen (N) — 3 % w/w (nitric nitrogen 3 % w/w)",
+   "Potassium oxide (K₂O), water-soluble — 40 % w/w",
+   "Boron (B) — 0.5 % w/w",
+   "Magnesium (MgO) — 2 % w/w"
+  ],
+  "packSizes": [
+   {
+    "size": "1 kg",
+    "priceUsd": null
+   }
+  ],
+  "applicationRates": [
+   {
+    "context": "foliar application",
+    "rate": "1.5–2 g/L",
+    "notes": "Minimum dose 1.5–2 kg/ha (per label)."
+   },
+   {
+    "context": "soil application · per ha",
+    "rate": "3–5 kg",
+    "notes": "General soil dosage (per label)."
+   }
+  ],
+  "applicationMethods": [
+   "foliar spray",
+   "fertigation",
+   "soil application"
+  ],
+  "suitableCrops": [
+   "fruits",
+   "vegetables",
+   "cereals",
+   "maize",
+   "tomato",
+   "potato",
+   "ornamentals"
+  ],
+  "benefits": [
+   "40 % water-soluble potassium for fruit filling and quality",
+   "Boron and magnesium included to prevent secondary deficiencies",
+   "Suitable for fruit trees, tropical fruit & citrus, vegetables, cereals, banana & pineapple, ornamentals, sugarcane and potato (per label)"
+  ],
+  "priceUsd": null,
+  "images": [
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.46 (1).jpeg",
+    "localPath": "/images/products/fortik-solid/wa-front.jpg",
+    "alt": "fortik-solid product photograph",
+    "role": "primary"
+   },
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.36 (1).jpeg",
+    "localPath": "/images/products/fortik-solid/wa-back.jpg",
+    "alt": "fortik-solid label",
+    "role": "gallery"
+   }
+  ],
+  "featured": false,
+  "notes": "New product from the August 2026 catalogue photo set; details transcribed from the pack label. Do not mix with alkaline products or products containing calcium. Store between +5 °C and +40 °C. Manufactured by Arvensis Agro S.A.",
+  "sourceUrl": ""
+ },
+ {
+  "name": "Kalisto",
+  "displayMark": false,
+  "slug": "kalisto",
+  "oldUrls": [],
+  "categorySlugs": [
+   "liquid-fertilisers"
+  ],
+  "tagline": "IKAR Add Value line",
+  "shortDescription": "Liquid fertiliser from IKAR's Add Value speciality line.",
+  "descriptionHtml": "<p>Liquid fertiliser from IKAR's Add Value speciality line.</p><p>Full specification, rates and crop programme are available from Humuson technical support — basic consultation is free.</p>",
+  "composition": [],
+  "packSizes": [
+   {
+    "size": "1 L",
+    "priceUsd": null
+   }
+  ],
+  "applicationRates": [],
+  "applicationMethods": [
+   "foliar spray"
+  ],
+  "suitableCrops": [],
+  "benefits": [],
+  "priceUsd": null,
+  "images": [
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.41 (1).jpeg",
+    "localPath": "/images/products/kalisto/wa-front.jpg",
+    "alt": "kalisto product photograph",
+    "role": "primary"
+   }
+  ],
+  "featured": false,
+  "notes": "New product from the August 2026 catalogue photo set — front label only; specification to be confirmed with Humuson technical support.",
+  "sourceUrl": ""
+ },
+ {
+  "name": "Fosto",
+  "displayMark": false,
+  "slug": "fosto",
+  "oldUrls": [],
+  "categorySlugs": [
+   "liquid-fertilisers"
+  ],
+  "tagline": "IKAR Add Value line",
+  "shortDescription": "Liquid fertiliser from IKAR's Add Value speciality line.",
+  "descriptionHtml": "<p>Liquid fertiliser from IKAR's Add Value speciality line.</p><p>Full specification, rates and crop programme are available from Humuson technical support — basic consultation is free.</p>",
+  "composition": [],
+  "packSizes": [
+   {
+    "size": "1 L",
+    "priceUsd": null
+   }
+  ],
+  "applicationRates": [],
+  "applicationMethods": [
+   "foliar spray"
+  ],
+  "suitableCrops": [],
+  "benefits": [],
+  "priceUsd": null,
+  "images": [
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.42 (1).jpeg",
+    "localPath": "/images/products/fosto/wa-front.jpg",
+    "alt": "fosto product photograph",
+    "role": "primary"
+   }
+  ],
+  "featured": false,
+  "notes": "New product from the August 2026 catalogue photo set — front label only; specification to be confirmed with Humuson technical support.",
+  "sourceUrl": ""
+ },
+ {
+  "name": "NPK 12-11-30+TE",
+  "displayMark": false,
+  "slug": "npk-12-11-30-te",
+  "oldUrls": [],
+  "categorySlugs": [
+   "liquid-fertilisers"
+  ],
+  "tagline": "IKAR Intense line",
+  "shortDescription": "High-potassium NPK 12-11-30 liquid fertiliser with trace elements, from IKAR's Intense concentrated-nutrition line.",
+  "descriptionHtml": "<p>High-potassium NPK 12-11-30 liquid fertiliser with trace elements, from IKAR's Intense concentrated-nutrition line.</p><p>Full specification, rates and crop programme are available from Humuson technical support — basic consultation is free.</p>",
+  "composition": [],
+  "packSizes": [
+   {
+    "size": "1 L",
+    "priceUsd": null
+   }
+  ],
+  "applicationRates": [],
+  "applicationMethods": [
+   "foliar spray"
+  ],
+  "suitableCrops": [],
+  "benefits": [],
+  "priceUsd": null,
+  "images": [
+   {
+    "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.41 (2).jpeg",
+    "localPath": "/images/products/npk-12-11-30-te/wa-front.jpg",
+    "alt": "npk-12-11-30-te product photograph",
+    "role": "primary"
+   }
+  ],
+  "featured": false,
+  "notes": "New product from the August 2026 catalogue photo set — front label only; specification to be confirmed with Humuson technical support.",
+  "sourceUrl": ""
+ }
+]
