@@ -127,7 +127,15 @@ defaulting to open.
 - **MFA enrolment.** The mechanism is built; each account holder still has to
   enrol at `/admin/security`. Nothing forces it yet — requiring it for the
   ADMIN role would be a one-line change once everyone with an account has one.
-- **Backup and recovery rehearsal.** See `docs/RUNBOOK.md`.
+- **A scheduled independent backup.** `npm run backup` works and the restore
+  has been rehearsed, but nothing runs it on a schedule yet, so the
+  off-platform copy is only as fresh as the last time a person ran it. See
+  `docs/RUNBOOK.md` §2.
+- **A production restore rehearsal.** Done against development; needs doing
+  once against a real Neon dump by someone with console access.
+- **The Neon history retention window** is unrecorded. `docs/RUNBOOK.md` §2 has
+  a blank waiting for it, and it is the number that decides how long a problem
+  can go unnoticed and still be recoverable.
 - **Retention periods.** The mechanism is built and off. The owner needs to
   confirm the windows and enable it.
 - **Legal review of `/privacy`.** The page is a factual description of what
