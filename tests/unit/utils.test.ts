@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { slugify, stripHtml, truncate, formatPriceUsd, humanize, readingMinutes } from "@/lib/utils";
+import { slugify, truncate, formatPriceUsd, humanize } from "@/lib/utils";
+import { readingMinutes, stripHtml } from "@/lib/sanitize";
 import { parseYouTubeId, youtubeThumbnail } from "@/lib/youtube";
 import { whatsappLink, whatsappProductMessage } from "@/lib/whatsapp";
 
@@ -12,7 +13,7 @@ describe("slugify", () => {
 
 describe("stripHtml", () => {
   it("flattens entities and tags", () => {
-    expect(stripHtml("<p>Healthy&nbsp;soil &amp; crops&#8217;s</p>")).toBe("Healthy soil & crops's");
+    expect(stripHtml("<p>Healthy&nbsp;soil &amp; crops&#8217;s</p>")).toBe("Healthy soil & crops\u2019s");
   });
 });
 

@@ -4,8 +4,8 @@ import { PublishStatus } from "@prisma/client";
 import { db } from "@/server/db";
 import { requireUser } from "@/server/auth";
 import { audit } from "@/server/audit";
-import { sanitizeRichHtml } from "@/lib/sanitize";
-import { readingMinutes, slugify } from "@/lib/utils";
+import { readingMinutes, sanitizeRichHtml } from "@/lib/sanitize";
+import { slugify } from "@/lib/utils";
 import type { AdminActionState } from "@/lib/admin-state";
 import { formBool, formList, formOptional, formString, revalidateContent } from "./helpers";
 

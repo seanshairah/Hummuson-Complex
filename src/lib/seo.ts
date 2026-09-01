@@ -1,5 +1,6 @@
 import { absoluteUrl, site } from "@/lib/site";
-import { stripHtml, truncate } from "@/lib/utils";
+import { truncate } from "@/lib/utils";
+import { stripHtml } from "@/lib/sanitize";
 import type { ProductDetailData } from "@/server/data/products";
 import type { ArticleDetailData, FaqData, VideoData } from "@/server/data/content";
 

@@ -24,3 +24,38 @@ export function sanitizeRichHtml(html: string): string {
     .replace(/<p>\s*(&nbsp;)?\s*<\/p>/g, "")
     .trim();
 }
+
+/**
+ * Reduces HTML to its readable text.
+ *
+ * Uses the same parser as the sanitizer above rather than a regex. Stripping
+ * tags with /<[^>]*>/g looks equivalent and is not: it leaves the *contents*
+ * of <script> and <style> behind as text, and an attribute containing ">"
+ * ends the match early, so `<img alt="a > b">` leaves `b">` in the output.
+ * Both of those were reaching the search index and the JSON-LD answer text
+ * that search engines display.
+ */
+export function stripHtml(html: string): string {
+  const text = sanitizeHtmlLib(html, { allowedTags: [], allowedAttributes: {} });
+  return decodeBasicEntities(text).replace(/\s+/g, " ").trim();
+}
+
+/**
+ * The parser re-encodes the few characters that are special in markup, which
+ * is right for HTML output and wrong for the plain text wanted here.
+ * Ampersand goes last, so "&amp;lt;" does not decode twice into "<".
+ */
+function decodeBasicEntities(text: string): string {
+  return text
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, "&");
+}
+
+/** Rough reading time, from the readable text rather than the markup. */
+export function readingMinutes(html: string): number {
+  const words = stripHtml(html).split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}

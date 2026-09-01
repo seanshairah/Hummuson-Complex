@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import { buildIndex, search, type SearchDoc } from "@/lib/search/engine";
-import { stripHtml, humanize } from "@/lib/utils";
+import { humanize } from "@/lib/utils";
+import { stripHtml } from "@/lib/sanitize";
 import { db } from "@/server/db";
 import { getAllFaqs } from "./content";
 import { getAllProducts, getProductBySlug } from "./products";
