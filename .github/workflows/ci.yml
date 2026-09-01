@@ -1,8 +1,11 @@
 name: CI
 
+# Pull requests, plus pushes to the default branch. Not `branches: ["**"]`:
+# with both, every push to a branch that has an open pull request ran the whole
+# pipeline twice — double the minutes for one commit's worth of information.
 on:
   push:
-    branches: ["**"]
+    branches: [main]
   pull_request:
 
 jobs:

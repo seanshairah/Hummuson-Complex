@@ -1,12 +1,18 @@
 name: CodeQL
 
 # Static analysis of the application's own code, as opposed to its
-# dependencies — that is what the audit gate in ci.yml covers. Runs on every
-# push and pull request, plus weekly so that newly published queries are
+# dependencies — that is what the audit gate in ci.yml covers. Pull requests,
+# pushes to the default branch, and weekly so that newly published queries are
 # applied to code that has not changed.
+#
+# Deliberately not `branches: ["**"]` alongside `pull_request`. That ran two
+# analyses for every push to a pull request branch, and the alert-gating check
+# fires when either finishes — so it repeatedly judged a commit against the
+# previous commit's results and reported alerts that had already been fixed.
+# One analysis per commit, one honest answer.
 on:
   push:
-    branches: ["**"]
+    branches: [main]
   pull_request:
   schedule:
     - cron: "0 4 * * 1"
