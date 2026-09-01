@@ -70,7 +70,13 @@ async function consume(bucket: Bucket): Promise<RateLimitVerdict> {
   };
 }
 
-/** Expired windows are dead weight; sweep them on a small fraction of calls. */
+/**
+ * Expired windows are dead weight; sweep them on a small fraction of calls.
+ *
+ * Math.random() is right here and deliberately not a cryptographic source:
+ * this decides whether to run a housekeeping DELETE, and nothing about the
+ * limit or its keys depends on it being unpredictable.
+ */
 function sweepOccasionally() {
   if (Math.random() > 0.02) return;
   void db.rateLimit.deleteMany({ where: { expiresAt: { lt: new Date() } } }).catch(() => {});

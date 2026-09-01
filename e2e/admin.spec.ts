@@ -1,4 +1,16 @@
+import { randomUUID } from "node:crypto";
 import { expect, test } from "@playwright/test";
+
+/**
+ * Unique per run, so tests that lock accounts out or enrol a second factor
+ * cannot interfere with each other or with the shared admin account.
+ *
+ * crypto rather than Math.random(): these values become passwords, and a
+ * predictable password is a predictable password whatever generated it.
+ */
+function unique(): string {
+  return randomUUID().replace(/-/g, "").slice(0, 12);
+}
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "admin@humusoncomplex.com";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "humuson-dev-admin";
@@ -61,7 +73,7 @@ test.describe("admin", () => {
   test("repeated wrong passwords lock the account out", async ({ page }) => {
     // A unique address per run, so this test cannot lock out the shared admin
     // account that every other test signs in with.
-    const target = `lockout-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@example.test`;
+    const target = `lockout-${unique()}@example.test`;
 
     for (let attempt = 1; attempt <= 5; attempt += 1) {
       await page.goto("/admin/login");
@@ -97,7 +109,7 @@ test.describe("session revocation", () => {
   test("deactivating an account ends the session it is already signed in on", async ({
     browser,
   }) => {
-    const stamp = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const stamp = unique();
     const email = `revoked-${stamp}@example.test`;
     const password = `Temp-${stamp}-password`;
 
@@ -179,7 +191,7 @@ test.describe("two-factor authentication", () => {
   // the enrolment screen hands over.
   test("enrolling adds a second step to sign-in", async ({ browser }) => {
     const { TOTP, Secret } = await import("otpauth");
-    const stamp = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const stamp = unique();
     const email = `mfa-${stamp}@example.test`;
     const password = `Temp-${stamp}-password`;
 
