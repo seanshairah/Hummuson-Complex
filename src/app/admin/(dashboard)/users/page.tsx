@@ -1,4 +1,4 @@
-import { Pencil, Plus, Users } from "lucide-react";
+import { LogOut, Pencil, Plus, Users } from "lucide-react";
 import { AdminPageHeader } from "@/components/admin/page-header";
 import { ActionDialog } from "@/components/admin/action-dialog";
 import { Table, TBody, Td, Th, THead, Tr } from "@/components/ui/table";
@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
-import { saveUser, toggleUserActive } from "@/server/actions/admin/misc";
+import { revokeUserSessions, saveUser, toggleUserActive } from "@/server/actions/admin/misc";
 import { cn, formatDate } from "@/lib/utils";
 
 export const metadata = { title: "Users — admin" };
@@ -122,6 +122,21 @@ export default async function AdminUsersPage() {
                   >
                     {fields(user)}
                   </ActionDialog>
+                  <form
+                    action={async () => {
+                      "use server";
+                      await revokeUserSessions(user.id);
+                    }}
+                  >
+                    <button
+                      type="submit"
+                      title="End every signed-in session for this account. They can sign back in; anyone holding a copy of their session cannot."
+                      className="flex size-8 items-center justify-center rounded-full text-ink-faint hover:bg-ink/5"
+                    >
+                      <LogOut className="size-3.5" />
+                      <span className="sr-only">Sign out everywhere</span>
+                    </button>
+                  </form>
                   {user.id !== session?.user.id && (
                     <form
                       action={async () => {

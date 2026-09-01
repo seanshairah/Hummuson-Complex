@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { CatalogueLayout, EnquiryStatus, PublishStatus, Role } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { db } from "@/server/db";
@@ -98,6 +99,11 @@ export async function saveUser(
   if (clash) return { status: "error", fieldErrors: { email: "Email already in use" } };
 
   if (id) {
+    const before = await db.user.findUniqueOrThrow({ where: { id }, select: { role: true } });
+    // A new password or a changed role has to end the sessions issued under
+    // the old one. Without this, someone whose password was changed because
+    // it leaked stays signed in on the attacker's browser for a week.
+    const invalidatesSessions = Boolean(password) || before.role !== role;
     await db.user.update({
       where: { id },
       data: {
@@ -105,6 +111,7 @@ export async function saveUser(
         name,
         role,
         ...(password ? { passwordHash: await bcrypt.hash(password, 12) } : {}),
+        ...(invalidatesSessions ? { sessionsValidFrom: new Date() } : {}),
       },
     });
   } else {
@@ -120,7 +127,30 @@ export async function toggleUserActive(id: string): Promise<{ error?: string } |
   const actor = await requireAdmin();
   if (actor.id === id) return { error: "You cannot deactivate your own account." };
   const user = await db.user.findUniqueOrThrow({ where: { id }, select: { active: true } });
-  await db.user.update({ where: { id }, data: { active: !user.active } });
+  await db.user.update({
+    where: { id },
+    data: {
+      active: !user.active,
+      // Deactivating has to take the account's live sessions with it —
+      // otherwise "deactivated" only means "cannot sign in again".
+      ...(user.active ? { sessionsValidFrom: new Date() } : {}),
+    },
+  });
+  // Without this the table keeps showing the state from before the click, so
+  // the next click quietly toggles the account back.
+  revalidatePath("/admin/users");
+}
+
+/**
+ * Ends every session for one account without changing anything else about it.
+ * The move to reach for when a laptop goes missing or a session is suspected
+ * of being shared: the person can sign straight back in, and anyone holding a
+ * copy of their token cannot.
+ */
+export async function revokeUserSessions(id: string): Promise<{ error?: string } | void> {
+  await requireAdmin();
+  await db.user.update({ where: { id }, data: { sessionsValidFrom: new Date() } });
+  revalidatePath("/admin/users");
 }
 
 /* ── Catalogue ──────────────────────────────────────────────────────────── */

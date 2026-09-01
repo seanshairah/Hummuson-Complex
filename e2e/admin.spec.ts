@@ -85,3 +85,56 @@ test.describe("admin", () => {
     await expect(page.getByText(/invalid email or password/i)).toBeVisible();
   });
 });
+
+test.describe("session revocation", () => {
+  // Two browser contexts: an administrator in one, the account being acted on
+  // in the other. A JWT session has no server-side record to delete, so the
+  // only way to know revocation works is to watch a live session stop working.
+  test("deactivating an account ends the session it is already signed in on", async ({
+    browser,
+  }) => {
+    const stamp = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const email = `revoked-${stamp}@example.test`;
+    const password = `Temp-${stamp}-password`;
+
+    const adminContext = await browser.newContext();
+    const admin = await adminContext.newPage();
+    await admin.goto("/admin/login");
+    await admin.fill('input[name="email"]', ADMIN_EMAIL);
+    await admin.fill('input[name="password"]', ADMIN_PASSWORD);
+    await admin.click('button[type="submit"]');
+    await admin.waitForURL("**/admin");
+
+    await admin.goto("/admin/users");
+    await admin.getByRole("button", { name: "New user" }).click();
+    const dialog = admin.locator('[role="dialog"]');
+    await dialog.locator('input[name="name"]').fill(`Revocation probe ${stamp}`);
+    await dialog.locator('input[name="email"]').fill(email);
+    await dialog.locator('input[name="password"]').fill(password);
+    await dialog.getByRole("button", { name: "Save" }).click();
+    await expect(admin.getByText(email)).toBeVisible();
+
+    // The new account signs in and reaches the dashboard.
+    const staffContext = await browser.newContext();
+    const staff = await staffContext.newPage();
+    await staff.goto("/admin/login");
+    await staff.fill('input[name="email"]', email);
+    await staff.fill('input[name="password"]', password);
+    await staff.click('button[type="submit"]');
+    await staff.waitForURL("**/admin");
+    await expect(staff.getByRole("heading", { name: "Overview" })).toBeVisible();
+
+    // The administrator deactivates it while that session is live.
+    const row = admin.locator("tr").filter({ hasText: email });
+    await row.getByRole("button", { name: "Deactivate" }).click();
+    await expect(row.getByText("Deactivated")).toBeVisible();
+
+    // The already-signed-in session must stop working on its very next
+    // request, not whenever its token next happens to be re-checked.
+    await staff.goto("/admin");
+    await expect(staff).toHaveURL(/\/admin\/login/);
+
+    await adminContext.close();
+    await staffContext.close();
+  });
+});

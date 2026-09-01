@@ -121,6 +121,10 @@ model User {
   role         Role      @default(EDITOR)
   active       Boolean   @default(true)
   lastLoginAt  DateTime?
+  /// Sessions issued before this instant are refused. Bumped on a password
+  /// change, a role change and on deactivation, which makes "sign out
+  /// everywhere" a single field update rather than a session store to build.
+  sessionsValidFrom DateTime @default(now())
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 

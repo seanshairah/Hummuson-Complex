@@ -12,12 +12,15 @@ declare module "next-auth" {
     user: {
       id: string;
       role: "ADMIN" | "EDITOR";
+      /** Epoch milliseconds at which this session began. See requireUser(). */
+      issuedAt: number;
     } & DefaultSession["user"];
   }
   interface User {
     role: "ADMIN" | "EDITOR";
   }
 }
+
 
 const credentialsSchema = z.object({
   // Trim the email: autofill, paste and mobile keyboards routinely add a
@@ -30,6 +33,46 @@ const credentialsSchema = z.object({
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  callbacks: {
+    ...authConfig.callbacks,
+    /**
+     * A JWT session has no server-side record to delete, so without this a
+     * stolen or stale token stays valid for its full seven days no matter
+     * what happens to the account behind it. Returning null here invalidates
+     * the token and clears the cookie.
+     *
+     * This runs on every session read rather than on an interval. The
+     * middleware cannot do it at all — it runs on the edge with no database —
+     * so it still waves a revoked token through to the page, and the page is
+     * where the answer has to be right. auth() is only ever called inside the
+     * admin area, so the cost is one indexed read per admin request.
+     */
+    async jwt(params) {
+      const token = await authConfig.callbacks.jwt(params);
+      if (!token?.id) return token;
+      if (params.user) return token;
+
+      const issuedAt = typeof token.issuedAt === "number" ? token.issuedAt : undefined;
+      const user = await db.user
+        .findUnique({
+          where: { id: token.id as string },
+          select: { active: true, role: true, sessionsValidFrom: true },
+        })
+        .catch(() => undefined);
+
+      // A database blip should not sign everyone out; leave the token alone
+      // and let the next request decide. A row that is genuinely gone is a
+      // different matter — that token has nothing behind it.
+      if (user === undefined) return token;
+      if (user === null) return null;
+      if (!user.active) return null;
+      if (!issuedAt || user.sessionsValidFrom.getTime() > issuedAt) return null;
+
+      // Role is read back on every request too, so a demoted editor cannot
+      // carry an ADMIN claim around in a token for the rest of the week.
+      return { ...token, role: user.role };
+    },
+  },
   providers: [
     Credentials({
       name: "Email & password",
@@ -62,7 +105,14 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
 });
 
-/** Server-side guard for admin actions/pages. Throws when unauthenticated. */
+/**
+ * Server-side guard for admin actions and pages. Throws when unauthenticated.
+ *
+ * Revocation is handled one level down, in the token callback above, so that
+ * every reader of the session sees the same answer — including the sign-in
+ * page, which would otherwise send a revoked session straight back to the
+ * admin area it was just bounced out of.
+ */
 export async function requireUser() {
   const session = await auth();
   if (!session?.user) throw new Error("Unauthorized");
