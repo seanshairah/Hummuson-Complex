@@ -191,6 +191,9 @@ export async function Footer() {
             <Link href="/search" className="hover:text-paper/80">
               Search
             </Link>
+            <Link href="/privacy" className="hover:text-paper/80">
+              Privacy
+            </Link>
           </p>
         </div>
       </div>

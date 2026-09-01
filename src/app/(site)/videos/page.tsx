@@ -3,6 +3,7 @@ import { PageIntro } from "@/components/shared/page-intro";
 import { VideoGrid } from "@/components/videos/video-grid";
 import { getAllVideos } from "@/server/data/content";
 import { videoJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/shared/json-ld";
 
 export const revalidate = 300;
 
@@ -18,12 +19,7 @@ export default async function VideosPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(videos.map((video) => videoJsonLd(video))),
-        }}
-      />
+      <JsonLd data={videos.map((video) => videoJsonLd(video))} />
       <PageIntro
         eyebrow="Video centre"
         title="See it"

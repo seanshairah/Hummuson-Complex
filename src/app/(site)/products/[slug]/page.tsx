@@ -28,6 +28,7 @@ import { getContactSettings } from "@/server/data/settings";
 import { faqJsonLd, productJsonLd } from "@/lib/seo";
 import { humanize } from "@/lib/utils";
 import { whatsappProductMessage } from "@/lib/whatsapp";
+import { JsonLd } from "@/components/shared/json-ld";
 
 export const revalidate = 300;
 export const dynamicParams = true;
@@ -77,15 +78,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd(product)) }}
-      />
+      <JsonLd data={productJsonLd(product)} />
       {product.faqs.length > 0 && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(product.faqs)) }}
-        />
+        <JsonLd data={faqJsonLd(product.faqs)} />
       )}
       <ViewTracker type="PRODUCT_VIEW" entityType="product" entityId={product.id} />
 

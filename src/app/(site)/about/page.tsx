@@ -14,6 +14,7 @@ import partnerBioenergy from "../../../../public/images/brand/Bioenergy_naujas-l
 import partnerSapropel from "../../../../public/images/brand/partner-433fd162.jpg";
 import handsPhoto from "../../../../public/images/field/field-IMG_0561.jpg";
 import fieldPhoto from "../../../../public/images/field/field-IMG_0597.jpg";
+import { JsonLd } from "@/components/shared/json-ld";
 
 export const revalidate = 300;
 
@@ -37,10 +38,7 @@ export default async function AboutPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
-      />
+      <JsonLd data={organizationJsonLd()} />
       <PageIntro
         tone="dark"
         eyebrow="About Humuson Complex"

@@ -3,6 +3,7 @@ import { PageIntro } from "@/components/shared/page-intro";
 import { FaqExplorer } from "@/components/faq/faq-explorer";
 import { getAllFaqs } from "@/server/data/content";
 import { faqJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/shared/json-ld";
 
 export const revalidate = 300;
 
@@ -18,10 +19,7 @@ export default async function FaqPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(faqs)) }}
-      />
+      <JsonLd data={faqJsonLd(faqs)} />
       <PageIntro
         eyebrow="Questions & answers"
         title="Asked and"

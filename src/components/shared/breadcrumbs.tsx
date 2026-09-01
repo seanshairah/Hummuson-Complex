@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { absoluteUrl } from "@/lib/site";
+import { JsonLd } from "@/components/shared/json-ld";
 
 export interface Crumb {
   label: string;
@@ -31,10 +32,7 @@ export function Breadcrumbs({
 
   return (
     <nav aria-label="Breadcrumb" className={className}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
       <ol
         className={cn(
           "flex flex-wrap items-center gap-1.5 text-xs",

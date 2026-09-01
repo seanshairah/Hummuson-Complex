@@ -3,6 +3,7 @@ import { AdminPageHeader } from "@/components/admin/page-header";
 import { StatusPill } from "@/components/admin/status-pill";
 import { ConfirmButton } from "@/components/admin/confirm-button";
 import { EmptyState } from "@/components/ui/empty-state";
+import { AdminPagination, pageFrom, pageQuery } from "@/components/admin/pagination";
 import { db } from "@/server/db";
 import { deleteEnquiry, setEnquiryStatus } from "@/server/actions/admin/misc";
 import { formatDate, humanize } from "@/lib/utils";
@@ -15,19 +16,23 @@ const STATUSES = ["NEW", "IN_PROGRESS", "RESOLVED", "ARCHIVED"] as const;
 export default async function AdminEnquiriesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string }>;
+  searchParams: Promise<{ status?: string; page?: string }>;
 }) {
-  const { status } = await searchParams;
+  const { status, page: pageParam } = await searchParams;
   const filter = STATUSES.includes(status as never)
     ? (status as (typeof STATUSES)[number])
     : undefined;
-  const [enquiries, counts] = await Promise.all([
+  const page = pageFrom(pageParam);
+  const where = filter ? { status: filter } : undefined;
+  const [enquiries, counts, total] = await Promise.all([
     db.enquiry.findMany({
-      where: filter ? { status: filter } : undefined,
+      where,
       orderBy: { createdAt: "desc" },
       include: { product: { select: { name: true } } },
+      ...pageQuery(page),
     }),
     db.enquiry.groupBy({ by: ["status"], _count: true }),
+    db.enquiry.count({ where }),
   ]);
   const countFor = (key: string) => counts.find((count) => count.status === key)?._count ?? 0;
 
@@ -147,6 +152,12 @@ export default async function AdminEnquiriesPage({
           ))}
         </div>
       )}
+      <AdminPagination
+        page={page}
+        total={total}
+        params={{ status: filter }}
+        basePath="/admin/enquiries"
+      />
     </>
   );
 }

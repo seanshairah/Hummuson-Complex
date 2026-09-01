@@ -22,6 +22,7 @@ import {
 import { getCompanySettings } from "@/server/data/settings";
 import { site } from "@/lib/site";
 import { organizationJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/shared/json-ld";
 
 export const revalidate = 300;
 
@@ -52,10 +53,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
-      />
+      <JsonLd data={organizationJsonLd()} />
       <HomeHero
         spotlight={spotlight}
         productCount={stats.products}

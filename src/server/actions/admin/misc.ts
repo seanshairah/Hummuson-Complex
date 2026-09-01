@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 import { CatalogueLayout, EnquiryStatus, PublishStatus, Role } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { db } from "@/server/db";
@@ -92,13 +93,26 @@ export async function saveUser(
   const email = formString(formData, "email").toLowerCase();
   const name = formString(formData, "name");
   const password = formString(formData, "password");
-  const role = (formString(formData, "role") || "EDITOR") as Role;
+
+  // Parsed, not cast. The value arrives in a form post, so anything can be in
+  // it — an unchecked cast to Role would let a crafted request write a value
+  // the enum does not contain, or promote an account by typing "ADMIN" into
+  // a field the interface never offers.
+  const parsedRole = z.nativeEnum(Role).safeParse(formString(formData, "role") || "EDITOR");
+  if (!parsedRole.success) return { status: "error", fieldErrors: { role: "Unknown role" } };
+  const role = parsedRole.data;
 
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     return { status: "error", fieldErrors: { email: "Valid email required" } };
   }
   if (name.length < 2) return { status: "error", fieldErrors: { name: "Name is required" } };
-  if (!id && password.length < 10) {
+  // The minimum applies to any password being set, not only at account
+  // creation. It was checked on create alone, so the way to give an account a
+  // four-character password was to create it properly and then edit it.
+  if (!id && !password) {
+    return { status: "error", fieldErrors: { password: "A password is required" } };
+  }
+  if (password && password.length < 10) {
     return { status: "error", fieldErrors: { password: "At least 10 characters" } };
   }
 

@@ -12,6 +12,7 @@ import { getAllArticles, getArticleBySlug } from "@/server/data/content";
 import { articleJsonLd } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 import { whatsappAdviceMessage } from "@/lib/whatsapp";
+import { JsonLd } from "@/components/shared/json-ld";
 
 export const revalidate = 300;
 export const dynamicParams = true;
@@ -46,10 +47,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd(article)) }}
-      />
+      <JsonLd data={articleJsonLd(article)} />
       <ReadingProgress />
       <ViewTracker type="ARTICLE_VIEW" entityType="article" entityId={article.id} />
 

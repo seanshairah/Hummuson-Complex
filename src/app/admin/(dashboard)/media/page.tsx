@@ -4,32 +4,43 @@ import { UploadButton } from "@/components/admin/upload-button";
 import { MediaCard } from "@/components/admin/media-card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { db } from "@/server/db";
+import { AdminPagination, pageFrom, pageQuery } from "@/components/admin/pagination";
 
 export const metadata = { title: "Media — admin" };
 
-export default async function AdminMediaPage() {
-  const media = await db.media.findMany({
-    orderBy: { createdAt: "desc" },
-    include: {
-      _count: {
-        select: {
-          productPrimary: true,
-          productGallery: true,
-          articleCovers: true,
-          cropImages: true,
-          projectImages: true,
-          catalogueSection: true,
-          catalogueEntries: true,
+export default async function AdminMediaPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
+  const { page: pageParam } = await searchParams;
+  const page = pageFrom(pageParam);
+  const [media, total] = await Promise.all([
+    db.media.findMany({
+      orderBy: { createdAt: "desc" },
+      ...pageQuery(page),
+      include: {
+        _count: {
+          select: {
+            productPrimary: true,
+            productGallery: true,
+            articleCovers: true,
+            cropImages: true,
+            projectImages: true,
+            catalogueSection: true,
+            catalogueEntries: true,
+          },
         },
       },
-    },
-  });
+    }),
+    db.media.count(),
+  ]);
 
   return (
     <>
       <AdminPageHeader
         title="Media library"
-        description={`${media.length} files — product packs, field photography and uploads.`}
+        description={`${total} files — product packs, field photography and uploads.`}
         actions={<UploadButton />}
       />
       {media.length === 0 ? (
@@ -53,6 +64,7 @@ export default async function AdminMediaPage() {
           })}
         </div>
       )}
+      <AdminPagination page={page} total={total} basePath="/admin/media" />
     </>
   );
 }

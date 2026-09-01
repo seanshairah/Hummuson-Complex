@@ -82,9 +82,35 @@ Under **Settings → Code security**:
 - **Dependabot alerts and security updates** — the alert side of the config
   above.
 
+## Personal data and retention
+
+`/privacy` describes exactly what this site collects — enquiry fields, search
+and question text, usage counters, and the one session cookie — and reads its
+retention periods from `src/server/data/retention.ts` rather than restating
+them, so the page cannot drift from the behaviour it describes.
+
+The sweep itself (`/api/maintenance/prune`, run daily by the Vercel Cron entry
+in `vercel.json`) **reports what it would delete and deletes nothing** until
+`DATA_RETENTION_ENABLED=1` is set. How long a business may keep a customer's
+enquiry is a question about that business's obligations, not something a
+default should decide. Review the real numbers first:
+
+```bash
+npm run maintenance:prune            # report only
+```
+
+Then set the windows (`RETENTION_*` in `.env.example`) and turn it on. The
+endpoint refuses every request without `CRON_SECRET` configured, rather than
+defaulting to open.
+
 ## Still open
 
 - **MFA for admin accounts.** Not yet implemented. Sign-in rate limiting and
   revocable sessions reduce the urgency; MFA is what turns a leaked password
   from an incident into a nuisance.
 - **Backup and recovery rehearsal.** See `docs/RUNBOOK.md`.
+- **Retention periods.** The mechanism is built and off. The owner needs to
+  confirm the windows and enable it.
+- **Legal review of `/privacy`.** The page is a factual description of what
+  the code does, written to be accurate rather than to satisfy any particular
+  jurisdiction.

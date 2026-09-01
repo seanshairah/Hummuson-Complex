@@ -30,7 +30,8 @@
     "qa:finder": "tsx scripts/qa/finder-matrix.ts",
     "qa:browser": "node scripts/qa/browser-qa.mjs",
     "qa:csp": "node scripts/qa/csp-sweep.mjs",
-    "qa:audit": "node scripts/qa/audit-gate.mjs"
+    "qa:audit": "node scripts/qa/audit-gate.mjs",
+    "maintenance:prune": "tsx scripts/maintenance/prune.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
