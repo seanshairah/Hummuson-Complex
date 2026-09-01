@@ -1,10 +1,11 @@
-import NextAuth, { type DefaultSession } from "next-auth";
+import NextAuth, { CredentialsSignin, type DefaultSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { db } from "@/server/db";
 import { clientIp } from "@/server/rate-limit";
 import { writeAuditEvent } from "@/server/audit-log";
+import { createChallenge, redeemChallenge, sweepExpiredChallenges } from "@/server/mfa";
 import { clearLoginThrottle, countLoginAttempt } from "@/server/login-throttle";
 import { authConfig } from "./auth.config";
 
@@ -31,6 +32,32 @@ const credentialsSchema = z.object({
   email: z.string().trim().toLowerCase().email(),
   password: z.string().min(1),
 });
+
+/**
+ * The second step of a sign-in that needs a code. No password: the challenge
+ * id is what proves the password step was passed, which is why it is single
+ * use, short-lived and unguessable — and why the form never has to hold a
+ * password across two requests.
+ */
+const challengeSchema = z.object({
+  challengeId: z.string().min(1),
+  code: z.string().trim().min(1).max(64),
+});
+
+/**
+ * Sign-in needed a code and the caller did not supply one.
+ *
+ * Thrown rather than returned because Auth.js gives authorize() no way to say
+ * anything but yes or no. The sign-in form reads the challenge id off this to
+ * ask for the code; nothing else is disclosed, and the challenge only exists
+ * at all because the password was correct.
+ */
+export class MfaRequiredError extends CredentialsSignin {
+  code = "mfa_required";
+  constructor(public readonly challengeId: string) {
+    super("A second factor is required");
+  }
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
@@ -80,9 +107,45 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
+        challengeId: { label: "Challenge", type: "text" },
+        code: { label: "Authentication code", type: "text" },
       },
       async authorize(raw, request) {
         const requestHeaders = request.headers;
+
+        // Second step: a code against a challenge issued when the password
+        // was accepted. No password is re-sent, so nothing has to hold one
+        // across the two requests.
+        const challenge = challengeSchema.safeParse(raw);
+        if (challenge.success) {
+          const outcome = await redeemChallenge(
+            challenge.data.challengeId,
+            challenge.data.code,
+          );
+          if (!outcome.ok) {
+            await writeAuditEvent({
+              action: "auth.mfa_failed",
+              requestHeaders,
+              meta: { reason: outcome.reason },
+            });
+            return null;
+          }
+          const user = await db.user.findUnique({ where: { id: outcome.userId } });
+          if (!user || !user.active) return null;
+
+          await clearLoginThrottle(user.email);
+          await db.user.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } });
+          await writeAuditEvent({
+            action: "auth.signed_in",
+            actorId: user.id,
+            actorEmail: user.email,
+            requestHeaders,
+            meta: { secondFactor: outcome.usedRecoveryCode ? "recovery-code" : "totp" },
+          });
+          void sweepExpiredChallenges();
+          return { id: user.id, email: user.email, name: user.name, role: user.role };
+        }
+
         const parsed = credentialsSchema.safeParse(raw);
         if (!parsed.success) return null;
         const { email, password } = parsed.data;
@@ -116,6 +179,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             meta: { reason: !user ? "unknown-account" : !user.active ? "deactivated" : "password" },
           });
           return null;
+        }
+
+        // The password was right. If this account carries a second factor,
+        // stop here and issue a challenge rather than a session.
+        if (user.totpConfirmedAt) {
+          const challengeId = await createChallenge(user.id);
+          await writeAuditEvent({
+            action: "auth.mfa_challenged",
+            actorId: user.id,
+            actorEmail: user.email,
+            requestHeaders,
+          });
+          throw new MfaRequiredError(challengeId);
         }
 
         await clearLoginThrottle(email);

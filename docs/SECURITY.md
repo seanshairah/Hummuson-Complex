@@ -17,6 +17,25 @@ access to the GitHub and hosting accounts can turn on.
   and on deactivation; available on its own from the users table
   ("sign out everywhere"). Checked on every session read.
 - **Password hashing.** bcrypt, cost 12.
+- **Two-factor authentication (TOTP).** Optional per account, enrolled by the
+  account holder at `/admin/security`. Self-contained: an authenticator app
+  and this database are the whole system — no SMS, no third-party identity
+  provider, nothing else to lose access to.
+
+  A password that is accepted for an enrolled account produces a *challenge*
+  rather than a session: a single-use row that expires in five minutes and
+  allows five wrong codes. The second step submits the challenge id and a
+  code, so no password is carried across two requests. Ten single-use
+  recovery codes are issued at enrolment, shown once and stored as bcrypt
+  hashes.
+
+  An administrator can clear another account's factor from the users table —
+  for someone who has lost their phone. That is also exactly what an attacker
+  with an admin account would reach for, so it is recorded as
+  `user.mfa_reset_by_admin` in the audit log.
+
+  The combination caps guessing at five challenges per fifteen minutes
+  (the sign-in limit) times five codes each, against a six-digit space.
 
 ## Responses
 
@@ -105,9 +124,9 @@ defaulting to open.
 
 ## Still open
 
-- **MFA for admin accounts.** Not yet implemented. Sign-in rate limiting and
-  revocable sessions reduce the urgency; MFA is what turns a leaked password
-  from an incident into a nuisance.
+- **MFA enrolment.** The mechanism is built; each account holder still has to
+  enrol at `/admin/security`. Nothing forces it yet — requiring it for the
+  ADMIN role would be a one-line change once everyone with an account has one.
 - **Backup and recovery rehearsal.** See `docs/RUNBOOK.md`.
 - **Retention periods.** The mechanism is built and off. The owner needs to
   confirm the windows and enable it.

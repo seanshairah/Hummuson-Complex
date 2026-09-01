@@ -167,3 +167,84 @@ test.describe("audit log", () => {
     await expect(page.getByText(ADMIN_EMAIL).first()).toBeVisible();
   });
 });
+
+test.describe("two-factor authentication", () => {
+  // Walks the whole thing through the real interface: enrol, sign out, sign in
+  // with a password and then a code, and confirm a wrong code is refused.
+  // The code is generated the way an authenticator app would, from the secret
+  // the enrolment screen hands over.
+  test("enrolling adds a second step to sign-in", async ({ browser }) => {
+    const { TOTP, Secret } = await import("otpauth");
+    const stamp = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    const email = `mfa-${stamp}@example.test`;
+    const password = `Temp-${stamp}-password`;
+
+    const adminContext = await browser.newContext();
+    const admin = await adminContext.newPage();
+    await admin.goto("/admin/login");
+    await admin.fill('input[name="email"]', ADMIN_EMAIL);
+    await admin.fill('input[name="password"]', ADMIN_PASSWORD);
+    await admin.click('button[type="submit"]');
+    await admin.waitForURL("**/admin");
+
+    await admin.goto("/admin/users");
+    await admin.getByRole("button", { name: "New user" }).click();
+    const dialog = admin.locator('[role="dialog"]');
+    await dialog.locator('input[name="name"]').fill(`MFA probe ${stamp}`);
+    await dialog.locator('input[name="email"]').fill(email);
+    await dialog.locator('input[name="password"]').fill(password);
+    await dialog.getByRole("button", { name: "Save" }).click();
+    await expect(admin.getByText(email)).toBeVisible();
+    await adminContext.close();
+
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    await page.goto("/admin/login");
+    await page.fill('input[name="email"]', email);
+    await page.fill('input[name="password"]', password);
+    await page.click('button[type="submit"]');
+    await page.waitForURL("**/admin");
+
+    // Enrol, taking the secret the way a person copying it by hand would.
+    await page.goto("/admin/security");
+    await expect(page.getByText(/not yet set up/i)).toBeVisible();
+    const secret = (await page.locator("code").first().innerText()).trim();
+    const totp = new TOTP({
+      issuer: "Humuson Complex",
+      label: email,
+      algorithm: "SHA1",
+      digits: 6,
+      period: 30,
+      secret: Secret.fromBase32(secret),
+    });
+    await page.locator('input[name="code"]').fill(totp.generate());
+    await page.getByRole("button", { name: /turn on two-factor/i }).click();
+    await expect(page.getByText(/save these recovery codes/i)).toBeVisible();
+
+    // Sign out, then back in — the password alone must no longer be enough.
+    await context.clearCookies();
+    await page.goto("/admin/login");
+    await page.fill('input[name="email"]', email);
+    await page.fill('input[name="password"]', password);
+    await page.click('button[type="submit"]');
+    await expect(page).toHaveURL(/\/admin\/login/);
+    await expect(page.getByText(/enter the 6-digit code/i)).toBeVisible();
+
+    // A wrong code is refused and the step stays open.
+    await page.locator('input[name="code"]').fill("000000");
+    await page.getByRole("button", { name: "Verify" }).click();
+    await expect(page.getByText(/code wasn.t right/i)).toBeVisible();
+
+    // The right one gets through. React clears the field after the action
+    // settles, so wait for that before typing — otherwise the reset lands on
+    // top of the value and an empty code is submitted.
+    await expect(page.locator('input[name="code"]')).toHaveValue("");
+    await page.locator('input[name="code"]').fill(totp.generate());
+    await expect(page.locator('input[name="code"]')).not.toHaveValue("");
+    await page.getByRole("button", { name: "Verify" }).click();
+    await page.waitForURL("**/admin");
+    await expect(page.getByRole("heading", { name: "Overview" })).toBeVisible();
+
+    await context.close();
+  });
+});

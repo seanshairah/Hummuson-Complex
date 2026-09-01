@@ -2,7 +2,7 @@
   "name": "humuson-complex-platform",
   "version": "1.0.0",
   "private": true,
-  "description": "Humuson Complex \u2014 digital agronomy platform: product discovery, knowledge engine, interactive catalogue and admin CMS.",
+  "description": "Humuson Complex — digital agronomy platform: product discovery, knowledge engine, interactive catalogue and admin CMS.",
   "engines": {
     "node": ">=20.0.0"
   },
@@ -61,6 +61,8 @@
     "motion": "^12.0.0",
     "next": "^15.3.0",
     "next-auth": "^5.0.0-beta.32",
+    "otpauth": "^9.5.1",
+    "qrcode": "^1.5.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.56.0",
@@ -74,6 +76,7 @@
     "@playwright/test": "^1.50.0",
     "@tailwindcss/postcss": "^4.1.0",
     "@types/node": "^22.15.0",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "@types/sanitize-html": "^2.13.0",

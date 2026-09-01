@@ -1,4 +1,4 @@
-import { LogOut, Pencil, Plus, Users } from "lucide-react";
+import { LogOut, Pencil, Plus, ShieldCheck, ShieldOff, Users } from "lucide-react";
 import { AdminPageHeader } from "@/components/admin/page-header";
 import { ActionDialog } from "@/components/admin/action-dialog";
 import { Table, TBody, Td, Th, THead, Tr } from "@/components/ui/table";
@@ -8,6 +8,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
 import { revokeUserSessions, saveUser, toggleUserActive } from "@/server/actions/admin/misc";
+import { resetUserMfa } from "@/server/actions/admin/security";
 import { cn, formatDate } from "@/lib/utils";
 
 export const metadata = { title: "Users — admin" };
@@ -81,6 +82,7 @@ export default async function AdminUsersPage() {
           <Tr>
             <Th>User</Th>
             <Th>Role</Th>
+            <Th>Two-factor</Th>
             <Th>Last login</Th>
             <Th>Status</Th>
             <Th className="text-right">Actions</Th>
@@ -94,6 +96,17 @@ export default async function AdminUsersPage() {
                 <span className="block text-xs text-ink-faint">{user.email}</span>
               </Td>
               <Td>{user.role.charAt(0) + user.role.slice(1).toLowerCase()}</Td>
+              <Td>
+                {user.totpConfirmedAt ? (
+                  <span className="inline-flex items-center gap-1.5 text-xs text-leaf-700">
+                    <ShieldCheck className="size-3.5" /> On
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 text-xs text-ink-faint">
+                    <ShieldOff className="size-3.5" /> Off
+                  </span>
+                )}
+              </Td>
               <Td>{user.lastLoginAt ? formatDate(user.lastLoginAt) : "Never"}</Td>
               <Td>
                 <span
@@ -122,6 +135,23 @@ export default async function AdminUsersPage() {
                   >
                     {fields(user)}
                   </ActionDialog>
+                  {user.totpConfirmedAt && user.id !== session?.user.id && (
+                    <form
+                      action={async () => {
+                        "use server";
+                        await resetUserMfa(user.id);
+                      }}
+                    >
+                      <button
+                        type="submit"
+                        title="Clear this account's second factor — for someone who has lost their phone. Recorded in the audit log."
+                        className="flex size-8 items-center justify-center rounded-full text-ink-faint hover:bg-ink/5"
+                      >
+                        <ShieldOff className="size-3.5" />
+                        <span className="sr-only">Reset two-factor authentication</span>
+                      </button>
+                    </form>
+                  )}
                   <form
                     action={async () => {
                       "use server";

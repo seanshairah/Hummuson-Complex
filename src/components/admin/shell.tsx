@@ -25,6 +25,7 @@ import {
   Trophy,
   Users,
   ScrollText,
+  ShieldCheck,
   X,
   type LucideIcon,
 } from "lucide-react";
@@ -78,6 +79,7 @@ const NAV_GROUPS: { label: string | null; items: NavItem[] }[] = [
       { href: "/admin/settings", label: "Settings", icon: Settings },
       { href: "/admin/users", label: "Users", icon: Users },
       { href: "/admin/audit", label: "Audit log", icon: ScrollText },
+      { href: "/admin/security", label: "Your security", icon: ShieldCheck },
     ],
   },
 ];

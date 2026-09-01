@@ -125,6 +125,17 @@ model User {
   /// change, a role change and on deactivation, which makes "sign out
   /// everywhere" a single field update rather than a session store to build.
   sessionsValidFrom DateTime @default(now())
+
+  /// Base32 TOTP secret. Present from the moment enrolment starts; the factor
+  /// is only actually required once totpConfirmedAt is set, so an abandoned
+  /// enrolment cannot lock anyone out of their own account.
+  totpSecret      String?
+  totpConfirmedAt DateTime?
+  /// bcrypt hashes of single-use recovery codes. Hashed rather than stored,
+  /// because a recovery code is a password that bypasses the second factor.
+  recoveryCodes   String[]
+
+  mfaChallenges MfaChallenge[]
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
@@ -732,4 +743,24 @@ model AuditEvent {
   @@index([action, createdAt])
   @@index([actorId, createdAt])
   @@index([entityType, entityId])
+}
+
+/// A password step that has been passed but is waiting on a second factor.
+///
+/// Exists so the second step does not have to carry the password back to the
+/// server — the row is proof that the password was accepted, is single use,
+/// and expires in minutes.
+model MfaChallenge {
+  id         String    @id @default(cuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt  DateTime
+  consumedAt DateTime?
+  /// Wrong codes entered against this challenge. Caps guessing at a fixed
+  /// number of attempts even within the challenge's short life.
+  attempts   Int       @default(0)
+  createdAt  DateTime  @default(now())
+
+  @@index([userId, createdAt])
+  @@index([expiresAt])
 }

@@ -5,6 +5,7 @@ import { AuthError } from "next-auth";
 import { auth, signIn } from "@/server/auth";
 import { clientIp } from "@/server/rate-limit";
 import { peekLoginThrottle } from "@/server/login-throttle";
+import { latestChallengeFor } from "@/server/mfa";
 import { Logo } from "@/components/layout/logo";
 import { AdminLoginForm, type LoginState } from "@/components/admin/login-form";
 
@@ -27,10 +28,31 @@ export default async function AdminLoginPage({
     "use server";
     const from = formData.get("from");
     const email = String(formData.get("email") ?? "").trim();
+    const challengeId = String(formData.get("challengeId") ?? "");
+    const code = String(formData.get("code") ?? "").trim();
     const target =
       typeof from === "string" && from.startsWith("/admin") && from !== "/admin/login"
         ? from
         : "/admin";
+
+    // Second step: a code against the challenge issued when the password was
+    // accepted. The password is not carried across the two requests.
+    if (challengeId && code) {
+      try {
+        await signIn("credentials", { challengeId, code, redirectTo: target });
+      } catch (error) {
+        if (error instanceof AuthError) {
+          if (error.type !== "CredentialsSignin") return { status: "server", email };
+          // Still live? Then the code was simply wrong and they can try again.
+          const stillOpen = await latestChallengeFor(email.toLowerCase());
+          return stillOpen
+            ? { status: "code", email, challengeId: stillOpen }
+            : { status: "challengeExpired", email };
+        }
+        throw error;
+      }
+      return {};
+    }
 
     // The limit itself is enforced inside authorize(); this only reads the
     // counter so a locked-out person is told they are locked out. Checking
@@ -50,6 +72,12 @@ export default async function AdminLoginPage({
       // A successful sign-in redirects by throwing NEXT_REDIRECT — let it pass.
       if (error instanceof AuthError) {
         if (error.type === "CredentialsSignin") {
+          // A challenge exists only when the password was accepted, so this is
+          // the signal that a second factor is wanted rather than that the
+          // credentials were wrong.
+          const challenge = await latestChallengeFor(email.toLowerCase());
+          if (challenge) return { status: "code", email, challengeId: challenge };
+
           // authorize() refuses a locked-out attempt the same way it refuses a
           // wrong password, so re-read the counter here: without this the
           // attempt that trips the lockout is reported as bad credentials.
