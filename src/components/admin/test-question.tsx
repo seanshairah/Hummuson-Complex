@@ -53,7 +53,9 @@ export function TestQuestion() {
         </button>
       </form>
       {result && (
-        <div className="mt-4 rounded-2xl bg-paper p-4 text-ink">
+        // Marked so a test can assert on the outcome rather than on the
+        // instructions above, which contain the same words.
+        <div data-testid="ask-preview-result" className="mt-4 rounded-2xl bg-paper p-4 text-ink">
           {result.matched && result.answerHtml ? (
             <>
               <p className="text-xs font-semibold text-leaf-700 uppercase">

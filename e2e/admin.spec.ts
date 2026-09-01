@@ -28,9 +28,13 @@ test.describe("admin", () => {
     await page.goto("/admin/faqs");
     await page.getByRole("textbox", { name: "Test question" }).fill("What is the shelf life?");
     await page.getByRole("button", { name: "Test" }).click();
-    await expect(page.getByText(/would answer|no confident match/i)).toBeVisible({
-      timeout: 15000,
-    });
+    // Scoped to the result, not the page: the instructions above the form say
+    // "preview what Ask Humuson would answer", so a page-wide match passed by
+    // finding those words in the hint and then broke once the real answer
+    // rendered alongside them.
+    const preview = page.getByTestId("ask-preview-result");
+    await expect(preview).toBeVisible({ timeout: 15000 });
+    await expect(preview).toHaveText(/would answer|no confident match/i);
   });
 
   test("signs in when autofill leaves whitespace or odd case in the email", async ({ page }) => {
