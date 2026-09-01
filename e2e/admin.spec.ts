@@ -138,3 +138,32 @@ test.describe("session revocation", () => {
     await staffContext.close();
   });
 });
+
+test.describe("audit log", () => {
+  test("records a sign-in and a content change, and shows them to an admin", async ({ page }) => {
+    await page.goto("/admin/login");
+    await page.fill('input[name="email"]', ADMIN_EMAIL);
+    await page.fill('input[name="password"]', ADMIN_PASSWORD);
+    await page.click('button[type="submit"]');
+    await page.waitForURL("**/admin");
+
+    // A content change that should be attributable afterwards.
+    const label = `Audit probe ${Date.now()}`;
+    await page.goto("/admin/testimonials");
+    await page.getByRole("button", { name: /new testimonial/i }).first().click();
+    const dialog = page.locator('[role="dialog"]');
+    await dialog.locator('input[name="name"]').fill(label);
+    await dialog.locator('textarea[name="quote"], input[name="quote"]').first().fill("Probe quote.");
+    await dialog.getByRole("button", { name: "Save" }).click();
+    // Wait for the save to land before navigating: under parallel load,
+    // leaving the page first can abort it and there is then nothing to find.
+    await expect(page.getByText(label).first()).toBeVisible();
+
+    await page.goto("/admin/audit");
+    await expect(page.getByRole("heading", { name: "Audit log" })).toBeVisible();
+    await expect(page.getByText("auth.signed_in").first()).toBeVisible();
+    await expect(page.getByText(label).first()).toBeVisible();
+    // The entry has to name who did it, or it is not an audit log.
+    await expect(page.getByText(ADMIN_EMAIL).first()).toBeVisible();
+  });
+});

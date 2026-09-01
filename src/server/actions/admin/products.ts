@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { ApplicationMethod, PublishStatus } from "@prisma/client";
 import { db } from "@/server/db";
 import { requireUser } from "@/server/auth";
+import { audit } from "@/server/audit";
 import { sanitizeRichHtml } from "@/lib/sanitize";
 import { slugify } from "@/lib/utils";
 import type { AdminActionState } from "@/lib/admin-state";
@@ -151,6 +152,12 @@ export async function saveProduct(
   });
 
   revalidateContent(...PRODUCT_TAGS);
+  await audit(id ? "product.updated" : "product.created", {
+    entityType: "product",
+    entityId: product.id,
+    label: product.name,
+    meta: { status: product.status, slug: product.slug },
+  });
   return {
     status: "success",
     message: id ? "Product saved." : "Product created.",
@@ -160,17 +167,33 @@ export async function saveProduct(
 
 export async function setProductStatus(id: string, status: PublishStatus): Promise<void> {
   await requireUser();
-  await db.product.update({
+  const product = await db.product.update({
     where: { id },
     data: { status, publishedAt: status === "PUBLISHED" ? new Date() : undefined },
+    select: { name: true },
+  });
+  await audit("product.status_changed", {
+    entityType: "product",
+    entityId: id,
+    label: product.name,
+    meta: { status },
   });
   revalidateContent(...PRODUCT_TAGS);
 }
 
 export async function toggleProductFeatured(id: string): Promise<void> {
   await requireUser();
-  const product = await db.product.findUniqueOrThrow({ where: { id }, select: { featured: true } });
+  const product = await db.product.findUniqueOrThrow({
+    where: { id },
+    select: { featured: true, name: true },
+  });
   await db.product.update({ where: { id }, data: { featured: !product.featured } });
+  await audit("product.featured_changed", {
+    entityType: "product",
+    entityId: id,
+    label: product.name,
+    meta: { featured: !product.featured },
+  });
   revalidateContent(...PRODUCT_TAGS);
 }
 
@@ -240,16 +263,24 @@ export async function duplicateProduct(id: string): Promise<void> {
   for (const row of source.gallery) {
     await db.productImage.create({ data: { productId: copy.id, mediaId: row.mediaId, order: row.order } });
   }
+  await audit("product.duplicated", {
+    entityType: "product",
+    entityId: copy.id,
+    label: copy.name,
+    meta: { copiedFrom: id },
+  });
   revalidateContent(...PRODUCT_TAGS);
   redirect(`/admin/products/${copy.id}`);
 }
 
 export async function deleteProduct(id: string): Promise<{ error?: string } | void> {
   await requireUser();
+  const product = await db.product.findUnique({ where: { id }, select: { name: true } });
   try {
     await db.product.delete({ where: { id } });
   } catch {
     return { error: "Could not delete — the product may be referenced elsewhere. Archive it instead." };
   }
+  await audit("product.deleted", { entityType: "product", entityId: id, label: product?.name });
   revalidateContent(...PRODUCT_TAGS);
 }

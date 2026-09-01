@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { db } from "@/server/db";
 import { clientIp } from "@/server/rate-limit";
+import { writeAuditEvent } from "@/server/audit-log";
 import { clearLoginThrottle, countLoginAttempt } from "@/server/login-throttle";
 import { authConfig } from "./auth.config";
 
@@ -81,6 +82,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(raw, request) {
+        const requestHeaders = request.headers;
         const parsed = credentialsSchema.safeParse(raw);
         if (!parsed.success) return null;
         const { email, password } = parsed.data;
@@ -89,16 +91,41 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         // this callback has its own public endpoint that can be posted to
         // directly — a limit on the form alone would guard the front door
         // while leaving the side one open.
-        const throttle = await countLoginAttempt(email, clientIp(request.headers));
-        if (!throttle.allowed) return null;
+        const throttle = await countLoginAttempt(email, clientIp(requestHeaders));
+        if (!throttle.allowed) {
+          await writeAuditEvent({
+            action: "auth.sign_in_blocked",
+            actorEmail: email,
+            requestHeaders,
+            meta: { retryAfterSeconds: throttle.retryAfterSeconds },
+          });
+          return null;
+        }
 
         const user = await db.user.findUnique({ where: { email } });
-        if (!user || !user.active) return null;
-        const valid = await bcrypt.compare(password, user.passwordHash);
-        if (!valid) return null;
+        const valid = user?.active ? await bcrypt.compare(password, user.passwordHash) : false;
+
+        if (!user || !valid) {
+          // The reason is recorded but never returned: whether the address
+          // exists is not something a failed attempt should reveal.
+          await writeAuditEvent({
+            action: "auth.sign_in_failed",
+            actorId: user?.id,
+            actorEmail: email,
+            requestHeaders,
+            meta: { reason: !user ? "unknown-account" : !user.active ? "deactivated" : "password" },
+          });
+          return null;
+        }
 
         await clearLoginThrottle(email);
         await db.user.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } });
+        await writeAuditEvent({
+          action: "auth.signed_in",
+          actorId: user.id,
+          actorEmail: user.email,
+          requestHeaders,
+        });
         return { id: user.id, email: user.email, name: user.name, role: user.role };
       },
     }),

@@ -6,6 +6,7 @@ import { auth } from "@/server/auth";
 import { db } from "@/server/db";
 import { slugify } from "@/lib/utils";
 import { rateLimit, tooManyRequests } from "@/server/rate-limit";
+import { writeAuditEvent } from "@/server/audit-log";
 
 export const runtime = "nodejs";
 
@@ -70,6 +71,17 @@ export async function POST(request: NextRequest) {
       filename,
       sizeBytes: file.size,
     },
+  });
+
+  await writeAuditEvent({
+    action: "media.uploaded",
+    actorId: session.user.id,
+    actorEmail: session.user.email,
+    entityType: "media",
+    entityId: media.id,
+    label: media.url,
+    requestHeaders: request.headers,
+    meta: { sizeBytes: file.size, contentType: file.type },
   });
 
   return NextResponse.json({ id: media.id, url: media.url });

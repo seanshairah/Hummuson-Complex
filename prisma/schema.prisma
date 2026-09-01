@@ -698,3 +698,38 @@ model RateLimit {
 
   @@index([expiresAt])
 }
+
+/// Append-only record of who did what, when, and from where.
+///
+/// Enforced append-only by a database trigger (see the accompanying
+/// migration), not merely by convention: a log the application can rewrite is
+/// not evidence. Rows may be deleted once they are past the retention window,
+/// which is what makes pruning possible without making tampering possible.
+model AuditEvent {
+  id     String @id @default(cuid())
+  /// "<subject>.<verb>", e.g. "user.deactivated", "product.published".
+  action String
+
+  /// Null for a failed sign-in, where there may be no account behind it.
+  actorId    String?
+  /// Denormalised on purpose: the record has to outlive the account.
+  actorEmail String?
+
+  entityType String?
+  entityId   String?
+  /// What the thing was called at the time — names change, and a log that
+  /// only holds an id stops meaning anything once the row is gone.
+  entityLabel String?
+
+  ip        String?
+  userAgent String?
+  /// Structured context: which fields changed, why an attempt was refused.
+  meta      Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([action, createdAt])
+  @@index([actorId, createdAt])
+  @@index([entityType, entityId])
+}

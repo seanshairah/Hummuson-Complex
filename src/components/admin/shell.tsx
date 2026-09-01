@@ -24,6 +24,7 @@ import {
   Sprout,
   Trophy,
   Users,
+  ScrollText,
   X,
   type LucideIcon,
 } from "lucide-react";
@@ -76,6 +77,7 @@ const NAV_GROUPS: { label: string | null; items: NavItem[] }[] = [
     items: [
       { href: "/admin/settings", label: "Settings", icon: Settings },
       { href: "/admin/users", label: "Users", icon: Users },
+      { href: "/admin/audit", label: "Audit log", icon: ScrollText },
     ],
   },
 ];

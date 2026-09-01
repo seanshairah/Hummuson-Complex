@@ -3,6 +3,7 @@
 import { FaqCategory, PublishStatus } from "@prisma/client";
 import { db } from "@/server/db";
 import { requireUser } from "@/server/auth";
+import { audit } from "@/server/audit";
 import { sanitizeRichHtml } from "@/lib/sanitize";
 import { answerQuestion } from "@/server/data/ask";
 import type { AdminActionState } from "@/lib/admin-state";
@@ -43,13 +44,21 @@ export async function saveFaq(
   }
 
   revalidateContent("faqs");
+  await audit(id ? "faq.updated" : "faq.created", {
+    entityType: "faq",
+    entityId: faqId,
+    label: question,
+    meta: { status: data.status },
+  });
   return { status: "success", message: "FAQ saved.", createdId: id ? undefined : (faqId ?? undefined) };
 }
 
 export async function deleteFaq(id: string): Promise<void> {
   await requireUser();
   await db.questionEvent.updateMany({ where: { faqId: id }, data: { faqId: null } });
+  const faq = await db.faq.findUnique({ where: { id }, select: { question: true } });
   await db.faq.delete({ where: { id } });
+  await audit("faq.deleted", { entityType: "faq", entityId: id, label: faq?.question });
   revalidateContent("faqs");
 }
 

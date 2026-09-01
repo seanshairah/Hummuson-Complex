@@ -3,6 +3,7 @@
 import { PublishStatus } from "@prisma/client";
 import { db } from "@/server/db";
 import { requireUser } from "@/server/auth";
+import { audit } from "@/server/audit";
 import { sanitizeRichHtml } from "@/lib/sanitize";
 import { readingMinutes, slugify } from "@/lib/utils";
 import type { AdminActionState } from "@/lib/admin-state";
@@ -64,21 +65,36 @@ export async function saveArticle(
   }
 
   revalidateContent("articles");
+  await audit(id ? "article.updated" : "article.created", {
+    entityType: "article",
+    entityId: articleId,
+    label: title,
+    meta: { status, slug },
+  });
   return { status: "success", message: "Article saved.", createdId: id ? undefined : (articleId ?? undefined) };
 }
 
 export async function setArticleStatus(id: string, status: PublishStatus): Promise<void> {
   await requireUser();
-  await db.article.update({
+  const article = await db.article.update({
     where: { id },
     data: { status, publishedAt: status === "PUBLISHED" ? new Date() : undefined },
+    select: { title: true },
+  });
+  await audit("article.status_changed", {
+    entityType: "article",
+    entityId: id,
+    label: article.title,
+    meta: { status },
   });
   revalidateContent("articles");
 }
 
 export async function deleteArticle(id: string): Promise<void> {
   await requireUser();
+  const article = await db.article.findUnique({ where: { id }, select: { title: true } });
   await db.article.delete({ where: { id } });
+  await audit("article.deleted", { entityType: "article", entityId: id, label: article?.title });
   revalidateContent("articles");
 }
 
@@ -93,5 +109,10 @@ export async function saveArticleCategory(name: string): Promise<{ id: string } 
     create: { name: trimmed, slug },
   });
   revalidateContent("articles");
+  await audit("article_category.saved", {
+    entityType: "articleCategory",
+    entityId: category.id,
+    label: trimmed,
+  });
   return { id: category.id };
 }
