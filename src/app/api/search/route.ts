@@ -2,8 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { searchAll } from "@/server/data/search-index";
 import { recordSearch } from "@/server/analytics";
 import { normalizeText } from "@/lib/search/tokenize";
+import { limitByIp, tooManyRequests } from "@/server/rate-limit";
 
 export async function GET(request: NextRequest) {
+  // Generous, because this endpoint is hit as the visitor types. It is here to
+  // stop the catalogue being scraped in a loop, not to police typing speed.
+  const verdict = await limitByIp(request.headers, "api:search", 150, 60);
+  if (!verdict.allowed) return tooManyRequests(verdict, "Too many searches — please wait a moment.");
+
   const q = request.nextUrl.searchParams.get("q")?.slice(0, 200) ?? "";
   const prefix = request.nextUrl.searchParams.get("prefix") === "1";
   const typesParam = request.nextUrl.searchParams.get("types");

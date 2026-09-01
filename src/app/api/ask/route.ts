@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { limitByIp, tooManyRequests } from "@/server/rate-limit";
 import { answerQuestion } from "@/server/data/ask";
 
 const askSchema = z.object({
@@ -8,6 +9,9 @@ const askSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  const verdict = await limitByIp(request.headers, "api:ask", 20, 60);
+  if (!verdict.allowed) return tooManyRequests(verdict, "Too many questions in a short time — please wait a moment.");
+
   let body: unknown;
   try {
     body = await request.json();

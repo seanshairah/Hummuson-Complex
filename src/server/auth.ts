@@ -3,6 +3,8 @@ import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { db } from "@/server/db";
+import { clientIp } from "@/server/rate-limit";
+import { clearLoginThrottle, countLoginAttempt } from "@/server/login-throttle";
 import { authConfig } from "./auth.config";
 
 declare module "next-auth" {
@@ -35,13 +37,24 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(raw) {
+      async authorize(raw, request) {
         const parsed = credentialsSchema.safeParse(raw);
         if (!parsed.success) return null;
-        const user = await db.user.findUnique({ where: { email: parsed.data.email } });
+        const { email, password } = parsed.data;
+
+        // Counted here rather than only in the sign-in form's action, because
+        // this callback has its own public endpoint that can be posted to
+        // directly — a limit on the form alone would guard the front door
+        // while leaving the side one open.
+        const throttle = await countLoginAttempt(email, clientIp(request.headers));
+        if (!throttle.allowed) return null;
+
+        const user = await db.user.findUnique({ where: { email } });
         if (!user || !user.active) return null;
-        const valid = await bcrypt.compare(parsed.data.password, user.passwordHash);
+        const valid = await bcrypt.compare(password, user.passwordHash);
         if (!valid) return null;
+
+        await clearLoginThrottle(email);
         await db.user.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } });
         return { id: user.id, email: user.email, name: user.name, role: user.role };
       },

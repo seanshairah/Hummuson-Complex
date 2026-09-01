@@ -34,6 +34,11 @@ jobs:
       ADMIN_EMAIL: admin@humusoncomplex.com
       ADMIN_PASSWORD: humuson-dev-admin
       ADMIN_NAME: CI Admin
+      # Every e2e profile signs in from the same address, and a re-run repeats
+      # them inside the same 15-minute window. Raise the shared-address ceiling
+      # so the sign-in limiter does not fail the suite; the per-account limit
+      # the lockout test asserts against is deliberately left at its default.
+      LOGIN_IP_ATTEMPT_LIMIT: "500"
 
     steps:
       - uses: actions/checkout@v4

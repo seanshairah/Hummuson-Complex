@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { limitByIp, tooManyRequests } from "@/server/rate-limit";
 import { recordEvent } from "@/server/analytics";
 import { AnalyticsType } from "@prisma/client";
 
@@ -12,6 +13,9 @@ const eventSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  const verdict = await limitByIp(request.headers, "api:events", 120, 60);
+  if (!verdict.allowed) return tooManyRequests(verdict, "Too many requests.");
+
   let body: unknown;
   try {
     body = await request.json();

@@ -677,3 +677,20 @@ model AnalyticsEvent {
   @@index([type, createdAt])
   @@index([entityType, entityId])
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Abuse control
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// Fixed-window counters for rate limiting. Kept in the database rather than in
+/// process memory because the app runs as serverless functions: an in-memory
+/// counter would be per-instance, so an attacker gets the limit multiplied by
+/// however many instances happen to be warm.
+model RateLimit {
+  key         String   @id
+  count       Int      @default(0)
+  windowStart DateTime @default(now())
+  expiresAt   DateTime
+
+  @@index([expiresAt])
+}

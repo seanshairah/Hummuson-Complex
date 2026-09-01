@@ -30,5 +30,12 @@ export default defineConfig({
     port: PORT,
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,
+    env: {
+      // Every profile signs in from the same address and the suite is run
+      // repeatedly inside one 15-minute window, so the shared-address ceiling
+      // would otherwise stop the run. The per-account limit — the one the
+      // lockout test actually asserts against — is left at its default.
+      LOGIN_IP_ATTEMPT_LIMIT: "500",
+    },
   },
 });

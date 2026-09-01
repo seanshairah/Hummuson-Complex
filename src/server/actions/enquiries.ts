@@ -1,8 +1,10 @@
 "use server";
 
+import { headers } from "next/headers";
 import { db } from "@/server/db";
 import { enquirySchema } from "@/lib/validation/enquiry";
 import { recordEvent } from "@/server/analytics";
+import { clientIp, rateLimit } from "@/server/rate-limit";
 
 export interface EnquiryFormState {
   status: "idle" | "success" | "error";
@@ -14,6 +16,22 @@ export async function submitEnquiry(
   _prev: EnquiryFormState,
   formData: FormData,
 ): Promise<EnquiryFormState> {
+  // The honeypot below catches naive bots; this catches the ones that fill it
+  // in correctly. A real person sends a handful of enquiries in an hour at
+  // most, so the ceiling can be low enough to make flooding the inbox
+  // pointless without ever getting in a customer's way.
+  const verdict = await rateLimit(
+    [{ name: "enquiry:ip", subject: clientIp(await headers()), limit: 8, windowSeconds: 3600 }],
+    { failOpen: false },
+  );
+  if (!verdict.allowed) {
+    return {
+      status: "error",
+      message:
+        "We’ve already received several enquiries from you. Please give us a little time to reply, or call us directly.",
+    };
+  }
+
   const raw = Object.fromEntries(formData.entries());
   const parsed = enquirySchema.safeParse(raw);
   if (!parsed.success) {

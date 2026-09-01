@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { limitByIp, tooManyRequests } from "@/server/rate-limit";
 import { recommendWithFallback } from "@/lib/finder/scoring";
 import { getFinderCandidates, getAllProducts, getFilterOptions } from "@/server/data/products";
 import { recordEvent } from "@/server/analytics";
@@ -12,6 +13,9 @@ const answersSchema = z.object({
 });
 
 export async function POST(request: NextRequest) {
+  const verdict = await limitByIp(request.headers, "api:finder", 40, 60);
+  if (!verdict.allowed) return tooManyRequests(verdict, "Too many requests — please wait a moment.");
+
   let body: unknown;
   try {
     body = await request.json();

@@ -5,6 +5,7 @@ import sharp from "sharp";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
 import { slugify } from "@/lib/utils";
+import { rateLimit, tooManyRequests } from "@/server/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -19,6 +20,14 @@ const ALLOWED = new Set(["image/jpeg", "image/png", "image/webp", "image/avif", 
 export async function POST(request: NextRequest) {
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  // Per signed-in user, not per address: this endpoint writes files to disk,
+  // so the limit that matters is on the account doing the writing.
+  const verdict = await rateLimit(
+    [{ name: "upload:user", subject: session.user.id, limit: 60, windowSeconds: 600 }],
+    { failOpen: false },
+  );
+  if (!verdict.allowed) return tooManyRequests(verdict, "Too many uploads — please wait a moment.");
 
   const formData = await request.formData();
   const file = formData.get("file");

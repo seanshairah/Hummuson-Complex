@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
 import { auth, signIn } from "@/server/auth";
+import { clientIp } from "@/server/rate-limit";
+import { peekLoginThrottle } from "@/server/login-throttle";
 import { Logo } from "@/components/layout/logo";
 import { AdminLoginForm, type LoginState } from "@/components/admin/login-form";
 
@@ -28,6 +31,15 @@ export default async function AdminLoginPage({
       typeof from === "string" && from.startsWith("/admin") && from !== "/admin/login"
         ? from
         : "/admin";
+
+    // The limit itself is enforced inside authorize(); this only reads the
+    // counter so a locked-out person is told they are locked out. Checking
+    // before signIn() also keeps a lockout from spending another attempt.
+    const throttle = await peekLoginThrottle(email.toLowerCase(), clientIp(await headers()));
+    if (!throttle.allowed) {
+      return { status: "throttled", email, retryAfterSeconds: throttle.retryAfterSeconds };
+    }
+
     try {
       await signIn("credentials", {
         email,
@@ -37,14 +49,20 @@ export default async function AdminLoginPage({
     } catch (error) {
       // A successful sign-in redirects by throwing NEXT_REDIRECT — let it pass.
       if (error instanceof AuthError) {
-        // Only CredentialsSignin means the pair was actually rejected. Anything
-        // else (a database failure, a misconfiguration) is our fault, and
-        // telling the admin their password is wrong would send them hunting
-        // for a problem that isn't there.
-        return {
-          status: error.type === "CredentialsSignin" ? "credentials" : "server",
-          email,
-        };
+        if (error.type === "CredentialsSignin") {
+          // authorize() refuses a locked-out attempt the same way it refuses a
+          // wrong password, so re-read the counter here: without this the
+          // attempt that trips the lockout is reported as bad credentials.
+          const after = await peekLoginThrottle(email.toLowerCase(), clientIp(await headers()));
+          if (!after.allowed) {
+            return { status: "throttled", email, retryAfterSeconds: after.retryAfterSeconds };
+          }
+          return { status: "credentials", email };
+        }
+        // Anything else (a database failure, a misconfiguration) is our fault,
+        // and telling the admin their password is wrong would send them
+        // hunting for a problem that isn't there.
+        return { status: "server", email };
       }
       throw error;
     }

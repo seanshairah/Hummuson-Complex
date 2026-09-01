@@ -54,6 +54,29 @@ test.describe("admin", () => {
     await expect(page.locator('input[name="password"]')).toHaveValue("");
   });
 
+  test("repeated wrong passwords lock the account out", async ({ page }) => {
+    // A unique address per run, so this test cannot lock out the shared admin
+    // account that every other test signs in with.
+    const target = `lockout-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@example.test`;
+
+    for (let attempt = 1; attempt <= 5; attempt += 1) {
+      await page.goto("/admin/login");
+      await page.fill('input[name="email"]', target);
+      await page.fill('input[name="password"]', `guess-${attempt}`);
+      await page.click('button[type="submit"]');
+      await expect(page.getByText(/invalid email or password/i)).toBeVisible();
+    }
+
+    // The sixth attempt is refused by the limiter, and must say so rather than
+    // claiming the password was wrong.
+    await page.goto("/admin/login");
+    await page.fill('input[name="email"]', target);
+    await page.fill('input[name="password"]', "guess-6");
+    await page.click('button[type="submit"]');
+    await expect(page.getByText(/too many sign-in attempts/i)).toBeVisible();
+    await expect(page.getByText(/try again in about/i)).toBeVisible();
+  });
+
   test("wrong credentials are rejected", async ({ page }) => {
     await page.goto("/admin/login");
     await page.fill('input[name="email"]', ADMIN_EMAIL);
