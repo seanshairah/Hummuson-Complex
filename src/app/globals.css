@@ -111,14 +111,23 @@
       transform: translateY(0);
     }
   }
+  /*
+   * Scale only — never translate. The dialog is centred by Tailwind's
+   * `-translate-x-1/2 -translate-y-1/2`, which in v4 compile to the standalone
+   * `translate` property rather than into `transform`. A keyframe that also
+   * said `transform: translate(-50%, -50%)` therefore did not override that
+   * centring, it composed with it: the offset was applied twice and the dialog
+   * opened a half-width up and to the left of centre, cropped off the top of
+   * the viewport on desktop and off the top-left corner on a phone.
+   */
   @keyframes scale-in {
     from {
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.96);
+      transform: scale(0.96);
     }
     to {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
+      transform: scale(1);
     }
   }
   @keyframes accordion-down {
