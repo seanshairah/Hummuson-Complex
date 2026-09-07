@@ -152,11 +152,18 @@ export function ProductForm({
           </div>
           <Field
             label="Brand"
-            hint="Supplier brand — IKAR, Nando, Avensis, Bio Energy, Sapropel Organics. Leave blank if unknown rather than guessing."
+            hint="Humuson Complex for our own products, or the European supplier it comes from."
           >
             <Input name="brand" defaultValue={initial.brand ?? ""} list="product-brands" />
             <datalist id="product-brands">
-              {["IKAR", "Nando", "Avensis", "Bio Energy", "Sapropel Organics"].map((brand) => (
+              {[
+                "Humuson Complex",
+                "IKAR",
+                "Nando",
+                "Avensis",
+                "Bio Energy",
+                "Sapropel Organics",
+              ].map((brand) => (
                 <option key={brand} value={brand} />
               ))}
             </datalist>

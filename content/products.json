@@ -361,7 +361,8 @@
     ],
     "featured": false,
     "notes": "Bioenergy LT product line. Original description repeated one passage twice (copy-paste error) — duplicate removed, wording untouched. Pack size not stated in listing text; photo filename suggests 5L — confirm.",
-    "sourceUrl": "https://humusoncomplex.com/product/bacto-seed/"
+    "sourceUrl": "https://humusoncomplex.com/product/bacto-seed/",
+    "brand": "Humuson Complex"
   },
   {
     "name": "Master",
@@ -466,7 +467,8 @@
     "featured": false,
     "notes": "Bioenergy LT product line. Active principle described as proline accumulation (\"The application of MaxProlin increases the concentration of proline in plants\") — no percentage composition stated. Label data transcribed from the August 2026 product photo set supplied by Humuson Complex.",
     "sourceUrl": "https://humusoncomplex.com/product/maxprolin/",
-    "tagline": "Pure L-proline"
+    "tagline": "Pure L-proline",
+    "brand": "Humuson Complex"
   },
   {
     "name": "Grow+ Top Dressing",
@@ -557,7 +559,7 @@
     "notes": "Merged duplicate of /product/grow-top-dressing-sachet/ ($3.00 sachet listing, tag \"satchets\", empty description). Main-pack size not stated ($25.00). Site FAQ states: \"Grow + should be applied at 4-6 leaves stage every 10-14 days till flowering. Recommended 2-3 applications.\" Blog calls Grow Plus \"our organic biostimulant renowned for its ability to enhance soil and crop health\". Part of the HUMUSON Complex / Sapropel Organics range. Label data transcribed from the August 2026 product photo set supplied by Humuson Complex.",
     "sourceUrl": "https://humusoncomplex.com/product/grow-top-dressing/",
     "tagline": "Organic top dressing fertiliser",
-    "instructionsHtml": "<h3>Preparation</h3><p>Mix 80 ml of Grow+ with 1 litre of water and stir thoroughly. Mix the resulting concentrate with 15 litres of water — one 16 L knapsack.</p><h3>Application</h3><p>Apply from the 4–6 leaf stage and repeat every 10–14 days; up to 7 applications are recommended per season. Suitable for drenching or foliar application.</p><h3>Usage</h3><p>Grow+ can be used simultaneously with mineral fertilisers, fungicides and insecticides. After a herbicide application, wait 7 days before applying.</p><p><em>Producer: Sapropel Organics Ltd, Lithuania (EU). Approved by Ecocert. Distributed by MKM Fertilizers Pvt Ltd t/a Humuson Complex.</em></p>",
+    "instructionsHtml": "<h3>Preparation</h3><p>Mix 80 ml of Grow+ with 1 litre of water and stir thoroughly. Mix the resulting concentrate with 15 litres of water — one 16 L knapsack.</p><h3>Application</h3><p>Apply from the 4–6 leaf stage and repeat every 10–14 days; up to 7 applications are recommended per season. Suitable for drenching or foliar application.</p><h3>Usage</h3><p>Grow+ can be used simultaneously with mineral fertilisers, fungicides and insecticides. After a herbicide application, wait 7 days before applying.</p><p><em>Producer: Sapropel Organics Ltd, Lithuania (EU). Approved by Ecocert. Distributed by Humuson Complex.</em></p>",
     "brand": "Sapropel Organics"
   },
   {
@@ -646,7 +648,7 @@
     "notes": "Merged duplicate of /product/carboamin-basal-dressing-sachet/ ($3.00 sachet listing, tag \"satchets\", empty description). Main-pack size not stated ($40.00). Site FAQ states: \"We recommend applying basal at the land preparation and/or planting stage.\" Description also carries a long passage on the advantages of humic-acid seed soaking (kept in descriptionHtml). Part of the HUMUSON Complex / Sapropel Organics range. Label data transcribed from the August 2026 product photo set supplied by Humuson Complex.",
     "sourceUrl": "https://humusoncomplex.com/product/carboamin-basal-dressing/",
     "tagline": "Organic basal fertiliser",
-    "instructionsHtml": "<h3>Preparation</h3><p>Dilute 160 ml of CarboAmin+ in 1 litre of water, then mix the concentrate with 15 litres of water — one 16 L knapsack.</p><h3>Application</h3><p>Applied for soil conditioning after harvesting, or as a basal fertiliser at the planting stage.</p><p><em>Producer: Sapropel Organics Ltd, Lithuania (EU). Approved by Ecocert. Distributed by MKM Fertilizers Pvt Ltd t/a Humuson Complex.</em></p>",
+    "instructionsHtml": "<h3>Preparation</h3><p>Dilute 160 ml of CarboAmin+ in 1 litre of water, then mix the concentrate with 15 litres of water — one 16 L knapsack.</p><h3>Application</h3><p>Applied for soil conditioning after harvesting, or as a basal fertiliser at the planting stage.</p><p><em>Producer: Sapropel Organics Ltd, Lithuania (EU). Approved by Ecocert. Distributed by Humuson Complex.</em></p>",
     "brand": "Sapropel Organics"
   },
   {
@@ -684,7 +686,8 @@
     ],
     "featured": false,
     "notes": "Bioenergy LT product line (tag \"bio-energy\"). Pack size not stated in listing text; photo filename suggests 5L — confirm.",
-    "sourceUrl": "https://humusoncomplex.com/product/ruinex/"
+    "sourceUrl": "https://humusoncomplex.com/product/ruinex/",
+    "brand": "Humuson Complex"
   },
   {
     "name": "Bactoforce",
@@ -1850,7 +1853,8 @@
     ],
     "featured": true,
     "notes": "New product from the August 2026 catalogue photo set; details transcribed from the bottle label. Storage: keep in the original, well-sealed container away from direct sunlight in a cool, dry environment; the container can be triple-rinsed and reused.",
-    "sourceUrl": ""
+    "sourceUrl": "",
+    "brand": "Humuson Complex"
   },
   {
     "name": "Fortik Solid",
@@ -1999,7 +2003,8 @@
     ],
     "featured": false,
     "notes": "New product from the August 2026 catalogue photo set — front label only; specification to be confirmed with Humuson technical support.",
-    "sourceUrl": ""
+    "sourceUrl": "",
+    "brand": "Humuson Complex"
   },
   {
     "name": "NPK 12-11-30+TE",
@@ -2036,6 +2041,7 @@
     ],
     "featured": false,
     "notes": "New product from the August 2026 catalogue photo set — front label only; specification to be confirmed with Humuson technical support.",
-    "sourceUrl": ""
+    "sourceUrl": "",
+    "brand": "Humuson Complex"
   }
 ]
