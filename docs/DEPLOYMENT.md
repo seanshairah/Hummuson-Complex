@@ -63,7 +63,46 @@ are still what you want for a first-time setup or a manual run.
 
 ## 5. Domain cutover checklist
 
-1. Point DNS at Vercel; add `humusoncomplex.com` (+ `www`) to the project.
+### 5.1 Pointing DNS at Vercel
+
+The domain is registered at Hostinger but its DNS is not — the nameservers are
+`ns1`–`ns4.stackdns.com`, and hPanel's DNS tab says as much ("DNS is managed by
+another provider"). Records are changed in the StackDNS panel; edits made in
+hPanel do nothing.
+
+It also carries live mail, which is the reason the record route below is
+preferred over changing nameservers:
+
+```
+MX   10 mx1.titan.email        MX  20 mx2.titan.email
+TXT  "v=spf1 include:spf.stackmail.com +include:spf.titan.email ~all a mx -all"
+```
+
+Delegating the domain to Vercel's nameservers hands Vercel the whole zone, and
+any record not recreated there stops existing — these two included. Mail then
+fails quietly: senders see nothing wrong for hours. Adding two records instead
+leaves mail untouched.
+
+1. Vercel → project → **Settings → Domains**: add `humusoncomplex.com`, then
+   `www.humusoncomplex.com`.
+2. Take the values from **that screen**. The apex `A` value and the `www`
+   `CNAME` target are issued per project (the CNAME looks like
+   `d1d4fc829fe7bc7c.vercel-dns-017.com`), so a value copied from a tutorial or
+   from another project resolves to nothing.
+3. Record what the zone holds today before touching it — at the time of writing
+   both the apex and `www` were `A 185.146.167.201`. Putting those back is the
+   rollback.
+4. In StackDNS: replace the apex `A`, point `www` at the `CNAME`. Leave `MX` and
+   the SPF `TXT` alone.
+5. Wait for Vercel to report **Valid Configuration**. The zone's TTL is 300s, so
+   both the cutover and the rollback are minutes rather than days.
+
+### 5.2 Once the domain resolves
+
+1. Set `NEXT_PUBLIC_SITE_URL` to `https://humusoncomplex.com` and redeploy —
+   canonical URLs, the sitemap and the JSON-LD all read from it
+   (`src/lib/site.ts`), and they stay on the `.vercel.app` hostname until it is
+   set.
 2. Verify legacy redirects: `/product/in5-2/`, `/shop/`, `/our-blog/` → new URLs (301).
 3. Submit `https://humusoncomplex.com/sitemap.xml` in Search Console.
 4. Change the seeded admin password; create personal staff accounts in `/admin/users`.
