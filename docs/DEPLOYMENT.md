@@ -89,13 +89,29 @@ leaves mail untouched.
    `CNAME` target are issued per project (the CNAME looks like
    `d1d4fc829fe7bc7c.vercel-dns-017.com`), so a value copied from a tutorial or
    from another project resolves to nothing.
-3. Record what the zone holds today before touching it — at the time of writing
-   both the apex and `www` were `A 185.146.167.201`. Putting those back is the
-   rollback.
+3. Record what the zone holds before touching it. This is the rollback, and it
+   is the step people skip. Captured 2026-09-07, before any change:
+
+   ```
+   NS   ns1.stackdns.com   ns2.stackdns.com   ns3.stackdns.com   ns4.stackdns.com
+   A    @    185.146.167.201
+   A    www  185.146.167.201
+   MX   10 mx1.titan.email        20 mx2.titan.email
+   TXT  "v=spf1 include:spf.stackmail.com +include:spf.titan.email ~all a mx -all"
+   ```
 4. In StackDNS: replace the apex `A`, point `www` at the `CNAME`. Leave `MX` and
    the SPF `TXT` alone.
 5. Wait for Vercel to report **Valid Configuration**. The zone's TTL is 300s, so
    both the cutover and the rollback are minutes rather than days.
+
+> **If the nameservers get changed by mistake.** Pointing the domain at
+> nameservers that do not host the zone — Hostinger's own
+> `apollo`/`athena.dns-parking.com`, for instance — takes the entire domain
+> offline, not just the website: resolvers return SERVFAIL, and mail stops
+> with it. Nothing is lost, because the StackDNS zone still exists and sending
+> servers queue for a few days, but the clock is running. Set the nameservers
+> back to the four `stackdns.com` entries above and the whole zone returns as
+> it was. Rebuild the records somewhere new only after service is restored.
 
 ### 5.2 Once the domain resolves
 
