@@ -45,18 +45,35 @@ export interface FinderRecommendation {
   answeredCriteria: number;
 }
 
-/** Broad crop groups: a maize grower should still see "cereals" products. */
+/**
+ * Broad crop groups: a maize grower should still see "cereals" products, and a
+ * cauliflower grower should see anything listed for brassicas. Each entry maps
+ * a specific crop to the wider groups whose products also apply to it.
+ */
 export const CROP_GROUPS: Record<string, string[]> = {
   maize: ["cereals", "grains"],
   wheat: ["cereals", "grains"],
   barley: ["cereals", "grains"],
   sorghum: ["cereals", "grains"],
+
+  cauliflower: ["brassicas", "vegetables"],
+  broccoli: ["brassicas", "vegetables"],
+  cabbage: ["brassicas", "vegetables"],
+  brassicas: ["vegetables"],
+
+  cucumber: ["cucurbits", "vegetables"],
+  butternut: ["cucurbits", "vegetables"],
+  watermelon: ["cucurbits", "fruits"],
+  cucurbits: ["vegetables"],
+
+  "leafy-vegetables": ["vegetables"],
   tomato: ["vegetables"],
-  cabbage: ["vegetables"],
   onion: ["vegetables"],
   pepper: ["vegetables"],
-  cucumber: ["vegetables"],
   potato: ["vegetables", "tubers"],
+  "sweet-potato": ["tubers"],
+  "fruit-trees": ["fruits"],
+
   "sugar-bean": ["legumes"],
   soybean: ["legumes", "oilseeds"],
   cowpea: ["legumes"],

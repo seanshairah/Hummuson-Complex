@@ -2,14 +2,22 @@
 
 import { useState } from "react";
 import { ArrowUpRight, MapPin } from "lucide-react";
-import { googleMapsEmbedUrl, googleMapsLink } from "@/lib/maps";
+import { googleMapsEmbedUrl, googleMapsLink, type MapPin as MapPinCoords } from "@/lib/maps";
 
 /**
  * Interactive location card. The whole card deep-links to Google Maps; the
  * live map itself loads only on request so the page costs nothing extra on
  * slow connections.
  */
-export function LocationMap({ query, address }: { query: string; address: string }) {
+export function LocationMap({
+  query,
+  address,
+  pin,
+}: {
+  query: string;
+  address: string;
+  pin?: MapPinCoords | null;
+}) {
   const [loaded, setLoaded] = useState(false);
 
   return (
@@ -17,7 +25,7 @@ export function LocationMap({ query, address }: { query: string; address: string
       <div className="relative aspect-[16/10]">
         {loaded ? (
           <iframe
-            src={googleMapsEmbedUrl(query)}
+            src={googleMapsEmbedUrl(query, pin)}
             title={`Map — ${address}`}
             loading="lazy"
             allowFullScreen
@@ -26,7 +34,7 @@ export function LocationMap({ query, address }: { query: string; address: string
           />
         ) : (
           <a
-            href={googleMapsLink(query)}
+            href={googleMapsLink(query, pin)}
             target="_blank"
             rel="noopener noreferrer"
             className="group absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[radial-gradient(circle_at_30%_20%,#dfe8d3,transparent_55%),radial-gradient(circle_at_75%_80%,#e8e2cf,transparent_50%)] bg-paper-dim p-6 text-center"
@@ -71,7 +79,7 @@ export function LocationMap({ query, address }: { query: string; address: string
             </button>
           )}
           <a
-            href={googleMapsLink(query)}
+            href={googleMapsLink(query, pin)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-sm font-medium text-leaf-800 hover:text-brand"

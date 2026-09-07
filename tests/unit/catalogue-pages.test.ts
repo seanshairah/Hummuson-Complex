@@ -7,6 +7,7 @@ const product = (name: string): ProductCardData => ({
   id: name,
   slug: name.toLowerCase(),
   name,
+  brand: null,
   tagline: null,
   shortDescription: null,
   category: null,

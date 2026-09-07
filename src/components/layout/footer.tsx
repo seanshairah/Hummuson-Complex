@@ -16,7 +16,7 @@ import { site } from "@/lib/site";
 import { Logo } from "@/components/layout/logo";
 import { Em } from "@/components/ui/section-heading";
 import { getContactSettings } from "@/server/data/settings";
-import { googleMapsLink } from "@/lib/maps";
+import { googleMapsLink, toMapPin } from "@/lib/maps";
 import { whatsappLink, whatsappAdviceMessage } from "@/lib/whatsapp";
 
 const SOCIAL_ICONS = {
@@ -143,7 +143,7 @@ export async function Footer() {
             {contact.address && (
               <li>
                 <a
-                  href={googleMapsLink(`${site.name}, ${contact.address}`)}
+                  href={googleMapsLink(`${site.name}, ${contact.address}`, toMapPin(contact))}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-start gap-2.5 transition-colors hover:text-leaf-300"

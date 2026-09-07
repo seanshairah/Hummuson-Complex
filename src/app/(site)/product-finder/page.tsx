@@ -6,9 +6,9 @@ import { getFilterOptions } from "@/server/data/products";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Product finder — four questions to the right product",
+  title: "Product finder — three questions to the right product",
   description:
-    "Answer four quick questions about your crop, goal, growth stage and application method — get matched with the Humuson products listed for exactly that situation.",
+    "Answer three quick questions about your crop, your goal and how you apply — get matched with the Humuson products listed for exactly that situation.",
   alternates: { canonical: "/product-finder" },
 };
 
@@ -29,7 +29,6 @@ export default async function ProductFinderPage() {
           options={{
             crops: options.crops,
             benefits: options.benefits,
-            stages: options.stages,
             methods: options.methods,
           }}
         />

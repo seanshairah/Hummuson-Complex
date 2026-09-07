@@ -9,6 +9,14 @@ export interface ContactSettings {
   whatsappCatalogueUrl: string;
   emails: string[];
   address: string | null;
+  /**
+   * The map pin, as decimal degrees. Set these and every map link points at
+   * the actual gate rather than at whatever Google makes of the address.
+   */
+  mapsLat: number | null;
+  mapsLng: number | null;
+  /** Optional Google Maps share link (maps.app.goo.gl/…) for "open" actions. */
+  mapsUrl: string | null;
   hours: string | null;
   socials: Partial<
     Record<"facebook" | "instagram" | "youtube" | "linkedin" | "twitter" | "tiktok", string | null>
@@ -20,7 +28,10 @@ const contactDefaults: ContactSettings = {
   whatsapp: site.whatsappNumber,
   whatsappCatalogueUrl: site.whatsappCatalogueUrl,
   emails: ["info@humusoncomplex.com"],
-  address: null,
+  address: "78 Nemakonde Way, Harare, Zimbabwe",
+  mapsLat: null,
+  mapsLng: null,
+  mapsUrl: null,
   hours: null,
   socials: {},
 };

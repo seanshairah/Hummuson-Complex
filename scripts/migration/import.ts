@@ -78,7 +78,8 @@ function mapMethod(label: string): ApplicationMethod {
 /** Canonical, filterable benefit dimensions (drive the finder + filters). */
 const BENEFIT_RULES: { slug: string; name: string; pattern: RegExp }[] = [
   { slug: "root-development", name: "Root development", pattern: /root/i },
-  { slug: "flowering", name: "Flowering & fruiting", pattern: /flower|bloom|fruit set/i },
+  { slug: "flowering", name: "Flowering", pattern: /flower|bloom|blossom/i },
+  { slug: "fruiting", name: "Fruiting", pattern: /fruit(ing|s| set| fill| development)|pod (set|fill)|tuber (formation|bulking)/i },
   { slug: "yield", name: "Yield", pattern: /yield|harvest|production|productivity/i },
   { slug: "crop-vigour", name: "Crop vigour", pattern: /vigou?r|vigorous|strong(er)? (plant|crop|growth)|robust/i },
   { slug: "soil-condition", name: "Soil health", pattern: /soil (health|fertility|structure|condition|life|biology)|revitali|regenerat/i },
@@ -87,24 +88,45 @@ const BENEFIT_RULES: { slug: string; name: string; pattern: RegExp }[] = [
   { slug: "moisture-retention", name: "Moisture retention", pattern: /moisture|water (retention|holding)/i },
 ];
 
-/** Growth stages mapped only from explicit textual evidence. */
+/**
+ * Growth stages mapped only from explicit textual evidence.
+ *
+ * Seed treatment is split into coating and soaking because they are different
+ * operations a grower either does or does not do, and a product listed for one
+ * is not automatically suitable for the other. Flowering and fruiting are split
+ * for the same reason — they are consecutive stages with different demands, and
+ * collapsing them (as "fruit & grain development" did) told a tomato grower at
+ * flowering to buy something meant for fruit fill.
+ *
+ * Grain fill stays separate from fruiting: wheat and maize fill grain, they do
+ * not fruit, and one bucket for both would mis-file every cereal product.
+ */
 const STAGE_RULES: { key: string; pattern: RegExp }[] = [
-  { key: "seed", pattern: /seed (dressing|treatment|soaking|coating)|at planting|basal|germination|sowing/i },
-  { key: "emergence", pattern: /seedling|emergence|nurser|transplant/i },
+  { key: "seed-coating", pattern: /seed (coating|dressing|treatment)|coat(ing)? the seed|dress(ing)? the seed/i },
+  { key: "seed-soaking", pattern: /seed soaking|soak(ing)? (the )?seed|steep(ing)? (the )?seed/i },
+  { key: "planting", pattern: /at planting|basal|sowing|germination|pre.?plant/i },
+  { key: "transplanting", pattern: /transplant|seedling|nurser|emergence/i },
   { key: "vegetative", pattern: /vegetative|top.?dress|tillering|leaf growth/i },
-  { key: "flowering", pattern: /flowering|bloom|blossom/i },
-  { key: "grain-fill", pattern: /grain.?fill|fruit(ing)? development|pod fill|tuber (formation|bulking)/i },
-  { key: "maturity", pattern: /maturity|ripening/i },
+  { key: "flowering", pattern: /flowering|bloom|blossom|flower set/i },
+  { key: "fruiting", pattern: /fruiting|fruit (set|development|fill|formation)|pod (set|fill|formation)|tuber (formation|bulking)|bulb formation/i },
+  { key: "grain-fill", pattern: /grain.?(fill|formation)|cob fill|ear fill|seed fill/i },
+  { key: "maturity", pattern: /maturity|ripening|harvest/i },
 ];
 
 const GROWTH_STAGES = [
-  { key: "seed", name: "Seed & planting", order: 0 },
-  { key: "emergence", name: "Emergence", order: 1 },
-  { key: "vegetative", name: "Vegetative growth", order: 2 },
-  { key: "flowering", name: "Flowering", order: 3 },
-  { key: "grain-fill", name: "Fruit & grain development", order: 4 },
-  { key: "maturity", name: "Maturity", order: 5 },
+  { key: "seed-coating", name: "Seed coating", order: 0 },
+  { key: "seed-soaking", name: "Seed soaking", order: 1 },
+  { key: "planting", name: "Planting & basal", order: 2 },
+  { key: "transplanting", name: "Transplanting", order: 3 },
+  { key: "vegetative", name: "Vegetative growth", order: 4 },
+  { key: "flowering", name: "Flowering", order: 5 },
+  { key: "fruiting", name: "Fruiting", order: 6 },
+  { key: "grain-fill", name: "Grain fill", order: 7 },
+  { key: "maturity", name: "Maturity & ripening", order: 8 },
 ];
+
+/** Stage keys this importer no longer uses, removed so they stop appearing. */
+const RETIRED_STAGE_KEYS = ["seed", "emergence"];
 
 const FAQ_CATEGORY_MAP: Record<string, FaqCategory> = {
   application: FaqCategory.APPLICATION,
@@ -182,9 +204,27 @@ async function ensureMedia(
 /** product.id → media.id of its role:"catalogue" image (filled by importProducts). */
 const catalogueImageByProduct = new Map<string, string>();
 
+/**
+ * Seeds the first admin on an empty database.
+ *
+ * The fallback password exists so `npm run setup` works on a laptop with no
+ * env file. On a database that already has an admin it must never be used:
+ * re-running the importer to refresh content would otherwise mint
+ * admin@humusoncomplex.com with a password published in this repository, and
+ * hand full access to anyone who has read it. So when an admin already exists
+ * and no ADMIN_PASSWORD was supplied, this step does nothing at all.
+ */
 async function importUsers() {
+  const suppliedPassword = process.env.ADMIN_PASSWORD;
+  if (!suppliedPassword) {
+    const admins = await prisma.user.count({ where: { role: "ADMIN", active: true } });
+    if (admins > 0) {
+      console.log(`✓ admin user skipped (${admins} already present, no ADMIN_PASSWORD given)`);
+      return;
+    }
+  }
   const email = process.env.ADMIN_EMAIL ?? "admin@humusoncomplex.com";
-  const password = process.env.ADMIN_PASSWORD ?? "change-me-immediately";
+  const password = suppliedPassword ?? "change-me-immediately";
   const name = process.env.ADMIN_NAME ?? "Humuson Admin";
   const passwordHash = await bcrypt.hash(password, 12);
   await prisma.user.upsert({
@@ -203,6 +243,12 @@ async function importGrowthStages() {
       create: stage,
     });
   }
+  // The old coarse keys were replaced, not renamed — leaving them would show
+  // growers two overlapping vocabularies on the same filter.
+  const retired = await prisma.growthStage.deleteMany({
+    where: { key: { in: RETIRED_STAGE_KEYS } },
+  });
+  if (retired.count > 0) console.log(`✓ retired ${retired.count} superseded stage(s)`);
   console.log(`✓ growth stages (${GROWTH_STAGES.length})`);
 }
 
@@ -232,6 +278,14 @@ async function importCategories(categories: SourceCategory[]) {
   console.log(`✓ categories (${categories.length})`);
 }
 
+/**
+ * Crops discovered in a product's own "suitable crops" text sort after every
+ * curated crop. content/crops.json is the owner's taxonomy and is ordered
+ * deliberately; without this offset an incidental mention creates a crop at
+ * order 0 that then outranks the whole curated list on every crop listing.
+ */
+const DISCOVERED_CROP_ORDER = 1000;
+
 async function importCrops(crops: SourceCrop[]) {
   let order = 0;
   for (const crop of crops) {
@@ -242,7 +296,16 @@ async function importCrops(crops: SourceCrop[]) {
     });
     order += 1;
   }
-  console.log(`✓ crops (${crops.length})`);
+  // Crops that came from a product's own text rather than the curated list get
+  // pushed below it. Doing this every run, not just at creation, is what makes
+  // it true of databases seeded before the curated list existed — otherwise an
+  // incidentally-discovered crop keeps order 0 forever and leads the listing.
+  const demoted = await prisma.crop.updateMany({
+    where: { slug: { notIn: crops.map((crop) => crop.slug) } },
+    data: { order: DISCOVERED_CROP_ORDER },
+  });
+  if (demoted.count > 0) console.log(`✓ crops (${crops.length}, ${demoted.count} discovered)`);
+  else console.log(`✓ crops (${crops.length})`);
 }
 
 async function ensureCrop(nameRaw: string): Promise<string> {
@@ -254,7 +317,11 @@ async function ensureCrop(nameRaw: string): Promise<string> {
   const byAka = await prisma.crop.findFirst({ where: { aka: { has: name.toLowerCase() } } });
   if (byAka) return byAka.id;
   const created = await prisma.crop.create({
-    data: { slug, name: name.charAt(0).toUpperCase() + name.slice(1) },
+    data: {
+      slug,
+      name: name.charAt(0).toUpperCase() + name.slice(1),
+      order: DISCOVERED_CROP_ORDER,
+    },
   });
   return created.id;
 }
@@ -295,6 +362,7 @@ async function importProducts(products: SourceProduct[]) {
       where: { slug: source.slug },
       update: {
         name: source.name,
+        brand: source.brand ?? null,
         shortDescription: source.shortDescription,
         descriptionHtml,
         composition: source.composition,
@@ -312,6 +380,7 @@ async function importProducts(products: SourceProduct[]) {
       create: {
         name: source.name,
         slug: source.slug,
+        brand: source.brand ?? null,
         shortDescription: source.shortDescription,
         descriptionHtml,
         composition: source.composition,
@@ -650,10 +719,17 @@ async function importCompany(company: SourceCompany | null) {
   const contactValue = {
     phones: company.phones ?? [],
     whatsapp: (company.whatsappNumbers?.[0] ?? "263776656433").replace(/[^0-9]/g, ""),
-    // Provided by the owner (WhatsApp Business catalogue share link).
-    whatsappCatalogueUrl: "https://wa.me/c/80084060872727",
+    // The owner's WhatsApp Business catalogue share link. Read from the content
+    // file rather than pinned here — a literal meant every correction to it
+    // needed a code change, and the one that was pinned had stopped resolving.
+    whatsappCatalogueUrl: company.whatsappCatalogueUrl ?? "",
     emails: company.emails ?? [],
     address: company.address ?? null,
+    // Set in admin → Settings once someone reads the coordinates off Maps.
+    // Seeding a guess would put the pin somewhere plausible and wrong.
+    mapsLat: null,
+    mapsLng: null,
+    mapsUrl: null,
     hours: company.hours ?? null,
     socials: company.socials ?? {},
   };

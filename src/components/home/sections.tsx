@@ -183,10 +183,10 @@ export function FinderBand() {
             eyebrow="Product finder"
             title={
               <>
-                Four questions. <Em className="text-leaf-300">The right product.</Em>
+                Three questions. <Em className="text-leaf-300">The right product.</Em>
               </>
             }
-            lede="Answer four quick questions about your crop and goals, and we’ll match you with the Humuson products listed for exactly that situation — no guesswork."
+            lede="Answer three quick questions about your crop and goals, and we’ll match you with the Humuson products listed for exactly that situation — no guesswork."
           />
           <div className="mt-8 flex flex-wrap gap-3">
             <ButtonLink href="/product-finder" variant="accent" size="lg">

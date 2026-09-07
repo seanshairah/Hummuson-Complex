@@ -9,6 +9,7 @@ import { cn, humanize } from "@/lib/utils";
 import type { FilterOptions } from "@/server/data/products";
 
 export interface ActiveFilters {
+  brand?: string;
   category?: string;
   crop?: string;
   benefit?: string;
@@ -70,6 +71,11 @@ export function ProductFilterBar({
   const dimensions: Dimension[] = useMemo(
     () => [
       {
+        key: "brand",
+        label: "Brand",
+        options: options.brands.map((o) => ({ value: o.name, label: o.name, count: o.count })),
+      },
+      {
         key: "category",
         label: "Range",
         options: options.categories.map((o) => ({ value: o.slug, label: o.name, count: o.count })),
@@ -112,7 +118,15 @@ export function ProductFilterBar({
 
   const clearAll = () => {
     setQuery("");
-    const keys: (keyof ActiveFilters)[] = ["category", "crop", "benefit", "method", "stage", "q"];
+    const keys: (keyof ActiveFilters)[] = [
+      "brand",
+      "category",
+      "crop",
+      "benefit",
+      "method",
+      "stage",
+      "q",
+    ];
     // Build one URL without any filter keys.
     const params = new URLSearchParams(window.location.search);
     keys.forEach((k) => params.delete(k));

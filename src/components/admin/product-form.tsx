@@ -39,6 +39,7 @@ export interface ProductFormInitial {
   slug?: string;
   status?: string;
   featured?: boolean;
+  brand?: string | null;
   tagline?: string | null;
   shortDescription?: string | null;
   descriptionHtml?: string | null;
@@ -149,6 +150,17 @@ export function ProductForm({
               <Input name="slug" defaultValue={initial.slug} placeholder="auto" />
             </Field>
           </div>
+          <Field
+            label="Brand"
+            hint="Supplier brand — IKAR, Nando, Avensis, Bio Energy, Sapropel Organics. Leave blank if unknown rather than guessing."
+          >
+            <Input name="brand" defaultValue={initial.brand ?? ""} list="product-brands" />
+            <datalist id="product-brands">
+              {["IKAR", "Nando", "Avensis", "Bio Energy", "Sapropel Organics"].map((brand) => (
+                <option key={brand} value={brand} />
+              ))}
+            </datalist>
+          </Field>
           <Field label="Tagline" hint="Short strapline shown under the name (optional)">
             <Input name="tagline" defaultValue={initial.tagline ?? ""} />
           </Field>

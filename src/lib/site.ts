@@ -31,7 +31,7 @@ export const site = {
   url: resolveSiteUrl(),
   whatsappNumber: whatsappDigits || "263776656433",
   /** WhatsApp Business catalogue share link (owner-editable in admin → settings). */
-  whatsappCatalogueUrl: "https://wa.me/c/80084060872727",
+  whatsappCatalogueUrl: "https://wa.me/c/263776656433",
   locale: "en_ZW",
 } as const;
 

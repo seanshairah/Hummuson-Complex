@@ -87,7 +87,11 @@ export default async function CropsPage() {
 
         {groups.length > 0 && (
           <div className="mt-12">
-            <h2 className="text-eyebrow text-ink-faint">Also referenced in product guidance</h2>
+            <h2 className="text-eyebrow text-ink-faint">Other crops we supply</h2>
+            <p className="mt-2 max-w-2xl text-sm text-ink-faint">
+              No product lists these by name in its published guidance yet, so there is nothing to
+              show automatically. Ask an adviser what fits.
+            </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {groups.map((crop) => (
                 <Link

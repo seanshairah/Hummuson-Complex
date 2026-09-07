@@ -6,7 +6,7 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import { ButtonLink } from "@/components/ui/button";
 import { getCompanySettings, getContactSettings } from "@/server/data/settings";
-import { googleMapsLink } from "@/lib/maps";
+import { googleMapsLink, toMapPin } from "@/lib/maps";
 import { site } from "@/lib/site";
 import { whatsappAdviceMessage } from "@/lib/whatsapp";
 import { organizationJsonLd } from "@/lib/seo";
@@ -21,7 +21,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "About — the home of healthy soil & healthy crop",
   description:
-    "Humuson Complex (MKM Fertilisers) supplies organic fertilisers, biostimulants and foliar feeds to restore Zimbabwe's soils and grow profitable, sustainable farms.",
+    "Humuson Complex supplies organic fertilisers, biostimulants and foliar feeds to restore Zimbabwe's soils and grow profitable, sustainable farms.",
   alternates: { canonical: "/about" },
 };
 
@@ -175,7 +175,7 @@ export default async function AboutPage() {
           <h2 className="text-display-3 text-ink">Come and talk crops</h2>
           <p className="mt-3 max-w-xl text-ink-soft">
             <a
-              href={googleMapsLink(`${site.name}, ${contact.address ?? "Harare, Zimbabwe"}`)}
+              href={googleMapsLink(`${site.name}, ${contact.address ?? "Harare, Zimbabwe"}`, toMapPin(contact))}
               target="_blank"
               rel="noopener noreferrer"
               className="underline decoration-leaf-600/40 underline-offset-4 transition-colors hover:text-brand"

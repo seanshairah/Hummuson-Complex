@@ -19,6 +19,8 @@ export interface SourceImage {
 export interface SourceProduct {
   name: string;
   slug: string;
+  /** Supplier brand the product is sold under, where the owner has stated it. */
+  brand?: string | null;
   oldUrls: string[];
   categorySlugs: string[];
   shortDescription: string | null;
@@ -107,6 +109,8 @@ export interface SourceCompany {
   taglines?: string[];
   about?: string;
   whatsappNumbers?: string[];
+  /** WhatsApp Business catalogue share link (wa.me/c/…). */
+  whatsappCatalogueUrl?: string;
   phones?: string[];
   emails?: string[];
   address?: string | null;

@@ -35,6 +35,7 @@ export default async function ProductsPage({
 }) {
   const params = await searchParams;
   const active: ActiveFilters = {
+    brand: firstParam(params, "brand"),
     category: firstParam(params, "category"),
     crop: firstParam(params, "crop"),
     benefit: firstParam(params, "benefit"),

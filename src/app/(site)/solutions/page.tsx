@@ -96,7 +96,7 @@ export default async function SolutionsPage() {
         <div>
           <h2 className="text-display-3 text-ink">Not sure where to start?</h2>
           <p className="mt-2 max-w-xl text-ink-soft">
-            Four questions match you with the right products — or ask an adviser directly.
+            Three questions match you with the right products — or ask an adviser directly.
           </p>
         </div>
         <div className="flex flex-wrap gap-3">

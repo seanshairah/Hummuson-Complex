@@ -7,7 +7,7 @@ import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import { getContactSettings } from "@/server/data/settings";
 import { getProductBySlug } from "@/server/data/products";
 import { site } from "@/lib/site";
-import { googleMapsLink } from "@/lib/maps";
+import { googleMapsLink, toMapPin } from "@/lib/maps";
 import { whatsappAdviceMessage } from "@/lib/whatsapp";
 
 export const revalidate = 300;
@@ -27,8 +27,9 @@ export default async function ContactPage({
   const params = await searchParams;
   const contact = await getContactSettings();
   const product = params.product ? await getProductBySlug(params.product) : null;
-  const address = contact.address ?? "78 Lomagundi Rd, Harare, Zimbabwe";
+  const address = contact.address ?? "78 Nemakonde Way, Harare, Zimbabwe";
   const mapsQuery = `${site.name}, ${address}`;
+  const pin = toMapPin(contact);
 
   return (
     <>
@@ -88,7 +89,7 @@ export default async function ContactPage({
               </a>
             ))}
             <a
-              href={googleMapsLink(mapsQuery)}
+              href={googleMapsLink(mapsQuery, pin)}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-start gap-3.5 text-ink hover:text-brand"
@@ -104,7 +105,7 @@ export default async function ContactPage({
             )}
           </div>
 
-          <LocationMap query={mapsQuery} address={address} />
+          <LocationMap query={mapsQuery} address={address} pin={pin} />
 
           <div className="rounded-3xl border border-dashed border-line p-6 text-sm leading-relaxed text-ink-faint">
             Free basic consultation · farm visits at an agreed amount · delivery available (fees

@@ -98,6 +98,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
             <Reveal y={20} delay={0.08}>
               <div className="flex flex-wrap items-center gap-2">
+                {product.brand && (
+                  <Link href={`/products?brand=${encodeURIComponent(product.brand)}`}>
+                    <Badge variant="outline">{product.brand}</Badge>
+                  </Link>
+                )}
                 {product.category && (
                   <Link href={`/products?category=${product.category.slug}`}>
                     <Badge variant="leaf">{product.category.name}</Badge>

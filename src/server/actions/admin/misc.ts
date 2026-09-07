@@ -35,6 +35,19 @@ export async function deleteEnquiry(id: string): Promise<void> {
 
 /* ── Settings ───────────────────────────────────────────────────────────── */
 
+/**
+ * A coordinate, or null. Anything that is not a real number inside the valid
+ * range is stored as null rather than saved: a half-typed latitude would move
+ * the pin somewhere arbitrary, and a wrong map is worse than no map.
+ */
+function formCoordinate(formData: FormData, key: string, limit: number): number | null {
+  const raw = formOptional(formData, key);
+  if (!raw) return null;
+  const value = Number(raw);
+  if (!Number.isFinite(value) || Math.abs(value) > limit) return null;
+  return value;
+}
+
 export async function saveContactSettings(
   _prev: AdminActionState,
   formData: FormData,
@@ -47,6 +60,9 @@ export async function saveContactSettings(
       formOptional(formData, "whatsappCatalogueUrl") ?? site.whatsappCatalogueUrl,
     emails: formList(formData, "emails"),
     address: formOptional(formData, "address"),
+    mapsLat: formCoordinate(formData, "mapsLat", 90),
+    mapsLng: formCoordinate(formData, "mapsLng", 180),
+    mapsUrl: formOptional(formData, "mapsUrl"),
     hours: formOptional(formData, "hours"),
     socials: {
       facebook: formOptional(formData, "facebook"),

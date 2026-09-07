@@ -1,20 +1,122 @@
 [
   {
-    "name": "maize",
-    "slug": "maize",
+    "name": "brassicas",
+    "slug": "brassicas",
+    "aka": [
+      "cauliflower",
+      "broccoli",
+      "cabbage",
+      "brassica",
+      "cole crops"
+    ]
+  },
+  {
+    "name": "cauliflower",
+    "slug": "cauliflower",
     "aka": []
   },
   {
-    "name": "potato",
+    "name": "broccoli",
+    "slug": "broccoli",
+    "aka": []
+  },
+  {
+    "name": "cabbage",
+    "slug": "cabbage",
+    "aka": []
+  },
+  {
+    "name": "cucurbits",
+    "slug": "cucurbits",
+    "aka": [
+      "cucumber",
+      "cucumbers",
+      "butternut",
+      "butternuts",
+      "watermelon",
+      "watermelons",
+      "cucurbit",
+      "pumpkin",
+      "squash"
+    ]
+  },
+  {
+    "name": "cucumber",
+    "slug": "cucumber",
+    "aka": [
+      "cucumbers"
+    ]
+  },
+  {
+    "name": "butternut",
+    "slug": "butternut",
+    "aka": [
+      "butternuts",
+      "butternut squash"
+    ]
+  },
+  {
+    "name": "watermelon",
+    "slug": "watermelon",
+    "aka": [
+      "watermelons",
+      "melon"
+    ]
+  },
+  {
+    "name": "leafy vegetables",
+    "slug": "leafy-vegetables",
+    "aka": [
+      "leafy greens",
+      "spinach",
+      "lettuce",
+      "rape",
+      "covo",
+      "kale",
+      "greens"
+    ]
+  },
+  {
+    "name": "potatoes",
     "slug": "potato",
     "aka": [
-      "potatoes"
+      "potatoes",
+      "potato",
+      "irish potato"
+    ]
+  },
+  {
+    "name": "sweet potatoes",
+    "slug": "sweet-potato",
+    "aka": [
+      "sweet potato",
+      "sweetpotato"
+    ]
+  },
+  {
+    "name": "fruit trees",
+    "slug": "fruit-trees",
+    "aka": [
+      "fruit tree",
+      "citrus",
+      "orchard",
+      "avocado",
+      "mango",
+      "apple"
     ]
   },
   {
     "name": "wheat",
     "slug": "wheat",
     "aka": []
+  },
+  {
+    "name": "maize",
+    "slug": "maize",
+    "aka": [
+      "mealies",
+      "corn"
+    ]
   },
   {
     "name": "sugar bean",

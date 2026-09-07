@@ -14,6 +14,8 @@ export interface ProductCardData {
   id: string;
   slug: string;
   name: string;
+  /** Supplier brand, where the owner has stated one. */
+  brand: string | null;
   tagline: string | null;
   shortDescription: string | null;
   category: { name: string; slug: string } | null;
@@ -66,6 +68,7 @@ export const getAllProducts = unstable_cache(
       id: product.id,
       slug: product.slug,
       name: product.name,
+      brand: product.brand,
       tagline: product.tagline,
       shortDescription: product.shortDescription,
       category: product.category
@@ -89,6 +92,7 @@ export const getAllProducts = unstable_cache(
 );
 
 export interface ProductFilterParams {
+  brand?: string;
   category?: string;
   crop?: string;
   benefit?: string;
@@ -103,6 +107,7 @@ export function filterProducts(
   params: ProductFilterParams,
 ): ProductCardData[] {
   return products.filter((product) => {
+    if (params.brand && product.brand !== params.brand) return false;
     if (params.category && product.category?.slug !== params.category) return false;
     if (params.crop && !product.cropSlugs.includes(params.crop)) return false;
     if (params.benefit && !product.benefitSlugs.includes(params.benefit)) return false;
@@ -120,6 +125,7 @@ export const getFeaturedProducts = async (limit = 6): Promise<ProductCardData[]>
 };
 
 export interface FilterOptions {
+  brands: { name: string; count: number }[];
   categories: { name: string; slug: string; count: number }[];
   crops: { name: string; slug: string; count: number }[];
   benefits: { name: string; slug: string; count: number }[];
@@ -161,11 +167,19 @@ export const getFilterOptions = unstable_cache(
     const methodMap = count(
       products.flatMap((p) => p.methods.map((m) => [m, m] as [string, string])),
     );
+    const brandMap = count(
+      products.flatMap((p) => (p.brand ? [[p.brand, p.brand] as [string, string]] : [])),
+    );
     const stageCounts = new Map<string, number>();
     for (const p of products)
       for (const key of p.stageKeys) stageCounts.set(key, (stageCounts.get(key) ?? 0) + 1);
 
     return {
+      // Alphabetical: brands are peers, so ranking them by how many products
+      // each happens to have would read as a ranking of the suppliers.
+      brands: [...brandMap]
+        .map(([name, v]) => ({ name, count: v.count }))
+        .sort((a, b) => a.name.localeCompare(b.name)),
       categories: [...categoryMap].map(([slug, v]) => ({ slug, name: v.label, count: v.count })),
       crops: [...cropMap]
         .map(([slug, v]) => ({ slug, name: v.label, count: v.count }))
@@ -243,6 +257,7 @@ export const getProductBySlug = (slug: string) =>
         id: p.id,
         slug: p.slug,
         name: p.name,
+        brand: p.brand,
         tagline: p.tagline,
         shortDescription: p.shortDescription,
         category: p.category ? { name: p.category.name, slug: p.category.slug } : null,
@@ -306,6 +321,7 @@ export const getFinderCandidates = unstable_cache(
       id: p.id,
       slug: p.slug,
       name: p.name,
+      brand: p.brand,
       cropSlugs: p.cropSlugs,
       benefitSlugs: p.benefitSlugs,
       stageKeys: p.stageKeys,

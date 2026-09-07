@@ -16,7 +16,7 @@ export function organizationJsonLd() {
     description: site.description,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "78 Lomagundi Rd",
+      streetAddress: "78 Nemakonde Way",
       addressLocality: "Harare",
       addressCountry: "ZW",
     },

@@ -29,6 +29,7 @@ const productSchema = z.object({
     .optional()
     .or(z.literal("")),
   shortDescription: z.string().trim().max(500).optional().or(z.literal("")),
+  brand: z.string().trim().max(100).optional().or(z.literal("")),
   tagline: z.string().trim().max(200).optional().or(z.literal("")),
 });
 
@@ -44,6 +45,7 @@ export async function saveProduct(
     name: formData.get("name"),
     slug: formData.get("slug"),
     shortDescription: formData.get("shortDescription"),
+    brand: formData.get("brand"),
     tagline: formData.get("tagline"),
   });
   if (!parsed.success) {
@@ -90,6 +92,7 @@ export async function saveProduct(
     slug,
     status,
     featured: formBool(formData, "featured"),
+    brand: parsed.data.brand || null,
     tagline: parsed.data.tagline || null,
     shortDescription: parsed.data.shortDescription || null,
     descriptionHtml: formOptional(formData, "descriptionHtml")
@@ -215,6 +218,7 @@ export async function duplicateProduct(id: string): Promise<void> {
       slug,
       status: "DRAFT",
       featured: false,
+      brand: source.brand,
       tagline: source.tagline,
       shortDescription: source.shortDescription,
       descriptionHtml: source.descriptionHtml,

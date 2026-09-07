@@ -78,6 +78,36 @@ export function ContactSettingsForm({ contact }: { contact: ContactSettings }) {
       <Field label="Address">
         <Input name="address" defaultValue={contact.address ?? ""} />
       </Field>
+      <Field
+        label="Map pin"
+        hint="Open Google Maps, right-click your gate, click the numbers to copy them, paste here. Without this the map only searches the address, which can land on the wrong plot."
+      >
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Input
+            name="mapsLat"
+            defaultValue={contact.mapsLat ?? ""}
+            placeholder="Latitude, e.g. -17.8092"
+            inputMode="decimal"
+          />
+          <Input
+            name="mapsLng"
+            defaultValue={contact.mapsLng ?? ""}
+            placeholder="Longitude, e.g. 31.0335"
+            inputMode="decimal"
+          />
+        </div>
+      </Field>
+      <Field
+        label="Google Maps share link"
+        hint="Optional. The “Share” link from your Google Business listing — used for Directions so visitors land on the listing itself."
+      >
+        <Input
+          name="mapsUrl"
+          type="url"
+          defaultValue={contact.mapsUrl ?? ""}
+          placeholder="https://maps.app.goo.gl/…"
+        />
+      </Field>
       <Field label="Opening hours">
         <Input name="hours" defaultValue={contact.hours ?? ""} />
       </Field>

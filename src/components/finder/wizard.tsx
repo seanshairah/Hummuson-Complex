@@ -23,14 +23,12 @@ import type { ProductCardData } from "@/server/data/products";
 export interface FinderOptions {
   crops: { slug: string; name: string; count: number }[];
   benefits: { slug: string; name: string; count: number }[];
-  stages: { key: string; name: string; count: number }[];
   methods: { key: string; count: number }[];
 }
 
 interface Answers {
   cropSlug?: string;
   benefitSlug?: string;
-  stageKey?: string;
   method?: string;
 }
 
@@ -44,7 +42,6 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 /** Plain-language names for criteria the finder had to set aside. */
 const RELAXED_LABELS: Record<string, string> = {
   method: "application method",
-  stageKey: "crop stage",
   cropSlug: "crop",
   benefitSlug: "the outcome you chose",
 };
@@ -63,7 +60,7 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
     () => [
       {
         key: "crop",
-        eyebrow: "Question 1 of 4",
+        eyebrow: "Question 1 of 3",
         question: "What are you growing?",
         hint: "Crops as listed in Humuson product guidance.",
         options: [
@@ -79,7 +76,7 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
       },
       {
         key: "benefit",
-        eyebrow: "Question 2 of 4",
+        eyebrow: "Question 2 of 3",
         question: "What do you want to improve?",
         hint: "Goals evidenced in the products’ own published claims.",
         options: options.benefits.map((benefit) => ({
@@ -91,24 +88,8 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
         set: (value: string) => setAnswers((a) => ({ ...a, benefitSlug: value || undefined })),
       },
       {
-        key: "stage",
-        eyebrow: "Question 3 of 4",
-        question: "What stage is your crop?",
-        hint: "Products are matched where their guidance references the stage.",
-        options: [
-          ...options.stages.map((stage) => ({
-            value: stage.key,
-            label: stage.name,
-            meta: `${stage.count} product${stage.count === 1 ? "" : "s"}`,
-          })),
-          { value: "", label: "Not sure", meta: undefined },
-        ],
-        selected: answers.stageKey ?? (answers.stageKey === "" ? "" : undefined),
-        set: (value: string) => setAnswers((a) => ({ ...a, stageKey: value || undefined })),
-      },
-      {
         key: "method",
-        eyebrow: "Question 4 of 4",
+        eyebrow: "Question 3 of 3",
         question: "Preferred application method?",
         hint: "Not sure is a perfectly good answer — we’ll include everything.",
         options: [
@@ -161,7 +142,6 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
     const nextAnswers: Answers = { ...answers };
     if (current.key === "crop") nextAnswers.cropSlug = value || undefined;
     if (current.key === "benefit") nextAnswers.benefitSlug = value || undefined;
-    if (current.key === "stage") nextAnswers.stageKey = value || undefined;
     if (current.key === "method") nextAnswers.method = value;
 
     if (step < steps.length - 1) {
@@ -186,7 +166,6 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
         ? "Any crop"
         : null,
     answers.benefitSlug ? options.benefits.find((b) => b.slug === answers.benefitSlug)?.name : null,
-    answers.stageKey ? options.stages.find((s) => s.key === answers.stageKey)?.name : null,
     answers.method ? humanize(answers.method) : null,
   ].filter((chip): chip is string => Boolean(chip));
 
