@@ -163,6 +163,34 @@ up to date.
    `user.created` and `user.role_changed` — and they are how an attacker keeps
    access after the password is changed. Look for them specifically.
 
+### Nobody can sign in to the admin
+
+Every step above assumes someone is already signed in. When no one is — the
+last admin left, the account was deactivated, both the password and the
+recovery codes are gone — provision one from a shell instead:
+
+```bash
+NEON_WS=1 \
+DATABASE_URL='<the production connection string from Vercel>' \
+ADMIN_EMAIL='someone@humusoncomplex.com' \
+ADMIN_PASSWORD='<a new password, at least 10 characters>' \
+ADMIN_NAME='Their Name' \
+npm run admin:create
+```
+
+`NEON_WS=1` routes the connection over 443, which is what to use when
+outbound port 5432 is blocked; drop it on a host that can reach 5432 directly.
+
+The script is safe to re-run. On an address that already exists it resets the
+password, restores the ADMIN role, reactivates the account and signs out every
+session issued under the old credentials — so it also serves as the recovery
+step when an account is locked rather than missing. It records
+`user.created` or `user.password_changed` in the audit log under
+`script:create-admin`, so a run always leaves a trace.
+
+Then sign in and, at `/admin/security`, add two-factor authentication to the
+account before doing anything else.
+
 ### Content on the public site is wrong or hostile
 
 1. Set the affected item to **Draft** — that removes it from the public site

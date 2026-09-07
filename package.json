@@ -31,6 +31,7 @@
     "qa:browser": "node scripts/qa/browser-qa.mjs",
     "qa:csp": "node scripts/qa/csp-sweep.mjs",
     "qa:audit": "node scripts/qa/audit-gate.mjs",
+    "admin:create": "tsx scripts/maintenance/create-admin.ts",
     "maintenance:prune": "tsx scripts/maintenance/prune.ts",
     "backup": "bash scripts/maintenance/backup.sh"
   },
