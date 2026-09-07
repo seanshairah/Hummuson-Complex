@@ -205,26 +205,28 @@ async function ensureMedia(
 const catalogueImageByProduct = new Map<string, string>();
 
 /**
- * Seeds the first admin on an empty database.
+ * Seeds the first admin, and only the first.
  *
- * The fallback password exists so `npm run setup` works on a laptop with no
- * env file. On a database that already has an admin it must never be used:
- * re-running the importer to refresh content would otherwise mint
- * admin@humusoncomplex.com with a password published in this repository, and
- * hand full access to anyone who has read it. So when an admin already exists
- * and no ADMIN_PASSWORD was supplied, this step does nothing at all.
+ * This exists to bootstrap an empty database. On one that already has an
+ * admin it does nothing, whatever the environment says — because the
+ * environment is not trustworthy here: prisma/seed.ts loads .env, so running
+ * the importer against production from a developer's machine brings that
+ * developer's ADMIN_PASSWORD with it and mints a live account nobody asked
+ * for, with a password from a laptop. Gating on ADMIN_PASSWORD being absent
+ * is not enough, because in that situation it is present.
+ *
+ * Adding an admin to a populated database is what `npm run admin:create` is
+ * for: it is explicit about which account it touches, and it says so in the
+ * audit log.
  */
 async function importUsers() {
-  const suppliedPassword = process.env.ADMIN_PASSWORD;
-  if (!suppliedPassword) {
-    const admins = await prisma.user.count({ where: { role: "ADMIN", active: true } });
-    if (admins > 0) {
-      console.log(`✓ admin user skipped (${admins} already present, no ADMIN_PASSWORD given)`);
-      return;
-    }
+  const admins = await prisma.user.count({ where: { role: "ADMIN", active: true } });
+  if (admins > 0) {
+    console.log(`✓ admin user skipped (${admins} already present — use npm run admin:create)`);
+    return;
   }
   const email = process.env.ADMIN_EMAIL ?? "admin@humusoncomplex.com";
-  const password = suppliedPassword ?? "change-me-immediately";
+  const password = process.env.ADMIN_PASSWORD ?? "change-me-immediately";
   const name = process.env.ADMIN_NAME ?? "Humuson Admin";
   const passwordHash = await bcrypt.hash(password, 12);
   await prisma.user.upsert({
