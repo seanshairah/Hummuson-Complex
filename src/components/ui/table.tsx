@@ -3,7 +3,15 @@ import type { HTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from "react";
 
 export function Table({ className, ...props }: HTMLAttributes<HTMLTableElement>) {
   return (
-    <div className="w-full overflow-x-auto rounded-xl border border-line">
+    // `contain: content` is load-bearing, not a micro-optimisation. On a phone
+    // Chrome sizes the layout viewport from the document's preferred width, and
+    // a table wider than the screen contributes its full intrinsic width even
+    // though this wrapper will scroll it. On /admin/users that made the layout
+    // viewport 826px against a 412px screen, so every `position: fixed` element
+    // — every dialog — centred against a box twice the width of the phone and
+    // opened off the side of it. Containment tells the browser what the
+    // overflow already implies: nothing in here affects layout outside it.
+    <div className="w-full [contain:content] overflow-x-auto rounded-xl border border-line">
       <table className={cn("w-full caption-bottom text-sm", className)} {...props} />
     </div>
   );
