@@ -251,7 +251,12 @@
       "Mg — 137 mg/L",
       "Ca — 134 mg/L"
     ],
-    "packSizes": [],
+    "packSizes": [
+      {
+        "size": "5 L",
+        "priceUsd": 80
+      }
+    ],
     "applicationRates": [
       {
         "context": "Cereals · per ha",
@@ -309,7 +314,7 @@
       "Approved for organic farming (FiBL registered)",
       "Product is non-toxic and has no irritating compounds"
     ],
-    "priceUsd": 150,
+    "priceUsd": 80,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_BACTO-K_5L_1080x1080-600x600-1.jpg",
@@ -350,7 +355,12 @@
     "shortDescription": "Contains a bacterial complex that promotes seed viability and germination and improves growth and development of the root system.",
     "descriptionHtml": "<h4>Why Bacto-Seed?</h4>\n<ul>\n<li>Promotes seed viability and germination;</li>\n<li>Improves growth and development of root system;</li>\n<li>Bacto-Seed enhances the uptake of phosphorus and potassium from the soil;</li>\n<li>Improves soil structure.</li>\n</ul>\n<h4>Operating principle:</h4>\n<p>Bacto-Seed product contains a bacterial complex that releases biologically active substances that promote seed germination and the development of young plants, balancing vital metabolic processes and increasing resistance to stress.</p>\n\n<p>Additional Information: <a href=\"https://www.bioenergy.lt/wp-content/uploads/2021/03/Bacto-Seed_Onepage-INFO-WEB.pdf\"><strong>Click Me</strong></a></p>",
     "composition": [],
-    "packSizes": [],
+    "packSizes": [
+      {
+        "size": "5 L",
+        "priceUsd": 80
+      }
+    ],
     "applicationRates": [],
     "applicationMethods": [],
     "suitableCrops": [],
@@ -360,7 +370,7 @@
       "Enhances the uptake of phosphorus and potassium from the soil",
       "Improves soil structure"
     ],
-    "priceUsd": 150,
+    "priceUsd": 80,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_BACTO-SEED_5L_1080x1080-600x600-1.jpg",
@@ -686,7 +696,12 @@
     "shortDescription": "Increases mineralisation of crop residues, enhancing decomposition of lignin and cellulose and the change of vegetal residues into humus.",
     "descriptionHtml": "<h4>Why Ruinex?</h4>\n<ul>\n<li>Increases mineralisation of crop residues;</li>\n<li>Enhances decomposition of lignin, cellulose and other organic polymers;</li>\n<li>Enhances change of vegetal residues into humus;</li>\n<li>Re-establishes soil balance and creates unfavourable soil environment for the spread of pathogens;</li>\n<li>Promotes biological activity of soils.</li>\n</ul>\n<h4>Operating principle:</h4>\n<p>The microorganisms in the biological preparation act as agents for a breakdown of lignin and cellulose by secreting specific enzymes. This process also releases antibiotics that increase plant resistance to pathogens.</p>\n<p>Additional Information: <strong><a href=\"https://www.bioenergy.lt/wp-content/uploads/2021/03/Ruinex-Onepage-INFO-WEB.pdf\">Click Here</a></strong></p>",
     "composition": [],
-    "packSizes": [],
+    "packSizes": [
+      {
+        "size": "20 L",
+        "priceUsd": 120
+      }
+    ],
     "applicationRates": [],
     "applicationMethods": [],
     "suitableCrops": [],
@@ -697,7 +712,7 @@
       "Re-establishes soil balance and creates unfavourable soil environment for the spread of pathogens",
       "Promotes biological activity of soils"
     ],
-    "priceUsd": 150,
+    "priceUsd": 120,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_RUINEX_5L_1080x1080-600x600-1.jpg",
@@ -1017,7 +1032,7 @@
       },
       {
         "size": "5 L",
-        "priceUsd": 90
+        "priceUsd": 96
       }
     ],
     "applicationRates": [
@@ -1261,7 +1276,7 @@
       },
       {
         "size": "5 L",
-        "priceUsd": 81
+        "priceUsd": 95
       }
     ],
     "applicationRates": [
@@ -1647,7 +1662,7 @@
       },
       {
         "size": "5 L",
-        "priceUsd": 121
+        "priceUsd": 125
       }
     ],
     "applicationRates": [

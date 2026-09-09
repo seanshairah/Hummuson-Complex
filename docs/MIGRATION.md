@@ -59,7 +59,7 @@ derived, extrapolated or rounded. Three sources are in play, in order of recency
 | Tag      | Source                                                                                                                                                                                                                                                                                       |
 | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **PDF**  | "Price List March 2026" (`cost_price__distributors_price_feb_26.pdf`), retail column. The same sheet carries a wholesale column that the public site does not publish.                                                                                                                       |
-| **LIST** | The owner's typed price list, 2026-09-09 — pack sizes the PDF does not cover (5 L / 10 L / 20 L, sachets, A3 250 g) plus Mendelenium, Emaxx Ultra, Maxprolin and the Bio Energy line. Where the two overlap they agree, which is what establishes the PDF's retail column as the site price. |
+| **LIST** | The owner's typed price lists, 2026-09-09 (two batches) — pack sizes the PDF does not cover (5 L / 10 L / 20 L, sachets, A3 250 g) plus Mendelenium, Emaxx Ultra, Maxprolin and the Bio Energy line. Where the two overlap they agree, which is what establishes the PDF's retail column as the site price. |
 | **OLD**  | Carried over from the legacy WooCommerce listing. Only where neither 2026 source gives a price.                                                                                                                                                                                              |
 
 `Product.priceUsd` is the **cheapest priced pack**, and the card labels it "from" when
@@ -77,14 +77,16 @@ product does not have.
 
 ### Still outstanding
 
-1. **Bacto-K, Bacto-Seed and Ruinex** still show the legacy $150 — the 2026 list does not
-   cover them. That now reads oddly beside Azofix 5 L at $80 and Bactoforce 10 L at $160,
-   all from the same Bioenergy line. These three need a 2026 price or removal.
-2. **5 L prices for the IKAR range** (Ocean $90, Bigo W $121, Enzo Pro $81, Bora $72,
-   Koral/IN5 $54, Elais $50, Silicare $69, Mendelenium $79) are OLD. The 1 L prices beside
-   them are March 2026 and all rose, so these are the numbers most likely to be stale.
-3. **Perfect Stick** ($25 / $110) appears in neither 2026 source — entirely OLD.
-4. **Master** is priced ($33) with no pack size stated anywhere; it renders as a plain
+1. **Six IKAR 5 L prices are still OLD** — Silicare $69, Mendelenium $79, Bora $72,
+   Koral $54, IN5 $54, Elais $50. Every 5 L the owner has since repriced went **up**
+   (Bigo W 121→125, Ocean 90→96, Enzo Pro 81→95), and the 1 L prices beside these six are
+   March 2026 and also rose, so these are the numbers most likely to be understated.
+2. **Perfect Stick** ($25 / $110) appears in neither 2026 source — entirely OLD.
+3. **Master** is priced ($33) with no pack size stated anywhere; it renders as a plain
    price rather than a per-pack one.
-5. **Bio NPK $30** was applied to the 50 g pack (the canonical listing, previously $28).
+4. **Bio NPK $30** was applied to the 50 g pack (the canonical listing, previously $28).
    The second listing — "Covers 4 hectares", size never stated — is untouched at $120.
+
+Closed since: Bacto-K and Bacto-Seed (5 L $80) and Ruinex (20 L $120) replaced the legacy
+flat $150 that the three of them shared, so the Bioenergy line is now internally
+consistent — Azofix 5 L $80, Bacto-K 5 L $80, Bacto-Seed 5 L $80, Fosfix 5 L $80.
