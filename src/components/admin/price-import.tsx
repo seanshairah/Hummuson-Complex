@@ -298,6 +298,7 @@ export function PriceImport() {
                   return (
                     <Tr
                       key={row.rowNumber}
+                      data-testid={`import-row-${row.rowNumber}`}
                       className={cn(
                         row.match === "possible" && "bg-soil-300/10",
                         row.match === "none" && "bg-paper-dim/60",
@@ -319,7 +320,7 @@ export function PriceImport() {
                       <Td>
                         <span className="font-medium text-ink">{row.rawName}</span>
                         {row.sheetBrand && (
-                          <span className="ml-1.5 text-xs text-ink-faint">{row.sheetBrand}</span>
+                          <span className="ml-1.5 text-xs text-ink-faint"> {row.sheetBrand}</span>
                         )}
                       </Td>
                       <Td>
@@ -417,7 +418,10 @@ export function PriceImport() {
             </button>
 
             {showUnmentioned && analysis.plan.unmentioned.length > 0 && (
-              <ul className="mt-5 grid gap-2 border-t border-line pt-5 sm:grid-cols-2">
+              <ul
+                data-testid="import-unmentioned"
+                className="mt-5 grid gap-2 border-t border-line pt-5 sm:grid-cols-2"
+              >
                 {analysis.plan.unmentioned.map((product) => (
                   <li
                     key={product.id}

@@ -297,15 +297,23 @@ test.describe("two-factor authentication", () => {
 
     // Retail, not wholesale — $21 is the retail figure for Silicare.
     await expect(page.getByText(/reading the "retail" column/i)).toBeVisible({ timeout: 15000 });
-    await expect(page.getByRole("cell", { name: /Silicare/ })).toBeVisible();
+
+    // Rows are addressed by their number in the sheet. Locating them by product
+    // name would not work: every row carries a picker listing the whole
+    // catalogue, so most product names appear on this page many times over.
+    const silicare = page.getByTestId("import-row-3");
+    await expect(silicare).toContainText("Silicare");
+    await expect(silicare).toContainText("Price changes");
 
     // The formulation row names no product, so it is offered unmatched rather
     // than attached to whichever name shares the word "NPK".
-    await expect(page.getByText("No product matched")).toBeVisible();
+    const npk = page.getByTestId("import-row-4");
+    await expect(npk).toContainText("NPK 3-30-0+zn");
+    await expect(npk).toContainText("No product matched");
 
     // Everything the sheet is silent about is listed, not passed over.
     await page.getByRole("button", { name: /products this sheet does not mention/i }).click();
-    await expect(page.getByText("Bacto-K")).toBeVisible();
+    await expect(page.getByTestId("import-unmentioned")).toContainText("Bacto-K");
 
     // One row is applicable, and only that one is counted.
     const apply = page.getByRole("button", { name: /Apply 1 change/ });
@@ -316,6 +324,6 @@ test.describe("two-factor authentication", () => {
 
     // And it reached the public page.
     await page.goto("/products/silicare");
-    await expect(page.getByText("$21")).toBeVisible();
+    await expect(page.getByText("$21").first()).toBeVisible();
   });
 });
