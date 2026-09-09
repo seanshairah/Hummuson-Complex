@@ -13,6 +13,7 @@ const product = (name: string): ProductCardData => ({
   category: null,
   image: null,
   priceUsd: null,
+  pricedPackCount: 0,
   packSizes: [],
   cropNames: [],
   cropSlugs: [],

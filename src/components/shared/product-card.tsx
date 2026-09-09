@@ -125,6 +125,11 @@ export function ProductCard({
           </span>
           {product.priceUsd !== null && (
             <span className="font-display text-sm font-semibold text-ink">
+              {/* priceUsd is the cheapest priced pack — say so when there are others,
+                  otherwise the number reads as the price of every size listed. */}
+              {product.pricedPackCount > 1 && (
+                <span className="mr-1 font-sans text-xs font-normal text-ink-faint">from</span>
+              )}
               ${product.priceUsd % 1 === 0 ? product.priceUsd : product.priceUsd.toFixed(2)}
             </span>
           )}

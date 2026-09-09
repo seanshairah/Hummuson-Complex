@@ -21,6 +21,11 @@ export interface ProductCardData {
   category: { name: string; slug: string } | null;
   image: ImageData | null;
   priceUsd: number | null;
+  /**
+   * How many package sizes carry a published price. `priceUsd` is the cheapest
+   * of them, so a count above one means it reads as a "from" price.
+   */
+  pricedPackCount: number;
   packSizes: string[];
   cropNames: string[];
   cropSlugs: string[];
@@ -76,6 +81,7 @@ export const getAllProducts = unstable_cache(
         : null,
       image: toImage(product.primaryImage),
       priceUsd: product.priceUsd ? Number(product.priceUsd) : null,
+      pricedPackCount: product.packageSizes.filter((p) => p.priceUsd !== null).length,
       packSizes: product.packageSizes.map((p) => p.size),
       cropNames: product.crops.map((c) => c.crop.name),
       cropSlugs: product.crops.map((c) => c.crop.slug),
@@ -263,6 +269,7 @@ export const getProductBySlug = (slug: string) =>
         category: p.category ? { name: p.category.name, slug: p.category.slug } : null,
         image: toImage(p.primaryImage),
         priceUsd: p.priceUsd ? Number(p.priceUsd) : null,
+        pricedPackCount: p.packageSizes.filter((pack) => pack.priceUsd !== null).length,
         packSizes: p.packageSizes.map((s) => s.size),
         cropNames: p.crops.map((c) => c.crop.name),
         cropSlugs: p.crops.map((c) => c.crop.slug),

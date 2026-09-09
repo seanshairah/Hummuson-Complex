@@ -26,7 +26,7 @@
     "packSizes": [
       {
         "size": "5 L",
-        "priceUsd": null
+        "priceUsd": 80
       }
     ],
     "applicationRates": [
@@ -86,7 +86,7 @@
       "Approved for organic farming (Ecocert & FiBL registered)",
       "Product is non-toxic and has no irritating compounds"
     ],
-    "priceUsd": 150,
+    "priceUsd": 80,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/AZOFIX-RHIZO_20L_620x620-323x323-1.jpg",
@@ -135,7 +135,16 @@
       "P — 100 mg/L",
       "Mg — 0.5 mg/L"
     ],
-    "packSizes": [],
+    "packSizes": [
+      {
+        "size": "5 L",
+        "priceUsd": 80
+      },
+      {
+        "size": "10 L",
+        "priceUsd": 160
+      }
+    ],
     "applicationRates": [
       {
         "context": "Cereals · per ha",
@@ -193,7 +202,7 @@
       "Approved for organic farming (Ecocert & FiBL registered)",
       "Product is non-toxic and has no irritating compounds"
     ],
-    "priceUsd": 150,
+    "priceUsd": 80,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_FOSFIX-PLUS_5L_1080x1080-600x600-1.jpg",
@@ -390,7 +399,7 @@
       "Improves soil structure",
       "Approved for use in organic farming according to EU Regulation 2018/848 and 2021/1165"
     ],
-    "priceUsd": 150,
+    "priceUsd": 33,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_MASTER_5L_1080x1080-600x600-1.jpg",
@@ -496,7 +505,11 @@
     "packSizes": [
       {
         "size": "80 ml sachet (per 16 L knapsack)",
-        "priceUsd": null
+        "priceUsd": 3
+      },
+      {
+        "size": "1 L",
+        "priceUsd": 25
       }
     ],
     "applicationRates": [
@@ -519,7 +532,7 @@
       "Contains 17 different amino acids with humic and fulvic acids",
       "Approved by Ecocert — premium Sapropel product"
     ],
-    "priceUsd": 25,
+    "priceUsd": 3,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_MAXPROLIN-BOX-1080x1080-1-600x600-2.png",
@@ -593,7 +606,15 @@
     "packSizes": [
       {
         "size": "160 ml sachet (per 16 L knapsack)",
-        "priceUsd": null
+        "priceUsd": 3
+      },
+      {
+        "size": "2.5 L",
+        "priceUsd": 37
+      },
+      {
+        "size": "20 L",
+        "priceUsd": 240
       }
     ],
     "applicationRates": [
@@ -614,7 +635,7 @@
       "Improves seed germination and promotes root formation",
       "Approved by Ecocert — premium Sapropel product"
     ],
-    "priceUsd": 40,
+    "priceUsd": 3,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/22.jpg",
@@ -711,7 +732,12 @@
       "Mg — 84 mg/L",
       "Ca — 51 mg/L"
     ],
-    "packSizes": [],
+    "packSizes": [
+      {
+        "size": "10 L",
+        "priceUsd": 160
+      }
+    ],
     "applicationRates": [
       {
         "context": "Cereals · per ha",
@@ -769,7 +795,7 @@
       "Approved for organic farming (laboratory quality certificate)",
       "Product is non-toxic and has no irritating compounds"
     ],
-    "priceUsd": 150,
+    "priceUsd": 160,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_BACTOFORCE_5L_1080x1080-600x600-1.jpg",
@@ -826,7 +852,7 @@
     "packSizes": [
       {
         "size": "50g",
-        "priceUsd": 28
+        "priceUsd": 30
       },
       {
         "size": "pack size not stated (\"Covers 4 hectares\")",
@@ -862,7 +888,7 @@
       "Promotes soil biodiversity",
       "Boosts plant vigour and yield potential"
     ],
-    "priceUsd": 28,
+    "priceUsd": 30,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bigo-uuuu-1152x1536.jpg",
@@ -917,12 +943,12 @@
     ],
     "packSizes": [
       {
-        "size": "5L",
-        "priceUsd": 110
+        "size": "1 L",
+        "priceUsd": 25
       },
       {
-        "size": "1L",
-        "priceUsd": 25
+        "size": "5 L",
+        "priceUsd": 110
       }
     ],
     "applicationRates": [
@@ -943,7 +969,7 @@
       "Increases the efficiency of foliar treatments",
       "Ideal for use with growth regulators, herbicides, fungicides and foliar fertilizers"
     ],
-    "priceUsd": 110,
+    "priceUsd": 25,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/PerfectStick-1-1152x1536.jpg",
@@ -986,12 +1012,12 @@
     ],
     "packSizes": [
       {
-        "size": "5L",
-        "priceUsd": 90
+        "size": "1 L",
+        "priceUsd": 22
       },
       {
-        "size": "1L",
-        "priceUsd": 18
+        "size": "5 L",
+        "priceUsd": 90
       }
     ],
     "applicationRates": [
@@ -1024,7 +1050,7 @@
       "Activates root hair activity and nutrient uptake",
       "Improves the protective layer of the leaf, thus increasing resistance for plants from pathogens"
     ],
-    "priceUsd": 90,
+    "priceUsd": 22,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Ocean-1-1152x1536.jpg",
@@ -1068,11 +1094,11 @@
     ],
     "packSizes": [
       {
-        "size": "1L",
-        "priceUsd": null
+        "size": "1 L",
+        "priceUsd": 16
       },
       {
-        "size": "5L",
+        "size": "5 L",
         "priceUsd": 54
       }
     ],
@@ -1099,7 +1125,7 @@
       "Enhances the efficiency of macronutrient absorption, ensuring healthy plant growth and high-quality yields",
       "Phosphorus is crucial for energy transfer, root growth and flowering; zinc supports enzyme activity, chlorophyll synthesis and carbohydrate metabolism"
     ],
-    "priceUsd": null,
+    "priceUsd": 16,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/1N6--1152x1536.jpg",
@@ -1148,11 +1174,11 @@
     ],
     "packSizes": [
       {
-        "size": "1L",
-        "priceUsd": 12
+        "size": "1 L",
+        "priceUsd": 16
       },
       {
-        "size": "5L",
+        "size": "5 L",
         "priceUsd": 54
       }
     ],
@@ -1183,7 +1209,7 @@
       "Supports pollen viability and growth, ensuring better fertilization and fruit quality",
       "Improves quality, shelf life and resilience"
     ],
-    "priceUsd": 12,
+    "priceUsd": 16,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Koral-1L-1152x1536.jpg",
@@ -1230,11 +1256,11 @@
     ],
     "packSizes": [
       {
-        "size": "1L",
-        "priceUsd": 17
+        "size": "1 L",
+        "priceUsd": 21
       },
       {
-        "size": "5L",
+        "size": "5 L",
         "priceUsd": 81
       }
     ],
@@ -1261,7 +1287,7 @@
       "Copper strengthens plant cell walls, increasing resistance to fungal and bacterial diseases",
       "L-Proline aids in regulating osmotic pressure, chlorophyll formation and pollen germination"
     ],
-    "priceUsd": 17,
+    "priceUsd": 21,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Enzo-Pro-1152x1536.jpg",
@@ -1309,11 +1335,11 @@
     ],
     "packSizes": [
       {
-        "size": "1L",
-        "priceUsd": null
+        "size": "1 L",
+        "priceUsd": 17
       },
       {
-        "size": "5L",
+        "size": "5 L",
         "priceUsd": 79
       }
     ],
@@ -1339,7 +1365,7 @@
       "Strengthens cell walls, improves membrane integrity and enhances resistance to rot, drought, and pathogens",
       "Supports chlorophyll formation, carbohydrate metabolism and pollen viability, ensuring healthy growth and high-quality yields"
     ],
-    "priceUsd": null,
+    "priceUsd": 17,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Mendelenium-1-1152x1536.jpg",
@@ -1384,11 +1410,11 @@
     ],
     "packSizes": [
       {
-        "size": "1L",
+        "size": "1 L",
         "priceUsd": 17
       },
       {
-        "size": "5L",
+        "size": "5 L",
         "priceUsd": 72
       }
     ],
@@ -1461,11 +1487,11 @@
     ],
     "packSizes": [
       {
-        "size": "1L",
-        "priceUsd": 12
+        "size": "1 L",
+        "priceUsd": 15
       },
       {
-        "size": "5L",
+        "size": "5 L",
         "priceUsd": 50
       }
     ],
@@ -1496,7 +1522,7 @@
       "Molybdenum improves nitrogen and phosphorus efficiency, boosting crop quality and yield",
       "Enhances the taste, smell and overall quality of produce"
     ],
-    "priceUsd": 12,
+    "priceUsd": 15,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Elais-1152x1536.jpg",
@@ -1543,12 +1569,12 @@
     ],
     "packSizes": [
       {
-        "size": "5L",
-        "priceUsd": 69
+        "size": "1 L",
+        "priceUsd": 20
       },
       {
-        "size": "1L",
-        "priceUsd": 15
+        "size": "5 L",
+        "priceUsd": 69
       }
     ],
     "applicationRates": [
@@ -1573,7 +1599,7 @@
       "L-Proline enhances natural immunity and pollen viability",
       "Promotes robust growth and higher yields"
     ],
-    "priceUsd": 69,
+    "priceUsd": 20,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/Silicare-1152x1536.jpg",
@@ -1616,11 +1642,11 @@
     ],
     "packSizes": [
       {
-        "size": "1L",
-        "priceUsd": 24
+        "size": "1 L",
+        "priceUsd": 27
       },
       {
-        "size": "5L",
+        "size": "5 L",
         "priceUsd": 121
       }
     ],
@@ -1645,7 +1671,7 @@
       "Biostimulants, amino acids and seaweed extract enhance nutrient uptake, photosynthesis and stress resistance",
       "Ideal for improving plant resilience and productivity under adverse conditions"
     ],
-    "priceUsd": 24,
+    "priceUsd": 27,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bigo-w-2-1152x1536.jpg",
@@ -1695,7 +1721,7 @@
     "packSizes": [
       {
         "size": "250 g",
-        "priceUsd": null
+        "priceUsd": 10
       },
       {
         "size": "1 kg",
@@ -1738,7 +1764,7 @@
       "Supports flowering, fruit set and recovery through stress periods",
       "Low doses: 0.25–0.5 kg/ha foliar or 1–1.5 kg/ha to the soil"
     ],
-    "priceUsd": 35,
+    "priceUsd": 10,
     "images": [
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/uu-1152x1536.jpg",
@@ -1788,7 +1814,7 @@
     "packSizes": [
       {
         "size": "1 L",
-        "priceUsd": null
+        "priceUsd": 17
       }
     ],
     "applicationRates": [
@@ -1824,7 +1850,7 @@
       "Improves abiotic stress resilience",
       "Cold-processed to preserve the full spectrum of kelp bioactives"
     ],
-    "priceUsd": null,
+    "priceUsd": 17,
     "images": [
       {
         "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.33 (2).jpeg",
@@ -1876,7 +1902,7 @@
     "packSizes": [
       {
         "size": "1 kg",
-        "priceUsd": null
+        "priceUsd": 30
       }
     ],
     "applicationRates": [
@@ -1910,7 +1936,7 @@
       "Boron and magnesium included to prevent secondary deficiencies",
       "Suitable for fruit trees, tropical fruit & citrus, vegetables, cereals, banana & pineapple, ornamentals, sugarcane and potato (per label)"
     ],
-    "priceUsd": null,
+    "priceUsd": 30,
     "images": [
       {
         "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.46 (1).jpeg",
@@ -1945,7 +1971,7 @@
     "packSizes": [
       {
         "size": "1 L",
-        "priceUsd": null
+        "priceUsd": 16
       }
     ],
     "applicationRates": [],
@@ -1954,7 +1980,7 @@
     ],
     "suitableCrops": [],
     "benefits": [],
-    "priceUsd": null,
+    "priceUsd": 16,
     "images": [
       {
         "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.41 (1).jpeg",
@@ -1983,7 +2009,7 @@
     "packSizes": [
       {
         "size": "1 L",
-        "priceUsd": null
+        "priceUsd": 23
       }
     ],
     "applicationRates": [],
@@ -1992,7 +2018,7 @@
     ],
     "suitableCrops": [],
     "benefits": [],
-    "priceUsd": null,
+    "priceUsd": 23,
     "images": [
       {
         "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.42 (1).jpeg",
@@ -2021,7 +2047,7 @@
     "packSizes": [
       {
         "size": "1 L",
-        "priceUsd": null
+        "priceUsd": 18
       }
     ],
     "applicationRates": [],
@@ -2030,7 +2056,7 @@
     ],
     "suitableCrops": [],
     "benefits": [],
-    "priceUsd": null,
+    "priceUsd": 18,
     "images": [
       {
         "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.41 (2).jpeg",
