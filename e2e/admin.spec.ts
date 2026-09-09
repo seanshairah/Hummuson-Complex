@@ -279,14 +279,22 @@ test.describe("two-factor authentication", () => {
 
     await page.goto("/admin/products/import");
 
+    // The desktop and mobile projects share one server and one database, and
+    // this test writes to it. A fixed price would therefore be "already
+    // correct" by the time the second project ran, leaving nothing to apply —
+    // so the sheet asks for a pack size and a price this run invented. Both
+    // would have to collide with the previous run for the row to stop being a
+    // change, and either one differing is enough.
+    const millilitres = 100 + (Date.now() % 800);
+    const price = 300 + (Date.now() % 400);
+
     // Shaped like the real March 2026 sheet: a title above the header, the
-    // brand in an ITEM column, units implied by the header, and a retail
-    // column alongside a wholesale one.
+    // brand in an ITEM column, and a retail column beside a wholesale one.
     const sheet = [
       "Price List March 2026,,,,",
-      "ITEM,DESCRIPTION,UNIT l,retail,Whole sale",
-      "Ikar,Silicare,1,21,18",
-      "Ikar,NPK 3-30-0+zn,1,16,14",
+      "ITEM,DESCRIPTION,UNIT,retail,Whole sale",
+      `Ikar,Silicare,${millilitres}ml,${price},${price - 3}`,
+      "Ikar,NPK 3-30-0+zn,1L,16,14",
     ].join("\n");
 
     await page.locator('input[type="file"]').setInputFiles({
@@ -295,7 +303,7 @@ test.describe("two-factor authentication", () => {
       buffer: Buffer.from(sheet, "utf8"),
     });
 
-    // Retail, not wholesale — $21 is the retail figure for Silicare.
+    // Retail, not wholesale: the sheet offers both and the site publishes one.
     await expect(page.getByText(/reading the "retail" column/i)).toBeVisible({ timeout: 15000 });
 
     // Rows are addressed by their number in the sheet. Locating them by product
@@ -303,7 +311,8 @@ test.describe("two-factor authentication", () => {
     // catalogue, so most product names appear on this page many times over.
     const silicare = page.getByTestId("import-row-3");
     await expect(silicare).toContainText("Silicare");
-    await expect(silicare).toContainText("Price changes");
+    await expect(silicare).toContainText(`${millilitres} ml`);
+    await expect(silicare).toContainText("New pack size");
 
     // The formulation row names no product, so it is offered unmatched rather
     // than attached to whichever name shares the word "NPK".
@@ -324,6 +333,7 @@ test.describe("two-factor authentication", () => {
 
     // And it reached the public page.
     await page.goto("/products/silicare");
-    await expect(page.getByText("$21").first()).toBeVisible();
+    await expect(page.getByText(`${millilitres} ml`).first()).toBeVisible();
+    await expect(page.getByText(`$${price}`).first()).toBeVisible();
   });
 });
