@@ -59,8 +59,13 @@ derived, extrapolated or rounded. Three sources are in play, in order of recency
 | Tag      | Source                                                                                                                                                                                                                                                                                       |
 | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **PDF**  | "Price List March 2026" (`cost_price__distributors_price_feb_26.pdf`), retail column. The same sheet carries a wholesale column that the public site does not publish.                                                                                                                       |
-| **LIST** | The owner's typed price lists, 2026-09-09 (two batches) — pack sizes the PDF does not cover (5 L / 10 L / 20 L, sachets, A3 250 g) plus Mendelenium, Emaxx Ultra, Maxprolin and the Bio Energy line. Where the two overlap they agree, which is what establishes the PDF's retail column as the site price. |
+| **LIST** | The owner's typed price lists, 2026-09-09 (three batches) — pack sizes the PDF does not cover (5 L / 10 L / 20 L, sachets, A3 250 g) plus Mendelenium, Emaxx Ultra, Maxprolin and the Bio Energy line. Where the two overlap they agree, which is what establishes the PDF's retail column as the site price. |
 | **OLD**  | Carried over from the legacy WooCommerce listing. Only where neither 2026 source gives a price.                                                                                                                                                                                              |
+
+The third batch (Perfect Stick 1 L $25, Master $33) changed no numbers — it restated two
+figures the site already carried. That is still worth recording: both were OLD, and are
+now confirmed current, which is the difference between a price nobody has checked since
+the WooCommerce era and one the owner has just stood behind.
 
 `Product.priceUsd` is the **cheapest priced pack**, and the card labels it "from" when
 more than one size is priced — a bare number beside "1 L · 5 L" states a price the
@@ -77,16 +82,20 @@ product does not have.
 
 ### Still outstanding
 
-1. **Six IKAR 5 L prices are still OLD** — Silicare $69, Mendelenium $79, Bora $72,
-   Koral $54, IN5 $54, Elais $50. Every 5 L the owner has since repriced went **up**
-   (Bigo W 121→125, Ocean 90→96, Enzo Pro 81→95), and the 1 L prices beside these six are
-   March 2026 and also rose, so these are the numbers most likely to be understated.
-2. **Perfect Stick** ($25 / $110) appears in neither 2026 source — entirely OLD.
-3. **Master** is priced ($33) with no pack size stated anywhere; it renders as a plain
-   price rather than a per-pack one.
-4. **Bio NPK $30** was applied to the 50 g pack (the canonical listing, previously $28).
-   The second listing — "Covers 4 hectares", size never stated — is untouched at $120.
+1. **Seven 5 L prices are still OLD** — Silicare $69, Mendelenium $79, Bora $72,
+   Koral $54, IN5 $54, Elais $50, Perfect Stick $110. Every 5 L the owner has since
+   repriced went **up** (Bigo W 121→125, Ocean 90→96, Enzo Pro 81→95), and the 1 L prices
+   beside these seven are all confirmed for 2026, so these are the numbers most likely to
+   be understated. Note the shape of it: the owner has now confirmed a 1 L price for every
+   IKAR product and a 5 L for only three of ten — the gap is systematic, not scattered.
+2. **Master** has a confirmed price ($33) and no pack size, stated nowhere in any source.
+   It therefore renders as a plain price rather than a per-pack one — the only product in
+   the range that does.
+3. **Bio NPK $30** was applied to the 50 g pack (the canonical listing, previously $28).
+   The second listing — "Covers 4 hectares", size never stated — is untouched at $120, and
+   that unresolved size shows on the product card verbatim.
 
 Closed since: Bacto-K and Bacto-Seed (5 L $80) and Ruinex (20 L $120) replaced the legacy
 flat $150 that the three of them shared, so the Bioenergy line is now internally
-consistent — Azofix 5 L $80, Bacto-K 5 L $80, Bacto-Seed 5 L $80, Fosfix 5 L $80.
+consistent — Azofix 5 L $80, Bacto-K 5 L $80, Bacto-Seed 5 L $80, Fosfix 5 L $80. Perfect
+Stick 1 L and Master were confirmed at their existing figures.
