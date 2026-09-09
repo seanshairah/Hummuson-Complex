@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Suspense } from "react";
-import { Copy, Eye, Package, Plus, Star } from "lucide-react";
+import { Copy, Eye, FileSpreadsheet, Package, Plus, Star } from "lucide-react";
 import { AdminPageHeader } from "@/components/admin/page-header";
 import { AdminSearch } from "@/components/admin/admin-search";
 import { StatusPill } from "@/components/admin/status-pill";
@@ -38,6 +38,9 @@ export default async function AdminProductsPage({
             <Suspense>
               <AdminSearch placeholder="Search products…" />
             </Suspense>
+            <ButtonLink href="/admin/products/import" size="sm" variant="outline">
+              <FileSpreadsheet className="size-4" /> Import prices
+            </ButtonLink>
             <ButtonLink href="/admin/products/new" size="sm">
               <Plus className="size-4" /> New product
             </ButtonLink>

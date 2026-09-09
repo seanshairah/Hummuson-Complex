@@ -56,11 +56,11 @@ Full audit: `docs/audit/AUDIT.md` · item inventory: `docs/audit/CONTENT-INVENTO
 Prices are USD **retail**, and every one of them is quoted from a source — none is
 derived, extrapolated or rounded. Three sources are in play, in order of recency:
 
-| Tag      | Source                                                                                                                                                                                                                                                                                       |
-| -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **PDF**  | "Price List March 2026" (`cost_price__distributors_price_feb_26.pdf`), retail column. The same sheet carries a wholesale column that the public site does not publish.                                                                                                                       |
+| Tag      | Source                                                                                                                                                                                                                                                                                                        |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **PDF**  | "Price List March 2026" (`cost_price__distributors_price_feb_26.pdf`), retail column. The same sheet carries a wholesale column that the public site does not publish.                                                                                                                                        |
 | **LIST** | The owner's typed price lists, 2026-09-09 (three batches) — pack sizes the PDF does not cover (5 L / 10 L / 20 L, sachets, A3 250 g) plus Mendelenium, Emaxx Ultra, Maxprolin and the Bio Energy line. Where the two overlap they agree, which is what establishes the PDF's retail column as the site price. |
-| **OLD**  | Carried over from the legacy WooCommerce listing. Only where neither 2026 source gives a price.                                                                                                                                                                                              |
+| **OLD**  | Carried over from the legacy WooCommerce listing. Only where neither 2026 source gives a price.                                                                                                                                                                                                               |
 
 The third batch (Perfect Stick 1 L $25, Master $33) changed no numbers — it restated two
 figures the site already carried. That is still worth recording: both were OLD, and are
@@ -70,6 +70,35 @@ the WooCommerce era and one the owner has just stood behind.
 `Product.priceUsd` is the **cheapest priced pack**, and the card labels it "from" when
 more than one size is priced — a bare number beside "1 L · 5 L" states a price the
 product does not have.
+
+### Importing the next sheet
+
+`/admin/products/import` takes an .xlsx or .csv and produces a plan; nothing is written
+until someone ticks rows and presses apply. The split is the feature. Reading the March
+2026 sheet by hand turned up four places where an importer acting on its own would have
+been confidently wrong, and each one is now a rule:
+
+| What the sheet did                                                | What the importer does                                                                                                              |
+| ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Carried retail **and** wholesale columns                          | Defaults to retail, names the column it read, and says so when a wholesale column exists                                            |
+| Wrote "NPK 3-30-0+zn", meaning IN5                                | Refuses to match on a word several products share, so the row arrives unmatched with a picker rather than repricing NPK 12-11-30+TE |
+| Put the header on row 4, under a title                            | Scores the first fifteen rows and picks the header; a sheet with none is rejected, not read from row 1                              |
+| Listed CarboAmin's sachet as "160" under a column headed "UNIT l" | Flags it: the product has a 160 ml pack, and 160 L is not a pack size                                                               |
+
+Beyond that: a pack is found by the quantity it parses to, so the sheet's "80ml" reaches
+the catalogue's "80 ml sachet (per 16 L knapsack)" instead of adding a second one. A pack
+the sheet omits is left alone. Only prices and pack sizes are written — names,
+descriptions and brands are not, and a brand the sheet disagrees with is shown beside the
+row rather than applied. Both halves are in the audit log: what was analysed, and what
+was applied.
+
+The **products this sheet does not mention** panel exists because of Bacto-K, which held a
+legacy $150 through a full repricing simply because nothing listed what the new list had
+failed to cover.
+
+`.xlsx` is read in-repo (`src/lib/spreadsheet`). It is a ZIP of XML and Node ships
+`zlib`; the npm alternatives were a maintained parser bringing 97 transitive packages or
+the abandoned `xlsx@0.18.5` with open prototype-pollution and ReDoS advisories.
 
 ### Two rows in the PDF resolve open questions
 

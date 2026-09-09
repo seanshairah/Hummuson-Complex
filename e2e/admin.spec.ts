@@ -166,10 +166,16 @@ test.describe("audit log", () => {
     // A content change that should be attributable afterwards.
     const label = `Audit probe ${Date.now()}`;
     await page.goto("/admin/testimonials");
-    await page.getByRole("button", { name: /new testimonial/i }).first().click();
+    await page
+      .getByRole("button", { name: /new testimonial/i })
+      .first()
+      .click();
     const dialog = page.locator('[role="dialog"]');
     await dialog.locator('input[name="name"]').fill(label);
-    await dialog.locator('textarea[name="quote"], input[name="quote"]').first().fill("Probe quote.");
+    await dialog
+      .locator('textarea[name="quote"], input[name="quote"]')
+      .first()
+      .fill("Probe quote.");
     await dialog.getByRole("button", { name: "Save" }).click();
     // Wait for the save to land before navigating: under parallel load,
     // leaving the page first can abort it and there is then nothing to find.
@@ -262,5 +268,54 @@ test.describe("two-factor authentication", () => {
     await expect(page.getByRole("heading", { name: "Overview" })).toBeVisible();
 
     await context.close();
+  });
+
+  test("price import: preview a sheet, reject a bad guess, apply the rest", async ({ page }) => {
+    await page.goto("/admin/login");
+    await page.fill('input[name="email"]', ADMIN_EMAIL);
+    await page.fill('input[name="password"]', ADMIN_PASSWORD);
+    await page.click('button[type="submit"]');
+    await page.waitForURL("**/admin");
+
+    await page.goto("/admin/products/import");
+
+    // Shaped like the real March 2026 sheet: a title above the header, the
+    // brand in an ITEM column, units implied by the header, and a retail
+    // column alongside a wholesale one.
+    const sheet = [
+      "Price List March 2026,,,,",
+      "ITEM,DESCRIPTION,UNIT l,retail,Whole sale",
+      "Ikar,Silicare,1,21,18",
+      "Ikar,NPK 3-30-0+zn,1,16,14",
+    ].join("\n");
+
+    await page.locator('input[type="file"]').setInputFiles({
+      name: "march-2026.csv",
+      mimeType: "text/csv",
+      buffer: Buffer.from(sheet, "utf8"),
+    });
+
+    // Retail, not wholesale — $21 is the retail figure for Silicare.
+    await expect(page.getByText(/reading the "retail" column/i)).toBeVisible({ timeout: 15000 });
+    await expect(page.getByRole("cell", { name: /Silicare/ })).toBeVisible();
+
+    // The formulation row names no product, so it is offered unmatched rather
+    // than attached to whichever name shares the word "NPK".
+    await expect(page.getByText("No product matched")).toBeVisible();
+
+    // Everything the sheet is silent about is listed, not passed over.
+    await page.getByRole("button", { name: /products this sheet does not mention/i }).click();
+    await expect(page.getByText("Bacto-K")).toBeVisible();
+
+    // One row is applicable, and only that one is counted.
+    const apply = page.getByRole("button", { name: /Apply 1 change/ });
+    await expect(apply).toBeEnabled();
+    await apply.click();
+
+    await expect(page.getByText(/1 product updated/i)).toBeVisible({ timeout: 15000 });
+
+    // And it reached the public page.
+    await page.goto("/products/silicare");
+    await expect(page.getByText("$21")).toBeVisible();
   });
 });
