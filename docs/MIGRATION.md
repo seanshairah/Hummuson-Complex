@@ -50,6 +50,30 @@ Full audit: `docs/audit/AUDIT.md` · item inventory: `docs/audit/CONTENT-INVENTO
    Official Meta Commerce API integration is the future path.
 5. Portfolio items had no narrative text — imported as image-led results; enrich in
    `/admin/projects`.
+6. Sweet potatoes is in the owner's crop list but no product's published text covers it,
+   directly or under an umbrella — it is the one crop still listed under "other crops we
+   supply". Name the products that suit it and they can be linked in `/admin/products`.
+
+### Crop umbrellas
+
+Supplier text names crops at two levels: an umbrella ("vegetables", "cereals") and
+specific crops the owner sells into ("cabbage", "wheat"). Read literally, a product that
+said "vegetables" was listed for a `vegetables` crop page and for none of the vegetables
+the owner actually grows, so the specific pages stood empty. Umbrella terms are therefore
+resolved to their members, using the members the owner's own taxonomy declares in
+`content/crops.json` — the `aka` list on `brassicas` and `cucurbits` is where cauliflower,
+cabbage, cucumber, butternut and watermelon come from, not from an outside source:
+
+- **vegetables** was replaced outright, on the owner's instruction that the term is too
+  broad to show: brassicas, cauliflower, broccoli, cabbage, cucurbits, cucumber,
+  butternut, watermelon, leafy vegetables, tomato.
+- **cereals**, **legumes** and **fruits** were kept and their members added alongside —
+  wheat; sugar bean, pea, bean; fruit trees — because those labels read as accurate on
+  their own and maize already sat beside "cereals".
+
+This is a deduction about what a word covers, not a claim about a product: nothing was
+listed for a crop its own text does not reach. Reversing any of it is an edit to
+`suitableCrops` in `content/products.json` followed by a re-import.
 
 ## Pricing
 

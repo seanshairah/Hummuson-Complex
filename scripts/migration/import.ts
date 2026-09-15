@@ -506,6 +506,34 @@ async function pruneEmptyCategories() {
   if (removed.count > 0) console.log(`✓ pruned ${removed.count} empty categories`);
 }
 
+/**
+ * Drops crops that nothing references any more.
+ *
+ * `ensureCrop` mints a crop the first time a product's own text names one, and
+ * `importCrops` can only add and demote — so a crop the owner has since split
+ * into narrower ones ("vegetables" → brassicas, cucurbits, leafy vegetables)
+ * survives as a row with no products, and the crops page lists it under "other
+ * crops we supply" forever. Curated crops are never touched, however empty:
+ * content/crops.json is the owner saying the crop exists, and a crop no product
+ * covers yet is exactly what that section is for. Only a crop that is both
+ * absent from the taxonomy and referenced by nothing at all goes.
+ */
+async function pruneOrphanCrops(curated: SourceCrop[]) {
+  const removed = await prisma.crop.deleteMany({
+    where: {
+      slug: { notIn: curated.map((crop) => crop.slug) },
+      products: { none: {} },
+      faqs: { none: {} },
+      stages: { none: {} },
+      applicationGuides: { none: {} },
+      articles: { none: {} },
+      videos: { none: {} },
+      projects: { none: {} },
+    },
+  });
+  if (removed.count > 0) console.log(`✓ pruned ${removed.count} orphaned crops`);
+}
+
 async function linkRelatedProducts() {
   // Related = same category, closest order — a deterministic, honest default.
   const products = await prisma.product.findMany({
@@ -872,6 +900,9 @@ export async function runImport() {
   if (videos) await importVideos(videos);
   if (projects) await importProjects(projects);
   if (testimonials) await importTestimonials(testimonials);
+  // Last of the content steps: every table that can point at a crop has been
+  // written by now, so "referenced by nothing" is finally true when it says so.
+  if (crops) await pruneOrphanCrops(crops);
   await importCompany(company);
   if (products) await buildDefaultCatalogue();
 
