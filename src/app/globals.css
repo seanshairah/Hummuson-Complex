@@ -312,17 +312,23 @@
 }
 
 /* Floating glass card on imagery — used sparingly */
+/*
+ * Frosted panels. Do NOT hand-write `-webkit-backdrop-filter` here: the build
+ * auto-prefixes from the browser targets, and writing the prefixed property
+ * alongside the standard one made Lightning CSS collapse the pair — glass-light
+ * shipped with only the -webkit- declaration and glass-dark lost the blur
+ * outright, so the scrolled header was plain translucent cream with the page
+ * showing through it sharply. One standard declaration, no prefix.
+ */
 @utility glass-dark {
   background: rgb(10 20 13 / 0.55);
   backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgb(255 255 255 / 0.12);
 }
 
 @utility glass-light {
   background: rgb(251 250 245 / 0.72);
   backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgb(19 26 18 / 0.08);
 }
 

@@ -41,6 +41,43 @@ test.describe("public site", () => {
     expect(shop?.url()).toContain("/products");
   });
 
+  /**
+   * Regression: the mobile menu panel used to live inside <header>, and the
+   * scrolled header carries `backdrop-filter` (its frosted glass). A filtered
+   * element is a containing block for `position: fixed` descendants, so
+   * `inset-0` resolved against the 64px bar instead of the viewport and the
+   * menu collapsed to a strip with the page showing through beneath it. It only
+   * happened once scrolled, which is why opening it at the top of the page
+   * looked fine — so this test scrolls first, and asserts on geometry rather
+   * than on visibility, which stayed true throughout the bug.
+   */
+  test("mobile menu covers the viewport after scrolling", async ({ page, isMobile }) => {
+    test.skip(!isMobile, "the menu and its toggle are mobile-only");
+    await page.goto("/products");
+    await page.mouse.wheel(0, 900);
+    await expect.poll(async () => page.evaluate(() => window.scrollY)).toBeGreaterThan(100);
+
+    await page.getByRole("button", { name: /open menu/i }).click();
+    const panel = page.locator("#mobile-menu");
+    await expect(panel).toBeVisible();
+
+    const covers = await panel.evaluate((el) => {
+      const r = el.getBoundingClientRect();
+      return r.height >= window.innerHeight - 2 && r.width >= window.innerWidth - 2;
+    });
+    expect(covers).toBe(true);
+
+    // The bar stays on top of the panel so the menu can be closed again.
+    await expect(page.getByRole("button", { name: /close menu/i })).toBeVisible();
+
+    // And the links inside it are actually reachable.
+    await page
+      .getByRole("link", { name: /^Crops/ })
+      .first()
+      .click();
+    await page.waitForURL("**/crops");
+  });
+
   test("404 page offers useful next actions", async ({ page }) => {
     await page.goto("/definitely-not-a-page");
     await expect(page.getByText(/404/i)).toBeVisible();

@@ -40,97 +40,114 @@ export function Header() {
   }, [open]);
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-40 transition-all duration-300",
-        scrolled && "shadow-card glass-light",
-        scrolled && "supports-[backdrop-filter]:bg-cream/70",
-      )}
-    >
-      <div className="container-wide flex h-16 items-center justify-between gap-4 md:h-[4.5rem]">
-        <Link href="/" aria-label="Humuson Complex — home" className="shrink-0">
-          <Logo tone={onDark || open ? "light" : "dark"} className={cn(open && "relative z-50")} />
-        </Link>
+    <>
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-40 transition-all duration-300",
+          // Above the mobile menu panel, which is a sibling below: the bar keeps
+          // the logo and the close button visible over the open menu.
+          open && "z-50",
+          // ...but transparent while it is open, so the dark panel behind shows
+          // through and the light logo and close button keep their contrast.
+          // The panel used to sit inside the header and cover this itself.
+          scrolled && !open && "shadow-card glass-light",
+          scrolled && !open && "supports-[backdrop-filter]:bg-cream/70",
+        )}
+      >
+        <div className="container-wide flex h-16 items-center justify-between gap-4 md:h-[4.5rem]">
+          <Link href="/" aria-label="Humuson Complex — home" className="shrink-0">
+            <Logo tone={onDark || open ? "light" : "dark"} />
+          </Link>
 
-        {/* Desktop nav */}
-        <nav aria-label="Main" className="hidden lg:block">
-          <ul
-            className={cn(
-              "flex items-center gap-0.5 rounded-full border p-1 transition-colors",
-              onDark
-                ? "border-paper/15 bg-humus-950/40 backdrop-blur-md"
-                : "border-ink/8 bg-paper-dim/70",
-            )}
-          >
-            {mainNav.map((item) => {
-              const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    aria-current={active ? "page" : undefined}
-                    className={cn(
-                      "block rounded-full px-4 py-2 font-display text-sm font-medium transition-colors",
-                      active
-                        ? onDark
-                          ? "bg-leaf-400 text-humus-950"
-                          : "bg-humus-900 text-paper"
-                        : onDark
-                          ? "text-paper/85 hover:bg-paper/10 hover:text-paper"
-                          : "text-ink-soft hover:bg-ink/5 hover:text-ink",
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
+          {/* Desktop nav */}
+          <nav aria-label="Main" className="hidden lg:block">
+            <ul
+              className={cn(
+                "flex items-center gap-0.5 rounded-full border p-1 transition-colors",
+                onDark
+                  ? "border-paper/15 bg-humus-950/40 backdrop-blur-md"
+                  : "border-ink/8 bg-paper-dim/70",
+              )}
+            >
+              {mainNav.map((item) => {
+                const active =
+                  item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      aria-current={active ? "page" : undefined}
+                      className={cn(
+                        "block rounded-full px-4 py-2 font-display text-sm font-medium transition-colors",
+                        active
+                          ? onDark
+                            ? "bg-leaf-400 text-humus-950"
+                            : "bg-humus-900 text-paper"
+                          : onDark
+                            ? "text-paper/85 hover:bg-paper/10 hover:text-paper"
+                            : "text-ink-soft hover:bg-ink/5 hover:text-ink",
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
 
-        {/* Utilities */}
-        <div className="flex items-center gap-2">
-          <SearchLauncher tone={onDark ? "light" : "dark"} />
-          <a
-            href={whatsappLink(whatsappAdviceMessage())}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Chat with Humuson on WhatsApp"
-            className={cn(
-              "hidden size-10 items-center justify-center rounded-full border transition-colors sm:flex",
-              onDark
-                ? "border-paper/20 text-paper hover:bg-paper/10"
-                : "border-ink/12 text-ink hover:bg-ink/5",
-            )}
-          >
-            <MessageCircle className="size-[1.15rem]" strokeWidth={1.8} />
-          </a>
-          <div className="hidden md:block">
-            <AskHumusonLauncher tone={onDark ? "light" : "dark"} />
+          {/* Utilities */}
+          <div className="flex items-center gap-2">
+            <SearchLauncher tone={onDark ? "light" : "dark"} />
+            <a
+              href={whatsappLink(whatsappAdviceMessage())}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Chat with Humuson on WhatsApp"
+              className={cn(
+                "hidden size-10 items-center justify-center rounded-full border transition-colors sm:flex",
+                onDark
+                  ? "border-paper/20 text-paper hover:bg-paper/10"
+                  : "border-ink/12 text-ink hover:bg-ink/5",
+              )}
+            >
+              <MessageCircle className="size-[1.15rem]" strokeWidth={1.8} />
+            </a>
+            <div className="hidden md:block">
+              <AskHumusonLauncher tone={onDark ? "light" : "dark"} />
+            </div>
+
+            {/* Mobile menu toggle */}
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              aria-label={open ? "Close menu" : "Open menu"}
+              className={cn(
+                "flex size-10 items-center justify-center rounded-full border lg:hidden",
+                open
+                  ? "border-paper/25 text-paper"
+                  : onDark
+                    ? "border-paper/20 text-paper"
+                    : "border-ink/12 text-ink",
+              )}
+            >
+              {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
           </div>
-
-          {/* Mobile menu toggle */}
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            aria-label={open ? "Close menu" : "Open menu"}
-            className={cn(
-              "relative z-50 flex size-10 items-center justify-center rounded-full border lg:hidden",
-              open
-                ? "border-paper/25 text-paper"
-                : onDark
-                  ? "border-paper/20 text-paper"
-                  : "border-ink/12 text-ink",
-            )}
-          >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile menu */}
+      {/*
+       * Mobile menu — deliberately a SIBLING of <header>, not a child.
+       * `backdrop-filter` (the scrolled header's frosted glass) makes an element
+       * a containing block for its `position: fixed` descendants, so while this
+       * panel lived inside the header its `inset-0` resolved against the 64px
+       * bar instead of the viewport: scrolling, then opening the menu, collapsed
+       * it to a strip with the page showing through underneath. Nothing inside a
+       * filtered ancestor can be viewport-fixed, so the panel lives out here.
+       */}
       <div
         id="mobile-menu"
         className={cn(
@@ -184,6 +201,6 @@ export function Header() {
           </div>
         </nav>
       </div>
-    </header>
+    </>
   );
 }
