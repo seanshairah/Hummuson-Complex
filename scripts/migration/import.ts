@@ -755,11 +755,12 @@ async function importCompany(company: SourceCompany | null) {
     whatsappCatalogueUrl: company.whatsappCatalogueUrl ?? "",
     emails: company.emails ?? [],
     address: company.address ?? null,
-    // Set in admin → Settings once someone reads the coordinates off Maps.
-    // Seeding a guess would put the pin somewhere plausible and wrong.
-    mapsLat: null,
-    mapsLng: null,
-    mapsUrl: null,
+    // The map pin. Seeding a guess would put it somewhere plausible and wrong,
+    // so these stay null until the content file carries real coordinates —
+    // supplied by the owner from Google Maps, not derived from the address.
+    mapsLat: company.mapsLat ?? null,
+    mapsLng: company.mapsLng ?? null,
+    mapsUrl: company.mapsUrl ?? null,
     hours: company.hours ?? null,
     socials: company.socials ?? {},
   };

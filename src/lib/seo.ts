@@ -1,11 +1,20 @@
 import { absoluteUrl, site } from "@/lib/site";
 import { truncate } from "@/lib/utils";
 import { stripHtml } from "@/lib/sanitize";
+import type { MapPin } from "@/lib/maps";
 import type { ProductDetailData } from "@/server/data/products";
 import type { ArticleDetailData, FaqData, VideoData } from "@/server/data/content";
 
-/** Organization schema (real details from the audited site). */
-export function organizationJsonLd() {
+/**
+ * Organization schema (real details from the audited site).
+ *
+ * `pin` is the owner-set map pin. Passing it adds `geo`, which is what stops a
+ * search engine having to geocode "78 Nemakonde Way" for itself and landing on
+ * the wrong side of the road — the same reason the on-page map links take it.
+ * Omitted when unset, because a schema that states the wrong coordinates is
+ * worse than one that states none.
+ */
+export function organizationJsonLd(pin?: MapPin | null) {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -20,6 +29,9 @@ export function organizationJsonLd() {
       addressLocality: "Harare",
       addressCountry: "ZW",
     },
+    ...(pin
+      ? { geo: { "@type": "GeoCoordinates", latitude: pin.lat, longitude: pin.lng } }
+      : {}),
     contactPoint: {
       "@type": "ContactPoint",
       telephone: "+263776656433",

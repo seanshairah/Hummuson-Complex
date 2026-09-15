@@ -54,6 +54,24 @@ Full audit: `docs/audit/AUDIT.md` · item inventory: `docs/audit/CONTENT-INVENTO
    directly or under an umbrella — it is the one crop still listed under "other crops we
    supply". Name the products that suit it and they can be linked in `/admin/products`.
 
+### The map pin
+
+`content/company.json` carries `mapsLat` / `mapsLng` — the yard at 78 Nemakonde
+Way, supplied by the owner from Google Maps (-17.77986, 31.028776), not derived
+from the address. Every "find us" surface reads it through `toMapPin`: the
+contact page's live map, the address links in the footer, on About and on
+Contact, and the `geo` block in the Organization JSON-LD. With no pin they all
+fall back to a text search of the address, which is a guess Google resolves —
+on a Harare street with no listing, often to the wrong side of the road.
+
+Two things follow. The pin is editable in admin → Settings → Contact, but the
+whole `contact` settings block is replaced from `content/company.json` on every
+import, exactly as the address and phone numbers are — so a correction made only
+in admin is lost at the next content refresh. Make it in both, or in the content
+file. And `mapsUrl` is deliberately empty: a Google Maps *directions* URL carries
+the sender's own starting point, so pasting one there would hand every visitor
+directions from wherever that person happened to be standing.
+
 ### Crop umbrellas
 
 Supplier text names crops at two levels: an umbrella ("vegetables", "cereals") and

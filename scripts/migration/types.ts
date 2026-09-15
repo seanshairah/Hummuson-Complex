@@ -114,6 +114,14 @@ export interface SourceCompany {
   phones?: string[];
   emails?: string[];
   address?: string | null;
+  /**
+   * The map pin in decimal degrees, read off Google Maps. An address is a
+   * string Google has to interpret; these are the gate.
+   */
+  mapsLat?: number | null;
+  mapsLng?: number | null;
+  /** Optional Google Maps share link (maps.app.goo.gl/…) for "open" actions. */
+  mapsUrl?: string | null;
   socials?: Record<string, string | null>;
   hours?: string | null;
   services?: (string | { title: string; description?: string })[];

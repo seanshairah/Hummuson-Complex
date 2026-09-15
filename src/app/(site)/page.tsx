@@ -19,9 +19,10 @@ import {
   getAllTestimonials,
   getAllVideos,
 } from "@/server/data/content";
-import { getCompanySettings } from "@/server/data/settings";
+import { getCompanySettings, getContactSettings } from "@/server/data/settings";
 import { site } from "@/lib/site";
 import { organizationJsonLd } from "@/lib/seo";
+import { toMapPin } from "@/lib/maps";
 import { JsonLd } from "@/components/shared/json-ld";
 
 export const revalidate = 300;
@@ -33,7 +34,18 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [stats, featured, options, crops, articles, videos, projects, testimonials, company] =
+  const [
+    stats,
+    featured,
+    options,
+    crops,
+    articles,
+    videos,
+    projects,
+    testimonials,
+    company,
+    contact,
+  ] =
     await Promise.all([
       getCatalogueStats(),
       getFeaturedProducts(8),
@@ -44,6 +56,7 @@ export default async function HomePage() {
       getAllProjects(),
       getAllTestimonials(),
       getCompanySettings(),
+      getContactSettings(),
     ]);
 
   const spotlight =
@@ -53,7 +66,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <JsonLd data={organizationJsonLd()} />
+      <JsonLd data={organizationJsonLd(toMapPin(contact))} />
       <HomeHero
         spotlight={spotlight}
         productCount={stats.products}

@@ -38,7 +38,7 @@ export default async function AboutPage() {
 
   return (
     <>
-      <JsonLd data={organizationJsonLd()} />
+      <JsonLd data={organizationJsonLd(toMapPin(contact))} />
       <PageIntro
         tone="dark"
         eyebrow="About Humuson Complex"
