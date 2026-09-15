@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowRight, Sprout } from "lucide-react";
@@ -27,83 +27,120 @@ export function GrowthTimeline({ stages, cropName }: { stages: StageData[]; crop
   const [activeKey, setActiveKey] = useState(
     stages.find((stage) => stage.products.length > 0)?.key ?? stages[0]?.key ?? "",
   );
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  /**
+   * Select a stage and bring it into view. The track scrolls on a narrow
+   * screen, so the stage an arrow key just chose is often off to one side —
+   * selecting without scrolling would move the highlight somewhere the reader
+   * cannot see.
+   */
+  function select(index: number) {
+    const stage = stages[index];
+    if (!stage) return;
+    setActiveKey(stage.key);
+    const el = tabRefs.current[index];
+    el?.focus();
+    el?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", inline: "center", block: "nearest" });
+  }
+
   const active = stages.find((stage) => stage.key === activeKey) ?? stages[0];
   if (!active) return null;
   const activeIndex = stages.findIndex((stage) => stage.key === active.key);
 
   return (
     <div>
-      {/* Timeline rail */}
-      <div className="relative">
-        <div
-          aria-hidden
-          className="absolute top-[1.05rem] right-4 left-4 h-0.5 rounded bg-line md:right-8 md:left-8"
-        />
-        <motion.div
-          aria-hidden
-          className="absolute top-[1.05rem] left-4 h-0.5 origin-left rounded bg-leaf-500 md:left-8"
-          initial={false}
-          animate={{
-            width: `calc((100% - 2rem) * ${stages.length > 1 ? activeIndex / (stages.length - 1) : 0})`,
-          }}
-          transition={reduce ? { duration: 0 } : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        />
-        <div
-          role="tablist"
-          aria-label={`${cropName} growth stages`}
-          className="relative scrollbar-none flex justify-between gap-1 overflow-x-auto pb-2"
-        >
-          {stages.map((stage, i) => {
-            const isActive = stage.key === active.key;
-            const reached = i <= activeIndex;
-            return (
-              <button
-                key={stage.key}
-                role="tab"
-                aria-selected={isActive}
-                aria-controls={`stage-panel-${stage.key}`}
-                id={`stage-tab-${stage.key}`}
-                onClick={() => setActiveKey(stage.key)}
-                onKeyDown={(e) => {
-                  if (e.key === "ArrowRight") setActiveKey(stages[(i + 1) % stages.length]!.key);
-                  if (e.key === "ArrowLeft")
-                    setActiveKey(stages[(i - 1 + stages.length) % stages.length]!.key);
-                }}
-                className="group flex min-w-16 flex-col items-center gap-2 px-1 md:min-w-24"
-              >
-                <span
-                  className={cn(
-                    "flex size-9 items-center justify-center rounded-full border-2 bg-paper transition-all",
-                    isActive
-                      ? "scale-110 border-leaf-600 bg-leaf-400 text-humus-950 shadow-card"
-                      : reached
-                        ? "border-leaf-500 text-leaf-700"
-                        : "border-line text-ink-faint group-hover:border-ink/30",
-                  )}
+      {/*
+       * Timeline rail. Stage names are long ("vegetative growth", "maturity &
+       * ripening") and a phone cannot fit six of them side by side: squeezed
+       * into a quarter of the screen each, the words overflowed their column
+       * and printed on top of the next one. So the whole track — rail included
+       * — scrolls instead of compressing, and every stage keeps a column wide
+       * enough to read. The rail sits inside the scroller so it travels with
+       * the stages rather than hanging still behind them.
+       */}
+      <div className="scrollbar-none -mx-5 overflow-x-auto px-5 pb-2 sm:mx-0 sm:px-0">
+        {/* w-24 columns put the first and last circle centres 3rem from the
+         * track's edges, packed on a phone and spread by justify-between once
+         * there is room, which is where the rail's inset comes from. */}
+        <div className="relative min-w-max md:min-w-0">
+          <div aria-hidden className="absolute top-[1.05rem] right-12 left-12 h-0.5 rounded bg-line" />
+          <motion.div
+            aria-hidden
+            className="absolute top-[1.05rem] right-12 left-12 h-0.5 origin-left rounded bg-leaf-500"
+            initial={false}
+            animate={{ scaleX: stages.length > 1 ? activeIndex / (stages.length - 1) : 0 }}
+            transition={reduce ? { duration: 0 } : { duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          />
+          <div
+            role="tablist"
+            aria-label={`${cropName} growth stages`}
+            className="relative flex justify-between gap-2"
+          >
+            {stages.map((stage, i) => {
+              const isActive = stage.key === active.key;
+              const reached = i <= activeIndex;
+              return (
+                <button
+                  key={stage.key}
+                  ref={(el) => {
+                    tabRefs.current[i] = el;
+                  }}
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-controls={`stage-panel-${stage.key}`}
+                  id={`stage-tab-${stage.key}`}
+                  // Roving focus: only the selected tab is a tab stop, and the
+                  // arrow keys move focus with the selection — otherwise the
+                  // tab the arrow key chose can sit off the scroller entirely.
+                  tabIndex={isActive ? 0 : -1}
+                  onClick={() => select(i)}
+                  onKeyDown={(e) => {
+                    if (e.key === "ArrowRight") {
+                      e.preventDefault();
+                      select((i + 1) % stages.length);
+                    }
+                    if (e.key === "ArrowLeft") {
+                      e.preventDefault();
+                      select((i - 1 + stages.length) % stages.length);
+                    }
+                  }}
+                  className="group flex w-24 shrink-0 flex-col items-center gap-2 px-1"
                 >
-                  <Sprout className="size-4" strokeWidth={2} />
-                </span>
-                <span
-                  className={cn(
-                    "text-center text-[0.68rem] leading-tight font-medium tracking-wide uppercase",
-                    isActive ? "text-ink" : "text-ink-faint",
-                  )}
-                >
-                  {stage.name}
-                </span>
-                {stage.products.length > 0 && (
                   <span
                     className={cn(
-                      "rounded-full px-1.5 text-[0.62rem] font-semibold",
-                      isActive ? "bg-humus-900 text-paper" : "bg-paper-dim text-ink-faint",
+                      "flex size-9 items-center justify-center rounded-full border-2 bg-paper transition-all",
+                      isActive
+                        ? "scale-110 border-leaf-600 bg-leaf-400 text-humus-950 shadow-card"
+                        : reached
+                          ? "border-leaf-500 text-leaf-700"
+                          : "border-line text-ink-faint group-hover:border-ink/30",
                     )}
                   >
-                    {stage.products.length}
+                    <Sprout className="size-4" strokeWidth={2} />
                   </span>
-                )}
-              </button>
-            );
-          })}
+                  <span
+                    className={cn(
+                      "text-center text-[0.7rem] leading-tight font-medium tracking-wide break-words uppercase",
+                      isActive ? "text-ink" : "text-ink-faint",
+                    )}
+                  >
+                    {stage.name}
+                  </span>
+                  {stage.products.length > 0 && (
+                    <span
+                      className={cn(
+                        "rounded-full px-1.5 text-[0.62rem] font-semibold",
+                        isActive ? "bg-humus-900 text-paper" : "bg-paper-dim text-ink-faint",
+                      )}
+                    >
+                      {stage.products.length}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
