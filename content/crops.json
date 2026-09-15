@@ -1,0 +1,197 @@
+[
+  {
+    "name": "brassicas",
+    "slug": "brassicas",
+    "aka": [
+      "cauliflower",
+      "broccoli",
+      "cabbage",
+      "brassica",
+      "cole crops"
+    ]
+  },
+  {
+    "name": "cauliflower",
+    "slug": "cauliflower",
+    "aka": []
+  },
+  {
+    "name": "broccoli",
+    "slug": "broccoli",
+    "aka": []
+  },
+  {
+    "name": "cabbage",
+    "slug": "cabbage",
+    "aka": []
+  },
+  {
+    "name": "cucurbits",
+    "slug": "cucurbits",
+    "aka": [
+      "cucumber",
+      "cucumbers",
+      "butternut",
+      "butternuts",
+      "watermelon",
+      "watermelons",
+      "cucurbit",
+      "pumpkin",
+      "squash"
+    ]
+  },
+  {
+    "name": "cucumber",
+    "slug": "cucumber",
+    "aka": [
+      "cucumbers"
+    ]
+  },
+  {
+    "name": "butternut",
+    "slug": "butternut",
+    "aka": [
+      "butternuts",
+      "butternut squash"
+    ]
+  },
+  {
+    "name": "watermelon",
+    "slug": "watermelon",
+    "aka": [
+      "watermelons",
+      "melon"
+    ]
+  },
+  {
+    "name": "leafy vegetables",
+    "slug": "leafy-vegetables",
+    "aka": [
+      "leafy greens",
+      "spinach",
+      "lettuce",
+      "rape",
+      "covo",
+      "kale",
+      "greens"
+    ]
+  },
+  {
+    "name": "potatoes",
+    "slug": "potato",
+    "aka": [
+      "potatoes",
+      "potato",
+      "irish potato"
+    ]
+  },
+  {
+    "name": "sweet potatoes",
+    "slug": "sweet-potato",
+    "aka": [
+      "sweet potato",
+      "sweetpotato"
+    ]
+  },
+  {
+    "name": "fruit trees",
+    "slug": "fruit-trees",
+    "aka": [
+      "fruit tree",
+      "citrus",
+      "orchard",
+      "avocado",
+      "mango",
+      "apple"
+    ]
+  },
+  {
+    "name": "wheat",
+    "slug": "wheat",
+    "aka": []
+  },
+  {
+    "name": "maize",
+    "slug": "maize",
+    "aka": [
+      "mealies",
+      "corn"
+    ]
+  },
+  {
+    "name": "sugar bean",
+    "slug": "sugar-bean",
+    "aka": [
+      "sugar beans"
+    ]
+  },
+  {
+    "name": "pea",
+    "slug": "pea",
+    "aka": [
+      "peas"
+    ]
+  },
+  {
+    "name": "bean",
+    "slug": "bean",
+    "aka": [
+      "beans"
+    ]
+  },
+  {
+    "name": "tomato",
+    "slug": "tomato",
+    "aka": [
+      "greenhouse tomato"
+    ]
+  },
+  {
+    "name": "cereals",
+    "slug": "cereals",
+    "aka": [
+      "cereal"
+    ]
+  },
+  {
+    "name": "legumes",
+    "slug": "legumes",
+    "aka": [
+      "legume"
+    ]
+  },
+  {
+    "name": "oilseeds",
+    "slug": "oilseeds",
+    "aka": [
+      "oil seeds",
+      "oilseed"
+    ]
+  },
+  {
+    "name": "fruits",
+    "slug": "fruits",
+    "aka": [
+      "fruit"
+    ]
+  },
+  {
+    "name": "ornamentals",
+    "slug": "ornamentals",
+    "aka": [
+      "ornamental plants"
+    ]
+  },
+  {
+    "name": "berry bushes",
+    "slug": "berry-bushes",
+    "aka": [
+      "berry bush"
+    ]
+  },
+  {
+    "name": "field crops",
+    "slug": "field-crops",
+    "aka": []
+  }
+]

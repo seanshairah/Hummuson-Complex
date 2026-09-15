@@ -1,5 +1,28 @@
 import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { extendTailwindMerge } from "tailwind-merge";
+
+/**
+ * tailwind-merge must learn our custom typography utilities, otherwise it
+ * mistakes them for text-color classes and drops them when a color class is
+ * present in the same cn() call (e.g. "text-display-2 text-ink").
+ */
+const twMerge = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      "font-size": [
+        "text-display-1",
+        "text-display-2",
+        "text-display-3",
+        "text-title",
+        "text-eyebrow",
+        "text-editorial",
+      ],
+      // bg-grain paints a noise *image*, not a color — without this, cn()
+      // would drop the background color next to it.
+      "bg-image": ["bg-grain"],
+    },
+  },
+});
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -37,22 +60,11 @@ export function truncate(text: string, length: number): string {
   return `${text.slice(0, length).replace(/\s+\S*$/, "")}…`;
 }
 
-export function stripHtml(html: string): string {
-  return html
-    .replace(/<[^>]*>/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&#8217;|&rsquo;/g, "'")
-    .replace(/&#8216;|&lsquo;/g, "'")
-    .replace(/&#8220;|&ldquo;|&#8221;|&rdquo;/g, '"')
-    .replace(/&nbsp;/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-export function readingMinutes(html: string): number {
-  const words = stripHtml(html).split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.round(words / 200));
-}
+/*
+ * stripHtml and readingMinutes used to live here. They now sit in
+ * src/lib/sanitize.ts, next to the parser they need — this module is imported
+ * by client components, and sanitize-html has no business in a browser bundle.
+ */
 
 /** Title-cases enum-ish keys: "SEED_TREATMENT" → "Seed treatment". */
 export function humanize(value: string): string {
