@@ -177,7 +177,14 @@ export async function Footer() {
       </div>
 
       <div className="border-t border-paper/10">
-        <div className="container-site flex flex-col items-center justify-between gap-3 py-6 text-xs text-paper/45 sm:flex-row">
+        {/*
+         * Extra clearance underneath on sm+: the WhatsApp button is fixed to the
+         * bottom-right of the viewport and this bar is the last thing on the
+         * page, so once the links move to the right-hand end they land directly
+         * under it and Privacy stops being clickable. Below sm the links are
+         * centred and already clear of it.
+         */}
+        <div className="container-site flex flex-col items-center justify-between gap-3 py-6 text-xs text-paper/45 sm:flex-row sm:pb-24">
           <p>
             © {year} {site.name}. Agricultural technology, balanced crop nutrition &amp;
             bio-innovation. All rights reserved.
