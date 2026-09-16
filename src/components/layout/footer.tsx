@@ -179,7 +179,8 @@ export async function Footer() {
       <div className="border-t border-paper/10">
         <div className="container-site flex flex-col items-center justify-between gap-3 py-6 text-xs text-paper/45 sm:flex-row">
           <p>
-            © {year} {site.name}. All rights reserved.
+            © {year} {site.name}. Agricultural technology, balanced crop nutrition &amp;
+            bio-innovation. All rights reserved.
           </p>
           <p className="flex items-center gap-4">
             <Link href="/faq" className="hover:text-paper/80">

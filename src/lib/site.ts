@@ -27,7 +27,7 @@ export const site = {
   name: "Humuson Complex",
   tagline: "Home of Healthy Soil & Healthy Crop",
   description:
-    "Humuson Complex supplies biological crop nutrition — organic fertilisers, biostimulants and foliar feeds — with agronomic support for farmers in Zimbabwe and Southern Africa.",
+    "Humuson Complex supplies modern agricultural technology — balanced crop nutrition, biostimulants and soil biology — with agronomic support across Zimbabwe and Southern Africa.",
   url: resolveSiteUrl(),
   whatsappNumber: whatsappDigits || "263776656433",
   /** WhatsApp Business catalogue share link (owner-editable in admin → settings). */

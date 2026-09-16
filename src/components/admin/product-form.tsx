@@ -160,7 +160,7 @@ export function ProductForm({
                 "Humuson Complex",
                 "IKAR",
                 "Nando",
-                "Avensis",
+                "Arvensis Agro",
                 "Bio Energy",
                 "Sapropel Organics",
               ].map((brand) => (

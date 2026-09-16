@@ -104,9 +104,9 @@ export function HomeHero({
               transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
               className="mt-6 max-w-xl text-base leading-relaxed text-paper/75 md:text-lg"
             >
-              Humuson Complex distributes organic fertilisers, biostimulants and foliar fertilisers
-              from renowned European producers — helping Zimbabwean farmers improve soil fertility,
-              maximise crop productivity and farm sustainably.
+              Humuson Complex brings modern agricultural technology to Zimbabwe — balanced crop
+              nutrition, biostimulants and soil biology from renowned European producers, matched to
+              your crop, your soil and your growth stage.
             </motion.p>
 
             <motion.div

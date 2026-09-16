@@ -3,6 +3,7 @@ import Image from "next/image";
 import { PageIntro } from "@/components/shared/page-intro";
 import { Em, SectionHeading } from "@/components/ui/section-heading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
+import { PartnerLogos } from "@/components/shared/partner-logos";
 import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import { ButtonLink } from "@/components/ui/button";
 import { getCompanySettings, getContactSettings } from "@/server/data/settings";
@@ -10,8 +11,6 @@ import { googleMapsLink, toMapPin } from "@/lib/maps";
 import { site } from "@/lib/site";
 import { whatsappAdviceMessage } from "@/lib/whatsapp";
 import { organizationJsonLd } from "@/lib/seo";
-import partnerBioenergy from "../../../../public/images/brand/Bioenergy_naujas-logotipas-3.jpg";
-import partnerSapropel from "../../../../public/images/brand/partner-433fd162.jpg";
 import handsPhoto from "../../../../public/images/field/field-IMG_0561.jpg";
 import fieldPhoto from "../../../../public/images/field/field-IMG_0597.jpg";
 import { JsonLd } from "@/components/shared/json-ld";
@@ -21,7 +20,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "About — the home of healthy soil & healthy crop",
   description:
-    "Humuson Complex supplies organic fertilisers, biostimulants and foliar feeds to restore Zimbabwe's soils and grow profitable, sustainable farms.",
+    "Humuson Complex supplies modern agricultural technology to Zimbabwe — balanced crop nutrition, biostimulants and soil biology, backed by agronomists in the field.",
   alternates: { canonical: "/about" },
 };
 
@@ -150,22 +149,9 @@ export default async function AboutPage() {
                 Renowned <Em className="text-brand">European brands</Em>
               </>
             }
-            lede="Humuson Complex distributes for established European producers of organic and biological crop nutrition."
+            lede="Humuson Complex distributes for established European producers of crop nutrition, biostimulants and agricultural biotechnology."
           />
-          <div className="flex flex-wrap items-center justify-center gap-10">
-            <Image
-              src={partnerBioenergy}
-              alt="Bioenergy LT"
-              className="h-16 w-auto rounded-lg object-contain"
-              sizes="160px"
-            />
-            <Image
-              src={partnerSapropel}
-              alt="Sapropel Organics"
-              className="h-10 w-auto object-contain"
-              sizes="180px"
-            />
-          </div>
+          <PartnerLogos />
         </div>
       </section>
 
@@ -175,7 +161,10 @@ export default async function AboutPage() {
           <h2 className="text-display-3 text-ink">Come and talk crops</h2>
           <p className="mt-3 max-w-xl text-ink-soft">
             <a
-              href={googleMapsLink(`${site.name}, ${contact.address ?? "Harare, Zimbabwe"}`, toMapPin(contact))}
+              href={googleMapsLink(
+                `${site.name}, ${contact.address ?? "Harare, Zimbabwe"}`,
+                toMapPin(contact),
+              )}
               target="_blank"
               rel="noopener noreferrer"
               className="underline decoration-leaf-600/40 underline-offset-4 transition-colors hover:text-brand"

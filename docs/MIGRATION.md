@@ -68,9 +68,34 @@ Two things follow. The pin is editable in admin → Settings → Contact, but th
 whole `contact` settings block is replaced from `content/company.json` on every
 import, exactly as the address and phone numbers are — so a correction made only
 in admin is lost at the next content refresh. Make it in both, or in the content
-file. And `mapsUrl` is deliberately empty: a Google Maps *directions* URL carries
+file. And `mapsUrl` is deliberately empty: a Google Maps _directions_ URL carries
 the sender's own starting point, so pasting one there would hand every visitor
 directions from wherever that person happened to be standing.
+
+### Partner logos
+
+`public/images/brand/` holds one file per producer. Bio Energy and Sapropel
+Organics arrived as artwork; IKAR, Nando and Arvensis never did, so their marks
+are cropped out of the catalogue product photographs by
+`npm run assets:logos` (`scripts/assets/extract-brand-logos.mjs`). That script
+is the record of which photo and which pixels each one came from, and it
+flattens the lighting so a mark photographed on a bag sits next to one that
+arrived on white. The outputs are committed; the script is not part of the
+build.
+
+They are the best available, not good: a logo printed at a centimetre across and
+photographed on a phone will never be as crisp as a supplied file. If a producer
+sends a press kit, drop the file in and delete that entry from the script rather
+than re-cropping.
+
+### The Arvensis brand name
+
+The A3 Biostimulant and Fortik Solid packs both print the _arvensis agro_ mark
+and `www.arvensis.com`. The audit had recorded the brand as "Avensis", which is
+a transcription slip rather than a second supplier, so `partnerBrands` and both
+products now read "Arvensis Agro". The value is what `?brand=` filters on, so it
+has to match in `content/products.json` and in the admin form's brand list — it
+is not a display label.
 
 ### Crop umbrellas
 

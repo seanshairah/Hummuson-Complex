@@ -25,6 +25,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "e2e": "playwright test",
+    "assets:logos": "node scripts/assets/extract-brand-logos.mjs",
     "catalogue:pdf": "tsx scripts/generate-catalogue-pdf.ts",
     "qa:data": "tsx scripts/qa/validate-data.ts",
     "qa:finder": "tsx scripts/qa/finder-matrix.ts",

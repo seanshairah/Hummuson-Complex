@@ -42,7 +42,7 @@ const catalogue: CatalogueProduct[] = [
     id: "p4",
     name: "A3 Biostimulant",
     slug: "a3-biostimulant",
-    brand: "Avensis",
+    brand: "Arvensis Agro",
     packSizes: [{ size: "1 kg", priceUsd: 35 }],
   },
   {

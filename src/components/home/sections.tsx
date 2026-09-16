@@ -18,6 +18,7 @@ import {
 import { SectionHeading, Em } from "@/components/ui/section-heading";
 import { ButtonLink } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { PartnerLogos } from "@/components/shared/partner-logos";
 import { ProductCard } from "@/components/shared/product-card";
 import { MediaImage } from "@/components/shared/media-image";
 import { VideoEmbed } from "@/components/shared/video-embed";
@@ -32,8 +33,6 @@ import type {
   VideoData,
 } from "@/server/data/content";
 import { formatDate, humanize } from "@/lib/utils";
-import partnerBioenergy from "../../../public/images/brand/Bioenergy_naujas-logotipas-3.jpg";
-import partnerSapropel from "../../../public/images/brand/partner-433fd162.jpg";
 import handsPhoto from "../../../public/images/field/field-IMG_0560.jpg";
 import cabbagePhoto from "../../../public/images/field/field-IMG_0595.jpg";
 
@@ -42,26 +41,13 @@ import cabbagePhoto from "../../../public/images/field/field-IMG_0595.jpg";
 export function RangesBand() {
   return (
     <section className="border-b border-line bg-cream">
-      <div className="container-site flex flex-col items-center gap-6 py-10 md:flex-row md:justify-between">
-        <p className="max-w-md text-center text-sm leading-relaxed text-ink-faint md:text-left">
-          Distributor of <strong className="text-ink">organic fertilisers</strong>,{" "}
+      <div className="container-site flex flex-col items-center gap-6 py-10 lg:flex-row lg:justify-between">
+        <p className="max-w-md text-center text-sm leading-relaxed text-ink-faint lg:text-left">
+          <strong className="text-ink">Balanced crop nutrition</strong>,{" "}
           <strong className="text-ink">biostimulants</strong> and{" "}
-          <strong className="text-ink">foliar fertilisers</strong> of renowned European brands.
+          <strong className="text-ink">soil biology</strong> from renowned European producers.
         </p>
-        <div className="flex items-center gap-8">
-          <Image
-            src={partnerBioenergy}
-            alt="Bioenergy LT"
-            className="h-12 w-auto rounded-md object-contain grayscale transition hover:grayscale-0"
-            sizes="120px"
-          />
-          <Image
-            src={partnerSapropel}
-            alt="Sapropel Organics"
-            className="h-9 w-auto object-contain grayscale transition hover:grayscale-0"
-            sizes="140px"
-          />
-        </div>
+        <PartnerLogos variant="compact" />
       </div>
     </section>
   );

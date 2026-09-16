@@ -15,9 +15,9 @@ import { whatsappAdviceMessage } from "@/lib/whatsapp";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Products — organic fertilisers, biostimulants & foliar feeds",
+  title: "Products — crop nutrition, biostimulants & soil biology",
   description:
-    "Explore the full Humuson Complex range: organic fertilisers, biostimulants and liquid foliar fertilisers with published composition, rates and crop suitability.",
+    "Explore the full Humuson Complex range: liquid and solid fertilisers, micronutrients, amino acids, biostimulants and soil microbiology, with published composition, rates and crop suitability.",
   alternates: { canonical: "/products" },
 };
 
@@ -69,7 +69,7 @@ export default async function ProductsPage({
         eyebrow="The Humuson range"
         title="Products that feed the"
         titleAccent="soil first"
-        lede="Organic fertilisers, biostimulants and liquid foliar feeds — each with its published composition, application guidance and crop suitability. Filter by what you grow or what you want to improve."
+        lede="Liquid and solid fertilisers, micronutrients, amino acids, biostimulants and soil microbiology — each with its published composition, application guidance and crop suitability. Filter by what you grow or what you want to improve."
         crumbs={[{ label: "Products" }]}
       />
 

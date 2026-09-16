@@ -3,10 +3,10 @@
   "legalName": "Humuson Complex",
   "taglines": [
     "Home Of Healthy Soil & Healthy Crop",
-    "Distributor of organic fertilizers, bio stimulants and foliar fertilizers of renowned European brands",
-    "Humuson Complex – Fertilizer Distributor"
+    "Agricultural technology for Southern Africa — balanced crop nutrition, biostimulants and soil biology from renowned European producers",
+    "Humuson Complex – Agricultural Technology & Crop Nutrition"
   ],
-  "about": "Zimbabwe’s economy is agro-based and its agricultural produce heavily depends on fertilisers for increased crop production. However, the agriculture industry has been heavily dominated by chemical fertilisers which weakened productivity of the soil, hence the need for organic fertilisers to restore the soil among other benefits. Humuson Complex was birthed upon realising a gap in the inconsistency and inadequate supply of organic fertilisers in Zimbabwe.\n\nOur Vision: To be the preferred supplier of organic fertilizers for the promotion of profitable and sustainable agricultural practices in Zimbabwe and beyond.\n\nOur Mission: To deliver to the Southern African Market high quality fertilizers that maximize crop productivity, improve soil fertility and are eco friendly.",
+  "about": "Zimbabwe’s economy is agro-based and its agricultural produce heavily depends on fertilisers for increased crop production. However, the agriculture industry has been heavily dominated by chemical fertilisers which weakened productivity of the soil, hence the need for organic fertilisers to restore the soil among other benefits. Humuson Complex was birthed upon realising a gap in the inconsistency and inadequate supply of organic fertilisers in Zimbabwe.\n\nThat gap was the starting point rather than the limit. Humuson Complex now supplies a complete nutrition programme — liquid and solid fertilisers, micronutrients, amino acids, biostimulants and soil microbiology — from established European producers, and pairs it with agronomists who match the product to the crop, the soil and the growth stage.\n\nOur Vision: To be the partner of choice for modern agricultural technology in Zimbabwe and beyond — advancing precision agriculture, balanced crop nutrition and biological innovation for farming that is profitable, resilient and sustainable.\n\nOur Mission: To bring the Southern African market the technologies that raise yield without costing the soil — balanced crop nutrition, biostimulants and soil biology, matched to each crop and growth stage and supported by agronomists in the field.",
   "whatsappNumbers": [
     "+263 77 665 6433"
   ],
@@ -31,7 +31,7 @@
   },
   "hours": "Mon–Fri 8:00–16:30, Sat 8:30–13:00, Sun closed",
   "services": [
-    "Supply of organic fertilizers, biostimulants and foliar fertilizers (Value, Physio & Organic ranges)",
+    "Supply of balanced crop nutrition and biological inputs — liquid and solid fertilizers, micronutrients, amino acids, biostimulants and soil microbiology (Value, Physio, Organic, Liquid and Biostimulant ranges)",
     "Fertilizers delivery (fees depend on distance — per site FAQ)",
     "Basic consultation, free of charge (per site FAQ)",
     "Farm visits at an agreed amount (per site FAQ)",
@@ -127,7 +127,7 @@
       "note": "Bio NPK."
     },
     {
-      "name": "Avensis",
+      "name": "Arvensis Agro",
       "note": "A3 Bio Stimulant, Fortik Solid."
     },
     {
@@ -139,5 +139,5 @@
       "note": "Grow Plus, Carbo Amin."
     }
   ],
-  "notes": "workingProcess is [] because /working-process/ contains only unedited gardening-theme placeholder text (see audit). \"Company Existence: 15\" and \"Years Of Experience: 15\" are the literal counter values configured on the About page — they conflict with the site’s 2023 launch and should be verified. team/values/stats/partnerBrands/whatsappGroupUrl/whatsappCatalogueUrl are extra fields beyond the base contract, provided because the data is real and useful."
+  "notes": "workingProcess is [] because /working-process/ contains only unedited gardening-theme placeholder text (see audit). \"Company Existence: 15\" and \"Years Of Experience: 15\" are the literal counter values configured on the About page — they conflict with the site’s 2023 launch and should be verified. team/values/stats/partnerBrands/whatsappGroupUrl/whatsappCatalogueUrl are extra fields beyond the base contract, provided because the data is real and useful. The brand recorded as \"Avensis\" was corrected to \"Arvensis Agro\": the A3 Biostimulant and Fortik Solid packs both print the arvensis agro mark and www.arvensis.com, so the original spelling was a transcription slip rather than a second supplier."
 }
