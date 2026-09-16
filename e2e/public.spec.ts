@@ -8,52 +8,56 @@ test.describe("public site", () => {
     await expect(page.getByRole("link", { name: /explore products/i }).first()).toBeVisible();
   });
 
-  /** How many distinct products the grid is showing. */
-  async function productSlugs(page: import("@playwright/test").Page) {
-    const hrefs = await page
-      .locator('a[href^="/products/"]')
+  /**
+   * Open a products URL and read the slugs the grid is showing.
+   *
+   * `domcontentloaded`, not the default `load`: the grid is server-rendered, so
+   * every link is in the first response, while `load` also waits on each
+   * product photograph — and the first request for one makes a cold Next server
+   * optimise it. On a two-core runner already busy with a second browser
+   * project that pushed past the 45s test budget, which is a fact about the
+   * runner rather than about the filter under test.
+   *
+   * Scoped to #main so the header and footer can never contribute a link.
+   */
+  async function gridSlugs(page: import("@playwright/test").Page, url: string) {
+    await page.goto(url, { waitUntil: "domcontentloaded" });
+    return page
+      .locator('#main a[href^="/products/"]')
       .evaluateAll((links) =>
         links.map((a) => a.getAttribute("href")!).filter((h) => h.split("/").length === 3),
       );
-    return hrefs;
   }
 
   test("products page filters by purpose via URL", async ({ page }) => {
-    await page.goto("/products");
-    const all = await productSlugs(page);
+    const all = await gridSlugs(page, "/products");
     expect(all.length).toBeGreaterThan(0);
 
-    await page.goto("/products?benefit=root-development");
-    const filtered = await productSlugs(page);
+    const filtered = await gridSlugs(page, "/products?benefit=root-development");
     expect(filtered.length).toBeGreaterThan(0);
     expect(filtered.length).toBeLessThan(all.length);
   });
 
   test("a range filter narrows the grid, and a renamed range still resolves", async ({ page }) => {
-    await page.goto("/products?category=crop-nutrition");
-    const current = await productSlugs(page);
+    const current = await gridSlugs(page, "/products?category=crop-nutrition");
     expect(current.length).toBeGreaterThan(0);
 
     // "Value" was renamed to Crop Nutrition; links to the old one are in the
     // wild and have to land on the same products rather than the whole shop.
-    await page.goto("/products?category=value");
-    expect(await productSlugs(page)).toEqual(current);
+    expect(await gridSlugs(page, "/products?category=value")).toEqual(current);
   });
 
   test("a multi-range product is listed once under each of its ranges", async ({ page }) => {
     // NPK 12-11-30+TE is both a liquid foliar fertiliser and crop nutrition.
     for (const range of ["liquid-fertilisers", "crop-nutrition"]) {
-      await page.goto(`/products?category=${range}`);
-      const slugs = await productSlugs(page);
+      const slugs = await gridSlugs(page, `/products?category=${range}`);
       expect(slugs.filter((s) => s === "/products/npk-12-11-30-te")).toHaveLength(1);
     }
   });
 
   test("a crop group returns more than one of its crops does", async ({ page }) => {
-    await page.goto("/products?crop=brassicas");
-    const group = await productSlugs(page);
-    await page.goto("/products?crop=cabbage");
-    const child = await productSlugs(page);
+    const group = await gridSlugs(page, "/products?crop=brassicas");
+    const child = await gridSlugs(page, "/products?crop=cabbage");
     expect(group.length).toBeGreaterThan(0);
     // Everything listed for a single brassica is listed across the group.
     for (const slug of child) expect(group).toContain(slug);
