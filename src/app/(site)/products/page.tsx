@@ -15,9 +15,9 @@ import { whatsappAdviceMessage } from "@/lib/whatsapp";
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Products — crop nutrition, biostimulants & soil biology",
+  title: "Products — microbiological fertilisers, biostimulants & liquid foliar feeds",
   description:
-    "Explore the full Humuson Complex range: liquid and solid fertilisers, micronutrients, amino acids, biostimulants and soil microbiology, with published composition, rates and crop suitability.",
+    "Explore the full Humuson Complex range: microbiological fertilisers, biostimulants and liquid foliar fertilisers, plus the basal and top dressings that feed the crop — with published composition, rates and crop suitability.",
   alternates: { canonical: "/products" },
 };
 
@@ -60,16 +60,16 @@ export default async function ProductsPage({
       .filter((p): p is NonNullable<typeof p> => Boolean(p));
   }
 
-  const goalName = options.benefits.find((b) => b.slug === active.benefit)?.name;
+  const purposeName = options.benefits.find((b) => b.slug === active.benefit)?.name;
   const cropName = options.crops.find((c) => c.slug === active.crop)?.name;
 
   return (
     <>
       <PageIntro
         eyebrow="The Humuson range"
-        title="Products that feed the"
-        titleAccent="soil first"
-        lede="Liquid and solid fertilisers, micronutrients, amino acids, biostimulants and soil microbiology — each with its published composition, application guidance and crop suitability. Filter by what you grow or what you want to improve."
+        title="Crop nutrition and biological solutions,"
+        titleAccent="from soil to leaf."
+        lede="Microbiological fertilisers, biostimulants and liquid foliar fertilisers, alongside the basal and top dressings that feed the crop. Each carries its own published composition, rates and crop suitability — nothing is listed for a job its documentation does not claim."
         crumbs={[{ label: "Products" }]}
       />
 
@@ -78,10 +78,10 @@ export default async function ProductsPage({
       </Suspense>
 
       <section className="container-site py-10 md:py-14">
-        {(goalName || cropName) && (
+        {(purposeName || cropName) && (
           <p className="mb-6 text-sm text-ink-faint">
             Showing products listed for{" "}
-            {[cropName, goalName ? goalName.toLowerCase() : null].filter(Boolean).join(" · ")}
+            {[cropName, purposeName ? purposeName.toLowerCase() : null].filter(Boolean).join(" · ")}
           </p>
         )}
         {products.length > 0 ? (

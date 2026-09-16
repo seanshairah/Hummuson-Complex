@@ -187,7 +187,23 @@ model ProductCategory {
   image       Media?  @relation(fields: [imageId], references: [id])
   order       Int     @default(0)
 
-  products Product[]
+  products ProductCategoryLink[]
+}
+
+/// A product's membership of a range. A range is a way of reading the
+/// catalogue, not a property of the product, and several readings can be true
+/// of the same pack at once — Grow+ is an organic fertiliser AND a crop
+/// nutrition product. This used to be `Product.categoryId`, one range per
+/// product, which meant the import had to pick a winner from the several the
+/// old shop recorded and silently drop the rest.
+model ProductCategoryLink {
+  productId  String
+  product    Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, categoryId])
+  @@index([categoryId])
 }
 
 model Product {
@@ -224,8 +240,8 @@ model Product {
 
   applicationMethods ApplicationMethod[]
 
-  categoryId String?
-  category   ProductCategory? @relation(fields: [categoryId], references: [id])
+  /// Every range this product belongs to; see ProductCategoryLink.
+  categories ProductCategoryLink[]
   tags       String[]
 
   primaryImageId String?
@@ -261,7 +277,6 @@ model Product {
   publishedAt DateTime?
 
   @@index([status, featured])
-  @@index([categoryId])
   @@index([brand])
 }
 
@@ -333,6 +348,21 @@ model Crop {
   order       Int      @default(0)
   featured    Boolean  @default(false)
 
+  /// Parent group ("cabbage" → "brassicas"). One level deep on purpose: the
+  /// catalogue is organised by the groups a farmer shops by, not by taxonomy,
+  /// and a second level would have to invent distinctions nothing in the
+  /// product text supports.
+  ///
+  /// A parent is itself a crop, not a separate kind of row, because products
+  /// really are listed against "brassicas" — that is what their own published
+  /// text says. Those associations would be lost if groups lived apart.
+  /// Filtering by a parent returns its own products plus its children's;
+  /// filtering by a child returns only that child's, so a product listed for
+  /// cabbage is never presented as suitable for broccoli.
+  parentId String?
+  parent   Crop?   @relation("CropHierarchy", fields: [parentId], references: [id])
+  children Crop[]  @relation("CropHierarchy")
+
   products          ProductCrop[]
   stages            CropStage[]
   applicationGuides ApplicationGuide[]
@@ -340,6 +370,8 @@ model Crop {
   articles          Article[]
   videos            Video[]
   projects          Project[]
+
+  @@index([parentId])
 }
 
 model ProductCrop {

@@ -8,11 +8,55 @@ test.describe("public site", () => {
     await expect(page.getByRole("link", { name: /explore products/i }).first()).toBeVisible();
   });
 
-  test("products page filters by benefit via URL", async ({ page }) => {
+  /** How many distinct products the grid is showing. */
+  async function productSlugs(page: import("@playwright/test").Page) {
+    const hrefs = await page
+      .locator('a[href^="/products/"]')
+      .evaluateAll((links) =>
+        links.map((a) => a.getAttribute("href")!).filter((h) => h.split("/").length === 3),
+      );
+    return hrefs;
+  }
+
+  test("products page filters by purpose via URL", async ({ page }) => {
+    await page.goto("/products");
+    const all = await productSlugs(page);
+    expect(all.length).toBeGreaterThan(0);
+
     await page.goto("/products?benefit=root-development");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Products");
-    const cards = page.locator('a[href^="/products/"]');
-    await expect(cards.first()).toBeVisible();
+    const filtered = await productSlugs(page);
+    expect(filtered.length).toBeGreaterThan(0);
+    expect(filtered.length).toBeLessThan(all.length);
+  });
+
+  test("a range filter narrows the grid, and a renamed range still resolves", async ({ page }) => {
+    await page.goto("/products?category=crop-nutrition");
+    const current = await productSlugs(page);
+    expect(current.length).toBeGreaterThan(0);
+
+    // "Value" was renamed to Crop Nutrition; links to the old one are in the
+    // wild and have to land on the same products rather than the whole shop.
+    await page.goto("/products?category=value");
+    expect(await productSlugs(page)).toEqual(current);
+  });
+
+  test("a multi-range product is listed once under each of its ranges", async ({ page }) => {
+    // NPK 12-11-30+TE is both a liquid foliar fertiliser and crop nutrition.
+    for (const range of ["liquid-fertilisers", "crop-nutrition"]) {
+      await page.goto(`/products?category=${range}`);
+      const slugs = await productSlugs(page);
+      expect(slugs.filter((s) => s === "/products/npk-12-11-30-te")).toHaveLength(1);
+    }
+  });
+
+  test("a crop group returns more than one of its crops does", async ({ page }) => {
+    await page.goto("/products?crop=brassicas");
+    const group = await productSlugs(page);
+    await page.goto("/products?crop=cabbage");
+    const child = await productSlugs(page);
+    expect(group.length).toBeGreaterThan(0);
+    // Everything listed for a single brassica is listed across the group.
+    for (const slug of child) expect(group).toContain(slug);
   });
 
   test("product detail shows verified facts and confirm-note", async ({ page }) => {

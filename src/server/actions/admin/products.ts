@@ -107,7 +107,6 @@ export async function saveProduct(
     priceUsd: formNumber(formData, "priceUsd"),
     whatsappRef: formOptional(formData, "whatsappRef"),
     applicationMethods: methods,
-    categoryId: formOptional(formData, "categoryId"),
     tags: formList(formData, "tags"),
     primaryImageId,
     seoTitle: formOptional(formData, "seoTitle"),
@@ -115,6 +114,7 @@ export async function saveProduct(
     publishedAt: status === "PUBLISHED" ? new Date() : undefined,
   };
 
+  const categoryIds = formList(formData, "categoryIds");
   const cropIds = formList(formData, "cropIds");
   const benefitIds = formList(formData, "benefitIds");
   const stageIds = formList(formData, "stageIds");
@@ -125,6 +125,10 @@ export async function saveProduct(
     : await db.product.create({ data });
 
   // Relations — rebuild deterministically.
+  await db.productCategoryLink.deleteMany({ where: { productId: product.id } });
+  for (const categoryId of new Set(categoryIds)) {
+    await db.productCategoryLink.create({ data: { productId: product.id, categoryId } });
+  }
   await db.productCrop.deleteMany({ where: { productId: product.id } });
   for (const cropId of cropIds) {
     await db.productCrop.create({ data: { productId: product.id, cropId } });
@@ -204,7 +208,15 @@ export async function duplicateProduct(id: string): Promise<void> {
   await requireUser();
   const source = await db.product.findUniqueOrThrow({
     where: { id },
-    include: { packageSizes: true, applicationGuides: true, crops: true, benefits: true, growthStages: true, gallery: true },
+    include: {
+      categories: true,
+      packageSizes: true,
+      applicationGuides: true,
+      crops: true,
+      benefits: true,
+      growthStages: true,
+      gallery: true,
+    },
   });
   let slug = `${source.slug}-copy`;
   let counter = 2;
@@ -229,13 +241,17 @@ export async function duplicateProduct(id: string): Promise<void> {
       priceUsd: source.priceUsd,
       whatsappRef: source.whatsappRef,
       applicationMethods: source.applicationMethods,
-      categoryId: source.categoryId,
       tags: source.tags,
       primaryImageId: source.primaryImageId,
       seoTitle: source.seoTitle,
       seoDescription: source.seoDescription,
     },
   });
+  for (const row of source.categories) {
+    await db.productCategoryLink.create({
+      data: { productId: copy.id, categoryId: row.categoryId },
+    });
+  }
   for (const row of source.packageSizes) {
     await db.packageSize.create({
       data: { productId: copy.id, size: row.size, priceUsd: row.priceUsd, order: row.order },

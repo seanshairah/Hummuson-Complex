@@ -214,9 +214,9 @@ export default async function CataloguePage() {
                           {/* Copy */}
                           <div className="flex flex-col p-6 md:p-9">
                             <div className="flex flex-wrap items-center gap-2">
-                              {product.category && (
+                              {product.categories[0] && (
                                 <Badge variant={DARK_THEMES.has(section.theme) ? "glass" : "leaf"}>
-                                  {product.category.name}
+                                  {product.categories[0].name}
                                 </Badge>
                               )}
                               {product.methods.slice(0, 2).map((method) => (

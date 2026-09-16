@@ -6,11 +6,15 @@ import { getAllProducts, type ImageData, type ProductCardData, filterProducts } 
  * Unique published products per crop slug. Every crop count on the site is
  * derived from this one helper so the homepage, crop cards, crop pages and the
  * product finder can never disagree.
+ *
+ * A group counts its children's products as well as its own, because that is
+ * what clicking it returns — Brassicas showing 3 while Cabbage alone shows 17
+ * would be a count of the association rather than of the result.
  */
 export function countProductsByCropSlug(products: ProductCardData[]): Map<string, number> {
   const counts = new Map<string, number>();
   for (const product of products) {
-    for (const slug of new Set(product.cropSlugs)) {
+    for (const slug of new Set([...product.cropSlugs, ...product.cropGroupSlugs])) {
       counts.set(slug, (counts.get(slug) ?? 0) + 1);
     }
   }
@@ -25,14 +29,22 @@ export interface CropListItem {
   image: ImageData | null;
   productCount: number;
   featured: boolean;
+  /** The group this crop sits under, or null if it is one. */
+  parentSlug: string | null;
+}
+
+/** A crop group with the individual crops beneath it, in taxonomy order. */
+export interface CropGroup extends CropListItem {
+  children: CropListItem[];
 }
 
 export const getAllCrops = unstable_cache(
   async (): Promise<CropListItem[]> => {
     const [crops, products] = await Promise.all([
       db.crop.findMany({
-        orderBy: [{ featured: "desc" }, { order: "asc" }],
-        include: { image: true },
+        // Taxonomy order, so a child always follows its parent.
+        orderBy: [{ order: "asc" }, { name: "asc" }],
+        include: { image: true, parent: { select: { slug: true } } },
       }),
       getAllProducts(),
     ]);
@@ -55,14 +67,41 @@ export const getAllCrops = unstable_cache(
         : null,
       productCount: productCounts.get(crop.slug) ?? 0,
       featured: crop.featured,
+      parentSlug: crop.parent?.slug ?? null,
     }));
   },
   ["all-crops"],
   { tags: ["crops", "products"], revalidate: 600 },
 );
 
+/**
+ * The crop list as the two-level tree the catalogue is organised by.
+ *
+ * A crop whose parent is missing — one the importer discovered in a product's
+ * own text and that the curated taxonomy has not placed yet — is returned at
+ * the top level rather than dropped, so a new crop is visible and obviously
+ * unfiled instead of invisible.
+ */
+export async function getCropTree(): Promise<CropGroup[]> {
+  const crops = await getAllCrops();
+  const bySlug = new Map(crops.map((crop) => [crop.slug, crop]));
+  const groups = new Map<string, CropGroup>();
+  for (const crop of crops) {
+    if (crop.parentSlug && bySlug.has(crop.parentSlug)) continue;
+    groups.set(crop.slug, { ...crop, children: [] });
+  }
+  for (const crop of crops) {
+    if (!crop.parentSlug) continue;
+    groups.get(crop.parentSlug)?.children.push(crop);
+  }
+  return [...groups.values()];
+}
+
 export interface CropDetailData extends CropListItem {
   aka: string[];
+  /** Where this crop sits in the taxonomy, for the breadcrumb and the siblings strip. */
+  parent: { slug: string; name: string } | null;
+  children: { slug: string; name: string; productCount: number }[];
   stages: {
     key: string;
     name: string;
@@ -84,6 +123,8 @@ export const getCropBySlug = (slug: string) =>
         where: { slug },
         include: {
           image: true,
+          parent: { select: { slug: true, name: true } },
+          children: { orderBy: [{ order: "asc" }, { name: "asc" }], select: { slug: true, name: true } },
           stages: { include: { growthStage: true } },
           faqs: { include: { faq: true } },
           articles: {
@@ -101,6 +142,7 @@ export const getCropBySlug = (slug: string) =>
 
       const allProducts = await getAllProducts();
       const cropProducts = filterProducts(allProducts, { crop: slug });
+      const counts = countProductsByCropSlug(allProducts);
       const allStages = await db.growthStage.findMany({ orderBy: { order: "asc" } });
       const narratives = new Map(crop.stages.map((s) => [s.growthStage.key, s]));
 
@@ -121,6 +163,12 @@ export const getCropBySlug = (slug: string) =>
           : null,
         productCount: cropProducts.length,
         featured: crop.featured,
+        parentSlug: crop.parent?.slug ?? null,
+        parent: crop.parent,
+        children: crop.children.map((child) => ({
+          ...child,
+          productCount: counts.get(child.slug) ?? 0,
+        })),
         stages: allStages.map((stage) => ({
           key: stage.key,
           name: stage.name,

@@ -43,9 +43,10 @@ export function RangesBand() {
     <section className="border-b border-line bg-cream">
       <div className="container-site flex flex-col items-center gap-6 py-10 lg:flex-row lg:justify-between">
         <p className="max-w-md text-center text-sm leading-relaxed text-ink-faint lg:text-left">
-          <strong className="text-ink">Balanced crop nutrition</strong>,{" "}
+          <strong className="text-ink">Microbiological fertilisers</strong>,{" "}
           <strong className="text-ink">biostimulants</strong> and{" "}
-          <strong className="text-ink">soil biology</strong> from renowned European producers.
+          <strong className="text-ink">liquid foliar fertilisers</strong> from renowned European
+          producers.
         </p>
         <PartnerLogos variant="compact" />
       </div>
@@ -74,13 +75,13 @@ export function BenefitNav({ options }: { options: FilterOptions }) {
       <div className="container-site">
         <Reveal>
           <SectionHeading
-            eyebrow="Start with your goal"
+            eyebrow="Shop by Purpose"
             title={
               <>
                 What do you want to <Em className="text-brand">improve</Em>?
               </>
             }
-            lede="Every Humuson product is mapped to the outcomes described in its own published guidance. Pick a goal to see the products listed for it."
+            lede="Every Humuson product is mapped to the outcomes described in its own published guidance. Pick a purpose to see the products listed for it."
           />
         </Reveal>
         <RevealGroup className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
@@ -172,7 +173,7 @@ export function FinderBand() {
                 Three questions. <Em className="text-leaf-300">The right product.</Em>
               </>
             }
-            lede="Answer three quick questions about your crop and goals, and we’ll match you with the Humuson products listed for exactly that situation — no guesswork."
+            lede="Answer three quick questions about your crop, your purpose and how you apply, and we’ll match you with the Humuson products listed for exactly that situation — no guesswork."
           />
           <div className="mt-8 flex flex-wrap gap-3">
             <ButtonLink href="/product-finder" variant="accent" size="lg">

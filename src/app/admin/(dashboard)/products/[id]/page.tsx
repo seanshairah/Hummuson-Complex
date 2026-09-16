@@ -38,6 +38,10 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
           slug: product.slug,
           status: product.status,
           featured: product.featured,
+          // Was missing: the field rendered empty and saving the form wrote
+          // that empty value back, so opening a product to change anything at
+          // all silently dropped its manufacturer.
+          brand: product.brand,
           tagline: product.tagline,
           shortDescription: product.shortDescription,
           descriptionHtml: product.descriptionHtml,
@@ -47,7 +51,7 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
           benefitClaims: product.benefitClaims,
           priceUsd: product.priceUsd ? String(product.priceUsd) : null,
           whatsappRef: product.whatsappRef,
-          categoryId: product.categoryId,
+          categoryIds: product.categories.map((link) => link.categoryId),
           tags: product.tags,
           seoTitle: product.seoTitle,
           seoDescription: product.seoDescription,

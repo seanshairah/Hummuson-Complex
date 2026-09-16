@@ -29,14 +29,14 @@ export const getSearchDocs = unstable_cache(
         type: "product",
         title: product.name,
         keywords: [
-          product.category?.name ?? "",
+          ...product.categories.map((category) => category.name),
           ...product.benefitNames,
           ...product.methods.map(humanize),
         ].filter(Boolean),
         body: [product.shortDescription ?? "", product.cropNames.join(" "), product.packSizes.join(" ")].join(" \n "),
         href: `/products/${product.slug}`,
         boost: product.featured ? 1.5 : 0.75,
-        meta: { subtitle: product.category?.name ?? "Product" },
+        meta: { subtitle: product.categories[0]?.name ?? "Product" },
       });
     }
 

@@ -49,8 +49,8 @@ export async function saveCategory(
 
 export async function deleteCategory(id: string): Promise<{ error?: string } | void> {
   await requireUser();
-  const count = await db.product.count({ where: { categoryId: id } });
-  if (count > 0) return { error: `This category still has ${count} product(s). Move them first.` };
+  const count = await db.product.count({ where: { categories: { some: { categoryId: id } } } });
+  if (count > 0) return { error: `This range still has ${count} product(s). Move them first.` };
   const category = await db.productCategory.findUnique({ where: { id }, select: { name: true } });
   await db.productCategory.delete({ where: { id } });
   await audit("category.deleted", {

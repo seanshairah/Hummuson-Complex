@@ -77,7 +77,7 @@ export function productJsonLd(product: ProductDetailData) {
     url: absoluteUrl(`/products/${product.slug}`),
     ...(product.image ? { image: absoluteUrl(product.image.url) } : {}),
     ...(product.shortDescription ? { description: product.shortDescription } : {}),
-    ...(product.category ? { category: product.category.name } : {}),
+    ...(product.categories[0] ? { category: product.categories[0].name } : {}),
     brand: { "@type": "Brand", name: site.name },
     ...(offers ? { offers } : {}),
   };

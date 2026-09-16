@@ -50,16 +50,26 @@ export function ProductCard({
           aria-hidden
           className="absolute inset-0 bg-gradient-to-t from-humus-950/25 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         />
-        {product.category && (
-          <Badge variant="glass" className="absolute top-3 left-3 backdrop-blur-md">
-            {product.category.name}
-          </Badge>
-        )}
-        {product.featured && (
-          <Badge variant="leaf" className="absolute top-3 right-3">
-            Featured
-          </Badge>
-        )}
+        {/*
+         * One row rather than two absolutely-positioned corners: the range
+         * names are long enough ("Microbiological Fertilisers") that a
+         * left-pinned badge ran into a right-pinned "Featured" on a
+         * three-column grid. Here the range gives way instead of colliding.
+         */}
+        <div className="pointer-events-none absolute inset-x-3 top-3 flex items-start justify-between gap-2">
+          {product.categories[0] ? (
+            <Badge variant="glass" className="min-w-0 backdrop-blur-md">
+              <span className="block truncate">{product.categories[0].name}</span>
+            </Badge>
+          ) : (
+            <span />
+          )}
+          {product.featured && (
+            <Badge variant="leaf" className="shrink-0">
+              Featured
+            </Badge>
+          )}
+        </div>
 
         {/* Hover quick facts */}
         <div className="absolute inset-x-3 bottom-3 translate-y-2 rounded-xl bg-humus-950/80 p-3 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 max-lg:hidden">

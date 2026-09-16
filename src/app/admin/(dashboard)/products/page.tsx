@@ -59,7 +59,7 @@ export default async function AdminProductsPage({
           <THead>
             <Tr>
               <Th>Product</Th>
-              <Th>Category</Th>
+              <Th>Ranges</Th>
               <Th>Price</Th>
               <Th>Data</Th>
               <Th>Status</Th>
@@ -93,7 +93,22 @@ export default async function AdminProductsPage({
                     </span>
                   </Link>
                 </Td>
-                <Td>{product.category?.name ?? "—"}</Td>
+                <Td>
+                  {product.categories.length > 0 ? (
+                    <span className="flex flex-wrap gap-1">
+                      {product.categories.map((link) => (
+                        <span
+                          key={link.categoryId}
+                          className="rounded-full bg-ink/6 px-2 py-0.5 text-xs whitespace-nowrap text-ink-soft"
+                        >
+                          {link.category.name}
+                        </span>
+                      ))}
+                    </span>
+                  ) : (
+                    "—"
+                  )}
+                </Td>
                 <Td>{formatPriceUsd(product.priceUsd ? Number(product.priceUsd) : null) ?? "—"}</Td>
                 <Td>
                   <span

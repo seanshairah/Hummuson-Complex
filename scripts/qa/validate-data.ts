@@ -17,7 +17,7 @@ const add = (level: Level, code: string, detail: string) => findings.push({ leve
 async function main() {
   const products = await db.product.findMany({
     include: {
-      category: true,
+      categories: { include: { category: true } },
       primaryImage: true,
       crops: { include: { crop: true } },
       benefits: { include: { benefit: true } },
@@ -36,7 +36,8 @@ async function main() {
     if (!p.shortDescription?.trim() && !p.descriptionHtml?.trim())
       add("BLOCKER", "MISSING_DESCRIPTION", `${p.name} has neither a short nor a full description`);
     if (!p.primaryImageId) add("BLOCKER", "MISSING_IMAGE", `${p.name} has no primary image`);
-    if (!p.categoryId) add("BLOCKER", "MISSING_CATEGORY", `${p.name} has no category`);
+    if (p.categories.length === 0)
+      add("BLOCKER", "MISSING_CATEGORY", `${p.name} belongs to no range`);
 
     if (p.status === "PUBLISHED") {
       if (p.crops.length === 0) add("WARN", "NO_CROPS", `${p.name} is listed for no crop`);
@@ -105,8 +106,8 @@ async function main() {
 
   const categories = await db.productCategory.findMany({ include: { products: true } });
   for (const category of categories)
-    if (category.products.filter((p) => publishedIds.has(p.id)).length === 0)
-      add("WARN", "EMPTY_CATEGORY", `category "${category.name}" has no published products`);
+    if (category.products.filter((link) => publishedIds.has(link.productId)).length === 0)
+      add("WARN", "EMPTY_CATEGORY", `range "${category.name}" has no published products`);
 
   /* ── Naming consistency ───────────────────────────────────────────────── */
   const lower = crops.filter((c) => c.name === c.name.toLowerCase()).length;

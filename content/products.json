@@ -7,8 +7,8 @@
       "https://humusoncomplex.com/product/azofix-plus/"
     ],
     "categorySlugs": [
-      "organic",
-      "physio"
+      "microbiological",
+      "biostimulants"
     ],
     "shortDescription": "Plant microbial biostimulant for more efficient fixation of atmospheric nitrogen — its bacteria fix nitrogen in a form accessible to the plant and promote the biological activity of soils.",
     "descriptionHtml": "<p>Azofix Plus is a plant microbial biostimulant built around the nitrogen-fixing bacterium <em>Paenibacillus polymyxa</em> MVY-024, enriched with B-group vitamins and microelements. Its bacteria fix atmospheric nitrogen in a form that is accessible to the plant and promote the biological activity of soils — feeding the crop by first feeding the soil.</p><p>Registered with Ecocert and FiBL and approved for organic farming, it is applied to the soil from before sowing up to the crop covering the ground, at 1–5 L/ha depending on the crop.</p>",
@@ -132,8 +132,8 @@
       "https://humusoncomplex.com/product/fosfix-plus/"
     ],
     "categorySlugs": [
-      "organic",
-      "physio"
+      "microbiological",
+      "biostimulants"
     ],
     "shortDescription": "Plant microbial biostimulant that increases the amount of available phosphorus in the soil for optimal phosphorus uptake by the crop.",
     "descriptionHtml": "<p>Fosfix Plus is a plant microbial biostimulant powered by <em>Bacillus aryabhattai</em> MVY-004. The bacteria unlock phosphorus already present in the soil, increasing the amount available to the crop — phosphorus that drives energy transfer, rooting and flowering.</p><p>Ecocert and FiBL registered and approved for organic farming, it is applied to the soil from before sowing until canopy closure at 1–5 L/ha depending on the crop.</p>",
@@ -259,8 +259,8 @@
       "https://humusoncomplex.com/product/bacto-k/"
     ],
     "categorySlugs": [
-      "organic",
-      "physio"
+      "microbiological",
+      "biostimulants"
     ],
     "shortDescription": "Plant microbial biostimulant that improves potassium assimilation and potassium balance in the soil, and increases resistance to droughts and frost.",
     "descriptionHtml": "<p>Bacto-K is a plant microbial biostimulant built on <em>Bacillus megaterium</em> MVY-011, a potassium-mobilising bacterium. It improves potassium assimilation and the potassium balance of the soil — the nutrient behind water regulation, standing power and stress tolerance — helping crops resist drought and frost.</p><p>FiBL registered and approved for organic farming, it is applied to the soil from before sowing until canopy closure at 1–5 L/ha depending on the crop.</p>",
@@ -382,8 +382,7 @@
       "https://humusoncomplex.com/product/bacto-seed/"
     ],
     "categorySlugs": [
-      "organic",
-      "physio"
+      "microbiological"
     ],
     "shortDescription": "Contains a bacterial complex that promotes seed viability and germination and improves growth and development of the root system.",
     "descriptionHtml": "<h4>Why Bacto-Seed?</h4>\n<ul>\n<li>Promotes seed viability and germination;</li>\n<li>Improves growth and development of root system;</li>\n<li>Bacto-Seed enhances the uptake of phosphorus and potassium from the soil;</li>\n<li>Improves soil structure.</li>\n</ul>\n<h4>Operating principle:</h4>\n<p>Bacto-Seed product contains a bacterial complex that releases biologically active substances that promote seed germination and the development of young plants, balancing vital metabolic processes and increasing resistance to stress.</p>\n\n<p>Additional Information: <a href=\"https://www.bioenergy.lt/wp-content/uploads/2021/03/Bacto-Seed_Onepage-INFO-WEB.pdf\"><strong>Click Me</strong></a></p>",
@@ -414,7 +413,7 @@
     "featured": false,
     "notes": "Bioenergy LT product line. Original description repeated one passage twice (copy-paste error) — duplicate removed, wording untouched. Pack size not stated in listing text; photo filename suggests 5L — confirm.",
     "sourceUrl": "https://humusoncomplex.com/product/bacto-seed/",
-    "brand": "Humuson Complex"
+    "brand": "Bio Energy"
   },
   {
     "name": "Master",
@@ -424,8 +423,7 @@
       "https://humusoncomplex.com/product/master/"
     ],
     "categorySlugs": [
-      "organic",
-      "physio"
+      "microbiological"
     ],
     "shortDescription": "Promotes soil biological and enzymatic activity and increases the amount of phosphorus and potassium available to plants.",
     "descriptionHtml": "<h4>Why Master?</h4>\n<ul>\n<li>Promotes soil biological and enzymatic activity;</li>\n<li>Increases the amount of phosphorus and potassium available to plants;</li>\n<li>Increases N reserves in soil;</li>\n<li>Promotes plant growth and accordingly, better resistance to stress;</li>\n<li>Improves soil structure.</li>\n</ul>\n<h4>Operating principle:</h4>\n<p>The product contains a complex of bacteria that exudes biologically active substances, vitamins, enzymes, plant hormones that promote plant development and secrete micro and macro elements that are especially needed by plants. Improving the physical and chemical properties of the soil and the uptake of nutrients by plants. Its action begins immediately after contact with the soil or parts of the plant and acts under favorable physiological conditions for up to 8 weeks.</p>\n<p>Additional Information: <a href=\"https://www.bioenergy.lt/wp-content/uploads/2021/03/Master-Onepage-INFO-WEB.pdf\"><strong>Click Me</strong></a></p>",
@@ -520,7 +518,7 @@
     "notes": "Bioenergy LT product line. Active principle described as proline accumulation (\"The application of MaxProlin increases the concentration of proline in plants\") — no percentage composition stated. Label data transcribed from the August 2026 product photo set supplied by Humuson Complex.",
     "sourceUrl": "https://humusoncomplex.com/product/maxprolin/",
     "tagline": "Pure L-proline",
-    "brand": "Humuson Complex"
+    "brand": "Bio Energy"
   },
   {
     "name": "Grow+ Top Dressing",
@@ -531,9 +529,8 @@
       "https://humusoncomplex.com/product/grow-top-dressing-sachet/"
     ],
     "categorySlugs": [
-      "organic",
-      "physio",
-      "value"
+      "crop-nutrition",
+      "organic"
     ],
     "shortDescription": "Organic top dressing containing humified and water-soluble organic carbon, natural vitamins, organic acids, enzymes and more than 40 natural-origin nutrition elements.",
     "descriptionHtml": "<ul>\n  <li>ORGANIC CARBON (HUMIFIED AND WATER SOLUBLE)</li>\n  <li>VITAMINS (CAROTENE, B1, B2, B3, B5, B6, B12, E, C, D, P)</li>\n  <li>ORGANIC ACIDS (FOLIC, HUMIC, FULVIC)</li>\n  <li>ENZYMES (CATALASE, PEROXIDASE, REDUCTASE, PROTEASE)</li>\n  <li>MORE THAN 40 DIFFERENT, NATURAL ORIGINAL NUTRITION ELEMENTS (Co., Mn, Cu, B, Zn, I, Br, Mo, V, Cr, Be, Ni&#8230;)</li>\n</ul>",
@@ -627,9 +624,8 @@
       "https://humusoncomplex.com/product/carboamin-basal-dressing-sachet/"
     ],
     "categorySlugs": [
-      "organic",
-      "physio",
-      "value"
+      "crop-nutrition",
+      "organic"
     ],
     "shortDescription": "Basal dressing containing humic and fulvic acids, amino acids and phytohormones — prevents nitrogen leaching, stabilizes phosphorus and increases nutrient availability and absorption.",
     "descriptionHtml": "<p>CONTAINS HUMIC &amp; FULVIC ACIDS</p>\n<ul>\n  <li>Prevent nitrogen leaching</li>\n  <li>Provides food for the microbes</li>\n  <li>Stabilizes phosphorus</li>\n  <li>Increases nutrient availability and absorption</li>\n  <li>Enhances for growth</li>\n  <li>Increase water retention</li>\n  <li>Improve overall soil structure</li>\n  <li>Improve soil CEC</li>\n  <li>Improves crop vigor</li>\n  <li>Improves seed germination</li>\n  <li>Increase iron uptake</li>\n</ul>\n<p>BIOSTIMULANT PROPERTIES — NUTRITIONAL COMPONENTS</p>\n<ul>\n  <li>Contains 17 essential amino acids</li>\n  <li>Phytohormones (Auxins and cytokinins)</li>\n  <li>Chelating agents (Amino acids, fulvic acid and humic acids)</li>\n  <li>Micro and Macro Nutrients</li>\n</ul>\n<ul>\n  <li>Makroelements: organic NPK</li>\n  <li>organic carbon (humified carbon and watersoluble carbon)</li>\n  <li>rich with natural vitamins: contains carotene (provitamin A), B1 B2 B3 B5 B6 B12 E, C, D, P)</li>\n  <li>organic acids: folic acid, humic acids fulvic acid</li>\n  <li>trace elements (Mn, Cu, B, Zn, I, Br, Mo, V, Cr, Be, Ni, Ag, Sn, Pb As, Ba, Sr, Ti)</li>\n  <li>amino acids (Glutamic acid, Glycine, Valine, Arginine, Aspartic acid, Alanine, Serine, Leucine, Isoleucine, Phenylalanine, Tyrosine, Lysine, Methionine, Threonine, Cystine)</li>\n  <li>contains enzymes ( peroxidase, reductase, protease)</li>\n  <li>glycoprotein, glomalin</li>\n  <li>phytohormones (auxin and cytokinin)</li>\n</ul>\n<p><strong>Humic acids</strong></p>\n<p>Here are some potential advantages of using humic acids for seed soaking:</p>\n<ol>\n  <li>Enhanced seed germination: Humic acids can help stimulate seed germination by breaking seed dormancy and promoting the activation of enzymes involved in germination processes. Soaking seeds in humic acids can potentially result in faster and more uniform germination rates.</li>\n  <li>Improved nutrient availability: Humic acids have the ability to chelate or bind with essential nutrients, such as iron, zinc, and manganese, making them more available for plant uptake. By soaking seeds in humic acids, the nutrients bound to these compounds can be released and absorbed more efficiently by the emerging seedlings, promoting healthy growth.</li>\n  <li>Increased root development: Humic acids can stimulate root growth and development. Soaking seeds in humic acids can help initiate root elongation, increase the number of root hairs, and enhance lateral root branching. This can lead to improved nutrient and water uptake, as well as better anchorage and overall plant vigor</li>\n  <li>Stress tolerance: Humic acids have been reported to enhance plant tolerance to various abiotic stresses, including drought, salinity, and heavy metal toxicity. Soaking seeds in humic acids can potentially prime the seedlings stress response mechanisms, allowing them to better withstand adverse environmental conditions.</li>\n  <li>Microbial activity promotion: Humic acids can act as a food source and stimulant for beneficial soil microorganisms. Soaking seeds in humic acids can promote the growth and activity of beneficial bacteria and fungi in the rhizosphere, leading to improved nutrient cycling, disease suppression, and overall soil health.</li>\n  <li>Seedling vigor and establishment: By providing a nutrient-rich and conducive environment for seed germination, humic acid seed soaking can result in stronger and more vigorous seedlings. This can lead to better establishment in the field, higher survival rates, and improved early growth stages</li>\n</ol>",
@@ -723,8 +719,7 @@
       "https://humusoncomplex.com/product/ruinex/"
     ],
     "categorySlugs": [
-      "organic",
-      "physio"
+      "microbiological"
     ],
     "shortDescription": "Increases mineralisation of crop residues, enhancing decomposition of lignin and cellulose and the change of vegetal residues into humus.",
     "descriptionHtml": "<h4>Why Ruinex?</h4>\n<ul>\n<li>Increases mineralisation of crop residues;</li>\n<li>Enhances decomposition of lignin, cellulose and other organic polymers;</li>\n<li>Enhances change of vegetal residues into humus;</li>\n<li>Re-establishes soil balance and creates unfavourable soil environment for the spread of pathogens;</li>\n<li>Promotes biological activity of soils.</li>\n</ul>\n<h4>Operating principle:</h4>\n<p>The microorganisms in the biological preparation act as agents for a breakdown of lignin and cellulose by secreting specific enzymes. This process also releases antibiotics that increase plant resistance to pathogens.</p>\n<p>Additional Information: <strong><a href=\"https://www.bioenergy.lt/wp-content/uploads/2021/03/Ruinex-Onepage-INFO-WEB.pdf\">Click Here</a></strong></p>",
@@ -756,7 +751,7 @@
     "featured": false,
     "notes": "Bioenergy LT product line (tag \"bio-energy\"). Pack size not stated in listing text; photo filename suggests 5L — confirm.",
     "sourceUrl": "https://humusoncomplex.com/product/ruinex/",
-    "brand": "Humuson Complex"
+    "brand": "Bio Energy"
   },
   {
     "name": "Bactoforce",
@@ -766,8 +761,8 @@
       "https://humusoncomplex.com/product/bactoforce/"
     ],
     "categorySlugs": [
-      "organic",
-      "physio"
+      "microbiological",
+      "biostimulants"
     ],
     "shortDescription": "Plant microbial biostimulant for healthy soil and plants, applied from before sowing right up to flowering.",
     "descriptionHtml": "<p>Bactoforce is a plant microbial biostimulant based on <em>Bacillus mojavensis</em> MVY-007 — a resilient beneficial bacterium that supports healthy soil biology and vigorous plants.</p><p>It offers one of the widest application windows in the Bioenergy range: from spraying on the soil before ploughing right up to flowering (BBCH 59), at 1–5 L/ha depending on the crop. Approved for organic farming.</p>",
@@ -890,9 +885,7 @@
       "https://humusoncomplex.com/product/4287/"
     ],
     "categorySlugs": [
-      "organic",
-      "physio",
-      "value"
+      "microbiological"
     ],
     "shortDescription": "Microbial powder for seed dressing and soil application, formulated with beneficial bacteria and fungi that provide plants with nitrogen, phosphorus, potassium and silicon through natural microbial processes.",
     "descriptionHtml": "<ul>\n  <li>Paenibacillus azotofixans</li>\n  <li>Bacillus megaterium Bacillus mucilaginosus Bacillus subtilis</li>\n  <li>Trichoderma viride</li>\n  <li>Mycorrhizal fungi</li>\n</ul>\n<p>BioNPK Powder S is a microbial powder for seed dressing and soil application, formulated with beneficial bacteria and fungi. The product provides plants with nitrogen, phosphorus, potassium and silicon through natural microbial processes. It enhances plant resistance to environmental stresses including drought and low temperatures, while promoting root system development and nutrient uptake efficiency. The powder strengthens plants&#8217; natural defenses against diseases, reduces lodging risk and improves the utilization of mineral fertilizers. The microbial consortium activates soil nutrients and supports vigorous plant growth throughout the development cycle. Ideal for cereals, oilseeds, potatoes, maize, legumes and vegetable crops.</p>\n<p>Package Size: 50g</p>\n<p>Rate per Ha: 50g depending on crop and application method</p>",
@@ -1074,6 +1067,7 @@
       "https://humusoncomplex.com/product/ocean-2/"
     ],
     "categorySlugs": [
+      "biostimulants",
       "liquid-fertilisers"
     ],
     "shortDescription": "Liquid fertilizer with a high concentration of seaweed extract and amino acids, designed for foliar application or watering.",
@@ -1800,6 +1794,7 @@
       "https://humusoncomplex.com/product/bico-w/"
     ],
     "categorySlugs": [
+      "biostimulants",
       "liquid-fertilisers"
     ],
     "shortDescription": "Liquid fertilizer with biostimulants, amino acids and seaweed extract, designed to strengthen root systems, boost plant immunity and provide energy for early growth.",
@@ -1939,7 +1934,8 @@
     ],
     "applicationMethods": [
       "soil application",
-      "foliar spray"
+      "foliar spray",
+      "soil drench"
     ],
     "suitableCrops": [
       "cereals",
@@ -1988,7 +1984,7 @@
       }
     ],
     "featured": true,
-    "notes": "The listing’s crop sentence ends mid-list (\"suitable for cereals, fruits, vegetables,\") — only those three kept. Two pack photos on the listing. Oxide notation normalized (K20 → K2O). Label data transcribed from the August 2026 product photo set supplied by Humuson Complex.",
+    "notes": "The listing’s crop sentence ends mid-list (\"suitable for cereals, fruits, vegetables,\") — only those three kept. Two pack photos on the listing. Oxide notation normalized (K20 → K2O). Label data transcribed from the August 2026 product photo set supplied by Humuson Complex. Soil drench added as an application method on the owner's instruction; the label publishes rates for soil (1–1.5 kg/ha) and foliar (0.25–0.5 kg/ha, 100 g/100 L) only, so no drench rate, dilution ratio or frequency is recorded and the product page shows the confirm-with-support state for it.",
     "sourceUrl": "https://humusoncomplex.com/product/a3-biostimulant/",
     "tagline": "Amino acids · algae · humics",
     "instructionsHtml": "<h3>Crop guidance (per label)</h3><ul><li><strong>Fruit trees, olives &amp; citrus:</strong> 1st application in pre-flowering, 2nd at fruit set, 3rd during fruit fattening.</li><li><strong>Tomato:</strong> apply at each flowering interval (every 20–30 days).</li><li><strong>Peppers:</strong> before pre-flowering, continuing every 20 days.</li><li><strong>Leafy vegetables:</strong> apply when 2–4 true leaves are visible; repeat after 20 days.</li><li><strong>Berries:</strong> in pre-flowering, repeating every 20 days.</li><li><strong>Ornamentals:</strong> 2–4 treatments during the growing season.</li></ul><p>Store between +5 °C and +40 °C. Do not mix with copper, strong acids or alkaline-reaction products. Use only in case of recognised need and do not exceed the recommended dose.</p><p><em>Manufactured by Arvensis Agro S.A. (Zaragoza, Spain).</em></p>",
@@ -2089,7 +2085,7 @@
     "featured": true,
     "notes": "New product from the August 2026 catalogue photo set; details transcribed from the bottle label. Storage: keep in the original, well-sealed container away from direct sunlight in a cool, dry environment; the container can be triple-rinsed and reused.",
     "sourceUrl": "",
-    "brand": "Humuson Complex"
+    "brand": "CMD Industries"
   },
   {
     "name": "Fortik Solid",
@@ -2097,7 +2093,7 @@
     "slug": "fortik-solid",
     "oldUrls": [],
     "categorySlugs": [
-      "biostimulants"
+      "crop-nutrition"
     ],
     "tagline": "NK (Mg) 3-40 (2) with boron — foliar & irrigation",
     "shortDescription": "High-potassium NK (Mg) 3-40 (2) fertiliser with boron for foliar and irrigation application — recommended to improve fruit quality and production.",
@@ -2250,7 +2246,7 @@
     "featured": false,
     "notes": "New product from the August 2026 catalogue photo set — front label only; specification to be confirmed with Humuson technical support.",
     "sourceUrl": "",
-    "brand": "Humuson Complex"
+    "brand": "IKAR"
   },
   {
     "name": "NPK 12-11-30+TE",
@@ -2258,6 +2254,7 @@
     "slug": "npk-12-11-30-te",
     "oldUrls": [],
     "categorySlugs": [
+      "crop-nutrition",
       "liquid-fertilisers"
     ],
     "tagline": "IKAR Intense line",
@@ -2288,6 +2285,6 @@
     "featured": false,
     "notes": "New product from the August 2026 catalogue photo set — front label only; specification to be confirmed with Humuson technical support.",
     "sourceUrl": "",
-    "brand": "Humuson Complex"
+    "brand": "IKAR"
   }
 ]

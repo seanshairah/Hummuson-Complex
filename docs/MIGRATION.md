@@ -72,6 +72,56 @@ file. And `mapsUrl` is deliberately empty: a Google Maps _directions_ URL carrie
 the sender's own starting point, so pasting one there would hand every visitor
 directions from wherever that person happened to be standing.
 
+### Ranges: several per product
+
+`Product.categoryId` held one range per product, so the importer had to pick a
+winner out of the several the old shop recorded — which is why Physio, the same
+thirteen products as Organic, never had a single member. A product now belongs
+to every range its own published text supports, through `ProductCategoryLink`.
+It is still one product record: the catalogue shows it under each range and
+once in any combined result.
+
+The ranges themselves were reworked to say what a grower is choosing between:
+
+| slug                 | name                        | what it means                                                                 |
+| -------------------- | --------------------------- | ----------------------------------------------------------------------------- |
+| `microbiological`    | Microbiological Fertilisers | contains live bacteria or fungi, by its own description                       |
+| `biostimulants`      | Biostimulants               | amino acids, seaweed, or a microbial product that calls itself a biostimulant |
+| `liquid-fertilisers` | Liquid Foliar Fertilisers   | the liquid range, fed through leaf or irrigation                              |
+| `crop-nutrition`     | Crop Nutrition              | supplies the crop's macro-nutrients: basal and top dressings, NPKs            |
+| `organic`            | Organic                     | nutrition from organic matter; both members are titled "organic … fertiliser" |
+
+`value` and `physio` are gone. They were live on the old shop and are in links,
+so `filterProducts` maps them onto `crop-nutrition` and `microbiological`
+respectively — `?category=` is a filter, not a route, so a stale one would
+otherwise render the whole catalogue and look like it had worked.
+
+Two judgement calls worth knowing: **Bio NPK Powder S** was in Value and is not
+in Crop Nutrition, because it is a microbial product that releases nutrients
+already in the soil rather than supplying them. **Perfect Stick** is in Liquid
+Foliar Fertilisers and is a spray adjuvant, not a fertiliser — it has no other
+home and belongs in the tank with them, but say so and it can stand outside the
+ranges instead.
+
+### Crops: one level of groups
+
+`Crop.parentId` groups the individual crops under the group a grower plants by —
+cabbage, broccoli and cauliflower under brassicas; Fruit and Fruit Trees merged
+into one Fruit Crops parent. A parent is itself a crop, not a separate kind of
+row, because products really are listed against "brassicas": that is what their
+own text says, and those associations would be lost if groups lived apart.
+
+Filtering by a group returns its own products **plus** its children's. Filtering
+by a single crop returns only that crop's, so a product listed for cabbage is
+never presented as suitable for broccoli. Inheritance runs upward only, and
+`tests/unit/product-filters.test.ts` is what holds it there.
+
+Nothing in the catalogue supports **Lawns & Turf** or **Pastures & Fodder
+Crops**: no crop exists for either and no product's published text mentions
+lawn, turf, pasture, fodder or grazing. They are not in the taxonomy, because an
+empty group is a filter that leads nowhere. Name the products that cover them
+and both can be added in an afternoon.
+
 ### Partner logos
 
 `public/images/brand/` holds one file per producer. Bio Energy and Sapropel
@@ -87,6 +137,32 @@ They are the best available, not good: a logo printed at a centimetre across and
 photographed on a phone will never be as crisp as a supplied file. If a producer
 sends a press kit, drop the file in and delete that entry from the script rather
 than re-cropping.
+
+### Brands are manufacturers
+
+Six products carried the brand "Humuson Complex", which is the distributor, not
+a maker — the eMAXX pack says so itself ("Zimbabwe Distribution: PaLanga
+Enterprises t/a HumusOn Complex"). Each was moved to the manufacturer its own
+record names:
+
+| product         | brand          | evidence                                                             |
+| --------------- | -------------- | -------------------------------------------------------------------- |
+| Fosto           | IKAR           | pack photo reads IKAR LIQUID FERTILIZERS · Fosto · ADD VALUE         |
+| NPK 12-11-30+TE | IKAR           | pack photo reads IKAR LIQUID FERTILIZERS · NPK 12-11-30+TE · INTENSE |
+| Bacto-Seed      | Bio Energy     | migration note: "Bioenergy LT product line"                          |
+| Maxprolin       | Bio Energy     | migration note: "Bioenergy LT product line"                          |
+| Ruinex          | Bio Energy     | migration note: 'Bioenergy LT product line (tag "bio-energy")'       |
+| eMAXX Ultra     | CMD Industries | supplied by the owner                                                |
+
+The instruction was to move them all to Sapropel Organics. That would have put
+five products under a maker their own records contradict, so they went where
+the evidence pointed instead; the requirement itself — no product appearing as a
+brand — is met either way. `content/products.json` is one line per product if
+any of them should read differently.
+
+The admin editor was also dropping `brand`: the field was never passed into the
+form, so it rendered empty and saving wrote the empty value back. Opening any
+product to change anything at all silently erased its manufacturer.
 
 ### The Arvensis brand name
 

@@ -21,7 +21,9 @@ export interface ActiveFilters {
 interface Dimension {
   key: keyof ActiveFilters;
   label: string;
-  options: { value: string; label: string; count?: number }[];
+  /** Shown inside the popover and the mobile sheet, above the options. */
+  placeholder?: string;
+  options: { value: string; label: string; count?: number; indent?: boolean }[];
 }
 
 function useFilterNavigation() {
@@ -83,15 +85,20 @@ export function ProductFilterBar({
       {
         key: "crop",
         label: "Crop",
+        placeholder: "Select a crop",
+        // Already in taxonomy order from the server, so a child follows its
+        // parent and only needs marking as one.
         options: options.crops.map((o) => ({
           value: o.slug,
           label: o.name.charAt(0).toUpperCase() + o.name.slice(1),
           count: o.count,
+          indent: Boolean(o.parentSlug),
         })),
       },
       {
         key: "benefit",
-        label: "Goal",
+        label: "Purpose",
+        placeholder: "Select a purpose",
         options: options.benefits.map((o) => ({ value: o.slug, label: o.name, count: o.count })),
       },
       {
@@ -193,30 +200,39 @@ export function ProductFilterBar({
                   <legend className="mb-2.5 text-eyebrow text-[0.65rem] text-ink-faint">
                     {dimension.label}
                   </legend>
-                  <div className="flex flex-wrap gap-2">
-                    {dimension.options.map((option) => {
-                      const selected = active[dimension.key] === option.value;
-                      return (
-                        <button
-                          key={option.value}
-                          type="button"
-                          onClick={() => setParam(dimension.key, selected ? null : option.value)}
-                          aria-pressed={selected}
+                  {/*
+                   * Crops arrive as the taxonomy, so they are broken back into
+                   * groups here. Thirty chips in one run is a wall; eleven
+                   * groups you can skim past is not.
+                   */}
+                  {groupOptions(dimension.options).map((group, i) => (
+                    <div key={group.parent?.value ?? `loose-${i}`} className="mb-2 last:mb-0">
+                      {group.parent && (
+                        <FilterChip
+                          option={group.parent}
+                          selected={active[dimension.key] === group.parent.value}
+                          onToggle={(next) => setParam(dimension.key, next)}
+                        />
+                      )}
+                      {group.children.length > 0 && (
+                        <div
                           className={cn(
-                            "rounded-full border px-3.5 py-2 text-sm transition-colors",
-                            selected
-                              ? "border-humus-900 bg-humus-900 text-paper"
-                              : "border-line bg-cream text-ink-soft",
+                            "flex flex-wrap gap-2",
+                            group.parent ? "mt-2 ml-3 border-l border-line pl-3" : "",
                           )}
                         >
-                          {option.label}
-                          {typeof option.count === "number" && (
-                            <span className="ml-1.5 text-xs opacity-60">{option.count}</span>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
+                          {group.children.map((option) => (
+                            <FilterChip
+                              key={option.value}
+                              option={option}
+                              selected={active[dimension.key] === option.value}
+                              onToggle={(next) => setParam(dimension.key, next)}
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </fieldset>
               ))}
             </div>
@@ -243,6 +259,56 @@ export function ProductFilterBar({
         )}
       </div>
     </div>
+  );
+}
+
+/**
+ * Split a flat, taxonomy-ordered option list back into parents and the children
+ * that follow them. A list with no indented entries comes back as one group of
+ * loose options, which is what every dimension other than crop is.
+ */
+function groupOptions(options: Dimension["options"]) {
+  type Group = { parent: Dimension["options"][number] | null; children: Dimension["options"] };
+  const nested = options.some((option) => option.indent);
+  if (!nested) return [{ parent: null, children: options }] satisfies Group[];
+
+  const groups: Group[] = [];
+  for (const option of options) {
+    const last = groups.at(-1);
+    if (option.indent && last) last.children.push(option);
+    else groups.push({ parent: option, children: [] });
+  }
+  return groups;
+}
+
+function FilterChip({
+  option,
+  selected,
+  onToggle,
+}: {
+  option: Dimension["options"][number];
+  selected: boolean;
+  onToggle: (next: string | null) => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={() => onToggle(selected ? null : option.value)}
+      aria-pressed={selected}
+      className={cn(
+        "rounded-full border px-3.5 py-2 text-sm transition-colors",
+        selected
+          ? "border-humus-900 bg-humus-900 text-paper"
+          : option.indent
+            ? "border-line/70 bg-transparent text-ink-faint"
+            : "border-line bg-cream font-medium text-ink-soft",
+      )}
+    >
+      {option.label}
+      {typeof option.count === "number" && (
+        <span className="ml-1.5 text-xs opacity-60">{option.count}</span>
+      )}
+    </button>
   );
 }
 
@@ -292,6 +358,9 @@ function FilterPopover({
               <X className="size-3.5" /> Clear {dimension.label.toLowerCase()}
             </button>
           )}
+          {dimension.placeholder && !selected && (
+            <p className="px-3 py-1.5 text-xs text-ink-faint">{dimension.placeholder}</p>
+          )}
           {dimension.options.map((option) => {
             const isSelected = option.value === value;
             return (
@@ -303,7 +372,8 @@ function FilterPopover({
                   setOpen(false);
                 }}
                 className={cn(
-                  "flex w-full items-center justify-between gap-2 rounded-xl px-3 py-2 text-left text-sm transition-colors",
+                  "flex w-full items-center justify-between gap-2 rounded-xl py-2 pr-3 text-left text-sm transition-colors",
+                  option.indent ? "pl-7 text-ink-faint" : "pl-3 font-medium",
                   isSelected
                     ? "bg-leaf-300/40 font-medium text-ink"
                     : "text-ink-soft hover:bg-ink/4",

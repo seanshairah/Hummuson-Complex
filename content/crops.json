@@ -1,5 +1,27 @@
 [
   {
+    "name": "cereals",
+    "slug": "cereals",
+    "aka": [
+      "cereal"
+    ]
+  },
+  {
+    "name": "maize",
+    "slug": "maize",
+    "aka": [
+      "mealies",
+      "corn"
+    ],
+    "parentSlug": "cereals"
+  },
+  {
+    "name": "wheat",
+    "slug": "wheat",
+    "aka": [],
+    "parentSlug": "cereals"
+  },
+  {
     "name": "brassicas",
     "slug": "brassicas",
     "aka": [
@@ -11,19 +33,22 @@
     ]
   },
   {
-    "name": "cauliflower",
-    "slug": "cauliflower",
-    "aka": []
+    "name": "cabbage",
+    "slug": "cabbage",
+    "aka": [],
+    "parentSlug": "brassicas"
   },
   {
     "name": "broccoli",
     "slug": "broccoli",
-    "aka": []
+    "aka": [],
+    "parentSlug": "brassicas"
   },
   {
-    "name": "cabbage",
-    "slug": "cabbage",
-    "aka": []
+    "name": "cauliflower",
+    "slug": "cauliflower",
+    "aka": [],
+    "parentSlug": "brassicas"
   },
   {
     "name": "cucurbits",
@@ -45,7 +70,8 @@
     "slug": "cucumber",
     "aka": [
       "cucumbers"
-    ]
+    ],
+    "parentSlug": "cucurbits"
   },
   {
     "name": "butternut",
@@ -53,7 +79,8 @@
     "aka": [
       "butternuts",
       "butternut squash"
-    ]
+    ],
+    "parentSlug": "cucurbits"
   },
   {
     "name": "watermelon",
@@ -61,7 +88,75 @@
     "aka": [
       "watermelons",
       "melon"
+    ],
+    "parentSlug": "cucurbits"
+  },
+  {
+    "name": "solanaceous crops",
+    "slug": "solanaceous",
+    "aka": [
+      "nightshade",
+      "nightshades",
+      "solanaceae"
     ]
+  },
+  {
+    "name": "tomato",
+    "slug": "tomato",
+    "aka": [
+      "greenhouse tomato"
+    ],
+    "parentSlug": "solanaceous"
+  },
+  {
+    "name": "potatoes",
+    "slug": "potato",
+    "aka": [
+      "potatoes",
+      "potato",
+      "irish potato"
+    ],
+    "parentSlug": "solanaceous"
+  },
+  {
+    "name": "legumes",
+    "slug": "legumes",
+    "aka": [
+      "legume"
+    ]
+  },
+  {
+    "name": "bean",
+    "slug": "bean",
+    "aka": [
+      "beans"
+    ],
+    "parentSlug": "legumes"
+  },
+  {
+    "name": "pea",
+    "slug": "pea",
+    "aka": [
+      "peas"
+    ],
+    "parentSlug": "legumes"
+  },
+  {
+    "name": "sugar bean",
+    "slug": "sugar-bean",
+    "aka": [
+      "sugar beans"
+    ],
+    "parentSlug": "legumes"
+  },
+  {
+    "name": "pea & bean",
+    "slug": "pea-bean",
+    "aka": [
+      "peas and beans",
+      "pea and bean"
+    ],
+    "parentSlug": "legumes"
   },
   {
     "name": "leafy vegetables",
@@ -77,20 +172,11 @@
     ]
   },
   {
-    "name": "potatoes",
-    "slug": "potato",
+    "name": "fruit crops",
+    "slug": "fruits",
     "aka": [
-      "potatoes",
-      "potato",
-      "irish potato"
-    ]
-  },
-  {
-    "name": "sweet potatoes",
-    "slug": "sweet-potato",
-    "aka": [
-      "sweet potato",
-      "sweetpotato"
+      "fruit",
+      "orchard"
     ]
   },
   {
@@ -103,62 +189,16 @@
       "avocado",
       "mango",
       "apple"
-    ]
+    ],
+    "parentSlug": "fruits"
   },
   {
-    "name": "wheat",
-    "slug": "wheat",
-    "aka": []
-  },
-  {
-    "name": "maize",
-    "slug": "maize",
+    "name": "berry bushes",
+    "slug": "berry-bushes",
     "aka": [
-      "mealies",
-      "corn"
-    ]
-  },
-  {
-    "name": "sugar bean",
-    "slug": "sugar-bean",
-    "aka": [
-      "sugar beans"
-    ]
-  },
-  {
-    "name": "pea",
-    "slug": "pea",
-    "aka": [
-      "peas"
-    ]
-  },
-  {
-    "name": "bean",
-    "slug": "bean",
-    "aka": [
-      "beans"
-    ]
-  },
-  {
-    "name": "tomato",
-    "slug": "tomato",
-    "aka": [
-      "greenhouse tomato"
-    ]
-  },
-  {
-    "name": "cereals",
-    "slug": "cereals",
-    "aka": [
-      "cereal"
-    ]
-  },
-  {
-    "name": "legumes",
-    "slug": "legumes",
-    "aka": [
-      "legume"
-    ]
+      "berry bush"
+    ],
+    "parentSlug": "fruits"
   },
   {
     "name": "oilseeds",
@@ -169,11 +209,35 @@
     ]
   },
   {
-    "name": "fruits",
-    "slug": "fruits",
+    "name": "rapeseed",
+    "slug": "rapeseed",
     "aka": [
-      "fruit"
-    ]
+      "rape seed",
+      "canola"
+    ],
+    "parentSlug": "oilseeds"
+  },
+  {
+    "name": "sunflower",
+    "slug": "sunflower",
+    "aka": [
+      "sunflowers"
+    ],
+    "parentSlug": "oilseeds"
+  },
+  {
+    "name": "field crops",
+    "slug": "field-crops",
+    "aka": []
+  },
+  {
+    "name": "sugar beet",
+    "slug": "sugar-beet",
+    "aka": [
+      "sugarbeet",
+      "beet"
+    ],
+    "parentSlug": "field-crops"
   },
   {
     "name": "ornamentals",
@@ -183,15 +247,11 @@
     ]
   },
   {
-    "name": "berry bushes",
-    "slug": "berry-bushes",
+    "name": "sweet potatoes",
+    "slug": "sweet-potato",
     "aka": [
-      "berry bush"
+      "sweet potato",
+      "sweetpotato"
     ]
-  },
-  {
-    "name": "field crops",
-    "slug": "field-crops",
-    "aka": []
   }
 ]

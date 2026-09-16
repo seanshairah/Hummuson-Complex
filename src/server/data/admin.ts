@@ -9,7 +9,7 @@ export async function listAdminProducts(q?: string) {
       : undefined,
     orderBy: [{ status: "asc" }, { order: "asc" }, { name: "asc" }],
     include: {
-      category: true,
+      categories: { include: { category: true } },
       primaryImage: true,
       _count: { select: { crops: true, applicationGuides: true, faqs: true } },
     },
@@ -20,7 +20,7 @@ export async function getAdminProduct(id: string) {
   return db.product.findUnique({
     where: { id },
     include: {
-      category: true,
+      categories: { select: { categoryId: true } },
       gallery: { orderBy: { order: "asc" } },
       packageSizes: { orderBy: { order: "asc" } },
       applicationGuides: { orderBy: { order: "asc" } },
@@ -35,7 +35,9 @@ export async function getAdminProduct(id: string) {
 export async function getProductFormOptions() {
   const [categories, crops, benefits, stages, media, products] = await Promise.all([
     db.productCategory.findMany({ orderBy: { order: "asc" } }),
-    db.crop.findMany({ orderBy: { name: "asc" } }),
+    // Taxonomy order, not alphabetical: the editor renders crops as the tree
+    // the owner arranged, so a child has to follow its parent.
+    db.crop.findMany({ orderBy: [{ order: "asc" }, { name: "asc" }] }),
     db.benefit.findMany({ orderBy: { order: "asc" } }),
     db.growthStage.findMany({ orderBy: { order: "asc" } }),
     db.media.findMany({ orderBy: { createdAt: "desc" }, take: 300 }),
@@ -43,7 +45,7 @@ export async function getProductFormOptions() {
   ]);
   return {
     categories: categories.map((c) => ({ id: c.id, name: c.name })),
-    crops: crops.map((c) => ({ id: c.id, name: c.name })),
+    crops: crops.map((c) => ({ id: c.id, name: c.name, parentId: c.parentId })),
     benefits: benefits.map((b) => ({ id: b.id, name: b.name })),
     stages: stages.map((s) => ({ id: s.id, name: s.name })),
     media: media.map((m) => ({ id: m.id, url: m.url, alt: m.alt })),

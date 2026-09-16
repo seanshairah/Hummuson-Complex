@@ -64,7 +64,20 @@ export default async function CropPage({ params }: { params: Promise<{ slug: str
           crop.description ??
           `${crop.products.length} Humuson product${crop.products.length === 1 ? "" : "s"} list ${crop.name} in their published guidance — explore them by growth stage below.`
         }
-        crumbs={[{ label: "Crops", href: "/crops" }, { label: displayName }]}
+        crumbs={[
+          { label: "Crops", href: "/crops" },
+          // The group sits in the trail so a single crop says where it belongs
+          // and the way back up is one tap rather than two.
+          ...(crop.parent
+            ? [
+                {
+                  label: crop.parent.name.charAt(0).toUpperCase() + crop.parent.name.slice(1),
+                  href: `/crops/${crop.parent.slug}`,
+                },
+              ]
+            : []),
+          { label: displayName },
+        ]}
         actions={
           <WhatsAppButton
             message={whatsappAdviceMessage(`growing ${crop.name}`)}
@@ -74,6 +87,30 @@ export default async function CropPage({ params }: { params: Promise<{ slug: str
           />
         }
       />
+
+      {/* The individual crops inside this group */}
+      {crop.children.length > 0 && (
+        <section className="container-site pt-10">
+          <h2 className="text-eyebrow text-ink-faint">Crops in this group</h2>
+          <p className="mt-2 max-w-2xl text-sm text-ink-faint">
+            This page shows everything listed across the group. Open a single crop for the products
+            named for it specifically.
+          </p>
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {crop.children.map((child) => (
+              <li key={child.slug}>
+                <Link
+                  href={`/crops/${child.slug}`}
+                  className="flex items-center gap-2 rounded-full border border-line bg-cream px-4 py-2 text-sm text-ink-soft capitalize transition-colors hover:border-leaf-600 hover:text-ink"
+                >
+                  {child.name}
+                  <span className="text-xs text-ink-faint">{child.productCount}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* Growth-stage timeline */}
       <section className="container-site pb-16">

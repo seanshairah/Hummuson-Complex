@@ -18,7 +18,13 @@ export interface ProductCardData {
   brand: string | null;
   tagline: string | null;
   shortDescription: string | null;
-  category: { name: string; slug: string } | null;
+  /**
+   * Every range this product belongs to, in range order. The first is what a
+   * card shows when it has room for one badge; `/products?category=` matches
+   * against all of them, so a product filed under two ranges is found under
+   * either and still listed once.
+   */
+  categories: { name: string; slug: string }[];
   image: ImageData | null;
   priceUsd: number | null;
   /**
@@ -28,13 +34,35 @@ export interface ProductCardData {
   pricedPackCount: number;
   packSizes: string[];
   cropNames: string[];
+  /** Exactly the crops this product's own published text names. */
   cropSlugs: string[];
+  /**
+   * The groups those crops sit under. Filtering by a group matches these, so a
+   * product listed for cabbage is found under Brassicas; filtering by a crop
+   * matches `cropSlugs` alone, so that same product is never presented as
+   * suitable for broccoli.
+   */
+  cropGroupSlugs: string[];
   methods: string[];
   benefitSlugs: string[];
   benefitNames: string[];
   stageKeys: string[];
   featured: boolean;
   hasRates: boolean;
+}
+
+/** The distinct groups a product's crops belong to. */
+function toCropGroups(links: { crop: { parent: { slug: string } | null } }[]): string[] {
+  return [...new Set(links.flatMap((link) => (link.crop.parent ? [link.crop.parent.slug] : [])))];
+}
+
+/** Ranges in the owner's own order, so the first is the one a card shows. */
+function toCategories(
+  links: { category: { name: string; slug: string; order: number } }[],
+): { name: string; slug: string }[] {
+  return [...links]
+    .sort((a, b) => a.category.order - b.category.order)
+    .map((link) => ({ name: link.category.name, slug: link.category.slug }));
 }
 
 function toImage(
@@ -52,10 +80,12 @@ function toImage(
 }
 
 const productListInclude = {
-  category: true,
+  categories: { include: { category: true } },
+  // The parent comes along so a card knows which groups it belongs to without
+  // a second query per product.
   primaryImage: true,
   packageSizes: { orderBy: { order: "asc" as const } },
-  crops: { include: { crop: true } },
+  crops: { include: { crop: { include: { parent: { select: { slug: true } } } } } },
   benefits: { include: { benefit: true }, orderBy: { order: "asc" as const } },
   growthStages: { include: { growthStage: true } },
   applicationGuides: true,
@@ -76,15 +106,14 @@ export const getAllProducts = unstable_cache(
       brand: product.brand,
       tagline: product.tagline,
       shortDescription: product.shortDescription,
-      category: product.category
-        ? { name: product.category.name, slug: product.category.slug }
-        : null,
+      categories: toCategories(product.categories),
       image: toImage(product.primaryImage),
       priceUsd: product.priceUsd ? Number(product.priceUsd) : null,
       pricedPackCount: product.packageSizes.filter((p) => p.priceUsd !== null).length,
       packSizes: product.packageSizes.map((p) => p.size),
       cropNames: product.crops.map((c) => c.crop.name),
       cropSlugs: product.crops.map((c) => c.crop.slug),
+      cropGroupSlugs: toCropGroups(product.crops),
       methods: product.applicationMethods,
       benefitSlugs: product.benefits.map((b) => b.benefit.slug),
       benefitNames: product.benefits.map((b) => b.benefit.name),
@@ -107,15 +136,36 @@ export interface ProductFilterParams {
   slugs?: string[];
 }
 
+/**
+ * Ranges that were renamed, pointed at what replaced them.
+ *
+ * `?category=` is a filter rather than a route, so a stale one fails silently:
+ * the page renders the whole catalogue and looks like the link worked. These
+ * two were live on the old shop and are in links and bookmarks, so they keep
+ * resolving.
+ */
+const CATEGORY_ALIASES: Record<string, string> = {
+  value: "crop-nutrition",
+  physio: "microbiological",
+};
+
 /** Pure filter over the cached product list. */
 export function filterProducts(
   products: ProductCardData[],
   params: ProductFilterParams,
 ): ProductCardData[] {
+  const category = params.category ? (CATEGORY_ALIASES[params.category] ?? params.category) : undefined;
   return products.filter((product) => {
     if (params.brand && product.brand !== params.brand) return false;
-    if (params.category && product.category?.slug !== params.category) return false;
-    if (params.crop && !product.cropSlugs.includes(params.crop)) return false;
+    if (category && !product.categories.some((c) => c.slug === category)) return false;
+    // A group matches its own listings and its children's; a single crop
+    // matches only its own.
+    if (
+      params.crop &&
+      !product.cropSlugs.includes(params.crop) &&
+      !product.cropGroupSlugs.includes(params.crop)
+    )
+      return false;
     if (params.benefit && !product.benefitSlugs.includes(params.benefit)) return false;
     if (params.method && !product.methods.includes(params.method)) return false;
     if (params.stage && !product.stageKeys.includes(params.stage)) return false;
@@ -133,7 +183,12 @@ export const getFeaturedProducts = async (limit = 6): Promise<ProductCardData[]>
 export interface FilterOptions {
   brands: { name: string; count: number }[];
   categories: { name: string; slug: string; count: number }[];
-  crops: { name: string; slug: string; count: number }[];
+  /**
+   * The crop taxonomy, parents first with their children after them. `count`
+   * is how many products the filter would actually return, which for a parent
+   * includes its children's.
+   */
+  crops: { name: string; slug: string; count: number; parentSlug: string | null }[];
   benefits: { name: string; slug: string; count: number }[];
   methods: { key: string; count: number }[];
   stages: { key: string; name: string; count: number }[];
@@ -156,15 +211,15 @@ export const getFilterOptions = unstable_cache(
     };
 
     const categoryMap = count(
-      products.flatMap((p) =>
-        p.category ? [[p.category.slug, p.category.name] as [string, string]] : [],
-      ),
+      products.flatMap((p) => p.categories.map((c) => [c.slug, c.name] as [string, string])),
     );
-    const cropMap = count(
-      products.flatMap((p) =>
-        p.cropSlugs.map((slug, i) => [slug, p.cropNames[i] ?? slug] as [string, string]),
-      ),
-    );
+    // Crop counts are worked out against `filterProducts` rather than by
+    // tallying associations, so a parent's number is the number of products
+    // clicking it returns — anything else and the label lies about the result.
+    const cropRows = await db.crop.findMany({
+      orderBy: [{ order: "asc" }, { name: "asc" }],
+      select: { slug: true, name: true, parent: { select: { slug: true } } },
+    });
     const benefitMap = count(
       products.flatMap((p) =>
         p.benefitSlugs.map((slug, i) => [slug, p.benefitNames[i] ?? slug] as [string, string]),
@@ -187,9 +242,16 @@ export const getFilterOptions = unstable_cache(
         .map(([name, v]) => ({ name, count: v.count }))
         .sort((a, b) => a.name.localeCompare(b.name)),
       categories: [...categoryMap].map(([slug, v]) => ({ slug, name: v.label, count: v.count })),
-      crops: [...cropMap]
-        .map(([slug, v]) => ({ slug, name: v.label, count: v.count }))
-        .sort((a, b) => b.count - a.count),
+      // Taxonomy order, not popularity: a child has to follow its parent for
+      // the grouped picker to read as a tree.
+      crops: cropRows
+        .map((crop) => ({
+          slug: crop.slug,
+          name: crop.name,
+          parentSlug: crop.parent?.slug ?? null,
+          count: filterProducts(products, { crop: crop.slug }).length,
+        }))
+        .filter((crop) => crop.count > 0),
       benefits: [...benefitMap].map(([slug, v]) => ({ slug, name: v.label, count: v.count })),
       methods: [...methodMap].map(([key, v]) => ({ key, count: v.count })),
       // Only stages that can actually return a product are offered. Crops,
@@ -266,13 +328,14 @@ export const getProductBySlug = (slug: string) =>
         brand: p.brand,
         tagline: p.tagline,
         shortDescription: p.shortDescription,
-        category: p.category ? { name: p.category.name, slug: p.category.slug } : null,
+        categories: toCategories(p.categories),
         image: toImage(p.primaryImage),
         priceUsd: p.priceUsd ? Number(p.priceUsd) : null,
         pricedPackCount: p.packageSizes.filter((pack) => pack.priceUsd !== null).length,
         packSizes: p.packageSizes.map((s) => s.size),
         cropNames: p.crops.map((c) => c.crop.name),
         cropSlugs: p.crops.map((c) => c.crop.slug),
+        cropGroupSlugs: toCropGroups(p.crops),
         methods: p.applicationMethods,
         benefitSlugs: p.benefits.map((b) => b.benefit.slug),
         benefitNames: p.benefits.map((b) => b.benefit.name),

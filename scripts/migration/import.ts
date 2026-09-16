@@ -298,6 +298,23 @@ async function importCrops(crops: SourceCrop[]) {
     });
     order += 1;
   }
+  // Parents in a second pass: the list is written parent-first, but nothing
+  // should depend on that — a child edited to point at a parent further down
+  // must still resolve.
+  const idBySlug = new Map(
+    (await prisma.crop.findMany({ select: { id: true, slug: true } })).map((c) => [c.slug, c.id]),
+  );
+  for (const crop of crops) {
+    const parentId = crop.parentSlug ? (idBySlug.get(crop.parentSlug) ?? null) : null;
+    if (crop.parentSlug && !parentId) {
+      throw new Error(`crop "${crop.slug}" names parent "${crop.parentSlug}", which is not in content/crops.json`);
+    }
+    if (parentId === idBySlug.get(crop.slug)) {
+      throw new Error(`crop "${crop.slug}" is its own parent`);
+    }
+    await prisma.crop.update({ where: { slug: crop.slug }, data: { parentId } });
+  }
+
   // Crops that came from a product's own text rather than the curated list get
   // pushed below it. Doing this every run, not just at creation, is what makes
   // it true of databases seeded before the curated list existed — otherwise an
@@ -348,15 +365,17 @@ async function importProducts(products: SourceProduct[]) {
       if (pattern.test(fullText) && !methods.includes(method)) methods.push(method);
     }
 
-    // A product may carry several old-shop categories; pick the most specific
-    // as its primary (Value sachet line > Biostimulants > Liquid > Organic > Physio).
-    const CATEGORY_PRIORITY = ["value", "biostimulants", "liquid-fertilisers", "organic", "physio"];
-    const primaryCategorySlug =
-      CATEGORY_PRIORITY.find((slug) => source.categorySlugs.includes(slug)) ??
-      source.categorySlugs[0];
-    const category = primaryCategorySlug
-      ? await prisma.productCategory.findUnique({ where: { slug: primaryCategorySlug } })
-      : null;
+    // A product belongs to every range its own published text supports. This
+    // used to pick one and drop the rest, which is why Physio — the same ten
+    // products as Organic on the old shop — never had a single member.
+    const ranges = await prisma.productCategory.findMany({
+      where: { slug: { in: source.categorySlugs } },
+      select: { id: true, slug: true },
+    });
+    const missingRange = source.categorySlugs.find((slug) => !ranges.some((r) => r.slug === slug));
+    if (missingRange) {
+      throw new Error(`product "${source.slug}" names range "${missingRange}", which is not in content/categories.json`);
+    }
 
     const descriptionHtml = source.descriptionHtml ? sanitizeRichHtml(source.descriptionHtml) : null;
 
@@ -371,7 +390,6 @@ async function importProducts(products: SourceProduct[]) {
         benefitClaims: source.benefits,
         priceUsd: source.priceUsd ?? undefined,
         applicationMethods: methods,
-        categoryId: category?.id ?? null,
         sourceUrls: source.oldUrls,
         notes: source.notes ?? null,
         status: PublishStatus.PUBLISHED,
@@ -389,7 +407,6 @@ async function importProducts(products: SourceProduct[]) {
         benefitClaims: source.benefits,
         priceUsd: source.priceUsd,
         applicationMethods: methods,
-        categoryId: category?.id ?? null,
         sourceUrls: source.oldUrls,
         notes: source.notes ?? null,
         status: PublishStatus.PUBLISHED,
@@ -398,6 +415,17 @@ async function importProducts(products: SourceProduct[]) {
         featured: source.featured ?? false,
       },
     });
+
+    await prisma.productCategoryLink.deleteMany({
+      where: { productId: product.id, categoryId: { notIn: ranges.map((r) => r.id) } },
+    });
+    for (const range of ranges) {
+      await prisma.productCategoryLink.upsert({
+        where: { productId_categoryId: { productId: product.id, categoryId: range.id } },
+        update: {},
+        create: { productId: product.id, categoryId: range.id },
+      });
+    }
     order += 1;
 
     // Images. Roles steer placement: "primary" wins the hero slot, a
@@ -535,21 +563,25 @@ async function pruneOrphanCrops(curated: SourceCrop[]) {
 }
 
 async function linkRelatedProducts() {
-  // Related = same category, closest order — a deterministic, honest default.
+  // Related = shares a range, closest order — a deterministic, honest default.
+  // With several ranges per product the rule is "any range in common", which
+  // is what a reader means by related: the Bio Energy microbials relate to each
+  // other as microbiological fertilisers and to A3 as biostimulants.
   const products = await prisma.product.findMany({
-    select: { id: true, categoryId: true, order: true },
+    select: { id: true, order: true, categories: { select: { categoryId: true } } },
     orderBy: { order: "asc" },
   });
   for (const product of products) {
+    const mine = new Set(product.categories.map((c) => c.categoryId));
     const siblings = products
-      .filter((p) => p.id !== product.id && p.categoryId && p.categoryId === product.categoryId)
+      .filter((p) => p.id !== product.id && p.categories.some((c) => mine.has(c.categoryId)))
       .slice(0, 4);
     await prisma.product.update({
       where: { id: product.id },
       data: { related: { set: siblings.map((s) => ({ id: s.id })) } },
     });
   }
-  console.log("✓ related products linked by category");
+  console.log("✓ related products linked by shared range");
 }
 
 async function importFaqs(faqs: SourceFaq[]) {
@@ -833,15 +865,20 @@ async function buildDefaultCatalogue() {
     orderBy: { order: "asc" },
     include: {
       products: {
-        where: { status: PublishStatus.PUBLISHED },
-        orderBy: { order: "asc" },
-        include: { primaryImage: true },
+        where: { product: { status: PublishStatus.PUBLISHED } },
+        include: { product: { include: { primaryImage: true } } },
       },
     },
   });
 
   let sectionOrder = 0;
-  for (const category of categories) {
+  for (const row of categories) {
+    // A product can appear in more than one range, so it can appear in more
+    // than one chapter of the catalogue. It is still one product record.
+    const category = {
+      ...row,
+      products: row.products.map((link) => link.product).sort((a, b) => a.order - b.order),
+    };
     if (category.products.length === 0) continue;
     const section = await prisma.catalogueSection.create({
       data: {

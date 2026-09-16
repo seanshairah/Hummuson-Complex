@@ -6,6 +6,7 @@ import { Save } from "lucide-react";
 import { saveProduct } from "@/server/actions/admin/products";
 import { idle, type AdminActionState } from "@/lib/admin-state";
 import { Field, Input, NativeSelect, Textarea } from "@/components/ui/field";
+import { CheckGroup, CropCheckTree } from "@/components/admin/check-group";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/skeleton";
 import { RichEditor } from "@/components/admin/rich-editor";
@@ -26,7 +27,7 @@ const METHODS = [
 
 export interface ProductFormOptions {
   categories: { id: string; name: string }[];
-  crops: { id: string; name: string }[];
+  crops: { id: string; name: string; parentId: string | null }[];
   benefits: { id: string; name: string }[];
   stages: { id: string; name: string }[];
   media: MediaOption[];
@@ -49,7 +50,7 @@ export interface ProductFormInitial {
   benefitClaims?: string[];
   priceUsd?: string | null;
   whatsappRef?: string | null;
-  categoryId?: string | null;
+  categoryIds?: string[];
   tags?: string[];
   seoTitle?: string | null;
   seoDescription?: string | null;
@@ -61,38 +62,6 @@ export interface ProductFormInitial {
   galleryIds?: string[];
   packSizes?: string[][];
   guides?: string[][];
-}
-
-function CheckGroup({
-  name,
-  options,
-  selected,
-  columns = "grid-cols-2 md:grid-cols-3",
-}: {
-  name: string;
-  options: { id: string; name: string }[];
-  selected: string[];
-  columns?: string;
-}) {
-  return (
-    <div className={`grid gap-1.5 ${columns}`}>
-      {options.map((option) => (
-        <label
-          key={option.id}
-          className="flex cursor-pointer items-center gap-2.5 rounded-xl border border-line bg-cream px-3 py-2 text-sm text-ink-soft transition-colors has-checked:border-leaf-600 has-checked:bg-leaf-300/25 has-checked:text-ink"
-        >
-          <input
-            type="checkbox"
-            name={name}
-            value={option.id}
-            defaultChecked={selected.includes(option.id)}
-            className="size-4 accent-leaf-600"
-          />
-          <span className="capitalize">{option.name}</span>
-        </label>
-      ))}
-    </div>
-  );
 }
 
 function Section({
@@ -152,17 +121,17 @@ export function ProductForm({
           </div>
           <Field
             label="Brand"
-            hint="Humuson Complex for our own products, or the European supplier it comes from."
+            hint="The manufacturer whose name is on the pack — not Humuson, which distributes them."
           >
             <Input name="brand" defaultValue={initial.brand ?? ""} list="product-brands" />
             <datalist id="product-brands">
               {[
-                "Humuson Complex",
                 "IKAR",
                 "Nando",
                 "Arvensis Agro",
                 "Bio Energy",
                 "Sapropel Organics",
+                "CMD Industries",
               ].map((brand) => (
                 <option key={brand} value={brand} />
               ))}
@@ -251,8 +220,11 @@ export function ProductForm({
               columns="grid-cols-2 md:grid-cols-4"
             />
           </Field>
-          <Field label="Suitable crops">
-            <CheckGroup name="cropIds" options={options.crops} selected={initial.cropIds ?? []} />
+          <Field
+            label="Suitable crops"
+            hint="Tick the group only where the product's own text names the group; tick a single crop where it names that crop."
+          >
+            <CropCheckTree name="cropIds" options={options.crops} selected={initial.cropIds ?? []} />
           </Field>
           <Field label="Canonical benefits (filters & finder)">
             <CheckGroup
@@ -333,15 +305,16 @@ export function ProductForm({
             />
             Featured (homepage & spotlight)
           </label>
-          <Field label="Category">
-            <NativeSelect name="categoryId" defaultValue={initial.categoryId ?? ""}>
-              <option value="">— None —</option>
-              {options.categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </NativeSelect>
+          <Field
+            label="Ranges"
+            hint="A product can sit in more than one, where its own published text supports each."
+          >
+            <CheckGroup
+              name="categoryIds"
+              options={options.categories}
+              selected={initial.categoryIds ?? []}
+              columns="grid-cols-1"
+            />
           </Field>
           <Field label="Tags">
             <ListInput name="tags" initial={initial.tags} placeholder="tag" addLabel="Add tag" />

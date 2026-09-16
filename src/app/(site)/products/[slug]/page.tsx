@@ -47,7 +47,7 @@ export async function generateMetadata({
   const product = await getProductBySlug(slug);
   if (!product) return { title: "Product not found" };
   return {
-    title: product.seoTitle ?? `${product.name} — ${product.category?.name ?? "Humuson product"}`,
+    title: product.seoTitle ?? `${product.name} — ${product.categories[0]?.name ?? "Humuson product"}`,
     description:
       product.seoDescription ??
       product.shortDescription ??
@@ -103,11 +103,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                     <Badge variant="outline">{product.brand}</Badge>
                   </Link>
                 )}
-                {product.category && (
-                  <Link href={`/products?category=${product.category.slug}`}>
-                    <Badge variant="leaf">{product.category.name}</Badge>
+                {product.categories.map((category) => (
+                  <Link key={category.slug} href={`/products?category=${category.slug}`}>
+                    <Badge variant="leaf">{category.name}</Badge>
                   </Link>
-                )}
+                ))}
                 {product.methods.map((method) => (
                   <Badge key={method} variant="outline">
                     {humanize(method)}

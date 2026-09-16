@@ -5,7 +5,7 @@ import { PageIntro } from "@/components/shared/page-intro";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ButtonLink } from "@/components/ui/button";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
-import { getAllCrops } from "@/server/data/crops";
+import { getCropTree } from "@/server/data/crops";
 import { cn } from "@/lib/utils";
 
 export const revalidate = 300;
@@ -13,14 +13,21 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Crops — guidance by what you grow",
   description:
-    "Maize, potatoes, wheat, tomatoes, legumes and more — see which Humuson Complex products are listed for your crop, stage by stage.",
+    "Cereals, brassicas, cucurbits, legumes, fruit crops and more — see which Humuson Complex products are listed for your crop, stage by stage.",
   alternates: { canonical: "/crops" },
 };
 
 export default async function CropsPage() {
-  const crops = await getAllCrops();
-  const specific = crops.filter((crop) => crop.productCount > 0);
-  const groups = crops.filter((crop) => crop.productCount === 0);
+  // The tree, not a flat run of 29 equal tiles: one card per group, the
+  // individual crops inside it. A group with no listed product anywhere drops
+  // to the strip at the foot of the page rather than taking a card that leads
+  // to nothing.
+  const tree = await getCropTree();
+  const covered = tree.filter((group) => group.productCount > 0 || group.children.length > 0);
+  const listed = covered.filter(
+    (group) => group.productCount > 0 || group.children.some((c) => c.productCount > 0),
+  );
+  const awaiting = tree.filter((group) => !listed.includes(group));
 
   return (
     <>
@@ -28,11 +35,11 @@ export default async function CropsPage() {
         eyebrow="Guidance by crop"
         title="Start from what you"
         titleAccent="grow"
-        lede="Every crop page shows the Humuson products listed for it, the growth stages they reference, and the questions farmers ask — all drawn from published product guidance."
+        lede="Crops are grouped the way you plant them. Open a group for everything listed across it, or go straight to the single crop — each page shows the Humuson products listed for it, the growth stages they reference, and the questions farmers ask."
         crumbs={[{ label: "Crops" }]}
       />
       <section className="container-site pb-20">
-        {specific.length === 0 ? (
+        {listed.length === 0 ? (
           <EmptyState
             icon={Wheat}
             title="Crop guidance is being prepared"
@@ -41,51 +48,82 @@ export default async function CropsPage() {
           />
         ) : (
           <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.05}>
-            {[...specific]
-              .sort((a, b) => b.productCount - a.productCount)
-              .map((crop, i) => (
-                <RevealItem key={crop.slug}>
-                  <Link
-                    href={`/crops/${crop.slug}`}
+            {listed.map((group, i) => {
+              const dark = i % 5 === 0;
+              const children = group.children.filter((child) => child.productCount > 0);
+              return (
+                <RevealItem key={group.slug}>
+                  <div
                     className={cn(
-                      "group relative flex h-full min-h-40 flex-col justify-between overflow-hidden rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-pop",
-                      i % 5 === 0
+                      "relative flex h-full flex-col overflow-hidden rounded-3xl p-6 transition-shadow duration-300 hover:shadow-pop",
+                      dark
                         ? "bg-grain bg-humus-950 text-paper"
                         : "border border-line bg-cream text-ink shadow-card",
                     )}
                   >
-                    {i % 5 === 0 && <span aria-hidden className="absolute inset-0 glow-leaf" />}
-                    <div className="relative flex items-start justify-between">
-                      <h2 className="font-display text-2xl font-semibold tracking-tight capitalize">
-                        {crop.name}
-                      </h2>
+                    {dark && <span aria-hidden className="absolute inset-0 glow-leaf" />}
+                    <Link
+                      href={`/crops/${group.slug}`}
+                      className="group relative flex items-start justify-between gap-3"
+                    >
+                      <span className="min-w-0">
+                        <h2 className="font-display text-2xl font-semibold tracking-tight break-words capitalize">
+                          {group.name}
+                        </h2>
+                        <span
+                          className={cn(
+                            "mt-1.5 block text-sm",
+                            dark ? "text-paper/65" : "text-ink-faint",
+                          )}
+                        >
+                          {group.productCount} listed product{group.productCount === 1 ? "" : "s"}
+                        </span>
+                      </span>
                       <span
                         className={cn(
-                          "flex size-9 items-center justify-center rounded-full border transition-all",
-                          i % 5 === 0
+                          "flex size-9 shrink-0 items-center justify-center rounded-full border transition-all",
+                          dark
                             ? "border-paper/25 text-paper group-hover:bg-leaf-400 group-hover:text-humus-950"
                             : "border-line text-ink-faint group-hover:border-leaf-600 group-hover:bg-leaf-400 group-hover:text-humus-950",
                         )}
                       >
                         <ArrowUpRight className="size-4" />
                       </span>
-                    </div>
-                    <p
-                      className={cn(
-                        "relative mt-6 text-sm",
-                        i % 5 === 0 ? "text-paper/65" : "text-ink-faint",
-                      )}
-                    >
-                      {crop.productCount} listed product{crop.productCount === 1 ? "" : "s"} ·
-                      growth-stage guidance · FAQs
-                    </p>
-                  </Link>
+                    </Link>
+
+                    {children.length > 0 && (
+                      <ul
+                        className={cn(
+                          "relative mt-5 flex flex-wrap gap-1.5 border-t pt-4",
+                          dark ? "border-paper/15" : "border-line",
+                        )}
+                      >
+                        {children.map((child) => (
+                          <li key={child.slug}>
+                            <Link
+                              href={`/crops/${child.slug}`}
+                              className={cn(
+                                "block rounded-full border px-3 py-1.5 text-xs capitalize transition-colors",
+                                dark
+                                  ? "border-paper/20 text-paper/75 hover:border-leaf-400 hover:text-paper"
+                                  : "border-line text-ink-soft hover:border-leaf-600 hover:text-ink",
+                              )}
+                            >
+                              {child.name}
+                              <span className="ml-1.5 opacity-55">{child.productCount}</span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </RevealItem>
-              ))}
+              );
+            })}
           </RevealGroup>
         )}
 
-        {groups.length > 0 && (
+        {awaiting.length > 0 && (
           <div className="mt-12">
             <h2 className="text-eyebrow text-ink-faint">Other crops we supply</h2>
             <p className="mt-2 max-w-2xl text-sm text-ink-faint">
@@ -93,7 +131,7 @@ export default async function CropsPage() {
               show automatically. Ask an adviser what fits.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              {groups.map((crop) => (
+              {awaiting.map((crop) => (
                 <Link
                   key={crop.slug}
                   href={`/crops/${crop.slug}`}

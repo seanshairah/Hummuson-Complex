@@ -43,12 +43,19 @@ export interface SourceCategory {
   slug: string;
   description: string | null;
   count?: number;
+  /** Why this range exists or changed — provenance, not shown on the site. */
+  note?: string;
 }
 
 export interface SourceCrop {
   name: string;
   slug: string;
   aka?: string[];
+  /**
+   * The group this crop sits under ("cabbage" → "brassicas"). One level only,
+   * and the parent must appear in this same list. Omit for a top-level crop.
+   */
+  parentSlug?: string;
 }
 
 export interface SourceFaq {

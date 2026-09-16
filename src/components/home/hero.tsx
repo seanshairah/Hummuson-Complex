@@ -104,9 +104,9 @@ export function HomeHero({
               transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
               className="mt-6 max-w-xl text-base leading-relaxed text-paper/75 md:text-lg"
             >
-              Humuson Complex brings modern agricultural technology to Zimbabwe — balanced crop
-              nutrition, biostimulants and soil biology from renowned European producers, matched to
-              your crop, your soil and your growth stage.
+              Humuson Complex brings modern agricultural technology to Zimbabwe — microbiological
+              fertilisers, biostimulants and liquid foliar fertilisers from renowned European
+              producers, matched to your crop, your soil and your growth stage.
             </motion.p>
 
             <motion.div
@@ -178,9 +178,9 @@ export function HomeHero({
                 >
                   <div className="flex items-center justify-between">
                     <p className="text-eyebrow text-[0.62rem] text-leaf-400">Product spotlight</p>
-                    {spotlight.category && (
+                    {spotlight.categories[0] && (
                       <Badge variant="glass" className="text-[0.62rem]">
-                        {spotlight.category.name}
+                        {spotlight.categories[0].name}
                       </Badge>
                     )}
                   </div>

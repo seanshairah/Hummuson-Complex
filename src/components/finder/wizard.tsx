@@ -21,7 +21,7 @@ import { whatsappAdviceMessage } from "@/lib/whatsapp";
 import type { ProductCardData } from "@/server/data/products";
 
 export interface FinderOptions {
-  crops: { slug: string; name: string; count: number }[];
+  crops: { slug: string; name: string; count: number; parentSlug: string | null }[];
   benefits: { slug: string; name: string; count: number }[];
   methods: { key: string; count: number }[];
 }
@@ -67,9 +67,10 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
           ...options.crops.map((crop) => ({
             value: crop.slug,
             label: crop.name.charAt(0).toUpperCase() + crop.name.slice(1),
+          indent: Boolean(crop.parentSlug),
             meta: `${crop.count} product${crop.count === 1 ? "" : "s"}`,
           })),
-          { value: "", label: "Other / not listed", meta: "We’ll match broadly" },
+          { value: "", label: "Other / not listed", meta: "We’ll match broadly", indent: false },
         ],
         selected: answers.cropSlug ?? (answers.cropSlug === "" ? "" : undefined),
         set: (value: string) => setAnswers((a) => ({ ...a, cropSlug: value || undefined })),
@@ -77,12 +78,13 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
       {
         key: "benefit",
         eyebrow: "Question 2 of 3",
-        question: "What do you want to improve?",
-        hint: "Goals evidenced in the products’ own published claims.",
+        question: "What is your purpose?",
+        hint: "Purposes evidenced in the products’ own published claims.",
         options: options.benefits.map((benefit) => ({
           value: benefit.slug,
           label: benefit.name,
           meta: `${benefit.count} product${benefit.count === 1 ? "" : "s"}`,
+          indent: false,
         })),
         selected: answers.benefitSlug,
         set: (value: string) => setAnswers((a) => ({ ...a, benefitSlug: value || undefined })),
@@ -96,9 +98,10 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
           ...options.methods.map((method) => ({
             value: method.key,
             label: humanize(method.key),
-            meta: `${method.count} product${method.count === 1 ? "" : "s"}`,
+            meta: `${method.count} product${method.count === 1 ? "" : "s"}` as string | undefined,
+            indent: false,
           })),
-          { value: "NOT_SURE", label: "Not sure", meta: undefined },
+          { value: "NOT_SURE", label: "Not sure", meta: undefined, indent: false },
         ],
         selected: answers.method,
         set: (value: string) => setAnswers((a) => ({ ...a, method: value })),
@@ -347,14 +350,24 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
                   type="button"
                   onClick={() => choose(option.value)}
                   className={cn(
-                    "group flex items-center justify-between gap-3 rounded-2xl border px-5 py-4 text-left transition-all duration-200",
+                    "group flex items-center justify-between gap-3 rounded-2xl border py-4 pr-5 text-left transition-all duration-200",
+                    // Crops come through as the taxonomy; a child is stepped in
+                    // so the list reads as groups rather than 27 equal options.
+                    option.indent ? "pl-9 sm:pl-10" : "pl-5",
                     isSelected
                       ? "border-leaf-400 bg-leaf-400 text-humus-950"
                       : "border-paper/15 bg-paper/5 text-paper backdrop-blur-sm hover:border-leaf-400/60 hover:bg-paper/10",
                   )}
                 >
                   <span>
-                    <span className="block font-display text-base font-medium">{option.label}</span>
+                    <span
+                      className={cn(
+                        "block font-display text-base",
+                        option.indent ? "font-normal" : "font-medium",
+                      )}
+                    >
+                      {option.label}
+                    </span>
                     {option.meta && (
                       <span
                         className={cn(

@@ -8,7 +8,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Product finder — three questions to the right product",
   description:
-    "Answer three quick questions about your crop, your goal and how you apply — get matched with the Humuson products listed for exactly that situation.",
+    "Answer three quick questions about your crop, your purpose and how you apply — get matched with the Humuson products listed for exactly that situation.",
   alternates: { canonical: "/product-finder" },
 };
 

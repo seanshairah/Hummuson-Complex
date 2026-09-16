@@ -187,14 +187,18 @@
     "sourceUrl": "https://humusoncomplex.com/faq/"
   },
   {
-    "question": "What is the organic base of HUMUSON Complex?",
-    "answer": "HUMUSON Complex is a new generation 100% organic fertilizer based on SAPROPEL — centuries-old bottom sediments of freshwater lakes, which were formed from dead aquatic vegetation, remnants of living organisms, plankton and soil humus.",
-    "productSlugs": [],
+    "question": "What is the organic base of the Sapropel Organics range?",
+    "answer": "Grow+ Top Dressing and CarboAmin Basal Dressing are 100% organic fertilisers based on SAPROPEL — centuries-old bottom sediments of freshwater lakes, which were formed from dead aquatic vegetation, remnants of living organisms, plankton and soil humus.",
+    "productSlugs": [
+      "grow-top-dressing",
+      "carboamin-basal-dressing"
+    ],
     "category": "general",
     "aliases": [
       "What is sapropel?",
       "What raw material is HUMUSON Complex made from?",
-      "Is HUMUSON Complex really organic?"
+      "Is HUMUSON Complex really organic?",
+      "What is the organic base of HUMUSON Complex?"
     ],
     "keywords": [
       "sapropel",

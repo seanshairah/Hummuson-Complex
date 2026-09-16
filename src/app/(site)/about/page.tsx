@@ -20,7 +20,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "About — the home of healthy soil & healthy crop",
   description:
-    "Humuson Complex supplies modern agricultural technology to Zimbabwe — balanced crop nutrition, biostimulants and soil biology, backed by agronomists in the field.",
+    "Humuson Complex supplies modern agricultural technology to Zimbabwe — microbiological fertilisers, biostimulants and liquid foliar fertilisers, backed by agronomists in the field.",
   alternates: { canonical: "/about" },
 };
 
