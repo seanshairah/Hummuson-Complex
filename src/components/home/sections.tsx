@@ -7,7 +7,6 @@ import {
   Droplets,
   Flower2,
   Layers,
-  Quote,
   ScanSearch,
   ShieldCheck,
   Sprout,
@@ -17,7 +16,6 @@ import {
 } from "lucide-react";
 import { SectionHeading, Em } from "@/components/ui/section-heading";
 import { ButtonLink } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { PartnerLogos } from "@/components/shared/partner-logos";
 import { ProductCard } from "@/components/shared/product-card";
 import { MediaImage } from "@/components/shared/media-image";
@@ -26,12 +24,7 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 import { Parallax } from "@/components/motion/parallax";
 import type { FilterOptions, ProductCardData } from "@/server/data/products";
 import type { CropListItem } from "@/server/data/crops";
-import type {
-  ArticleCardData,
-  ProjectCardData,
-  TestimonialData,
-  VideoData,
-} from "@/server/data/content";
+import type { ArticleCardData, VideoData } from "@/server/data/content";
 import { formatDate, humanize } from "@/lib/utils";
 import handsPhoto from "../../../public/images/field/field-IMG_0560.jpg";
 import cabbagePhoto from "../../../public/images/field/field-IMG_0595.jpg";
@@ -327,101 +320,6 @@ export function SoilStory({ claims }: { claims: string[] }) {
             ))}
           </RevealGroup>
         </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── Results & testimonials ─────────────────────────────────────────────── */
-
-export function ResultsBand({
-  projects,
-  testimonials,
-}: {
-  projects: ProjectCardData[];
-  testimonials: TestimonialData[];
-}) {
-  return (
-    <section className="bg-paper py-20 md:py-28">
-      <div className="container-site">
-        <Reveal className="flex flex-wrap items-end justify-between gap-6">
-          <SectionHeading
-            eyebrow="Results from the field"
-            title={
-              <>
-                Proof that grows <Em className="text-brand">out of the ground</Em>
-              </>
-            }
-          />
-          <ButtonLink href="/projects" variant="outline" className="mb-1.5">
-            All results <ArrowRight className="size-4" />
-          </ButtonLink>
-        </Reveal>
-
-        {projects.length > 0 && (
-          <RevealGroup className="mt-12 grid gap-4 md:grid-cols-3" stagger={0.08}>
-            {projects.slice(0, 3).map((project) => (
-              <RevealItem key={project.id}>
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="group block overflow-hidden rounded-2xl border border-line bg-cream shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-pop"
-                >
-                  {project.image && (
-                    <div className="relative aspect-[16/10] overflow-hidden bg-paper-dim">
-                      <MediaImage
-                        image={project.image}
-                        alt={project.title}
-                        fill
-                        sizes="(max-width: 768px) 92vw, 380px"
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                      />
-                    </div>
-                  )}
-                  <div className="p-5">
-                    <div className="flex flex-wrap gap-2">
-                      {project.cropName && <Badge variant="leaf">{project.cropName}</Badge>}
-                      {project.location && <Badge variant="outline">{project.location}</Badge>}
-                    </div>
-                    <h3 className="mt-3 font-display text-lg font-semibold text-ink group-hover:text-brand">
-                      {project.title}
-                    </h3>
-                    {project.summary && (
-                      <p className="mt-1.5 line-clamp-2 text-sm text-ink-faint">
-                        {project.summary}
-                      </p>
-                    )}
-                  </div>
-                </Link>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        )}
-
-        {testimonials.length > 0 && (
-          <RevealGroup className="mt-14 grid gap-4 md:grid-cols-2" stagger={0.08}>
-            {testimonials.slice(0, 2).map((testimonial) => (
-              <RevealItem key={testimonial.id}>
-                <figure className="flex h-full flex-col rounded-2xl bg-humus-900 p-6 text-paper">
-                  <Quote className="size-6 text-leaf-400" aria-hidden />
-                  <blockquote className="mt-4 flex-1 text-editorial text-lg leading-relaxed text-paper/90">
-                    {testimonial.quote}
-                  </blockquote>
-                  <figcaption className="mt-5 flex items-center gap-3">
-                    <span className="flex size-9 items-center justify-center rounded-full bg-leaf-400/20 font-display text-sm font-semibold text-leaf-300">
-                      {testimonial.name.charAt(0)}
-                    </span>
-                    <span>
-                      <span className="block text-sm font-medium">{testimonial.name}</span>
-                      {testimonial.location && (
-                        <span className="block text-xs text-paper/55">{testimonial.location}</span>
-                      )}
-                    </span>
-                  </figcaption>
-                </figure>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        )}
       </div>
     </section>
   );

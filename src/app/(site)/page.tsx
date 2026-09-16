@@ -8,17 +8,11 @@ import {
   FinderBand,
   KnowledgePreview,
   RangesBand,
-  ResultsBand,
   SoilStory,
 } from "@/components/home/sections";
 import { getCatalogueStats, getFeaturedProducts, getFilterOptions } from "@/server/data/products";
 import { getAllCrops } from "@/server/data/crops";
-import {
-  getAllArticles,
-  getAllProjects,
-  getAllTestimonials,
-  getAllVideos,
-} from "@/server/data/content";
+import { getAllArticles, getAllVideos } from "@/server/data/content";
 import { getCompanySettings, getContactSettings } from "@/server/data/settings";
 import { site } from "@/lib/site";
 import { organizationJsonLd } from "@/lib/seo";
@@ -34,18 +28,7 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [
-    stats,
-    featured,
-    options,
-    crops,
-    articles,
-    videos,
-    projects,
-    testimonials,
-    company,
-    contact,
-  ] =
+  const [stats, featured, options, crops, articles, videos, company, contact] =
     await Promise.all([
       getCatalogueStats(),
       getFeaturedProducts(8),
@@ -53,8 +36,6 @@ export default async function HomePage() {
       getAllCrops(),
       getAllArticles(),
       getAllVideos(),
-      getAllProjects(),
-      getAllTestimonials(),
       getCompanySettings(),
       getContactSettings(),
     ]);
@@ -79,7 +60,6 @@ export default async function HomePage() {
       <FinderBand />
       <CropsBand crops={crops} />
       <SoilStory claims={company.whyChooseUs} />
-      <ResultsBand projects={projects} testimonials={testimonials} />
       <KnowledgePreview articles={articles} videos={videos} />
       <CatalogueTeaser products={featured} />
     </>
