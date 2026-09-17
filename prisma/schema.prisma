@@ -668,8 +668,11 @@ model Distributor {
   /// the row is what lets whoever checks it know what they are checking.
   sourceNote String?
 
-  /// Set when a person has confirmed this address with the shop itself. Null
-  /// means nobody has yet, which is the honest default for a transcribed list.
+  /// Set when the address has been confirmed against a primary source — the
+  /// shop itself, its own listing or flyer, or evidence the owner supplied.
+  /// Null means nobody has, which is the honest default for a transcribed
+  /// list. A date rather than a flag, so a check from two years ago is
+  /// visibly old.
   verifiedAt DateTime?
 
   status PublishStatus @default(PUBLISHED)

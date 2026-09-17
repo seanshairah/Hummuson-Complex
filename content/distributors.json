@@ -49,26 +49,29 @@
     "slug": "nts-bulawayo",
     "town": "Bulawayo",
     "address": "62 George Silundika Street, Bulawayo",
-    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified. Named by Humuson as a Bulawayo stockist; the address is from the directory."
+    "sourceNote": "Address confirmed by a branch-listing screenshot the owner supplied, agreeing with the NTS directory entry. Two independent sources.",
+    "verifiedOn": "2026-09-17"
   },
   {
     "name": "Farmer's Choice Bulawayo",
     "slug": "farmers-choice-bulawayo",
     "town": "Bulawayo",
-    "address": "Cnr 4th Avenue & Robert Mugabe Way, Bulawayo",
+    "address": "Corner 4th Avenue & Robert Mugabe Way, Bulawayo",
     "phones": [
-      "0777 723 649",
-      "0781 469 078"
+      "0781 469 078",
+      "0777 723 649"
     ],
-    "sourceNote": "Farmer's Choice, from their Bulldozer insecticide flyer. Unverified. The flyer announced this branch as opening 1 Aug 2025."
+    "sourceNote": "Address and 0781 469 078 confirmed by Farmer's Choice's own branch-opening flyer (owner-supplied), which announced this branch for 1 Aug 2025. 0777 723 649 is from the Bulldozer flyer and is unconfirmed.",
+    "verifiedOn": "2026-09-17"
   },
   {
     "name": "Bulawayo Seed Centre",
     "slug": "bulawayo-seed-centre",
     "town": "Bulawayo",
-    "address": "109 Fife Street, cnr Fife Street & 11th Avenue, Bulawayo",
-    "notes": "Signage reads \"Seed Co Bulawayo Depot\".",
-    "sourceNote": "Address from a shopfront screenshot. Named by Humuson as a stockist."
+    "address": "109 Fife Street, cnr 11th Avenue, Bulawayo",
+    "notes": "Signage reads \"Seed Co — Bulawayo Depot\".",
+    "sourceNote": "Confirmed by the shop's own Google Business listing (owner-supplied screenshot): name, address and a photograph of the shopfront.",
+    "verifiedOn": "2026-09-17"
   },
   {
     "name": "Frontline Farming",
@@ -85,7 +88,7 @@
       "+263 29 2260277"
     ],
     "notes": "Mon–Fri 08:00–17:00, Sat 08:00–12:00, closed Sunday.",
-    "sourceNote": "Screenshot carried no business name. Draft until somebody names it.",
+    "sourceNote": "Address, hours and number confirmed by an owner-supplied screenshot of the shop's own contact card — but the card carries no business name. By elimination it is likely Frontline Farming, the one Bulawayo stockist named without an address, though nothing in the screenshot says so. Draft until somebody confirms the name.",
     "status": "DRAFT"
   },
   {

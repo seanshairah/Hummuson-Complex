@@ -948,32 +948,55 @@ async function pruneDelistedProducts(delisted: DelistedProduct[]) {
   if (removed.count > 0) console.log(`✓ delisted products removed (${removed.count})`);
 }
 
+/**
+ * Stockists, upserted by slug rather than wiped and rebuilt.
+ *
+ * Wiping was the obvious way to write this and it was wrong: checking forty
+ * addresses is hours of somebody's phone calls, that work lives in
+ * `verifiedAt` and `mapsLat/mapsLng`, and a `deleteMany` erased all of it the
+ * next time anyone re-imported content for an unrelated reason. Nothing would
+ * have said so — the row count would have looked identical.
+ *
+ * So the content file owns the facts it states, the admin keeps what only it
+ * knows, and a row the file no longer mentions is deleted at the end.
+ */
 async function importDistributors(distributors: SourceDistributor[]) {
-  await prisma.distributor.deleteMany();
   let order = 0;
   for (const source of distributors) {
     // Half a coordinate pair is not a location. Storing one of the two would
     // put the pin on the equator, so both go in together or neither does.
     const hasPin = typeof source.mapsLat === "number" && typeof source.mapsLng === "number";
-    await prisma.distributor.create({
-      data: {
-        name: source.name,
-        slug: source.slug,
-        town: source.town,
-        address: source.address ?? null,
-        phones: source.phones ?? [],
-        notes: source.notes ?? null,
-        mapsLat: hasPin ? source.mapsLat : null,
-        mapsLng: hasPin ? source.mapsLng : null,
-        mapsUrl: source.mapsUrl ?? null,
-        sourceNote: source.sourceNote ?? null,
-        status: source.status === "DRAFT" ? PublishStatus.DRAFT : PublishStatus.PUBLISHED,
-        order,
-      },
+    const verifiedAt = source.verifiedOn ? new Date(`${source.verifiedOn}T00:00:00Z`) : null;
+    if (source.verifiedOn && Number.isNaN(verifiedAt!.getTime())) {
+      throw new Error(`distributor "${source.slug}" has an unreadable verifiedOn: ${source.verifiedOn}`);
+    }
+    const data = {
+      name: source.name,
+      town: source.town,
+      address: source.address ?? null,
+      phones: source.phones ?? [],
+      notes: source.notes ?? null,
+      mapsLat: hasPin ? source.mapsLat : null,
+      mapsLng: hasPin ? source.mapsLng : null,
+      mapsUrl: source.mapsUrl ?? null,
+      sourceNote: source.sourceNote ?? null,
+      status: source.status === "DRAFT" ? PublishStatus.DRAFT : PublishStatus.PUBLISHED,
+      order,
+    };
+    await prisma.distributor.upsert({
+      where: { slug: source.slug },
+      // A verification the content file states wins; otherwise whatever the
+      // admin recorded stays, because the file has nothing to say about it.
+      update: { ...data, ...(verifiedAt ? { verifiedAt } : {}) },
+      create: { ...data, slug: source.slug, verifiedAt },
     });
     order += 1;
   }
-  console.log(`✓ distributors (${distributors.length})`);
+  const dropped = await prisma.distributor.deleteMany({
+    where: { slug: { notIn: distributors.map((d) => d.slug) } },
+  });
+  const suffix = dropped.count > 0 ? `, ${dropped.count} removed` : "";
+  console.log(`✓ distributors (${distributors.length}${suffix})`);
 }
 
 export async function runImport() {

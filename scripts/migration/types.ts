@@ -87,6 +87,11 @@ export interface SourceDistributor {
   sourceNote?: string;
   /** Defaults to PUBLISHED. DRAFT holds a row back from the public page. */
   status?: "PUBLISHED" | "DRAFT";
+  /**
+   * YYYY-MM-DD, set when the address has been confirmed against a primary
+   * source. Omitting it leaves whatever the admin recorded alone.
+   */
+  verifiedOn?: string;
 }
 
 export interface SourceFaq {

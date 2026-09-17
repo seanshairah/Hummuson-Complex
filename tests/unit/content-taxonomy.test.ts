@@ -155,6 +155,7 @@ describe("stockists", () => {
     mapsLng?: number;
     sourceNote?: string;
     status?: string;
+    verifiedOn?: string;
   }
   const distributors = content<Distributor[]>("distributors.json");
 
@@ -186,6 +187,16 @@ describe("stockists", () => {
     // nobody can check, and a wrong address costs a farmer a wasted drive.
     for (const shop of distributors) {
       expect(shop.sourceNote?.trim(), `${shop.slug} has no sourceNote`).toBeTruthy();
+    }
+  });
+
+  it("dates every verification it claims", () => {
+    for (const shop of distributors) {
+      if (!shop.verifiedOn) continue;
+      expect(shop.verifiedOn, `${shop.slug} verifiedOn`).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      // A row cannot be confirmed and addressless at the same time: what would
+      // have been confirmed?
+      expect(shop.address?.trim(), `${shop.slug} is verified with no address`).toBeTruthy();
     }
   });
 

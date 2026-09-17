@@ -379,6 +379,29 @@ Mutare, now with its phone number; "Farmshop NTS, Bulawayo" is NTS Bulawayo at 6
 Silundika Street; Bulawayo Seed Centre and Farmer's Choice Bulawayo both gained
 addresses. Frontline Farming still has none.
 
+**The import stopped wiping the table.** `importDistributors` began as
+`deleteMany()` + `create`, which was the obvious way to write it and was wrong:
+checking forty addresses is hours of somebody's phone calls, that work lives in
+`verifiedAt` and the map pins, and a re-import for an unrelated reason erased all of it
+silently — the row count looked identical either way. It upserts by slug now and deletes
+only rows the content file no longer mentions. The content file owns the facts it
+states; the admin keeps what only it knows.
+
+**Bulawayo is confirmed (17 Sep).** The owner supplied screenshots for the four Bulawayo
+entries, and three of them name their shop:
+
+| Shop | Evidence | Result |
+| --- | --- | --- |
+| NTS Bulawayo | A branch-listing page agreeing with the directory entry | 62 George Silundika Street — two independent sources, verified |
+| Farmer's Choice Bulawayo | Their own branch-opening flyer (for 1 Aug 2025) | Corner 4th Avenue & Robert Mugabe Way, and 0781 469 078 — verified. The second number, 0777 723 649, is still flyer-only |
+| Bulawayo Seed Centre | Its own Google Business listing, with a shopfront photograph | 109 Fife Street, cnr 11th Avenue — verified; signage reads "Seed Co — Bulawayo Depot" |
+| No. 2 Swansea Street, Belmont | The shop's own contact card — address, hours, number | Still **no business name anywhere on it**, so still a draft |
+
+The Belmont card is probably **Frontline Farming** — it is the one Bulawayo stockist
+named without an address, and this is the one Bulawayo address without a name — but
+nothing in the screenshot says so, so the row stays a draft with the inference recorded
+in `sourceNote` rather than published under a guessed name.
+
 Open with the owner:
 
 1. **Banket and Karoi contradict the flyer.** 83 Ginnery Road (Banket) and 196 Jamer
