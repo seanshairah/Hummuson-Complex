@@ -28,6 +28,8 @@ import type {
   SourceCategory,
   SourceCompany,
   SourceCrop,
+  SourceDistributor,
+  DelistedProduct,
   SourceFaq,
   SourceImage,
   SourceProduct,
@@ -291,10 +293,19 @@ const DISCOVERED_CROP_ORDER = 1000;
 async function importCrops(crops: SourceCrop[]) {
   let order = 0;
   for (const crop of crops) {
+    // Written on both create and update, and always to a concrete value, so
+    // that clearing a note in content/crops.json actually clears it here
+    // rather than leaving the previous run's text behind.
+    const family = {
+      familyName: crop.familyName ?? null,
+      signature: crop.signature ?? null,
+      notes: crop.notes ?? [],
+      alsoIncludes: crop.alsoIncludes ?? [],
+    };
     await prisma.crop.upsert({
       where: { slug: crop.slug },
-      update: { name: crop.name, aka: crop.aka ?? [], order },
-      create: { slug: crop.slug, name: crop.name, aka: crop.aka ?? [], order },
+      update: { name: crop.name, aka: crop.aka ?? [], order, ...family },
+      create: { slug: crop.slug, name: crop.name, aka: crop.aka ?? [], order, ...family },
     });
     order += 1;
   }
@@ -912,6 +923,57 @@ async function buildDefaultCatalogue() {
   console.log("✓ default catalogue generated from categories");
 }
 
+/**
+ * Removes products the owner has taken off the catalogue.
+ *
+ * `importProducts` only ever upserts, so dropping a product from
+ * content/products.json leaves the row — and the live page — exactly where it
+ * was. That silence is the dangerous part: the content file says the product is
+ * gone and the site still sells it.
+ *
+ * The list is read from content/delisted-products.json rather than inferred
+ * from "absent from products.json", because those two are not the same thing. A
+ * truncated or half-written content file would otherwise wipe the catalogue,
+ * whereas a delisting is a deliberate, recorded act.
+ *
+ * Enquiries, FAQs and catalogue entries that pointed at the product survive
+ * with a null reference (Prisma's default for an optional relation) — a
+ * customer's enquiry is a record of something that really happened and is not
+ * ours to delete along with the product.
+ */
+async function pruneDelistedProducts(delisted: DelistedProduct[]) {
+  const slugs = delisted.map((entry) => entry.slug).filter(Boolean);
+  if (slugs.length === 0) return;
+  const removed = await prisma.product.deleteMany({ where: { slug: { in: slugs } } });
+  if (removed.count > 0) console.log(`✓ delisted products removed (${removed.count})`);
+}
+
+async function importDistributors(distributors: SourceDistributor[]) {
+  await prisma.distributor.deleteMany();
+  let order = 0;
+  for (const source of distributors) {
+    // Half a coordinate pair is not a location. Storing one of the two would
+    // put the pin on the equator, so both go in together or neither does.
+    const hasPin = typeof source.mapsLat === "number" && typeof source.mapsLng === "number";
+    await prisma.distributor.create({
+      data: {
+        name: source.name,
+        slug: source.slug,
+        town: source.town,
+        address: source.address ?? null,
+        phones: source.phones ?? [],
+        notes: source.notes ?? null,
+        mapsLat: hasPin ? source.mapsLat : null,
+        mapsLng: hasPin ? source.mapsLng : null,
+        mapsUrl: source.mapsUrl ?? null,
+        order,
+      },
+    });
+    order += 1;
+  }
+  console.log(`✓ distributors (${distributors.length})`);
+}
+
 export async function runImport() {
   console.log("── Humuson content import ──");
   const products = loadJson<SourceProduct[]>("products.json");
@@ -922,6 +984,8 @@ export async function runImport() {
   const videos = loadJson<SourceVideo[]>("videos.json");
   const projects = loadJson<SourceProject[]>("projects.json");
   const testimonials = loadJson<SourceTestimonial[]>("testimonials.json");
+  const distributors = loadJson<SourceDistributor[]>("distributors.json");
+  const delisted = loadJson<DelistedProduct[]>("delisted-products.json");
   const company = loadJson<SourceCompany>("company.json");
   const urlMap = loadJson<OldUrlMapEntry[]>("old-url-map.json");
 
@@ -931,6 +995,9 @@ export async function runImport() {
   if (categories) await importCategories(categories);
   if (crops) await importCrops(crops);
   if (products) await importProducts(products);
+  // Before the category prune, so a range left holding only delisted products
+  // disappears with them instead of lingering as an empty filter.
+  if (delisted) await pruneDelistedProducts(delisted);
   if (products) await pruneEmptyCategories();
   if (products) await linkRelatedProducts();
   if (faqs) await importFaqs(faqs);
@@ -938,6 +1005,7 @@ export async function runImport() {
   if (videos) await importVideos(videos);
   if (projects) await importProjects(projects);
   if (testimonials) await importTestimonials(testimonials);
+  if (distributors) await importDistributors(distributors);
   // Last of the content steps: every table that can point at a crop has been
   // written by now, so "referenced by nothing" is finally true when it says so.
   if (crops) await pruneOrphanCrops(crops);

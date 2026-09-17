@@ -61,8 +61,8 @@ const catalogue: CatalogueProduct[] = [
   },
   {
     id: "p7",
-    name: "Bacto-K",
-    slug: "bacto-k",
+    name: "Master",
+    slug: "master",
     brand: "Bio Energy",
     packSizes: [{ size: "5 L", priceUsd: 150 }],
   },
@@ -331,7 +331,7 @@ describe("import plan", () => {
 
   it("lists the products the sheet never mentions", () => {
     const names = plan().unmentioned.map((product) => product.name);
-    expect(names).toContain("Bacto-K");
+    expect(names).toContain("Master");
     expect(names).not.toContain("Silicare");
   });
 

@@ -271,3 +271,92 @@ Closed since: Bacto-K and Bacto-Seed (5 L $80) and Ruinex (20 L $120) replaced t
 flat $150 that the three of them shared, so the Bioenergy line is now internally
 consistent — Azofix 5 L $80, Bacto-K 5 L $80, Bacto-Seed 5 L $80, Fosfix 5 L $80. Perfect
 Stick 1 L and Master were confirmed at their existing figures.
+
+## 17 Sep 2026 — delisting, crop families, stockists
+
+### Five products withdrawn from Bio Energy
+
+The owner asked for Bactoforce, Azofix Plus, Fosfix Plus, Bacto-K and Ruinex to come
+off the Bio Energy range, and confirmed that meant delisting them rather than moving
+them to another manufacturer. Bio Energy now carries three products — Bacto-Seed,
+Master, Maxprolin — and the catalogue 22 rather than 27.
+
+Delisting needed a mechanism, not just an edit. **The importer only ever upserts**, so
+dropping a product from `content/products.json` left the row — and the live page —
+exactly where it was: the content file said the product was gone and the site went on
+selling it. Two things close that gap:
+
+- `content/delisted-products.json` records what was withdrawn, when, why, and where its
+  URL now points. `pruneDelistedProducts()` deletes exactly those slugs.
+- The list is read from that file rather than inferred from "missing from
+  products.json", because a truncated content file would otherwise wipe the catalogue.
+  Absence is an accident; a delisting record is a decision.
+
+Both URLs a withdrawn product owns now redirect (301) to `/products`: the old WordPress
+one via `old-url-map.json`, and the one this site published itself via
+`delistedRedirects()` in `next.config.ts`. Enquiries, FAQs and catalogue entries that
+referenced a deleted product survive with a null reference — a customer's enquiry
+records something that really happened and is not ours to delete alongside the product.
+
+`public/catalogue/humuson-catalogue.pdf` still pictures all five. It is a binary the
+build does not regenerate; **it needs re-exporting before it is handed to anyone.**
+
+### Crops are botanical families now
+
+The owner supplied a family taxonomy — Brassicaceae, Cucurbitaceae, Solanaceae,
+Fabaceae, Alliaceae, Apiaceae, Poaceae, and Amaranthaceae/Asteraceae — with the field
+signature, root and feeding habit, and pests for each. `Crop` gained `familyName`,
+`signature`, `notes[]` and `alsoIncludes[]` to carry it.
+
+Roughly 45 crops are named across those families; about 20 are named in some product's
+own published guidance. The owner chose that **only the covered ones get a page**. The
+rest are printed as text on their family page under "Also in this family", with no
+link: a crop page that can only say "nothing listed" is a dead end, and inventing a
+product–crop claim to fill it would be worse. Alliums and the carrot family have no
+covered member at all, so they sit in the "other crops" strip with their agronomy
+intact.
+
+Judgement calls worth knowing about:
+
+- **Solanaceae has no common name in the brief** (the line was left unfinished). It is
+  titled *Nightshades*, the conventional English name. Say the word and it changes.
+- **Rapeseed, sunflower and sugar beet lost every product.** All four products that
+  listed them are among the five delisted, so they became text under Brassicaceae,
+  oilseeds and field crops respectively rather than pages returning nothing.
+- **Parents no longer answer to their children's names.** `brassicas` carried
+  `cauliflower`, `broccoli` and `cabbage` as aliases, and `cucurbits` carried its three
+  — which would resolve a search for "cabbage" to the whole group and put one cabbage
+  product in front of every brassica grower. A unit test now forbids it.
+- **`pea & bean` is gone.** It was a crop record with no products, kept alive by one
+  project ("Peas & Beans") naming it. That project now names `legumes`, which is what
+  the trial actually was and has nine products behind it.
+- `validate-data.ts` counted only a crop's direct joins, so it reported every group
+  whose products sit on its members as an empty facet. It counts children now, the same
+  rule the site itself uses.
+
+### Stockists
+
+`/where-to-buy` lists the shops that carry Humuson product, grouped by town, with an
+admin module at `/admin/distributors`. Ten shops across Bulawayo, Mutare, Banket and
+Karoi, as supplied.
+
+**No coordinate is invented.** Google's keyless embed takes one query, so the map shows
+one town at a time and each shop carries its own link out. A shop with real coordinates
+gets a pin; a shop with only a street address gets a Google *search* of that address —
+Google's guess, plainly, rather than a pin we placed on its behalf; a shop with neither
+gets no directions link at all. `Distributor.mapsLat/mapsLng` are there for when
+somebody reads the real numbers off the map, and the admin form refuses one coordinate
+without the other.
+
+Open with the owner:
+
+1. **The four Bulawayo shops have no addresses** — Farmshop NTS, Farmers Choice,
+   Frontline Farming, Bulawayo Seed Centre. They render with "Address to follow" and no
+   directions link. The page opens on Mutare for that reason.
+2. **83 Ginnery Road, Banket and 196 Jamer Street, Karoi are recorded against Farmers
+   Choice**, reading them with the "Farmers choice — Banket and karoi" line that
+   followed. If either belongs to Farmshop NTS instead, it is one field in the admin.
+3. **Farmline Supplies at 9 First Street and Farmshop NTS at Shop 9, First Street** are
+   recorded verbatim as supplied. Worth a glance in case one absorbed the other.
+4. Spelling of the shop names is title-cased from the brief, with "Bulawayo Seed
+   Centre" in the Zimbabwean spelling. Business names should match the shopfront.

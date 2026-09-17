@@ -90,6 +90,46 @@ test.describe("public site", () => {
   });
 
   /**
+   * A delisted product has two live URLs to answer for: the old WordPress one
+   * and the one this site published itself. Both have to land somewhere rather
+   * than 404, or every link to a withdrawn product in a WhatsApp thread or a
+   * printed price list becomes a dead end.
+   */
+  test("delisted products redirect instead of 404ing", async ({ page }) => {
+    const own = await page.goto("/products/azofix-plus", { waitUntil: "domcontentloaded" });
+    expect(own?.url()).toMatch(/\/products$/);
+    expect(own?.status()).toBe(200);
+
+    const legacy = await page.goto("/product/bactoforce/", { waitUntil: "domcontentloaded" });
+    expect(legacy?.url()).toMatch(/\/products$/);
+    expect(legacy?.status()).toBe(200);
+  });
+
+  test("where to buy lists stockists and links each one into Google Maps", async ({ page }) => {
+    await page.goto("/where-to-buy", { waitUntil: "domcontentloaded" });
+    // Scoped to the shop's own card: the address string also appears in the
+    // card next door, whose unit number happens to share the street number.
+    const farmline = page
+      .locator("li")
+      .filter({ has: page.getByRole("heading", { name: /Farmline Supplies/i }) });
+    await expect(farmline).toContainText("9 First Street, Mutare");
+
+    // Every directions link has to leave for Google Maps — an internal one
+    // would mean the page is pretending to know where the shop is.
+    const directions = page.locator('#main a:has-text("Directions")');
+    expect(await directions.count()).toBeGreaterThan(0);
+    for (const href of await directions.evaluateAll((links) =>
+      links.map((a) => a.getAttribute("href") ?? ""),
+    )) {
+      expect(href).toContain("google.com/maps");
+    }
+
+    // Switching town switches the map and the list together.
+    await page.getByRole("tab", { name: /Bulawayo/ }).click();
+    await expect(page.getByRole("heading", { name: /Bulawayo Seed Centre/i })).toBeVisible();
+  });
+
+  /**
    * Regression: the mobile menu panel used to live inside <header>, and the
    * scrolled header carries `backdrop-filter` (its frosted glass). A filtered
    * element is a containing block for `position: fixed` descendants, so

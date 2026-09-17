@@ -45,9 +45,9 @@ const MICRO = { name: "Microbiological Fertilisers", slug: "microbiological" };
 /** One record, two ranges — the case the single-category column could not hold. */
 const npk = product({ slug: "npk", categories: [LIQUID, CROP_NUTRITION] });
 const fortik = product({ slug: "fortik", categories: [CROP_NUTRITION] });
-const azofix = product({ slug: "azofix", categories: [MICRO] });
+const master = product({ slug: "master", categories: [MICRO] });
 
-const catalogue = [npk, fortik, azofix];
+const catalogue = [npk, fortik, master];
 
 describe("range filtering", () => {
   it("finds a multi-range product under each of its ranges", () => {
@@ -63,7 +63,7 @@ describe("range filtering", () => {
 
   it("leaves a product out of a range it does not belong to", () => {
     expect(filterProducts(catalogue, { category: "microbiological" }).map((p) => p.slug)).toEqual([
-      "azofix",
+      "master",
     ]);
   });
 
@@ -74,7 +74,7 @@ describe("range filtering", () => {
       "npk",
       "fortik",
     ]);
-    expect(filterProducts(catalogue, { category: "physio" }).map((p) => p.slug)).toEqual(["azofix"]);
+    expect(filterProducts(catalogue, { category: "physio" }).map((p) => p.slug)).toEqual(["master"]);
   });
 
   it("returns nothing for a range that does not exist", () => {

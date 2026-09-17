@@ -343,10 +343,28 @@ model Crop {
   /// Alternative names used in search ("mealies" → maize).
   aka         String[]
   description String?
-  imageId     String?
-  image       Media?   @relation(fields: [imageId], references: [id])
-  order       Int      @default(0)
-  featured    Boolean  @default(false)
+
+  /// The botanical family this group belongs to ("Brassicaceae"). Set on the
+  /// groups a farmer plants by, not on the individual crops inside them.
+  familyName String?
+
+  /// How a grower tells the family apart in the field — "four petals opening
+  /// in a cross". Only some families have one worth printing.
+  signature String?
+
+  /// The owner's agronomy notes for the family: root depth, feeding habit, the
+  /// pests to expect. Free text, one line each, shown in order.
+  notes String[]
+
+  /// Crops of this family that no product's own guidance names yet. They are
+  /// listed as text on the family page rather than given a page of their own,
+  /// because a crop page that can only say "nothing listed" is a dead end —
+  /// and inventing a product-crop claim to fill it would be worse.
+  alsoIncludes String[]
+  imageId      String?
+  image        Media?   @relation(fields: [imageId], references: [id])
+  order        Int      @default(0)
+  featured     Boolean  @default(false)
 
   /// Parent group ("cabbage" → "brassicas"). One level deep on purpose: the
   /// catalogue is organised by the groups a farmer shops by, not by taxonomy,
@@ -605,6 +623,51 @@ model Testimonial {
   projects Project[]
 
   createdAt DateTime @default(now())
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Stockists
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// A shop that sells Humuson product, grouped by the town it trades in.
+///
+/// `town` is a plain string rather than a table: the list is short, a town has
+/// nothing to hold beyond its name, and a join would buy nothing but an extra
+/// query. Grouping happens in the query.
+///
+/// The map pin is optional on purpose. Humuson supplies the addresses from the
+/// shop fronts, and a street address on a Zimbabwean high street is not
+/// something Google always resolves to the right building — so until somebody
+/// reads real coordinates off the map, the "Directions" link hands Google the
+/// address text and lets it do its best, exactly as the contact page does.
+/// Guessing coordinates would put a confident pin on the wrong shop.
+model Distributor {
+  id      String   @id @default(cuid())
+  name    String
+  slug    String   @unique
+  /// "Mutare", "Bulawayo" — the heading this shop is listed under.
+  town    String
+  /// Street address as the owner supplied it. Null where none was given yet.
+  address String?
+  /// One or more contact numbers, in the order they were supplied.
+  phones  String[]
+  /// Anything a caller needs to know that the address does not say.
+  notes   String?
+
+  /// Decimal degrees, once somebody has read them off the map. Both or neither.
+  mapsLat Float?
+  mapsLng Float?
+  /// A maps.app.goo.gl share link, which beats coordinates when it exists
+  /// because it carries the shop's own place record.
+  mapsUrl String?
+
+  status PublishStatus @default(PUBLISHED)
+  order  Int           @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([town])
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

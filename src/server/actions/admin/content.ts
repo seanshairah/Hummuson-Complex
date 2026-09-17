@@ -11,6 +11,7 @@ import type { AdminActionState } from "@/lib/admin-state";
 import {
   formBool,
   formList,
+  formNumber,
   formOptional,
   formString,
   revalidateContent,
@@ -301,4 +302,88 @@ export async function deleteProject(id: string): Promise<void> {
   await db.project.delete({ where: { id } });
   await audit("project.deleted", { entityType: "project", entityId: id, label: project?.title });
   revalidateContent("projects", "crops");
+}
+
+/* ── Stockists ──────────────────────────────────────────────────────────── */
+
+export async function saveDistributor(
+  _prev: AdminActionState,
+  formData: FormData,
+): Promise<AdminActionState> {
+  await requireUser();
+  const id = formOptional(formData, "id");
+  const name = formString(formData, "name");
+  const town = formString(formData, "town");
+  if (!name || !town) {
+    return {
+      status: "error",
+      fieldErrors: {
+        ...(name ? {} : { name: "Name is required" }),
+        ...(town ? {} : { town: "Town is required" }),
+      },
+    };
+  }
+
+  // A pin is both numbers or neither. One alone would place the shop on the
+  // equator or the Greenwich meridian with complete confidence, which is worse
+  // than having no pin at all — the page falls back to searching the address.
+  const lat = formNumber(formData, "mapsLat");
+  const lng = formNumber(formData, "mapsLng");
+  const inRange =
+    lat !== null && lng !== null && Math.abs(lat) <= 90 && Math.abs(lng) <= 180 && !(lat === 0 && lng === 0);
+  if ((lat === null) !== (lng === null)) {
+    return {
+      status: "error",
+      fieldErrors: { mapsLat: "Give both a latitude and a longitude, or neither." },
+    };
+  }
+  if (lat !== null && lng !== null && !inRange) {
+    return {
+      status: "error",
+      fieldErrors: { mapsLat: "That is not a point on the map." },
+    };
+  }
+
+  // Two branches of one chain need two slugs, so the town disambiguates.
+  const slug = formOptional(formData, "slug") || slugify(`${name}-${town}`);
+
+  const data = {
+    name,
+    slug,
+    town,
+    address: formOptional(formData, "address"),
+    phones: formString(formData, "phones")
+      .split(/[\n,]/)
+      .map((phone) => phone.trim())
+      .filter(Boolean),
+    notes: formOptional(formData, "notes"),
+    mapsLat: inRange ? lat : null,
+    mapsLng: inRange ? lng : null,
+    mapsUrl: formOptional(formData, "mapsUrl"),
+    status: (formString(formData, "status") || "PUBLISHED") as PublishStatus,
+    order: Number(formString(formData, "order") || 0),
+  };
+
+  const saved = id
+    ? await db.distributor.update({ where: { id }, data })
+    : await db.distributor.create({ data });
+  revalidateContent("distributors");
+  await audit(id ? "distributor.updated" : "distributor.created", {
+    entityType: "distributor",
+    entityId: saved.id,
+    label: `${name} (${town})`,
+  });
+  return { status: "success", message: "Stockist saved." };
+}
+
+export async function deleteDistributor(id: string): Promise<void> {
+  await requireUser();
+  const shop = await db.distributor.findUnique({ where: { id }, select: { name: true, town: true } });
+  await db.distributor.delete({ where: { id } });
+  revalidateContent("distributors");
+  await audit("distributor.deleted", {
+    entityType: "distributor",
+    entityId: id,
+    label: shop ? `${shop.name} (${shop.town})` : undefined,
+  });
 }

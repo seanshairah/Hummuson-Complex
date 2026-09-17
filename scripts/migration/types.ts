@@ -56,6 +56,33 @@ export interface SourceCrop {
    * and the parent must appear in this same list. Omit for a top-level crop.
    */
   parentSlug?: string;
+  /** Botanical family of a group ("Brassicaceae"). Groups only. */
+  familyName?: string;
+  /** How the family is recognised in the field. */
+  signature?: string;
+  /** Agronomy notes for the family — root depth, feeding, pests. One per line. */
+  notes?: string[];
+  /**
+   * Crops of this family that no product's own guidance names yet, listed as
+   * text on the family page. They deliberately do not become crop records: a
+   * crop page with nothing to show is a dead end, and inventing a product-crop
+   * claim to fill it would be worse.
+   */
+  alsoIncludes?: string[];
+}
+
+/** A shop that sells Humuson product. See the Distributor model. */
+export interface SourceDistributor {
+  name: string;
+  slug: string;
+  town: string;
+  address?: string;
+  phones?: string[];
+  notes?: string;
+  /** Decimal degrees, once read off the map. Both or neither. */
+  mapsLat?: number;
+  mapsLng?: number;
+  mapsUrl?: string;
 }
 
 export interface SourceFaq {
@@ -144,4 +171,22 @@ export interface OldUrlMapEntry {
   newPath: string;
   redirect?: boolean;
   notes?: string;
+}
+
+/**
+ * A product taken off the catalogue (content/delisted-products.json).
+ *
+ * This is the record that makes a delisting actually happen: the importer only
+ * upserts, so a product dropped from products.json would otherwise stay live in
+ * the database forever. Listing it here is the owner saying "remove this",
+ * which is a different statement from "this file happens not to mention it".
+ */
+export interface DelistedProduct {
+  slug: string;
+  name: string;
+  brand?: string | null;
+  delistedOn: string;
+  reason?: string;
+  /** Where the product's own URL should now send people. Defaults to /products. */
+  redirectTo?: string;
 }

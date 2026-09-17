@@ -89,10 +89,16 @@ async function main() {
   const countFor = <T extends { productId: string }>(rows: T[]) =>
     new Set(rows.filter((r) => publishedIds.has(r.productId)).map((r) => r.productId)).size;
 
-  const crops = await db.crop.findMany({ include: { products: true } });
-  for (const crop of crops)
-    if (countFor(crop.products) === 0)
+  // A group counts its children's products as well as its own, because that is
+  // what clicking it returns. Counting only the direct joins reported every
+  // group whose products sit on its members as an empty facet — Nightshades
+  // says nothing itself, while tomato and potato underneath it say plenty.
+  const crops = await db.crop.findMany({ include: { products: true, children: { include: { products: true } } } });
+  for (const crop of crops) {
+    const ownAndChildren = [...crop.products, ...crop.children.flatMap((child) => child.products)];
+    if (countFor(ownAndChildren) === 0)
       add("WARN", "EMPTY_CROP", `crop "${crop.name}" (${crop.slug}) has no published products`);
+  }
 
   const benefits = await db.benefit.findMany({ include: { products: true } });
   for (const benefit of benefits)

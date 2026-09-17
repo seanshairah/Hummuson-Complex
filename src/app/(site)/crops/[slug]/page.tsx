@@ -88,6 +88,40 @@ export default async function CropPage({ params }: { params: Promise<{ slug: str
         }
       />
 
+      {/* What the owner knows about the family: how to recognise it, how it
+          feeds, what eats it. Agronomy supplied for the group, not derived from
+          any product — so it never appears on an individual crop. */}
+      {(crop.familyName || crop.signature || crop.notes.length > 0) && (
+        <section className="container-site pt-10">
+          <div className="rounded-3xl border border-line bg-cream p-6 sm:p-8">
+            {crop.familyName && (
+              <p className="text-eyebrow text-leaf-700">{crop.familyName}</p>
+            )}
+            {crop.signature && (
+              <p className="mt-2 max-w-2xl font-display text-lg leading-snug text-ink italic sm:text-xl">
+                {crop.signature}
+              </p>
+            )}
+            {crop.notes.length > 0 && (
+              <ul className="mt-5 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+                {crop.notes.map((note) => (
+                  <li
+                    key={note}
+                    className="flex items-start gap-2.5 text-sm leading-relaxed text-ink-soft"
+                  >
+                    <span
+                      aria-hidden
+                      className="mt-1.5 size-1.5 shrink-0 rounded-full bg-leaf-600"
+                    />
+                    <span className="min-w-0">{note}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
+      )}
+
       {/* The individual crops inside this group */}
       {crop.children.length > 0 && (
         <section className="container-site pt-10">
@@ -106,6 +140,26 @@ export default async function CropPage({ params }: { params: Promise<{ slug: str
                   {child.name}
                   <span className="text-xs text-ink-faint">{child.productCount}</span>
                 </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {crop.alsoIncludes.length > 0 && (
+        <section className="container-site pt-8">
+          <h2 className="text-eyebrow text-ink-faint">Also in this family</h2>
+          <p className="mt-2 max-w-2xl text-sm text-ink-faint">
+            No product’s own guidance names {crop.alsoIncludes.length === 1 ? "this one" : "these"}{" "}
+            yet, so there is nothing to list automatically. Ask an adviser what fits.
+          </p>
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {crop.alsoIncludes.map((name) => (
+              <li
+                key={name}
+                className="rounded-full border border-dashed border-line px-4 py-2 text-sm text-ink-faint capitalize"
+              >
+                {name}
               </li>
             ))}
           </ul>

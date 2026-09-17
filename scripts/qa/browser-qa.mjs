@@ -14,7 +14,7 @@ import { chromium, devices } from "@playwright/test";
 const BASE = process.env.QA_BASE_URL ?? "http://localhost:3000";
 const ROUTES = ["/", "/products", "/product-finder", "/crops", "/catalogue", "/knowledge",
   "/videos", "/projects", "/faq", "/about", "/contact", "/solutions", "/search",
-  "/products/azofix-plus", "/crops/maize"];
+  "/products/master", "/crops/maize"];
 const VIEWPORTS = [
   { name: "mobile",  width: 390,  height: 844 },
   { name: "tablet",  width: 820,  height: 1180 },

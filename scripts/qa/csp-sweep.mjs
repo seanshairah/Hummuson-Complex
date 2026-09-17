@@ -16,7 +16,7 @@ const BASE = process.env.QA_BASE_URL ?? "http://localhost:3000";
 const ROUTES = [
   "/", "/products", "/product-finder", "/crops", "/catalogue", "/catalogue/flipbook",
   "/knowledge", "/videos", "/projects", "/faq", "/about", "/contact", "/solutions",
-  "/search?q=maize", "/products/azofix-plus", "/crops/maize", "/admin/login", "/not-a-real-page",
+  "/search?q=maize", "/products/master", "/crops/maize", "/admin/login", "/not-a-real-page",
 ];
 
 const violations = [];

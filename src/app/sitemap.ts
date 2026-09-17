@@ -19,6 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: absoluteUrl("/products"), priority: 0.9, changeFrequency: "weekly" },
     { url: absoluteUrl("/product-finder"), priority: 0.8 },
     { url: absoluteUrl("/crops"), priority: 0.8 },
+    { url: absoluteUrl("/where-to-buy"), priority: 0.7 },
     { url: absoluteUrl("/catalogue"), priority: 0.8 },
     { url: absoluteUrl("/catalogue/flipbook"), priority: 0.6 },
     { url: absoluteUrl("/knowledge"), priority: 0.7, changeFrequency: "weekly" },

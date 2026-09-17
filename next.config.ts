@@ -39,6 +39,33 @@ function legacyRedirects(): { source: string; destination: string; permanent: bo
 }
 
 /**
+ * Products taken off the catalogue (content/delisted-products.json).
+ *
+ * Delisting removes the product record, which would leave `/products/<slug>`
+ * returning a 404 to anyone holding the link — a search result, a WhatsApp
+ * message, a printed price list. The legacy map above only covers the old
+ * WordPress URL; this covers the one this site published itself. Keeping the
+ * record in content rather than in code means the redirect and the reason for
+ * it stay together, and a future delisting needs no code change.
+ */
+function delistedRedirects(): { source: string; destination: string; permanent: boolean }[] {
+  try {
+    const file = path.join(process.cwd(), "content", "delisted-products.json");
+    if (!fs.existsSync(file)) return [];
+    const entries: { slug: string; redirectTo?: string }[] = JSON.parse(fs.readFileSync(file, "utf8"));
+    return entries.flatMap((entry) => {
+      if (!entry.slug) return [];
+      const destination = entry.redirectTo || "/products";
+      const source = `/products/${entry.slug}`;
+      if (source === destination) return [];
+      return [{ source, destination, permanent: true }];
+    });
+  } catch {
+    return [];
+  }
+}
+
+/**
  * Hosts this site is allowed to pull media from. Kept next to `remotePatterns`
  * below so the image loader and the Content-Security-Policy can never drift
  * apart — a host added to one and not the other is a broken image or a hole.
@@ -149,7 +176,9 @@ const nextConfig: NextConfig = {
     ],
   },
   async redirects() {
-    return legacyRedirects();
+    // Legacy first: a delisted product's old WordPress URL is already mapped
+    // there, and Next.js honours the first match.
+    return [...legacyRedirects(), ...delistedRedirects()];
   },
   async headers() {
     return [

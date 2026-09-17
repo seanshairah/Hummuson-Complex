@@ -67,7 +67,17 @@ export default async function CropsPage() {
                       className="group relative flex items-start justify-between gap-3"
                     >
                       <span className="min-w-0">
-                        <h2 className="font-display text-2xl font-semibold tracking-tight break-words capitalize">
+                        {group.familyName && (
+                          <span
+                            className={cn(
+                              "text-eyebrow block",
+                              dark ? "text-leaf-400" : "text-leaf-700",
+                            )}
+                          >
+                            {group.familyName}
+                          </span>
+                        )}
+                        <h2 className="mt-1 font-display text-2xl font-semibold tracking-tight break-words capitalize">
                           {group.name}
                         </h2>
                         <span
@@ -90,6 +100,17 @@ export default async function CropsPage() {
                         <ArrowUpRight className="size-4" />
                       </span>
                     </Link>
+
+                    {group.signature && (
+                      <p
+                        className={cn(
+                          "relative mt-4 text-sm italic",
+                          dark ? "text-paper/70" : "text-ink-soft",
+                        )}
+                      >
+                        {group.signature}
+                      </p>
+                    )}
 
                     {children.length > 0 && (
                       <ul
@@ -115,6 +136,17 @@ export default async function CropsPage() {
                           </li>
                         ))}
                       </ul>
+                    )}
+
+                    {group.alsoIncludes.length > 0 && (
+                      <p
+                        className={cn(
+                          "relative mt-3 text-xs leading-relaxed",
+                          dark ? "text-paper/55" : "text-ink-faint",
+                        )}
+                      >
+                        Also in this family: {group.alsoIncludes.join(", ")}.
+                      </p>
                     )}
                   </div>
                 </RevealItem>

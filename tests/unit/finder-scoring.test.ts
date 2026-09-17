@@ -8,8 +8,8 @@ import {
 
 const rootProduct: FinderCandidate = {
   id: "1",
-  slug: "fosfix-plus",
-  name: "Fosfix Plus",
+  slug: "bacto-seed",
+  name: "Bacto-Seed",
   cropSlugs: ["maize", "vegetables", "cereals"],
   benefitSlugs: ["root-development", "nutrient-uptake"],
   stageKeys: ["seed", "emergence"],
@@ -44,7 +44,7 @@ describe("finder scoring", () => {
       stageKey: "seed",
       method: "SEED_TREATMENT",
     });
-    expect(results[0]?.candidate.slug).toBe("fosfix-plus");
+    expect(results[0]?.candidate.slug).toBe("bacto-seed");
     expect(results[0]?.reasons.length).toBeGreaterThan(0);
   });
 
@@ -114,18 +114,18 @@ describe("finder fallback", () => {
       benefitSlug: "root-development",
     });
     expect(outcome.relaxed).toEqual([]);
-    expect(outcome.results[0]?.candidate.slug).toBe("fosfix-plus");
+    expect(outcome.results[0]?.candidate.slug).toBe("bacto-seed");
   });
 
   it("relaxes the least binding criterion first and reports it", () => {
-    // Fosfix Plus fits maize + root development, but is never applied FOLIAR.
+    // Bacto-Seed fits maize + root development, but is never applied FOLIAR.
     const outcome = recommendWithFallback([rootProduct], {
       cropSlug: "maize",
       benefitSlug: "root-development",
       method: "FOLIAR",
     });
     expect(outcome.relaxed).toEqual(["method"]);
-    expect(outcome.results[0]?.candidate.slug).toBe("fosfix-plus");
+    expect(outcome.results[0]?.candidate.slug).toBe("bacto-seed");
   });
 
   it("reports an honest empty result when nothing can satisfy the answers", () => {

@@ -20,14 +20,15 @@ import {
   PanelLeftOpen,
   PlaySquare,
   Quote,
-  Settings,
-  Sprout,
-  Trophy,
-  Users,
   ScrollText,
+  Settings,
   ShieldCheck,
-  X,
+  Sprout,
+  Store,
+  Trophy,
   type LucideIcon,
+  Users,
+  X,
 } from "lucide-react";
 import { Logo, LogoMark } from "@/components/layout/logo";
 import { signOutAdmin } from "@/server/actions/admin/session";
@@ -53,6 +54,7 @@ const NAV_GROUPS: { label: string | null; items: NavItem[] }[] = [
       { href: "/admin/categories", label: "Categories", icon: FolderTree },
       { href: "/admin/crops", label: "Crops", icon: Sprout },
       { href: "/admin/catalogue", label: "Catalogue", icon: BookOpen },
+      { href: "/admin/distributors", label: "Stockists", icon: Store },
       { href: "/admin/media", label: "Media", icon: Images },
     ],
   },

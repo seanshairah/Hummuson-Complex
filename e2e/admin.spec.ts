@@ -322,7 +322,7 @@ test.describe("two-factor authentication", () => {
 
     // Everything the sheet is silent about is listed, not passed over.
     await page.getByRole("button", { name: /products this sheet does not mention/i }).click();
-    await expect(page.getByTestId("import-unmentioned")).toContainText("Bacto-K");
+    await expect(page.getByTestId("import-unmentioned")).toContainText("Maxprolin");
 
     // One row is applicable, and only that one is counted.
     const apply = page.getByRole("button", { name: /Apply 1 change/ });

@@ -31,6 +31,17 @@ export interface CropListItem {
   featured: boolean;
   /** The group this crop sits under, or null if it is one. */
   parentSlug: string | null;
+  /** Botanical family of a group ("Brassicaceae"); null on an individual crop. */
+  familyName: string | null;
+  /** How the family is recognised in the field. */
+  signature: string | null;
+  /** The owner's agronomy notes for the family, in order. */
+  notes: string[];
+  /**
+   * Crops of this family that no product's guidance names yet. Shown as text,
+   * never as a link — there is nothing behind them to show.
+   */
+  alsoIncludes: string[];
 }
 
 /** A crop group with the individual crops beneath it, in taxonomy order. */
@@ -68,6 +79,10 @@ export const getAllCrops = unstable_cache(
       productCount: productCounts.get(crop.slug) ?? 0,
       featured: crop.featured,
       parentSlug: crop.parent?.slug ?? null,
+      familyName: crop.familyName,
+      signature: crop.signature,
+      notes: crop.notes,
+      alsoIncludes: crop.alsoIncludes,
     }));
   },
   ["all-crops"],
@@ -164,6 +179,10 @@ export const getCropBySlug = (slug: string) =>
         productCount: cropProducts.length,
         featured: crop.featured,
         parentSlug: crop.parent?.slug ?? null,
+        familyName: crop.familyName,
+        signature: crop.signature,
+        notes: crop.notes,
+        alsoIncludes: crop.alsoIncludes,
         parent: crop.parent,
         children: crop.children.map((child) => ({
           ...child,

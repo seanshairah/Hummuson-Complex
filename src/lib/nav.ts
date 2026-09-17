@@ -14,6 +14,7 @@ export const mainNav: NavItem[] = [
 ];
 
 export const secondaryNav: NavItem[] = [
+  { label: "Where to buy", href: "/where-to-buy" },
   { label: "Solutions", href: "/solutions" },
   { label: "Videos", href: "/videos" },
   { label: "Results", href: "/projects" },
@@ -45,6 +46,7 @@ export const footerNav: { heading: string; items: NavItem[] }[] = [
     heading: "Company",
     items: [
       { label: "About us", href: "/about" },
+      { label: "Where to buy", href: "/where-to-buy" },
       { label: "Results & projects", href: "/projects" },
       { label: "Contact", href: "/contact" },
     ],
