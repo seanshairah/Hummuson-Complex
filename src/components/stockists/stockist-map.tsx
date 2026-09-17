@@ -44,11 +44,11 @@ export function StockistMap({ towns }: { towns: StockistTown[] }) {
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_1.15fr] lg:items-start">
       <div className="space-y-4">
-        <div
-          role="tablist"
-          aria-label="Towns"
-          className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
-        >
+        {/* Wrapped, not a scrolling strip. Twenty-odd towns in a horizontal
+            rail means most of them are off-screen and nobody scrolls sideways
+            to look — a farmer needs to see at a glance whether their own town
+            is on the list at all. */}
+        <div role="tablist" aria-label="Towns" className="flex flex-wrap gap-1.5">
           {towns.map((town) => {
             const selected = town.town === current.town;
             return (
@@ -59,14 +59,14 @@ export function StockistMap({ towns }: { towns: StockistTown[] }) {
                 aria-selected={selected}
                 onClick={() => setActive(town.town)}
                 className={cn(
-                  "shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+                  "rounded-full border px-3 py-1.5 text-sm transition-colors",
                   selected
-                    ? "border-humus-950 bg-humus-950 text-paper"
+                    ? "border-humus-950 bg-humus-950 font-medium text-paper"
                     : "border-line bg-cream text-ink-soft hover:border-leaf-600 hover:text-ink",
                 )}
               >
                 {town.town}
-                <span className="ml-1.5 opacity-60">{town.distributors.length}</span>
+                <span className="ml-1.5 text-xs opacity-60">{town.distributors.length}</span>
               </button>
             );
           })}

@@ -153,6 +153,8 @@ describe("stockists", () => {
     phones?: string[];
     mapsLat?: number;
     mapsLng?: number;
+    sourceNote?: string;
+    status?: string;
   }
   const distributors = content<Distributor[]>("distributors.json");
 
@@ -175,6 +177,25 @@ describe("stockists", () => {
     for (const shop of distributors) {
       if (shop.address === undefined) continue;
       expect(shop.address.trim(), `${shop.slug} address`).not.toBe("");
+    }
+  });
+
+  it("records where every row came from", () => {
+    // Most of these addresses were transcribed from third-party listings, one
+    // of which rates itself "0% accurate". A row with no provenance is a row
+    // nobody can check, and a wrong address costs a farmer a wasted drive.
+    for (const shop of distributors) {
+      expect(shop.sourceNote?.trim(), `${shop.slug} has no sourceNote`).toBeTruthy();
+    }
+  });
+
+  it("never publishes a shop without a name of its own", () => {
+    // One source screenshot carried an address and no business name. It is
+    // kept as a draft rather than published as "Unnamed".
+    for (const shop of distributors) {
+      if (/unnamed/i.test(shop.name)) {
+        expect(shop.status, `${shop.slug} is published without a real name`).toBe("DRAFT");
+      }
     }
   });
 });

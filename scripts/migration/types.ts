@@ -83,6 +83,10 @@ export interface SourceDistributor {
   mapsLat?: number;
   mapsLng?: number;
   mapsUrl?: string;
+  /** Where the row came from and how far to trust it. Admin-only. */
+  sourceNote?: string;
+  /** Defaults to PUBLISHED. DRAFT holds a row back from the public page. */
+  status?: "PUBLISHED" | "DRAFT";
 }
 
 export interface SourceFaq {

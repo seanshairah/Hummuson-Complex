@@ -107,6 +107,10 @@ test.describe("public site", () => {
 
   test("where to buy lists stockists and links each one into Google Maps", async ({ page }) => {
     await page.goto("/where-to-buy", { waitUntil: "domcontentloaded" });
+
+    // The page opens on the first town that has addresses; Mutare's shops came
+    // straight from Humuson, so they are the ones worth asserting on.
+    await page.getByRole("tab", { name: /^Mutare/ }).click();
     // Scoped to the shop's own card: the address string also appears in the
     // card next door, whose unit number happens to share the street number.
     const farmline = page
@@ -125,8 +129,12 @@ test.describe("public site", () => {
     }
 
     // Switching town switches the map and the list together.
-    await page.getByRole("tab", { name: /Bulawayo/ }).click();
+    await page.getByRole("tab", { name: /^Bulawayo/ }).click();
     await expect(page.getByRole("heading", { name: /Bulawayo Seed Centre/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Farmline Supplies/i })).toHaveCount(0);
+
+    // A shop held back as a draft never reaches the page.
+    await expect(page.getByText(/Unnamed outlet/i)).toHaveCount(0);
   });
 
   /**

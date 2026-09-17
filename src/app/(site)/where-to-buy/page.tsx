@@ -28,9 +28,9 @@ export default async function WhereToBuyPage() {
         titleAccent="your farm"
         lede={
           count > 0
-            ? `${count} shops carry Humuson product across ${towns.length} ${
-                towns.length === 1 ? "town" : "towns"
-              }. Pick a town for its addresses and numbers — or talk to us directly and we will point you at the nearest one.`
+            ? `Humuson product reaches farmers through ${count} agro-dealer outlets in ${
+                towns.length
+              } ${towns.length === 1 ? "town" : "towns"}. Pick a town for its addresses and numbers — and ring ahead, because what each branch holds varies.`
             : "Talk to us and we will point you at the nearest shop carrying Humuson product."
         }
         crumbs={[{ label: "Where to buy" }]}

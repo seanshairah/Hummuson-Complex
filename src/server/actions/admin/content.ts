@@ -360,13 +360,23 @@ export async function saveDistributor(
     mapsLat: inRange ? lat : null,
     mapsLng: inRange ? lng : null,
     mapsUrl: formOptional(formData, "mapsUrl"),
+    sourceNote: formOptional(formData, "sourceNote"),
     status: (formString(formData, "status") || "PUBLISHED") as PublishStatus,
     order: Number(formString(formData, "order") || 0),
   };
 
+  // Ticking "verified" stamps the moment somebody confirmed the address with
+  // the shop; clearing it puts the row back in the queue. The date is recorded
+  // rather than a flag so a confirmation from two years ago is visibly old.
+  const verified = formBool(formData, "verified");
+  const existing = id
+    ? await db.distributor.findUnique({ where: { id }, select: { verifiedAt: true } })
+    : null;
+  const verifiedAt = verified ? (existing?.verifiedAt ?? new Date()) : null;
+
   const saved = id
-    ? await db.distributor.update({ where: { id }, data })
-    : await db.distributor.create({ data });
+    ? await db.distributor.update({ where: { id }, data: { ...data, verifiedAt } })
+    : await db.distributor.create({ data: { ...data, verifiedAt } });
   revalidateContent("distributors");
   await audit(id ? "distributor.updated" : "distributor.created", {
     entityType: "distributor",

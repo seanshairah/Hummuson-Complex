@@ -51,6 +51,21 @@ export default async function AdminDistributorsPage() {
       <Field label="Google Maps share link" hint="Optional. Beats coordinates when the shop has a listing">
         <Input name="mapsUrl" defaultValue={shop?.mapsUrl ?? ""} />
       </Field>
+      <Field
+        label="Where this came from"
+        hint="Never shown on the site — for whoever checks the address next"
+      >
+        <Textarea name="sourceNote" rows={2} defaultValue={shop?.sourceNote ?? ""} />
+      </Field>
+      <label className="flex items-center gap-2.5 text-sm text-ink">
+        <input
+          type="checkbox"
+          name="verified"
+          defaultChecked={Boolean(shop?.verifiedAt)}
+          className="size-4 accent-leaf-600"
+        />
+        Address confirmed with the shop itself
+      </label>
       <div className="grid grid-cols-2 gap-4">
         <Field label="Status">
           <NativeSelect name="status" defaultValue={shop?.status ?? "PUBLISHED"}>
@@ -69,7 +84,7 @@ export default async function AdminDistributorsPage() {
     <>
       <AdminPageHeader
         title="Stockists"
-        description="The shops that sell Humuson product, shown on /where-to-buy grouped by town."
+        description="Agro-dealer outlets shown on /where-to-buy, grouped by town. Most addresses were transcribed from third-party listings and have not been confirmed with the shops — the Checked column is the queue."
         actions={
           <ActionDialog
             title="New stockist"
@@ -93,6 +108,7 @@ export default async function AdminDistributorsPage() {
               <Th>Shop</Th>
               <Th>Address</Th>
               <Th>Phone</Th>
+              <Th>Checked</Th>
               <Th>Status</Th>
               <Th className="text-right">Actions</Th>
             </Tr>
@@ -120,6 +136,15 @@ export default async function AdminDistributorsPage() {
                     ))
                   ) : (
                     <span className="text-ink-faint">—</span>
+                  )}
+                </Td>
+                <Td>
+                  {shop.verifiedAt ? (
+                    <span className="text-xs text-leaf-800">
+                      {shop.verifiedAt.toISOString().slice(0, 10)}
+                    </span>
+                  ) : (
+                    <span className="text-xs text-ink-faint">not yet</span>
                   )}
                 </Td>
                 <Td>

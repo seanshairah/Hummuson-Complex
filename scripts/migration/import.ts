@@ -966,6 +966,8 @@ async function importDistributors(distributors: SourceDistributor[]) {
         mapsLat: hasPin ? source.mapsLat : null,
         mapsLng: hasPin ? source.mapsLng : null,
         mapsUrl: source.mapsUrl ?? null,
+        sourceNote: source.sourceNote ?? null,
+        status: source.status === "DRAFT" ? PublishStatus.DRAFT : PublishStatus.PUBLISHED,
         order,
       },
     });

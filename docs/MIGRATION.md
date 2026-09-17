@@ -348,15 +348,51 @@ gets no directions link at all. `Distributor.mapsLat/mapsLng` are there for when
 somebody reads the real numbers off the map, and the admin form refuses one coordinate
 without the other.
 
+### The agro-dealer list (17 Sep, second pass)
+
+The owner supplied `agro-dealer-addresses.docx` — 35 outlets across NTS, NTS FarmShop
+and Farmer's Choice, transcribed from 20 screenshots. With the six Humuson supplied
+directly, the list is **41 rows, 40 published, across 21 towns**.
+
+**The document carries its own health warning and so does the data.** Its stated
+sources: the NTS branch list comes from thedirectory.co.zw, *which rates its own listing
+"0% accurate"*; the FarmShop addresses from NTS Facebook posts and a search summary; the
+Farmer's Choice addresses from a Bulldozer insecticide flyer. The document says "verify
+before outreach", and the screenshots are known to skip part of the NTS list — at least
+one branch between Mbare and Mutare.
+
+Publishing 40 third-party addresses as fact would be a claim about other people's
+businesses that nothing here supports, and a wrong address costs a farmer a drive. So:
+
+- `Distributor.sourceNote` carries the provenance of every row, admin-only, never
+  rendered publicly. A unit test fails if any row lacks one.
+- `Distributor.verifiedAt` is null until somebody rings the shop. The admin list has a
+  **Checked** column, which is the queue; the edit dialog has the tick.
+- The page says "ring ahead, because what each branch holds varies" rather than
+  claiming every branch stocks Humuson. Two networks stock it; that every one of their
+  40 branches does is not something the sources establish.
+- The Belmont outlet (No. 2 Swansea Street) had **no business name** on its screenshot,
+  so it is a DRAFT, not a published stockist called "Unnamed".
+
+Reconciliations against the first pass: "Farmshop NTS, Shop 9 1st Street, Mutare" is NTS
+Mutare, now with its phone number; "Farmshop NTS, Bulawayo" is NTS Bulawayo at 62 George
+Silundika Street; Bulawayo Seed Centre and Farmer's Choice Bulawayo both gained
+addresses. Frontline Farming still has none.
+
 Open with the owner:
 
-1. **The four Bulawayo shops have no addresses** — Farmshop NTS, Farmers Choice,
-   Frontline Farming, Bulawayo Seed Centre. They render with "Address to follow" and no
-   directions link. The page opens on Mutare for that reason.
-2. **83 Ginnery Road, Banket and 196 Jamer Street, Karoi are recorded against Farmers
-   Choice**, reading them with the "Farmers choice — Banket and karoi" line that
-   followed. If either belongs to Farmshop NTS instead, it is one field in the admin.
-3. **Farmline Supplies at 9 First Street and Farmshop NTS at Shop 9, First Street** are
-   recorded verbatim as supplied. Worth a glance in case one absorbed the other.
-4. Spelling of the shop names is title-cased from the brief, with "Bulawayo Seed
-   Centre" in the Zimbabwean spelling. Business names should match the shopfront.
+1. **Banket and Karoi contradict the flyer.** 83 Ginnery Road (Banket) and 196 Jamer
+   Street (Karoi) are recorded against Farmer's Choice on the reading of the original
+   brief, but Farmer's Choice's own flyer lists seven branches and neither town is among
+   them. NTS *does* have a Karoi branch, at "Stand 248, Fred Jameson Road" — which may
+   be the same street as "196 Jamer Street" under a garbled name. Both rows say so in
+   `sourceNote`.
+2. **NTS FarmShop Murehwa has two addresses** — "Stand 244, Murehwa" and "287 Makunde
+   Building, opposite CBZ" — and "Stand 244" is the same number recorded for Mhangura,
+   so one of them is probably a transcription error. Only the first is stored.
+3. **NTS FarmShop Centenary** is named Centenary while its address ends "Muzarabani".
+   Filed under Centenary.
+4. **Farmline Supplies at 9 First Street and NTS Mutare at Shop 9, First Street** still
+   sit at the same street number. Worth one glance.
+5. Shop names follow the document's spelling ("Farmer's Choice"), and Bulawayo Seed
+   Centre carries a public note that its signage reads "Seed Co Bulawayo Depot".

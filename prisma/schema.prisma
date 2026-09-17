@@ -661,6 +661,17 @@ model Distributor {
   /// because it carries the shop's own place record.
   mapsUrl String?
 
+  /// Where this row came from and how much to trust it — admin-only, never
+  /// rendered publicly. Most of the network branches were transcribed from a
+  /// third-party directory that rates its own listing "0% accurate", and a
+  /// wrong address sends a farmer on a wasted drive. Keeping the provenance on
+  /// the row is what lets whoever checks it know what they are checking.
+  sourceNote String?
+
+  /// Set when a person has confirmed this address with the shop itself. Null
+  /// means nobody has yet, which is the honest default for a transcribed list.
+  verifiedAt DateTime?
+
   status PublishStatus @default(PUBLISHED)
   order  Int           @default(0)
 
