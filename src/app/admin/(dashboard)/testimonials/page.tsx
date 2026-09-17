@@ -18,7 +18,7 @@ export default async function AdminTestimonialsPage() {
   const fields = (testimonial?: (typeof testimonials)[number]) => (
     <>
       {testimonial && <input type="hidden" name="id" value={testimonial.id} />}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Name" required>
           <Input name="name" defaultValue={testimonial?.name} required />
         </Field>
@@ -26,7 +26,7 @@ export default async function AdminTestimonialsPage() {
           <Input name="role" defaultValue={testimonial?.role ?? ""} />
         </Field>
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Location">
           <Input name="location" defaultValue={testimonial?.location ?? ""} />
         </Field>

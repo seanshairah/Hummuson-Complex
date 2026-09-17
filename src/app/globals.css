@@ -234,6 +234,107 @@
   }
 }
 
+/* ── Vertical rhythm ──────────────────────────────────────────────────────────
+   Section padding was ad hoc before this: pb-16, pb-20, pb-24, pt-8, pt-10,
+   py-14, py-16 md:py-20 all appeared across the public pages, so no two pages
+   breathed the same way and the seams between sections landed at different
+   heights. Three steps, used through <Section>, replace all of it.
+
+   The scale is deliberately coarse. Three choices that are clearly different
+   beat eight that are nearly the same — "a bit more room here" is how the
+   drift started.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+@utility section-y-tight {
+  padding-block: 2.5rem;
+  @media (width >= 48rem) {
+    padding-block: 3rem;
+  }
+  @media (width >= 80rem) {
+    padding-block: 3.5rem;
+  }
+}
+
+@utility section-y {
+  padding-block: 3.5rem;
+  @media (width >= 48rem) {
+    padding-block: 4.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-block: 5.5rem;
+  }
+}
+
+@utility section-y-loose {
+  padding-block: 5rem;
+  @media (width >= 48rem) {
+    padding-block: 6.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-block: 8rem;
+  }
+}
+
+/* One-sided variants, for a section that butts against the page opener or the
+   footer and should not double up on the gap. */
+@utility section-pt-tight {
+  padding-top: 2.5rem;
+  @media (width >= 48rem) {
+    padding-top: 3rem;
+  }
+  @media (width >= 80rem) {
+    padding-top: 3.5rem;
+  }
+}
+
+@utility section-pt {
+  padding-top: 3.5rem;
+  @media (width >= 48rem) {
+    padding-top: 4.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-top: 5.5rem;
+  }
+}
+
+@utility section-pb-tight {
+  padding-bottom: 2.5rem;
+  @media (width >= 48rem) {
+    padding-bottom: 3rem;
+  }
+  @media (width >= 80rem) {
+    padding-bottom: 3.5rem;
+  }
+}
+
+@utility section-pb {
+  padding-bottom: 3.5rem;
+  @media (width >= 48rem) {
+    padding-bottom: 4.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-bottom: 5.5rem;
+  }
+}
+
+@utility section-pb-loose {
+  padding-bottom: 5rem;
+  @media (width >= 48rem) {
+    padding-bottom: 6.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-bottom: 8rem;
+  }
+}
+
+/* Reading measure for editorial bodies. Characters, not pixels: the line
+   length that stays readable is a function of the type, not the viewport. */
+@utility container-reading {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 68ch;
+}
+
 @utility container-wide {
   margin-inline: auto;
   width: 100%;
@@ -269,6 +370,18 @@
   font-size: clamp(1.75rem, 1.45rem + 1.6vw, 2.75rem);
   line-height: 1.08;
   letter-spacing: -0.02em;
+  font-weight: 500;
+}
+
+/* Sub-page h1. Sits between display-2 (a homepage hero, which earns its size)
+   and display-3 (a section heading). Page titles were running at display-2 —
+   68px on a laptop — which pushed the first useful line of every page most of
+   a screen down. */
+@utility text-page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.6rem + 1.9vw, 3.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
   font-weight: 500;
 }
 

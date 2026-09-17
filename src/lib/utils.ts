@@ -9,10 +9,14 @@ import { extendTailwindMerge } from "tailwind-merge";
 const twMerge = extendTailwindMerge({
   extend: {
     classGroups: {
+      // Every custom text-* utility has to be listed here. Miss one and it
+      // vanishes silently wherever a colour sits beside it — the heading still
+      // renders, at body size, and nothing errors.
       "font-size": [
         "text-display-1",
         "text-display-2",
         "text-display-3",
+        "text-page-title",
         "text-title",
         "text-eyebrow",
         "text-editorial",

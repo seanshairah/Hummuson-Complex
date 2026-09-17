@@ -35,7 +35,7 @@ export async function Footer() {
       {/* CTA band */}
       <div className="relative overflow-hidden border-b border-paper/10">
         <div className="absolute inset-0 glow-leaf" aria-hidden />
-        <div className="relative container-site flex flex-col items-start gap-8 py-16 md:flex-row md:items-end md:justify-between md:py-20">
+        <div className="relative container-site flex flex-col items-start gap-8 section-y md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <p className="text-eyebrow text-leaf-400">Talk to an agronomist</p>
             <h2 className="mt-3 text-display-2 text-paper">
@@ -66,7 +66,7 @@ export async function Footer() {
       </div>
 
       {/* Main grid */}
-      <div className="container-site grid gap-12 py-14 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.3fr]">
+ <div className="container-site grid gap-8 lg:gap-12 section-y-tight md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.3fr]">
         <div>
           <Link href="/" aria-label="Humuson Complex — home">
             <Logo tone="light" />
@@ -184,7 +184,7 @@ export async function Footer() {
          * under it and Privacy stops being clickable. Below sm the links are
          * centred and already clear of it.
          */}
-        <div className="container-site flex flex-col items-center justify-between gap-3 py-6 text-xs text-paper/45 sm:flex-row sm:pb-24">
+        <div className="container-site flex flex-col items-center justify-between gap-3 py-6 pb-24 text-xs text-paper/45 sm:flex-row">
           <p>
             © {year} {site.name}. Agricultural technology, balanced crop nutrition &amp;
             bio-innovation. All rights reserved.

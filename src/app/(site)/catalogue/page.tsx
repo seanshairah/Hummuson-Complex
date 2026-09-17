@@ -70,7 +70,7 @@ export default async function CataloguePage() {
 
   if (!catalogue) {
     return (
-      <div className="container-site pt-36 pb-24">
+      <div className="container-site pt-24 md:pt-28 lg:pt-32 section-pb-loose">
         <EmptyState
           icon={BookOpen}
           title="The catalogue is being prepared"
@@ -94,7 +94,7 @@ export default async function CataloguePage() {
         >
           {catalogue.title} · {catalogue.title}
         </div>
-        <div className="relative container-site pt-40 pb-16">
+        <div className="relative container-site pt-24 md:pt-28 lg:pt-32 section-pb">
           <p className="text-eyebrow text-leaf-400">
             Interactive catalogue{catalogue.year ? ` · ${catalogue.year}` : ""}
           </p>
@@ -119,7 +119,7 @@ export default async function CataloguePage() {
 
           {/* Chapter index */}
           <nav aria-label="Catalogue chapters" className="mt-14">
-            <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+ <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {catalogue.sections.map((section, i) => (
                 <li key={section.id}>
                   <a
@@ -151,7 +151,7 @@ export default async function CataloguePage() {
             className={cn("scroll-mt-16 py-20 md:py-28", theme.section)}
           >
             <div className="container-site">
-              <Reveal className="grid items-end gap-8 lg:grid-cols-[1fr_auto]">
+ <Reveal className="grid items-end gap-8 lg:grid-cols-[1fr_auto]">
                 <div>
                   <p className={cn("text-eyebrow", theme.label)}>
                     Chapter {String(sectionIndex + 1).padStart(2, "0")}
@@ -178,7 +178,7 @@ export default async function CataloguePage() {
                         <Link
                           href={`/products/${product.slug}`}
                           className={cn(
-                            "group grid items-stretch gap-0 overflow-hidden rounded-3xl transition-all duration-300 hover:-translate-y-1 hover:shadow-pop md:grid-cols-[0.9fr_1.1fr]",
+ "group grid items-stretch gap-0 overflow-hidden rounded-3xl transition-all duration-300 hover:-translate-y-1 hover:shadow-pop md:grid-cols-[0.9fr_1.1fr]",
                             theme.card,
                           )}
                         >
@@ -289,7 +289,7 @@ export default async function CataloguePage() {
                 {/* The rest of the chapter as a compact editorial grid */}
                 {rest.length > 0 && (
                   <RevealGroup
-                    className="grid gap-5 md:grid-cols-2 xl:grid-cols-3"
+                    className="grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3"
                     stagger={0.05}
                   >
                     {rest.map((entry, restIndex) => {

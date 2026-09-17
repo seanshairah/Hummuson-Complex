@@ -91,7 +91,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             crumbs={[{ label: "Products", href: "/products" }, { label: product.name }]}
             className="mb-8"
           />
-          <div className="grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
+ <div className="grid gap-8 lg:gap-12 lg:grid-cols-[0.92fr_1.08fr] ">
             <Reveal y={20}>
               <ProductGallery images={gallery} name={product.name} />
             </Reveal>
@@ -215,7 +215,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         </div>
       </nav>
 
-      <div className="container-site grid gap-14 py-14 lg:grid-cols-[1fr_320px] lg:gap-16">
+ <div className="container-site grid gap-8 lg:gap-12 section-y lg:grid-cols-[1fr_320px] ">
         <div className="min-w-0 space-y-16">
           {/* Overview */}
           {product.descriptionHtml && (
@@ -487,7 +487,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <section id="related" className="scroll-mt-32 border-t border-line bg-paper-dim/60 py-14">
           <div className="container-site">
             <h2 className="text-display-3 text-ink">Related products</h2>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+ <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {product.related.slice(0, 4).map((related) => (
                 <ProductCard key={related.id} product={related} className="h-full" />
               ))}

@@ -167,7 +167,7 @@ export function GrowthTimeline({ stages, cropName }: { stages: StageData[]; crop
           )}
 
           {active.products.length > 0 ? (
-            <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+ <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {active.products.map((product) => (
                 <li key={product.id}>
                   <Link

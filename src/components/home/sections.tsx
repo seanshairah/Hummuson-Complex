@@ -34,7 +34,7 @@ import cabbagePhoto from "../../../public/images/field/field-IMG_0595.jpg";
 export function RangesBand() {
   return (
     <section className="border-b border-line bg-cream">
-      <div className="container-site flex flex-col items-center gap-6 py-10 lg:flex-row lg:justify-between">
+      <div className="container-site flex flex-col items-center gap-6 section-y-tight lg:flex-row lg:justify-between">
         <p className="max-w-md text-center text-sm leading-relaxed text-ink-faint lg:text-left">
           <strong className="text-ink">Microbiological fertilisers</strong>,{" "}
           <strong className="text-ink">biostimulants</strong> and{" "}
@@ -77,7 +77,7 @@ export function BenefitNav({ options }: { options: FilterOptions }) {
             lede="Every Humuson product is mapped to the outcomes described in its own published guidance. Pick a purpose to see the products listed for it."
           />
         </Reveal>
-        <RevealGroup className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+ <RevealGroup className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           {benefits.map((benefit) => {
             const Icon = BENEFIT_ICONS[benefit.slug] ?? Sprout;
             return (
@@ -129,7 +129,7 @@ export function FeaturedProducts({ products }: { products: ProductCardData[] }) 
       </div>
       <div className="container-site mt-12">
         <RevealGroup
-          className="scrollbar-none grid snap-x snap-mandatory auto-cols-[78%] grid-flow-col gap-4 overflow-x-auto pb-4 sm:auto-cols-[46%] lg:auto-cols-fr lg:grid-flow-row lg:grid-cols-4 lg:overflow-visible"
+ className="scrollbar-none grid snap-x snap-mandatory auto-cols-[78%] grid-flow-col gap-4 overflow-x-auto pb-4 sm:auto-cols-[46%] lg:auto-cols-fr lg:grid-flow-row lg:grid-cols-4 lg:overflow-visible"
           stagger={0.06}
         >
           {products.slice(0, 8).map((product, i) => (
@@ -156,7 +156,7 @@ export function FinderBand() {
   return (
     <section className="bg-grain relative overflow-hidden bg-humus-950 py-20 text-paper md:py-28">
       <div aria-hidden className="absolute inset-0 glow-leaf" />
-      <div className="relative container-site grid items-center gap-12 lg:grid-cols-2">
+ <div className="relative container-site grid items-center gap-8 lg:gap-12 lg:grid-cols-2">
         <Reveal>
           <SectionHeading
             tone="dark"
@@ -202,7 +202,7 @@ export function CropsBand({ crops }: { crops: CropListItem[] }) {
   if (withProducts.length === 0) return null;
   return (
     <section className="bg-paper py-20 md:py-28">
-      <div className="container-site grid items-start gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+ <div className="container-site grid items-start gap-8 lg:gap-12 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="lg:sticky lg:top-28">
           <Reveal>
             <SectionHeading
@@ -274,7 +274,7 @@ export function SoilStory({ claims }: { claims: string[] }) {
   if (shown.length === 0) return null;
   return (
     <section className="bg-grain relative overflow-hidden bg-humus-950 py-20 text-paper md:py-28">
-      <div className="container-site grid items-center gap-14 lg:grid-cols-2">
+ <div className="container-site grid items-center gap-8 lg:gap-12 lg:grid-cols-2">
         <Reveal className="relative order-2 lg:order-1">
           <Parallax speed={0.08} className="relative aspect-[4/5] overflow-hidden rounded-3xl">
             <Image
@@ -356,7 +356,7 @@ export function KnowledgePreview({
             </ButtonLink>
           </div>
         </Reveal>
-        <div className="mt-12 grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+ <div className="mt-12 grid gap-8 lg:gap-12 lg:grid-cols-[1.15fr_0.85fr]">
           <RevealGroup className="space-y-1" stagger={0.06}>
             {articles.slice(0, 4).map((article) => (
               <RevealItem key={article.id}>
@@ -425,7 +425,7 @@ export function CatalogueTeaser({ products }: { products: ProductCardData[] }) {
   return (
     <section className="bg-grain relative overflow-hidden bg-humus-950 py-20 text-paper md:py-24">
       <div aria-hidden className="absolute inset-0 glow-leaf" />
-      <div className="relative container-site grid items-center gap-12 lg:grid-cols-2">
+ <div className="relative container-site grid items-center gap-8 lg:gap-12 lg:grid-cols-2">
         <Reveal>
           <SectionHeading
             tone="dark"

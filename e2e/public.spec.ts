@@ -19,9 +19,17 @@ test.describe("public site", () => {
    * runner rather than about the filter under test.
    *
    * Scoped to #main so the header and footer can never contribute a link.
+   *
+   * The results count is what tells us the grid has finished arriving. Reading
+   * the links straight after `domcontentloaded` returned a partial grid once
+   * the run got busy enough — the page streams, so "the document has parsed" is
+   * not "the grid is here". That produced a total smaller than the filtered
+   * subset it was being compared against: a failure that looked like a broken
+   * filter and was a half-read page.
    */
   async function gridSlugs(page: import("@playwright/test").Page, url: string) {
     await page.goto(url, { waitUntil: "domcontentloaded" });
+    await expect(page.getByTestId("product-results")).toBeVisible();
     return page
       .locator('#main a[href^="/products/"]')
       .evaluateAll((links) =>
@@ -105,22 +113,29 @@ test.describe("public site", () => {
     expect(legacy?.status()).toBe(200);
   });
 
-  test("where to buy lists stockists and links each one into Google Maps", async ({ page }) => {
+  test("where to buy: pick a town, see its stockists, link each one out", async ({ page }) => {
     await page.goto("/where-to-buy", { waitUntil: "domcontentloaded" });
 
-    // The page opens on the first town that has addresses; Mutare's shops came
-    // straight from Humuson, so they are the ones worth asserting on.
-    await page.getByRole("tab", { name: /^Mutare/ }).click();
-    // Scoped to the shop's own card: the address string also appears in the
-    // card next door, whose unit number happens to share the street number.
+    // The town picker is a searchable combobox, not a row of chips: twenty-one
+    // towns as buttons buried most of them.
+    const picker = page.getByRole("button", { name: "Town" });
+    await expect(picker).toBeVisible();
+
+    await picker.click();
+    await page.getByPlaceholder("Search towns").fill("Mutare");
+    await page.getByRole("option", { name: /Mutare/ }).first().click();
+
+    // The summary counts the actual results, not a hardcoded number.
+    await expect(page.getByText(/stockists in\s+Mutare/)).toBeVisible();
+
     const farmline = page
       .locator("li")
       .filter({ has: page.getByRole("heading", { name: /Farmline Supplies/i }) });
     await expect(farmline).toContainText("9 First Street, Mutare");
 
-    // Every directions link has to leave for Google Maps — an internal one
-    // would mean the page is pretending to know where the shop is.
-    const directions = page.locator('#main a:has-text("Directions")');
+    // Every directions link leaves for Google Maps — an internal one would mean
+    // the page is pretending to know where the shop is.
+    const directions = page.locator('#main a:has-text("Get directions")');
     expect(await directions.count()).toBeGreaterThan(0);
     for (const href of await directions.evaluateAll((links) =>
       links.map((a) => a.getAttribute("href") ?? ""),
@@ -128,13 +143,26 @@ test.describe("public site", () => {
       expect(href).toContain("google.com/maps");
     }
 
-    // Switching town switches the map and the list together.
-    await page.getByRole("tab", { name: /^Bulawayo/ }).click();
+    // Switching town switches the results with it.
+    await picker.click();
+    await page.getByPlaceholder("Search towns").fill("Bulawayo");
+    await page.getByRole("option", { name: /Bulawayo/ }).first().click();
     await expect(page.getByRole("heading", { name: /Bulawayo Seed Centre/i })).toBeVisible();
     await expect(page.getByRole("heading", { name: /Farmline Supplies/i })).toHaveCount(0);
 
     // A shop held back as a draft never reaches the page.
     await expect(page.getByText(/Unnamed outlet/i)).toHaveCount(0);
+  });
+
+  test("where to buy: the town picker is usable from the keyboard", async ({ page }) => {
+    await page.goto("/where-to-buy", { waitUntil: "domcontentloaded" });
+    await page.getByRole("button", { name: "Town" }).click();
+    const search = page.getByPlaceholder("Search towns");
+    await search.fill("kw");
+    // Typing filters, arrows move, Enter chooses — without focus ever leaving
+    // the search box, which is what makes typing mid-search work.
+    await search.press("Enter");
+    await expect(page.getByText(/stockists in\s+Kwekwe/)).toBeVisible();
   });
 
   /**

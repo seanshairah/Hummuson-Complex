@@ -48,7 +48,7 @@ export function EnquiryForm({
         </p>
       )}
 
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-4 sm:gap-5 sm:grid-cols-2">
         <Field label="Your name" required error={state.fieldErrors?.name}>
           <Input name="name" autoComplete="name" required />
         </Field>
@@ -60,7 +60,7 @@ export function EnquiryForm({
           <Input name="phone" type="tel" autoComplete="tel" />
         </Field>
       </div>
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid gap-4 sm:gap-5 sm:grid-cols-2">
         <Field label="Email" error={state.fieldErrors?.email}>
           <Input name="email" type="email" autoComplete="email" />
         </Field>

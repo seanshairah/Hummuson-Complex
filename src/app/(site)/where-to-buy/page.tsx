@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Store } from "lucide-react";
 import { PageIntro } from "@/components/shared/page-intro";
+import { Section } from "@/components/layout/section";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ButtonLink } from "@/components/ui/button";
 import { StockistMap } from "@/components/stockists/stockist-map";
@@ -12,7 +13,7 @@ export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Where to buy — Humuson stockists",
   description:
-    "The shops that carry Humuson Complex products across Zimbabwe — Bulawayo, Mutare, Banket and Karoi — with addresses, phone numbers and directions.",
+    "The agro-dealer outlets that carry Humuson Complex products across Zimbabwe — Harare, Bulawayo, Mutare, Gweru, Kwekwe and more — with addresses, phone numbers and directions.",
   alternates: { canonical: "/where-to-buy" },
 };
 
@@ -30,13 +31,13 @@ export default async function WhereToBuyPage() {
           count > 0
             ? `Humuson product reaches farmers through ${count} agro-dealer outlets in ${
                 towns.length
-              } ${towns.length === 1 ? "town" : "towns"}. Pick a town for its addresses and numbers — and ring ahead, because what each branch holds varies.`
+              } ${towns.length === 1 ? "town" : "towns"}. Ring ahead — what each branch holds varies.`
             : "Talk to us and we will point you at the nearest shop carrying Humuson product."
         }
         crumbs={[{ label: "Where to buy" }]}
       />
 
-      <section className="container-site pb-16">
+      <Section top="none" bottom="base">
         {count === 0 ? (
           <EmptyState
             icon={Store}
@@ -47,18 +48,15 @@ export default async function WhereToBuyPage() {
         ) : (
           <StockistMap towns={towns} />
         )}
-      </section>
+      </Section>
 
-      <section className="container-site pb-20">
-        <div className="bg-grain flex flex-col gap-4 rounded-3xl bg-humus-950 p-6 text-paper sm:flex-row sm:items-center sm:justify-between sm:p-8">
+      <Section top="none" bottom="loose">
+        <div className="bg-grain flex flex-col gap-5 rounded-3xl bg-humus-950 p-6 text-paper sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div className="min-w-0">
-            <h2 className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
-              Not near any of these?
-            </h2>
+            <h2 className="text-display-3 text-paper">Not near any of these?</h2>
             <p className="mt-2 max-w-xl text-sm text-paper/70">
-              Humuson supplies direct from{" "}
-              {contact.address ?? "the Harare depot"} and delivers nationally. Tell us what you
-              grow and we will sort out the nearest supply.
+              Humuson supplies direct from {contact.address ?? "the Harare depot"} and delivers
+              nationally. Tell us what you grow and we will sort out the nearest supply.
             </p>
           </div>
           <div className="flex shrink-0 flex-wrap gap-3">
@@ -68,7 +66,7 @@ export default async function WhereToBuyPage() {
             </ButtonLink>
           </div>
         </div>
-      </section>
+      </Section>
     </>
   );
 }

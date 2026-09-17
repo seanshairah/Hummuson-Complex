@@ -20,7 +20,7 @@ export default async function AdminDistributorsPage() {
   const fields = (shop?: (typeof distributors)[number]) => (
     <>
       {shop && <input type="hidden" name="id" value={shop.id} />}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Shop name" required>
           <Input name="name" defaultValue={shop?.name} required />
         </Field>
@@ -37,7 +37,7 @@ export default async function AdminDistributorsPage() {
       <Field label="Note" hint="Anything a caller needs that the address does not say">
         <Input name="notes" defaultValue={shop?.notes ?? ""} />
       </Field>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         <Field
           label="Latitude"
           hint="Optional. Right-click the shop in Google Maps and copy the two numbers"
@@ -66,7 +66,7 @@ export default async function AdminDistributorsPage() {
         />
         Address confirmed with the shop itself
       </label>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Status">
           <NativeSelect name="status" defaultValue={shop?.status ?? "PUBLISHED"}>
             <option value="PUBLISHED">Published</option>
@@ -84,7 +84,7 @@ export default async function AdminDistributorsPage() {
     <>
       <AdminPageHeader
         title="Stockists"
-        description="Agro-dealer outlets shown on /where-to-buy, grouped by town. Most addresses were transcribed from third-party listings and have not been confirmed with the shops — the Checked column is the queue."
+        description="Outlets shown on /where-to-buy, grouped by town. Checked is the verification queue — most addresses came from third-party listings."
         actions={
           <ActionDialog
             title="New stockist"
@@ -140,7 +140,7 @@ export default async function AdminDistributorsPage() {
                 </Td>
                 <Td>
                   {shop.verifiedAt ? (
-                    <span className="text-xs text-leaf-800">
+                    <span className="text-xs whitespace-nowrap text-leaf-800">
                       {shop.verifiedAt.toISOString().slice(0, 10)}
                     </span>
                   ) : (

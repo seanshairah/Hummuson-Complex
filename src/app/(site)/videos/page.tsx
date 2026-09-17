@@ -27,7 +27,7 @@ export default async function VideosPage() {
         lede="Webinars, demonstrations and organic-farming education from the Humuson team. Videos load only when you press play — kind to your data bundle."
         crumbs={[{ label: "Videos" }]}
       />
-      <section className="container-site pb-20">
+      <section className="container-site section-pb">
         <VideoGrid videos={videos} />
       </section>
     </>

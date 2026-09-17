@@ -21,7 +21,7 @@ export default async function AdminCropsPage() {
   const fields = (crop?: (typeof crops)[number]) => (
     <>
       {crop && <input type="hidden" name="id" value={crop.id} />}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Name" required>
           <Input name="name" defaultValue={crop?.name} required />
         </Field>

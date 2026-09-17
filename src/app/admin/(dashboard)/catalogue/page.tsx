@@ -82,7 +82,7 @@ export default async function AdminCataloguePage() {
               <Field label="Title" required>
                 <Input name="title" defaultValue={catalogue.title} required />
               </Field>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-4 sm:grid-cols-2">
                 <Field label="Year">
                   <Input name="year" type="number" defaultValue={catalogue.year ?? ""} />
                 </Field>

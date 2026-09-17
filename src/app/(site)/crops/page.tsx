@@ -38,7 +38,7 @@ export default async function CropsPage() {
         lede="Crops are grouped the way you plant them. Open a group for everything listed across it, or go straight to the single crop — each page shows the Humuson products listed for it, the growth stages they reference, and the questions farmers ask."
         crumbs={[{ label: "Crops" }]}
       />
-      <section className="container-site pb-20">
+      <section className="container-site section-pb">
         {listed.length === 0 ? (
           <EmptyState
             icon={Wheat}
@@ -47,7 +47,7 @@ export default async function CropsPage() {
             action={<ButtonLink href="/contact">Request advice</ButtonLink>}
           />
         ) : (
-          <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.05}>
+ <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.05}>
             {listed.map((group, i) => {
               const dark = i % 5 === 0;
               const children = group.children.filter((child) => child.productCount > 0);
@@ -112,10 +112,11 @@ export default async function CropsPage() {
                       </p>
                     )}
 
+                    <div className="relative mt-auto pt-5">
                     {children.length > 0 && (
                       <ul
                         className={cn(
-                          "relative mt-5 flex flex-wrap gap-1.5 border-t pt-4",
+                          "relative flex flex-wrap gap-1.5 border-t pt-4",
                           dark ? "border-paper/15" : "border-line",
                         )}
                       >
@@ -148,6 +149,7 @@ export default async function CropsPage() {
                         Also in this family: {group.alsoIncludes.join(", ")}.
                       </p>
                     )}
+                    </div>
                   </div>
                 </RevealItem>
               );

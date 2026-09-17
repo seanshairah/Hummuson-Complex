@@ -32,7 +32,7 @@ export default async function ProjectsPage() {
         crumbs={[{ label: "Results" }]}
       />
 
-      <section className="container-site pb-16">
+      <section className="container-site section-pb">
         {projects.length === 0 ? (
           <EmptyState
             icon={Images}
@@ -41,7 +41,7 @@ export default async function ProjectsPage() {
             action={<ButtonLink href="/contact">Contact Humuson</ButtonLink>}
           />
         ) : (
-          <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
+ <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
             {projects.map((project) => (
               <RevealItem key={project.id}>
                 <Link

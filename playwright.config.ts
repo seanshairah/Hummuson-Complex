@@ -21,9 +21,41 @@ export default defineConfig({
     trace: "retain-on-failure",
     ...(executablePath ? { launchOptions: { executablePath, args: ["--no-sandbox"] } } : {}),
   },
+  /*
+   * The read-only public journeys run first, in parallel, on both profiles.
+   * The admin specs run after them, because they write: the editorial flow
+   * edits a product and the price import applies a change, and under
+   * `fullyParallel` those landed in the middle of public assertions reading the
+   * same rows. The result was three tests that failed in a full run and passed
+   * every time in isolation — the shape of a race, not of a bug, and the sort
+   * that gets re-run rather than read.
+   *
+   * Splitting by file rather than serialising the whole suite keeps the public
+   * run parallel, which is where most of the tests are.
+   */
   projects: [
-    { name: "desktop", use: { ...devices["Desktop Chrome"] } },
-    { name: "mobile", use: { ...devices["Pixel 7"] } },
+    {
+      name: "desktop",
+      testIgnore: /admin\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "mobile",
+      testIgnore: /admin\.spec\.ts/,
+      use: { ...devices["Pixel 7"] },
+    },
+    {
+      name: "admin-desktop",
+      testMatch: /admin\.spec\.ts/,
+      dependencies: ["desktop", "mobile"],
+      use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "admin-mobile",
+      testMatch: /admin\.spec\.ts/,
+      dependencies: ["desktop", "mobile"],
+      use: { ...devices["Pixel 7"] },
+    },
   ],
   webServer: {
     command: `npm run start -- -p ${PORT}`,

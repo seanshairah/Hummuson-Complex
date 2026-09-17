@@ -41,7 +41,7 @@ export default async function PrivacyPage() {
         lede={`What ${site.name} collects through this website, why it is collected, and how long it is kept.`}
         crumbs={[{ label: "Privacy" }]}
       />
-      <div className="container-site pb-24">
+      <div className="container-site section-pb-loose">
         <div className="rich-text max-w-2xl">
           <h2>What this site collects</h2>
 

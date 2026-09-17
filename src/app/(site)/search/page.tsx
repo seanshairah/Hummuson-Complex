@@ -74,7 +74,7 @@ export default async function SearchPage({
         </form>
       </PageIntro>
 
-      <section className="container-site max-w-3xl pb-20">
+      <section className="container-site max-w-3xl section-pb">
         {query.length >= 2 && results.length === 0 && (
           <EmptyState
             icon={SearchX}

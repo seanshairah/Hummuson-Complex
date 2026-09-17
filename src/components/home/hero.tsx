@@ -69,8 +69,8 @@ export function HomeHero({
       </motion.div>
       <div aria-hidden className="absolute inset-0 -z-10 glow-leaf" />
 
-      <div className="container-site flex flex-1 items-center pt-28 pb-16 md:pt-32">
-        <div className="grid w-full items-center gap-10 lg:grid-cols-[1.2fr_0.8fr] xl:gap-14">
+      <div className="container-site flex flex-1 items-center pt-24 section-pb md:pt-28 lg:pt-32">
+ <div className="grid w-full items-center gap-8 lg:gap-12 lg:grid-cols-[1.2fr_0.8fr] xl:gap-14">
           {/* Copy */}
           <div>
             <motion.p

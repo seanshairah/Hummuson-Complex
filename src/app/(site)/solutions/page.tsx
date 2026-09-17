@@ -34,8 +34,8 @@ export default async function SolutionsPage() {
         crumbs={[{ label: "Solutions" }]}
       />
 
-      <section className="container-site pb-16">
-        <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
+      <section className="container-site section-pb">
+ <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
           {company.services.map((service, i) => {
             const Icon = SERVICE_ICONS[i % SERVICE_ICONS.length]!;
             return (
@@ -73,7 +73,7 @@ export default async function SolutionsPage() {
               lede="Filter the full catalogue by range, crop or the outcome you’re after."
             />
           </Reveal>
-          <RevealGroup className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" stagger={0.06}>
+ <RevealGroup className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" stagger={0.06}>
             {options.categories.map((category) => (
               <RevealItem key={category.slug}>
                 <Link
@@ -92,7 +92,7 @@ export default async function SolutionsPage() {
         </div>
       </section>
 
-      <section className="container-site flex flex-col items-start justify-between gap-6 py-16 md:flex-row md:items-center">
+      <section className="container-site flex flex-col items-start justify-between gap-6 section-y md:flex-row md:items-center">
         <div>
           <h2 className="text-display-3 text-ink">Not sure where to start?</h2>
           <p className="mt-2 max-w-xl text-ink-soft">

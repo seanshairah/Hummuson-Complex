@@ -102,7 +102,7 @@ export function ProductForm({
   }, [state, router]);
 
   return (
-    <form action={formAction} className="grid items-start gap-6 xl:grid-cols-[1fr_320px]">
+ <form action={formAction} className="grid items-start gap-6 xl:grid-cols-[1fr_320px]">
       {initial.id && <input type="hidden" name="id" value={initial.id} />}
 
       <div className="min-w-0 space-y-6">

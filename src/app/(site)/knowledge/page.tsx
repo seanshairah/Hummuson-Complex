@@ -32,7 +32,7 @@ export default async function KnowledgePage() {
         lede="Practical guidance from the Humuson team — soil biology, application know-how and crop advice you can act on this season."
         crumbs={[{ label: "Knowledge" }]}
       />
-      <section className="container-site pb-20">
+      <section className="container-site section-pb">
         {articles.length === 0 ? (
           <EmptyState
             icon={Newspaper}
@@ -45,7 +45,7 @@ export default async function KnowledgePage() {
             {featured && (
               <Link
                 href={`/knowledge/${featured.slug}`}
-                className="group grid overflow-hidden rounded-3xl border border-line bg-cream shadow-card transition-all duration-300 hover:shadow-pop lg:grid-cols-2"
+ className="group grid overflow-hidden rounded-3xl border border-line bg-cream shadow-card transition-all duration-300 hover:shadow-pop lg:grid-cols-2"
               >
                 {featured.cover && (
                   <div className="relative aspect-[16/10] overflow-hidden bg-paper-dim lg:aspect-auto lg:min-h-80">
@@ -84,7 +84,7 @@ export default async function KnowledgePage() {
               </Link>
             )}
 
-            <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
+ <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
               {rest.map((article) => (
                 <RevealItem key={article.id}>
                   <Link

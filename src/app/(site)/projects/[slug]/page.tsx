@@ -94,7 +94,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </div>
         )}
 
-        <div className="container-site mt-12 grid max-w-4xl gap-10 md:grid-cols-[1fr_280px]">
+ <div className="container-site mt-12 grid max-w-4xl gap-8 lg:gap-12 md:grid-cols-[1fr_280px]">
           <div className="min-w-0">
             {project.problem && (
               <section className="mb-8">

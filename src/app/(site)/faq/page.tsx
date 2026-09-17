@@ -27,7 +27,7 @@ export default async function FaqPage() {
         lede="Every answer here is published by Humuson Complex. Can’t find yours? Ask Humuson in the corner of any page, or reach an adviser on WhatsApp."
         crumbs={[{ label: "FAQ" }]}
       />
-      <section className="container-site max-w-4xl pb-20">
+      <section className="container-site max-w-4xl section-pb">
         <FaqExplorer faqs={faqs} />
       </section>
     </>

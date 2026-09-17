@@ -48,7 +48,7 @@ export default async function AboutPage() {
       />
 
       {/* Story */}
-      <section className="container-site grid items-center gap-12 py-16 md:py-20 lg:grid-cols-2">
+ <section className="container-site grid items-center gap-8 lg:gap-12 section-y lg:grid-cols-2">
         <Reveal>
           <SectionHeading
             eyebrow="Our story"
@@ -88,7 +88,7 @@ export default async function AboutPage() {
       {/* Vision & mission */}
       {(vision || mission) && (
         <section className="bg-grain bg-humus-950 py-16 text-paper">
-          <div className="container-site grid gap-6 md:grid-cols-2">
+          <div className="container-site grid gap-4 sm:gap-5 md:grid-cols-2">
             {vision && (
               <Reveal className="rounded-3xl border border-paper/10 bg-paper/5 p-8">
                 <p className="text-eyebrow text-leaf-400">Our vision</p>
@@ -111,7 +111,7 @@ export default async function AboutPage() {
 
       {/* Values */}
       {company.values.length > 0 && (
-        <section className="container-site py-16 md:py-20">
+        <section className="container-site section-y">
           <Reveal>
             <SectionHeading
               eyebrow="What we stand for"
@@ -122,7 +122,7 @@ export default async function AboutPage() {
               }
             />
           </Reveal>
-          <RevealGroup className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
+ <RevealGroup className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
             {company.values.map((value, i) => (
               <RevealItem key={value.name}>
                 <div className="h-full rounded-2xl border border-line bg-cream p-6">
@@ -156,7 +156,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Visit / contact strip */}
-      <section className="container-site flex flex-col items-start justify-between gap-8 py-16 md:flex-row md:items-center">
+      <section className="container-site flex flex-col items-start justify-between gap-8 section-y md:flex-row md:items-center">
         <div>
           <h2 className="text-display-3 text-ink">Come and talk crops</h2>
           <p className="mt-3 max-w-xl text-ink-soft">

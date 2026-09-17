@@ -21,7 +21,7 @@ export default async function FlipbookPage() {
 
   if (!catalogue) {
     return (
-      <div className="container-site pt-36 pb-24">
+      <div className="container-site pt-24 md:pt-28 lg:pt-32 section-pb-loose">
         <EmptyState
           icon={BookOpen}
           title="The catalogue is being prepared"

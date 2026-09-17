@@ -77,7 +77,7 @@ export default async function ProductsPage({
         <ProductFilterBar options={options} active={active} resultCount={products.length} />
       </Suspense>
 
-      <section className="container-site py-10 md:py-14">
+      <section className="container-site section-y-tight" data-testid="product-results">
         {(purposeName || cropName) && (
           <p className="mb-6 text-sm text-ink-faint">
             Showing products listed for{" "}
@@ -86,7 +86,7 @@ export default async function ProductsPage({
         )}
         {products.length > 0 ? (
           <RevealGroup
-            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            className="grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
             stagger={0.04}
             amount={0.05}
           >

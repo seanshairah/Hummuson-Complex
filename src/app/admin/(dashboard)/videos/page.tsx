@@ -50,7 +50,7 @@ export default async function AdminVideosPage() {
       <Field label="Description">
         <Textarea name="description" rows={2} defaultValue={video?.description ?? ""} />
       </Field>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Category">
           <NativeSelect name="category" defaultValue={video?.category ?? "AGRONOMY_EDUCATION"}>
             {CATEGORIES.map((category) => (

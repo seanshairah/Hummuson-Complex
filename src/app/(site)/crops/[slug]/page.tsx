@@ -92,7 +92,7 @@ export default async function CropPage({ params }: { params: Promise<{ slug: str
           feeds, what eats it. Agronomy supplied for the group, not derived from
           any product — so it never appears on an individual crop. */}
       {(crop.familyName || crop.signature || crop.notes.length > 0) && (
-        <section className="container-site pt-10">
+        <section className="container-site section-pt-tight">
           <div className="rounded-3xl border border-line bg-cream p-6 sm:p-8">
             {crop.familyName && (
               <p className="text-eyebrow text-leaf-700">{crop.familyName}</p>
@@ -103,7 +103,7 @@ export default async function CropPage({ params }: { params: Promise<{ slug: str
               </p>
             )}
             {crop.notes.length > 0 && (
-              <ul className="mt-5 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+ <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {crop.notes.map((note) => (
                   <li
                     key={note}
@@ -124,7 +124,7 @@ export default async function CropPage({ params }: { params: Promise<{ slug: str
 
       {/* The individual crops inside this group */}
       {crop.children.length > 0 && (
-        <section className="container-site pt-10">
+        <section className="container-site section-pt-tight">
           <h2 className="text-eyebrow text-ink-faint">Crops in this group</h2>
           <p className="mt-2 max-w-2xl text-sm text-ink-faint">
             This page shows everything listed across the group. Open a single crop for the products
@@ -147,7 +147,7 @@ export default async function CropPage({ params }: { params: Promise<{ slug: str
       )}
 
       {crop.alsoIncludes.length > 0 && (
-        <section className="container-site pt-8">
+        <section className="container-site section-pt-tight">
           <h2 className="text-eyebrow text-ink-faint">Also in this family</h2>
           <p className="mt-2 max-w-2xl text-sm text-ink-faint">
             No product’s own guidance names {crop.alsoIncludes.length === 1 ? "this one" : "these"}{" "}
@@ -167,7 +167,7 @@ export default async function CropPage({ params }: { params: Promise<{ slug: str
       )}
 
       {/* Growth-stage timeline */}
-      <section className="container-site pb-16">
+      <section className="container-site section-pb">
         <Reveal>
           <h2 className="text-display-3 text-ink">Season timeline</h2>
           <p className="mt-2 max-w-2xl text-sm text-ink-faint">
@@ -182,7 +182,7 @@ export default async function CropPage({ params }: { params: Promise<{ slug: str
 
       {/* Program chart from the old site's portfolio */}
       {program?.image && (
-        <section className="container-site pb-16">
+        <section className="container-site section-pb">
           <Reveal className="overflow-hidden rounded-3xl border border-line bg-cream shadow-card">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-6 py-4">
               <div>
@@ -225,7 +225,7 @@ export default async function CropPage({ params }: { params: Promise<{ slug: str
                 Open in product filter →
               </Link>
             </Reveal>
-            <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" stagger={0.05}>
+ <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" stagger={0.05}>
               {crop.products.slice(0, 8).map((product) => (
                 <RevealItem key={product.id}>
                   <ProductCard product={product} className="h-full" />
@@ -238,7 +238,7 @@ export default async function CropPage({ params }: { params: Promise<{ slug: str
 
       {/* Knowledge row */}
       {(crop.faqs.length > 0 || crop.articles.length > 0 || crop.videos.length > 0) && (
-        <section className="container-site grid gap-12 py-16 lg:grid-cols-2">
+ <section className="container-site grid gap-8 lg:gap-12 section-y lg:grid-cols-2">
           {crop.faqs.length > 0 && (
             <div>
               <h2 className="flex items-center gap-2.5 font-display text-2xl font-semibold text-ink">

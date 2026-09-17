@@ -41,7 +41,7 @@ export default async function ContactPage({
         crumbs={[{ label: "Contact" }]}
       />
 
-      <section className="container-site grid gap-12 pb-20 lg:grid-cols-[0.85fr_1.15fr]">
+ <section className="container-site grid gap-8 lg:gap-12 section-pb lg:grid-cols-[0.85fr_1.15fr]">
         {/* Details */}
         <div className="space-y-4">
           <a

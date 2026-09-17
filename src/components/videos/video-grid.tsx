@@ -26,7 +26,7 @@ export function VideoGrid({ videos }: { videos: VideoData[] }) {
       {featured && (
         <div className="bg-grain relative mb-12 overflow-hidden rounded-[2rem] bg-humus-950 text-paper">
           <div aria-hidden className="absolute inset-0 glow-leaf" />
-          <div className="relative grid items-center gap-7 p-5 sm:p-6 md:p-8 lg:grid-cols-[1.55fr_1fr] lg:gap-10">
+ <div className="relative grid items-center gap-7 p-5 sm:p-6 md:p-8 lg:grid-cols-[1.55fr_1fr] lg:gap-10">
             <VideoEmbed
               youtubeId={featured.youtubeId}
               title={featured.title}
@@ -81,7 +81,7 @@ export function VideoGrid({ videos }: { videos: VideoData[] }) {
           className="mt-6"
         />
       ) : (
-        <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-6 grid gap-4 sm:gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {shown.map((video) => (
             <VideoEmbed
               key={video.id}

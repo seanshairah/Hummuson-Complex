@@ -175,7 +175,7 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
   /* Results view */
   if (loading || results !== null) {
     return (
-      <div className="container-site pb-24">
+      <div className="container-site section-pb-loose">
         {loading ? (
           <div className="flex flex-col items-center justify-center gap-4 py-32 text-paper/80">
             <Spinner className="size-8 text-leaf-400" />
@@ -230,7 +230,7 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
                     </span>
                   </p>
                 )}
-                <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+ <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {results.map((entry) => (
                     <ProductCard
                       key={entry.product.id}
@@ -304,7 +304,7 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
 
   /* Question view */
   return (
-    <div className="container-site pb-24">
+    <div className="container-site section-pb-loose">
       {/* Progress */}
       <div className="mx-auto max-w-3xl">
         <div className="flex items-center justify-between text-xs text-paper/60">

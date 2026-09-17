@@ -56,7 +56,7 @@ export function FaqForm({
   }, [state, router]);
 
   return (
-    <form action={formAction} className="grid items-start gap-6 xl:grid-cols-[1fr_300px]">
+ <form action={formAction} className="grid items-start gap-6 xl:grid-cols-[1fr_300px]">
       {initial.id && <input type="hidden" name="id" value={initial.id} />}
       <div className="space-y-5 rounded-3xl border border-line bg-cream p-6">
         <Field label="Question" required error={state.fieldErrors?.question}>

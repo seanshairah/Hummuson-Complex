@@ -34,7 +34,7 @@ export default async function AdminUsersPage() {
   const fields = (user?: (typeof users)[number]) => (
     <>
       {user && <input type="hidden" name="id" value={user.id} />}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Name" required>
           <Input name="name" defaultValue={user?.name} required />
         </Field>
