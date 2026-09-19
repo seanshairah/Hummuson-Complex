@@ -29,6 +29,27 @@ fails the build, leaving the previous deployment serving rather than shipping
 code that queries tables the database has never heard of. The commands above
 are still what you want for a first-time setup or a manual run.
 
+**Content is NOT applied by the build — this catches people out.** The build runs
+migrations and prerenders pages *against whatever the database already holds*. It
+never runs the importer. So editing `content/*.json`, committing and deploying
+changes the schema and the code and leaves the data exactly as it was: the
+stockist page goes on serving yesterday's branches from a perfectly green
+deployment, which is a silent, convincing failure.
+
+After any change under `content/`, run the importer against production yourself:
+
+```bash
+NEON_WS=1 DATABASE_URL=<neon pooled string> npm run db:seed
+```
+
+No redeploy is needed afterwards. `/where-to-buy` carries `revalidate = 300` and
+`getDistributorTowns` is cached for 600s, so the live page picks the new rows up
+within about ten minutes on its own. To see it sooner, redeploy.
+
+The importer is safe to re-run: it upserts by slug and deletes only rows the
+content file has stopped mentioning, so verification ticks and map pins set in the
+admin survive it.
+
 ## 2. Environment variables (Vercel → Settings → Environment Variables)
 
 | Variable                       | Notes                                             |
