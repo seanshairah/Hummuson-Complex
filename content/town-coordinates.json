@@ -32,6 +32,12 @@
       "kind": "settlement",
       "osmMatch": "Chinhoyi [town]"
     },
+    "Chiredzi": {
+      "lat": -21.04529,
+      "lng": 31.66888,
+      "kind": "settlement",
+      "osmMatch": "Chiredzi [town]"
+    },
     "Chivhu": {
       "lat": -19.0187,
       "lng": 30.89695,

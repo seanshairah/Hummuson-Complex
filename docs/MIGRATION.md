@@ -455,3 +455,35 @@ through.
 - **Does Pavet actually stock Humuson product?** The screenshots do not say so.
   The page already tells growers to ring ahead, but if Pavet is a prospect rather
   than a stockist they should come off it.
+
+## Owner corrections, 19 Sep 2026
+
+Three changes from the owner, two of which close questions that had been open since
+the Bulawayo pass.
+
+**Frontline Farming has its address — the Belmont inference was right.** The list
+carried the same shop twice: `frontline-farming-bulawayo`, a stockist Humuson named
+with no address, and `unnamed-belmont-bulawayo`, an address with hours and a phone
+number and no business name anywhere on its contact card. The note above called the
+Belmont card "probably Frontline Farming" and refused to publish on a guess. The
+owner has now confirmed it. The two are merged into `frontline-farming-bulawayo` at
+No. 2 Swansea Street, Belmont, with the hours and number, marked verified 19 Sep;
+the placeholder draft is deleted. **The list holds no drafts any more.**
+
+**NTS's head office is at Bluff Hill, not Kenneth Kaunda Avenue.** The 0%-accurate
+directory put the head office at 75 Kenneth Kaunda Avenue and a FarmShop at 750
+Lorraine Drive, Bluff Hill. The owner says the head office is Bluff Hill, so the two
+rows were the same site and are now one: `nts-farmshop-bluff-hill`, carrying the
++263 242 253866 line that had been on the head-office row, noted as head office and
+FarmShop counter. `nts-head-office` is deleted.
+
+> Careful with what is actually confirmed here: the owner confirmed the **suburb**.
+> The street address (750 Lorraine Drive) and the phone number still come from that
+> directory and are unverified. If the head office has a different street number in
+> Bluff Hill, this row needs it.
+
+**NTS FarmShop Chiredzi added**, at B72 Knobthorn Road, Chiredzi — from National
+Tested Seeds' own Facebook announcement dated 22 Aug 2024 for a 23 Aug 2024 opening.
+Chiredzi is a new town for the list and gets its OSM point with the rest. The
+announcement is two years old, so it is worth a call to confirm the branch still
+trades before anyone drives there.
