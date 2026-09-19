@@ -154,6 +154,39 @@ test.describe("public site", () => {
     await expect(page.getByText(/Unnamed outlet/i)).toHaveCount(0);
   });
 
+  /**
+   * Regression: the map panel is collapsed behind a toggle on a phone, so its
+   * frame starts life inside `display: none`, where a `loading="lazy"` iframe is
+   * never fetched. The timeout that gives up on a slow map used to start on
+   * mount regardless — so it expired while the map was still hidden, dropped the
+   * frame, and the tap that finally opened the panel found a failure that had
+   * never been attempted. It failed on every phone, every time, and looked like
+   * a network problem.
+   *
+   * This waits past that old 7s timeout before opening the map, which is what a
+   * real visitor does while reading the page, and asserts the frame is there to
+   * load. It does not assert the map paints — that depends on a third party and
+   * on the network — only that we still intend to try.
+   */
+  test("where to buy: the map still loads when opened long after arrival", async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(!isMobile, "the map is only collapsed behind a toggle on a phone");
+    await page.goto("/where-to-buy", { waitUntil: "domcontentloaded" });
+
+    const toggle = page.getByRole("button", { name: /View map of/ });
+    await expect(toggle).toBeVisible();
+
+    // Longer than the timeout that used to run while the panel was hidden.
+    await page.waitForTimeout(9000);
+
+    await toggle.click();
+    const frame = page.locator('iframe[title^="Map"]');
+    await expect(frame).toHaveCount(1);
+    await expect(frame).toHaveAttribute("src", /openstreetmap\.org/);
+  });
+
   test("where to buy: the town picker is usable from the keyboard", async ({ page }) => {
     await page.goto("/where-to-buy", { waitUntil: "domcontentloaded" });
     await page.getByRole("button", { name: "Town" }).click();

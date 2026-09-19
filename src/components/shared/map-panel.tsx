@@ -1,34 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, MapPin } from "lucide-react";
 import { googleMapsLink, osmEmbedUrl, type MapScale, type MapPin as MapPinCoords } from "@/lib/maps";
 import { cn } from "@/lib/utils";
 
 /**
- * A map with somewhere to stand when there is nothing to show.
+ * A map with somewhere to stand while it arrives, or if it never does.
  *
- * The map is OpenStreetMap, not Google. Google's keyless embed now redirects to
- * a response carrying `X-Frame-Options: SAMEORIGIN`, so the browser refuses to
- * paint it, and the panel went blank on every page that used it.
+ * The map is OpenStreetMap. Google's keyless embed now answers with
+ * `X-Frame-Options: SAMEORIGIN`, so browsers refuse to paint it, and its
+ * supported embed wants a key on a billed Cloud project.
  *
- * What this version fixes is the guaranteed case: without coordinates there is
- * no frame at all, because the OSM embed has no geocoder — it draws the box it
- * is given. Asking it for "Mutare, Zimbabwe" got an empty map every time. Now
- * no pin means no iframe, and the panel says so and links out to Google Maps,
- * which was always the part a farmer actually uses.
+ * The loading rule is the part that matters, and the version before this got
+ * it wrong in a way that failed on every phone. The panel is collapsed behind
+ * a toggle on a small screen, so the frame sits inside `display: none`; a
+ * `loading="lazy"` frame in a hidden container is never fetched. But the
+ * old timeout started on mount regardless, so it expired while the map was
+ * still hidden, dropped the frame, and left the tap that finally opened the
+ * panel showing a failure that had never been attempted. Guaranteed, every
+ * time, on every phone.
  *
- * The honest limit, unchanged and not fixable from here: a frame that fails
- * still fires `load` — the browser fires it on its own error page — and
- * same-origin rules stop us looking inside to tell the difference. So a hard
- * network failure shows the browser's error box rather than this panel. A
- * script-side probe could catch the unreachable-host case, but only by opening
- * `connect-src` to a third party, which is a real exfiltration surface traded
- * for a cosmetic gain. Escaping it properly means drawing the tiles ourselves
- * (MapLibre) instead of embedding someone else's page.
+ * So the clock starts when the panel is actually on screen, not when it
+ * mounts — an IntersectionObserver, the same trigger `loading="lazy"` uses —
+ * and the timeout no longer unmounts the frame. A slow map is not a failed
+ * one: the panel covers the wait and steps aside whenever `load` finally
+ * fires, which on a 3G connection in Zimbabwe can be a good while after the
+ * tap. Only a missing pin means no frame at all, because the OSM embed has
+ * no geocoder and there would be nothing to draw.
  *
- * The timeout still covers the slow-network case: if `load` has not fired by
- * then, the frame is dropped and the panel stays.
+ * The honest limit, unchanged: a cross-origin frame that fails still fires
+ * `load`, and same-origin rules stop us reading it, so a hard network failure
+ * shows the browser's error box rather than this panel.
  */
 export function MapPanel({
   query,
@@ -54,22 +57,51 @@ export function MapPanel({
   /** Collapsed on small screens behind the caller's own toggle. */
   hidden?: boolean;
 }) {
-  const [state, setState] = useState<"loading" | "ready" | "unavailable">("loading");
+  const [state, setState] = useState<"waiting" | "loading" | "ready" | "slow">("waiting");
+  const [onScreen, setOnScreen] = useState(false);
+  const frameRef = useRef<HTMLDivElement>(null);
   const src = pin ? osmEmbedUrl(pin, scale) : null;
+
+  // Start when the panel is actually visible, not when it mounts. On a phone it
+  // begins life inside `display: none`, where a lazy frame is never fetched —
+  // timing that from mount is timing a request nobody has made.
+  useEffect(() => {
+    const node = frameRef.current;
+    if (!node || !src) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setOnScreen(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setOnScreen(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [src]);
 
   // Every map is a fresh attempt: one that failed for one place must not leave
   // the next showing a stale failure, or a stale success.
   useEffect(() => {
-    if (!src) {
-      setState("unavailable");
-      return;
-    }
-    setState("loading");
-    const timer = setTimeout(() => {
-      setState((current) => (current === "loading" ? "unavailable" : current));
-    }, 7000);
-    return () => clearTimeout(timer);
+    setState("waiting");
+    setOnScreen(false);
   }, [src]);
+
+  // The wait is only a wait. If it runs long the panel says so and stays put,
+  // but the frame is left alone — a map that arrives late still gets to arrive.
+  useEffect(() => {
+    if (!src || !onScreen) return;
+    setState((current) => (current === "ready" ? current : "loading"));
+    const timer = setTimeout(() => {
+      setState((current) => (current === "loading" ? "slow" : current));
+    }, 15000);
+    return () => clearTimeout(timer);
+  }, [src, onScreen]);
 
   return (
     <div
@@ -79,8 +111,8 @@ export function MapPanel({
         className,
       )}
     >
-      <div className={cn("relative", aspect)}>
-        {src && state !== "unavailable" && (
+      <div ref={frameRef} className={cn("relative", aspect)}>
+        {src && onScreen && (
           <iframe
             key={src}
             src={src}
@@ -107,17 +139,21 @@ export function MapPanel({
           <span
             className={cn(
               "relative flex size-12 items-center justify-center rounded-full bg-humus-900 text-paper shadow-float",
-              state === "loading" && "animate-pulse-soft",
+              (state === "loading" || state === "waiting") && "animate-pulse-soft",
             )}
           >
             <MapPin className="size-5" strokeWidth={1.8} />
           </span>
           <span className="relative font-display font-semibold text-ink">{caption ?? query}</span>
-          {state === "unavailable" && (
+          {!src && (
             <span className="relative max-w-xs text-sm text-ink-faint">
-              {src
-                ? "The map could not load here. The link below opens it in Google Maps."
-                : "No map pin for this one yet. The link below searches Google Maps."}
+              No map pin for this one yet. The link below searches Google Maps.
+            </span>
+          )}
+          {state === "slow" && (
+            <span className="relative max-w-xs text-sm text-ink-faint">
+              The map is taking a while on this connection. It will appear if it
+              arrives; the link below opens it in Google Maps either way.
             </span>
           )}
         </div>
