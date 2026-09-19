@@ -184,7 +184,15 @@ test.describe("public site", () => {
     await toggle.click();
     const frame = page.locator('iframe[title^="Map"]');
     await expect(frame).toHaveCount(1);
-    await expect(frame).toHaveAttribute("src", /openstreetmap\.org/);
+    // Anchored to the whole origin and path, not just the domain somewhere in
+    // the string: an unanchored /openstreetmap\.org/ is happy with
+    // https://somewhere-else.example/?ref=openstreetmap.org, so it would pass
+    // while pointing at the wrong host entirely — which is both a weak
+    // assertion and what CodeQL flags it for.
+    await expect(frame).toHaveAttribute(
+      "src",
+      /^https:\/\/www\.openstreetmap\.org\/export\/embed\.html\?/,
+    );
   });
 
   test("where to buy: the town picker is usable from the keyboard", async ({ page }) => {
