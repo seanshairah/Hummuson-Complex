@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { googleMapsEmbedUrl, googleMapsLink, toMapPin } from "@/lib/maps";
+import { googleMapsLink, osmEmbedUrl, toMapPin } from "@/lib/maps";
 
 /**
  * The map pin decides where every "find us" link on the site points. A pin that
@@ -61,21 +61,45 @@ describe("googleMapsLink", () => {
   });
 });
 
-describe("googleMapsEmbedUrl", () => {
-  it("zooms in further on a pin than on an address guess", () => {
-    expect(googleMapsEmbedUrl(QUERY, toMapPin(YARD))).toContain("q=-17.77986,31.028776&z=17");
-    expect(googleMapsEmbedUrl(QUERY, null)).toContain("&z=15");
+describe("osmEmbedUrl", () => {
+  const pin = toMapPin(YARD)!;
+
+  it("stays on the CSP-allowed frame host", () => {
+    // next.config.ts allows exactly https://www.openstreetmap.org in frame-src;
+    // another host here renders as a blank card in production only. It listed
+    // maps.google.com until Google's keyless embed began refusing to frame.
+    expect(osmEmbedUrl(pin).startsWith("https://www.openstreetmap.org/export/embed.html?")).toBe(
+      true,
+    );
   });
 
-  it("stays on the CSP-allowed embed host", () => {
-    // next.config.ts allows exactly https://maps.google.com in frame-src;
-    // another host here renders as a blank card in production only.
-    for (const pin of [toMapPin(YARD), null]) {
-      expect(googleMapsEmbedUrl(QUERY, pin).startsWith("https://maps.google.com/maps?")).toBe(true);
-    }
+  it("marks the pin and centres the box on it", () => {
+    const url = new URL(osmEmbedUrl(pin));
+    expect(url.searchParams.get("marker")).toBe("-17.77986,31.028776");
+    const box = url.searchParams.get("bbox")!.split(",").map(Number) as number[];
+    expect((box[0]! + box[2]!) / 2).toBeCloseTo(31.028776, 4);
+    expect((box[1]! + box[3]!) / 2).toBeCloseTo(-17.77986, 4);
   });
 
-  it("asks for an embeddable page", () => {
-    expect(googleMapsEmbedUrl(QUERY, toMapPin(YARD))).toContain("output=embed");
+  it("draws a yard tighter than a town, and a town tighter than a district", () => {
+    const width = (scale: Parameters<typeof osmEmbedUrl>[1]) => {
+      const box = new URL(osmEmbedUrl(pin, scale)).searchParams
+        .get("bbox")!
+        .split(",")
+        .map(Number) as number[];
+      return box[2]! - box[0]!;
+    };
+    expect(width("address")).toBeLessThan(width("settlement"));
+    expect(width("settlement")).toBeLessThan(width("district"));
+  });
+
+  it("keeps the box square on the ground at Zimbabwe's latitude", () => {
+    // Longitude degrees shrink with latitude; an unadjusted box would render
+    // noticeably wider than it is tall this far south.
+    const box = new URL(osmEmbedUrl(pin)).searchParams.get("bbox")!.split(",").map(Number) as number[];
+    const lngKm = (box[2]! - box[0]!) * 111.32 * Math.cos((-17.77986 * Math.PI) / 180);
+    const latKm = (box[3]! - box[1]!) * 110.57;
+    expect(lngKm / latKm).toBeGreaterThan(0.9);
+    expect(lngKm / latKm).toBeLessThan(1.1);
   });
 });

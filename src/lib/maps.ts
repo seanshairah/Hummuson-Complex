@@ -36,10 +36,48 @@ export function googleMapsLink(query: string, pin?: MapPin | null): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 
-/** Keyless embed endpoint — loaded only after an explicit tap (data-friendly). */
-export function googleMapsEmbedUrl(query: string, pin?: MapPin | null): string {
-  const q = pin ? coords(pin) : encodeURIComponent(query);
-  return `https://maps.google.com/maps?q=${q}&z=${pin ? 17 : 15}&output=embed`;
+/**
+ * A bounding box around a point, in the `minLng,minLat,maxLng,maxLat` order
+ * OpenStreetMap's embed expects. `span` is roughly the width of the view in
+ * degrees; latitude is narrowed by cos(lat) so the box stays square on the
+ * ground rather than stretching east-west as you leave the equator.
+ */
+function bbox(pin: MapPin, span: number): string {
+  const lngSpan = span;
+  const latSpan = span * Math.cos((pin.lat * Math.PI) / 180);
+  return [
+    (pin.lng - lngSpan / 2).toFixed(5),
+    (pin.lat - latSpan / 2).toFixed(5),
+    (pin.lng + lngSpan / 2).toFixed(5),
+    (pin.lat + latSpan / 2).toFixed(5),
+  ].join(",");
+}
+
+/** How wide the view is, in degrees of longitude, per kind of place. */
+const SPAN = { address: 0.012, settlement: 0.09, district: 0.35 } as const;
+
+export type MapScale = keyof typeof SPAN;
+
+/**
+ * The OpenStreetMap embed URL for a pin.
+ *
+ * Why not Google: the keyless `maps.google.com/?output=embed` endpoint now
+ * redirects to a response carrying `X-Frame-Options: SAMEORIGIN`, so browsers
+ * refuse to render it and the panel goes blank. Google's supported embed wants
+ * an API key on a billed Cloud project. OpenStreetMap frames without either,
+ * which is why the map you can actually see is this one. "Open in Google Maps"
+ * still points at Google, because that is where people want to end up.
+ *
+ * Takes a pin rather than a text query because this endpoint has no geocoder —
+ * it draws the box it is given and nothing else.
+ */
+export function osmEmbedUrl(pin: MapPin, scale: MapScale = "address"): string {
+  const params = new URLSearchParams({
+    bbox: bbox(pin, SPAN[scale]),
+    layer: "mapnik",
+    marker: `${pin.lat},${pin.lng}`,
+  });
+  return `https://www.openstreetmap.org/export/embed.html?${params}`;
 }
 
 /**

@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { ArrowUpRight, ChevronDown, Map as MapIcon, MapPin, Phone } from "lucide-react";
 import { googleMapsLink, type MapPin as MapPinCoords } from "@/lib/maps";
 import { MapPanel } from "@/components/shared/map-panel";
+import { townPlace } from "@/lib/town-coordinates";
 import { Combobox } from "@/components/ui/combobox";
 import { CardGrid } from "@/components/layout/card-grid";
 import { cn } from "@/lib/utils";
@@ -47,6 +48,7 @@ export function StockistMap({ towns }: { towns: StockistTown[] }) {
   const [mapOpen, setMapOpen] = useState(false);
 
   const current = towns.find((t) => t.town === active) ?? towns[0];
+  const place = current ? townPlace(current.town) : null;
 
   const options = useMemo(
     () =>
@@ -114,6 +116,8 @@ export function StockistMap({ towns }: { towns: StockistTown[] }) {
           <MapPanel
             query={`${current.town}, Zimbabwe`}
             caption={`${current.town}, Zimbabwe`}
+            pin={place?.pin}
+            scale={place?.scale}
             hidden={!mapOpen}
           />
         </div>

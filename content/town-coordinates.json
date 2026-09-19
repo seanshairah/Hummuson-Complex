@@ -1,0 +1,132 @@
+{
+  "_source": "OpenStreetMap via Nominatim, resolved 2026-09-19. Public geography, not business claims — unlike the stockist addresses these need no shop-by-shop verification. Re-run scripts/geocode-towns.mjs to refresh.",
+  "_note": "`kind` records what OSM actually matched. 'district' means OSM has no settlement node for that name, so the point is the district centroid and the map is drawn wider to admit it rather than pretending to a street-level fix.",
+  "towns": {
+    "Banket": {
+      "lat": -17.38736,
+      "lng": 30.39252,
+      "kind": "settlement",
+      "osmMatch": "Banket [town]"
+    },
+    "Bulawayo": {
+      "lat": -20.15606,
+      "lng": 28.58871,
+      "kind": "settlement",
+      "osmMatch": "Bulawayo [city]"
+    },
+    "Centenary": {
+      "lat": -16.73054,
+      "lng": 31.12109,
+      "kind": "settlement",
+      "osmMatch": "Centenary [town]"
+    },
+    "Chegutu": {
+      "lat": -18.13048,
+      "lng": 30.14601,
+      "kind": "settlement",
+      "osmMatch": "Chegutu [town]"
+    },
+    "Chinhoyi": {
+      "lat": -17.36153,
+      "lng": 30.19294,
+      "kind": "settlement",
+      "osmMatch": "Chinhoyi [town]"
+    },
+    "Chivhu": {
+      "lat": -19.0187,
+      "lng": 30.89695,
+      "kind": "settlement",
+      "osmMatch": "Chivhu [town]"
+    },
+    "Gokwe": {
+      "lat": -18.22498,
+      "lng": 28.95393,
+      "kind": "settlement",
+      "osmMatch": "Gokwe [town]"
+    },
+    "Guruve": {
+      "lat": -16.65936,
+      "lng": 30.7034,
+      "kind": "settlement",
+      "osmMatch": "Guruve [town]"
+    },
+    "Gweru": {
+      "lat": -19.46163,
+      "lng": 29.8206,
+      "kind": "settlement",
+      "osmMatch": "Gweru [city]"
+    },
+    "Harare": {
+      "lat": -17.83177,
+      "lng": 31.04569,
+      "kind": "settlement",
+      "osmMatch": "Harare [city]"
+    },
+    "Kadoma": {
+      "lat": -18.3374,
+      "lng": 29.9135,
+      "kind": "settlement",
+      "osmMatch": "Kadoma [city]"
+    },
+    "Karoi": {
+      "lat": -16.81904,
+      "lng": 29.68369,
+      "kind": "settlement",
+      "osmMatch": "Karoi [town]"
+    },
+    "Kwekwe": {
+      "lat": -18.92844,
+      "lng": 29.814,
+      "kind": "settlement",
+      "osmMatch": "Kwekwe [city]"
+    },
+    "Marondera": {
+      "lat": -18.1901,
+      "lng": 31.54554,
+      "kind": "settlement",
+      "osmMatch": "Marondera [town]"
+    },
+    "Masvingo": {
+      "lat": -20.07201,
+      "lng": 30.83419,
+      "kind": "settlement",
+      "osmMatch": "Masvingo [city]"
+    },
+    "Mhangura": {
+      "lat": -16.89445,
+      "lng": 30.16279,
+      "kind": "settlement",
+      "osmMatch": "Mhangura [town]"
+    },
+    "Murehwa": {
+      "lat": -17.80444,
+      "lng": 31.8388,
+      "kind": "district",
+      "osmMatch": "Murehwa [county]"
+    },
+    "Mutare": {
+      "lat": -18.97466,
+      "lng": 32.67047,
+      "kind": "settlement",
+      "osmMatch": "Mutare [city]"
+    },
+    "Mvurwi": {
+      "lat": -17.02752,
+      "lng": 30.85011,
+      "kind": "settlement",
+      "osmMatch": "Mvurwi [town]"
+    },
+    "Norton": {
+      "lat": -17.87454,
+      "lng": 30.69595,
+      "kind": "settlement",
+      "osmMatch": "Norton [town]"
+    },
+    "Rusape": {
+      "lat": -18.53348,
+      "lng": 32.12568,
+      "kind": "settlement",
+      "osmMatch": "Rusape [town]"
+    }
+  }
+}

@@ -2,43 +2,50 @@
 
 import { useEffect, useState } from "react";
 import { ArrowUpRight, MapPin } from "lucide-react";
-import { googleMapsEmbedUrl, googleMapsLink, type MapPin as MapPinCoords } from "@/lib/maps";
+import { googleMapsLink, osmEmbedUrl, type MapScale, type MapPin as MapPinCoords } from "@/lib/maps";
 import { cn } from "@/lib/utils";
 
 /**
- * A Google Maps embed with somewhere to stand when it cannot load.
+ * A map with somewhere to stand when there is nothing to show.
  *
- * The embed is a third-party iframe on a network we do not control, and it
- * fails in ways this page cannot see: blocked, offline, slow, refused. The
- * version this replaces put a decorative placeholder *behind* the frame, so a
- * failure painted the browser's own broken-page box over the top of it and the
- * panel read as broken rather than as unavailable — which is what the contact
- * page and the stockist finder were both doing, separately, in their own copies
- * of the same markup.
+ * The map is OpenStreetMap, not Google. Google's keyless embed now redirects to
+ * a response carrying `X-Frame-Options: SAMEORIGIN`, so the browser refuses to
+ * paint it, and the panel went blank on every page that used it.
  *
- * Here the designed panel sits on top, and the frame fades in underneath only
- * once `load` has actually fired. If it has not fired by the timeout, the frame
- * is dropped and the panel stays, with the link out to Google Maps that was
- * always the useful part of it.
+ * What this version fixes is the guaranteed case: without coordinates there is
+ * no frame at all, because the OSM embed has no geocoder — it draws the box it
+ * is given. Asking it for "Mutare, Zimbabwe" got an empty map every time. Now
+ * no pin means no iframe, and the panel says so and links out to Google Maps,
+ * which was always the part a farmer actually uses.
  *
- * The honest limit: a frame that loads *someone else's error page* still fires
- * `load`, and same-origin rules stop us looking inside to tell the difference.
- * That case shows an unhelpful map rather than this fallback. Catching it would
- * need a keyed static-map API — a billing account, not a code change.
+ * The honest limit, unchanged and not fixable from here: a frame that fails
+ * still fires `load` — the browser fires it on its own error page — and
+ * same-origin rules stop us looking inside to tell the difference. So a hard
+ * network failure shows the browser's error box rather than this panel. A
+ * script-side probe could catch the unreachable-host case, but only by opening
+ * `connect-src` to a third party, which is a real exfiltration surface traded
+ * for a cosmetic gain. Escaping it properly means drawing the tiles ourselves
+ * (MapLibre) instead of embedding someone else's page.
+ *
+ * The timeout still covers the slow-network case: if `load` has not fired by
+ * then, the frame is dropped and the panel stays.
  */
 export function MapPanel({
   query,
   pin,
   caption,
+  scale = "address",
   action = "Open in Google Maps",
   aspect = "aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3]",
   className,
   hidden,
 }: {
-  /** What the map should show — an address, or "Harare, Zimbabwe". */
+  /** What the "open in Google Maps" link searches for, and the default caption. */
   query: string;
-  /** Real coordinates, when we have them. A pin beats a text search. */
+  /** The coordinates to draw. No pin, no frame — see the note above. */
   pin?: MapPinCoords | null;
+  /** How wide to draw: a yard, a town, or a district. */
+  scale?: MapScale;
   /** The line under the frame. Defaults to the query. */
   caption?: string;
   action?: string;
@@ -48,16 +55,21 @@ export function MapPanel({
   hidden?: boolean;
 }) {
   const [state, setState] = useState<"loading" | "ready" | "unavailable">("loading");
+  const src = pin ? osmEmbedUrl(pin, scale) : null;
 
-  // Every query is a fresh attempt: a map that failed for one place must not
-  // leave the next showing a stale failure, or a stale success.
+  // Every map is a fresh attempt: one that failed for one place must not leave
+  // the next showing a stale failure, or a stale success.
   useEffect(() => {
+    if (!src) {
+      setState("unavailable");
+      return;
+    }
     setState("loading");
     const timer = setTimeout(() => {
       setState((current) => (current === "loading" ? "unavailable" : current));
     }, 7000);
     return () => clearTimeout(timer);
-  }, [query]);
+  }, [src]);
 
   return (
     <div
@@ -68,10 +80,10 @@ export function MapPanel({
       )}
     >
       <div className={cn("relative", aspect)}>
-        {state !== "unavailable" && (
+        {src && state !== "unavailable" && (
           <iframe
-            key={query}
-            src={googleMapsEmbedUrl(query, pin)}
+            key={src}
+            src={src}
             title={`Map — ${caption ?? query}`}
             loading="lazy"
             allowFullScreen
@@ -103,7 +115,9 @@ export function MapPanel({
           <span className="relative font-display font-semibold text-ink">{caption ?? query}</span>
           {state === "unavailable" && (
             <span className="relative max-w-xs text-sm text-ink-faint">
-              The map could not load here. The link below opens it in Google Maps.
+              {src
+                ? "The map could not load here. The link below opens it in Google Maps."
+                : "No map pin for this one yet. The link below searches Google Maps."}
             </span>
           )}
         </div>

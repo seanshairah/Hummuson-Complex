@@ -78,7 +78,11 @@ const IMAGE_HOSTS = [
 ];
 
 /** The only third parties allowed to render inside a frame on this site. */
-const FRAME_HOSTS = ["https://www.youtube-nocookie.com", "https://maps.google.com"];
+// Every third-party frame the site is allowed to render. The map moved from
+// Google to OpenStreetMap when Google's keyless embed started answering with
+// `X-Frame-Options: SAMEORIGIN`; this list has to move with it, or the map is
+// blocked here instead — the same blank panel, a different cause.
+const FRAME_HOSTS = ["https://www.youtube-nocookie.com", "https://www.openstreetmap.org"];
 
 /**
  * Content-Security-Policy.
