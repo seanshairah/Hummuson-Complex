@@ -1,0 +1,1051 @@
+/**
+ * Content importer: content/*.json (audited old-site content) → database.
+ *
+ * Principles:
+ * - Idempotent: upserts by slug/key; child collections are rebuilt per run.
+ * - Verbatim-faithful: no field is invented. Structured mappings (canonical
+ *   benefits, growth stages, methods) are derived ONLY from phrases present
+ *   in the product's own published text, via the conservative rule tables
+ *   below. Anything unmatched stays unmapped and the UI says
+ *   "confirm with technical support".
+ */
+import { readFileSync, existsSync } from "node:fs";
+import path from "node:path";
+import {
+  ApplicationMethod,
+  FaqCategory,
+  PublishStatus,
+  VideoCategory,
+  type Prisma,
+} from "@prisma/client";
+import bcrypt from "bcryptjs";
+import sharp from "sharp";
+import { createPrismaClient } from "./client";
+import { sanitizeRichHtml } from "../../src/lib/sanitize";
+import type {
+  OldUrlMapEntry,
+  SourceArticle,
+  SourceCategory,
+  SourceCompany,
+  SourceCrop,
+  SourceDistributor,
+  DelistedProduct,
+  SourceFaq,
+  SourceImage,
+  SourceProduct,
+  SourceProject,
+  SourceTestimonial,
+  SourceVideo,
+} from "./types";
+
+const prisma = createPrismaClient();
+const ROOT = process.cwd();
+
+function loadJson<T>(name: string): T | null {
+  const file = path.join(ROOT, "content", name);
+  if (!existsSync(file)) return null;
+  return JSON.parse(readFileSync(file, "utf8")) as T;
+}
+
+/** slug helper mirroring src/lib/utils (kept dependency-free for tsx). */
+function slugify(input: string): string {
+  return input
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[®™©]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+// ─── Conservative mapping rule tables ────────────────────────────────────────
+
+const METHOD_RULES: [RegExp, ApplicationMethod][] = [
+  [/foliar/i, ApplicationMethod.FOLIAR],
+  [/seed (dressing|treatment|soaking|coating)/i, ApplicationMethod.SEED_TREATMENT],
+  [/top.?dress/i, ApplicationMethod.TOP_DRESSING],
+  [/basal/i, ApplicationMethod.BASAL_DRESSING],
+  [/fertigation|drip/i, ApplicationMethod.FERTIGATION],
+  [/drench/i, ApplicationMethod.DRENCH],
+  [/soil/i, ApplicationMethod.SOIL],
+];
+
+function mapMethod(label: string): ApplicationMethod {
+  for (const [pattern, method] of METHOD_RULES) {
+    if (pattern.test(label)) return method;
+  }
+  return ApplicationMethod.OTHER;
+}
+
+/** Canonical, filterable benefit dimensions (drive the finder + filters). */
+const BENEFIT_RULES: { slug: string; name: string; pattern: RegExp }[] = [
+  { slug: "root-development", name: "Root development", pattern: /root/i },
+  { slug: "flowering", name: "Flowering", pattern: /flower|bloom|blossom/i },
+  { slug: "fruiting", name: "Fruiting", pattern: /fruit(ing|s| set| fill| development)|pod (set|fill)|tuber (formation|bulking)/i },
+  { slug: "yield", name: "Yield", pattern: /yield|harvest|production|productivity/i },
+  { slug: "crop-vigour", name: "Crop vigour", pattern: /vigou?r|vigorous|strong(er)? (plant|crop|growth)|robust/i },
+  { slug: "soil-condition", name: "Soil health", pattern: /soil (health|fertility|structure|condition|life|biology)|revitali|regenerat/i },
+  { slug: "nutrient-uptake", name: "Nutrient uptake", pattern: /uptake|utili[sz]ation|absorption|availab|solubili/i },
+  { slug: "stress-resistance", name: "Stress resistance", pattern: /stress|drought|resistan|resilien|defen[cs]e|tolerance/i },
+  { slug: "moisture-retention", name: "Moisture retention", pattern: /moisture|water (retention|holding)/i },
+];
+
+/**
+ * Growth stages mapped only from explicit textual evidence.
+ *
+ * Seed treatment is split into coating and soaking because they are different
+ * operations a grower either does or does not do, and a product listed for one
+ * is not automatically suitable for the other. Flowering and fruiting are split
+ * for the same reason — they are consecutive stages with different demands, and
+ * collapsing them (as "fruit & grain development" did) told a tomato grower at
+ * flowering to buy something meant for fruit fill.
+ *
+ * Grain fill stays separate from fruiting: wheat and maize fill grain, they do
+ * not fruit, and one bucket for both would mis-file every cereal product.
+ */
+const STAGE_RULES: { key: string; pattern: RegExp }[] = [
+  { key: "seed-coating", pattern: /seed (coating|dressing|treatment)|coat(ing)? the seed|dress(ing)? the seed/i },
+  { key: "seed-soaking", pattern: /seed soaking|soak(ing)? (the )?seed|steep(ing)? (the )?seed/i },
+  { key: "planting", pattern: /at planting|basal|sowing|germination|pre.?plant/i },
+  { key: "transplanting", pattern: /transplant|seedling|nurser|emergence/i },
+  { key: "vegetative", pattern: /vegetative|top.?dress|tillering|leaf growth/i },
+  { key: "flowering", pattern: /flowering|bloom|blossom|flower set/i },
+  { key: "fruiting", pattern: /fruiting|fruit (set|development|fill|formation)|pod (set|fill|formation)|tuber (formation|bulking)|bulb formation/i },
+  { key: "grain-fill", pattern: /grain.?(fill|formation)|cob fill|ear fill|seed fill/i },
+  { key: "maturity", pattern: /maturity|ripening|harvest/i },
+];
+
+const GROWTH_STAGES = [
+  { key: "seed-coating", name: "Seed coating", order: 0 },
+  { key: "seed-soaking", name: "Seed soaking", order: 1 },
+  { key: "planting", name: "Planting & basal", order: 2 },
+  { key: "transplanting", name: "Transplanting", order: 3 },
+  { key: "vegetative", name: "Vegetative growth", order: 4 },
+  { key: "flowering", name: "Flowering", order: 5 },
+  { key: "fruiting", name: "Fruiting", order: 6 },
+  { key: "grain-fill", name: "Grain fill", order: 7 },
+  { key: "maturity", name: "Maturity & ripening", order: 8 },
+];
+
+/** Stage keys this importer no longer uses, removed so they stop appearing. */
+const RETIRED_STAGE_KEYS = ["seed", "emergence"];
+
+const FAQ_CATEGORY_MAP: Record<string, FaqCategory> = {
+  application: FaqCategory.APPLICATION,
+  dosage: FaqCategory.DOSAGE,
+  compatibility: FaqCategory.COMPATIBILITY,
+  crops: FaqCategory.CROPS,
+  benefits: FaqCategory.BENEFITS,
+  storage: FaqCategory.STORAGE,
+  availability: FaqCategory.AVAILABILITY,
+  ordering: FaqCategory.ORDERING,
+  packages: FaqCategory.PACKAGES,
+  general: FaqCategory.GENERAL,
+};
+
+const VIDEO_CATEGORY_MAP: Record<string, VideoCategory> = {
+  "how-to-apply": VideoCategory.HOW_TO_APPLY,
+  "product-demonstration": VideoCategory.PRODUCT_DEMONSTRATION,
+  "farmer-results": VideoCategory.FARMER_RESULTS,
+  "agronomy-education": VideoCategory.AGRONOMY_EDUCATION,
+  events: VideoCategory.EVENTS,
+  "humuson-stories": VideoCategory.HUMUSON_STORIES,
+};
+
+// ─── Media ───────────────────────────────────────────────────────────────────
+
+const mediaCache = new Map<string, string>();
+
+async function ensureMedia(
+  image: SourceImage,
+  kind: string,
+): Promise<string | null> {
+  const url = `/${image.localPath.replace(/^\/+/, "")}`;
+  if (mediaCache.has(url)) return mediaCache.get(url)!;
+  const filePath = path.join(ROOT, "public", url);
+  if (!existsSync(filePath)) {
+    console.warn(`  ! media missing on disk, skipping: ${url}`);
+    return null;
+  }
+  let width: number | undefined;
+  let height: number | undefined;
+  let blurDataUrl: string | undefined;
+  let sizeBytes: number | undefined;
+  try {
+    const img = sharp(filePath);
+    const meta = await img.metadata();
+    width = meta.width;
+    height = meta.height;
+    sizeBytes = meta.size;
+    const blur = await img.resize(18, undefined, { fit: "inside" }).webp({ quality: 30 }).toBuffer();
+    blurDataUrl = `data:image/webp;base64,${blur.toString("base64")}`;
+  } catch {
+    console.warn(`  ! could not probe image ${url}`);
+  }
+  const media = await prisma.media.upsert({
+    where: { url },
+    update: { alt: image.alt ?? undefined, width, height, blurDataUrl, sizeBytes },
+    create: {
+      url,
+      alt: image.alt ?? null,
+      width,
+      height,
+      blurDataUrl,
+      kind,
+      sizeBytes,
+      filename: path.basename(url),
+      sourceUrl: image.sourceUrl,
+    },
+  });
+  mediaCache.set(url, media.id);
+  return media.id;
+}
+
+// ─── Import steps ────────────────────────────────────────────────────────────
+
+/** product.id → media.id of its role:"catalogue" image (filled by importProducts). */
+const catalogueImageByProduct = new Map<string, string>();
+
+/**
+ * Seeds the first admin, and only the first.
+ *
+ * This exists to bootstrap an empty database. On one that already has an
+ * admin it does nothing, whatever the environment says — because the
+ * environment is not trustworthy here: prisma/seed.ts loads .env, so running
+ * the importer against production from a developer's machine brings that
+ * developer's ADMIN_PASSWORD with it and mints a live account nobody asked
+ * for, with a password from a laptop. Gating on ADMIN_PASSWORD being absent
+ * is not enough, because in that situation it is present.
+ *
+ * Adding an admin to a populated database is what `npm run admin:create` is
+ * for: it is explicit about which account it touches, and it says so in the
+ * audit log.
+ */
+async function importUsers() {
+  const admins = await prisma.user.count({ where: { role: "ADMIN", active: true } });
+  if (admins > 0) {
+    console.log(`✓ admin user skipped (${admins} already present — use npm run admin:create)`);
+    return;
+  }
+  const email = process.env.ADMIN_EMAIL ?? "admin@humusoncomplex.com";
+  const password = process.env.ADMIN_PASSWORD ?? "change-me-immediately";
+  const name = process.env.ADMIN_NAME ?? "Humuson Admin";
+  const passwordHash = await bcrypt.hash(password, 12);
+  await prisma.user.upsert({
+    where: { email },
+    update: { name, role: "ADMIN", active: true },
+    create: { email, name, passwordHash, role: "ADMIN" },
+  });
+  console.log(`✓ admin user ready (${email})`);
+}
+
+async function importGrowthStages() {
+  for (const stage of GROWTH_STAGES) {
+    await prisma.growthStage.upsert({
+      where: { key: stage.key },
+      update: { name: stage.name, order: stage.order },
+      create: stage,
+    });
+  }
+  // The old coarse keys were replaced, not renamed — leaving them would show
+  // growers two overlapping vocabularies on the same filter.
+  const retired = await prisma.growthStage.deleteMany({
+    where: { key: { in: RETIRED_STAGE_KEYS } },
+  });
+  if (retired.count > 0) console.log(`✓ retired ${retired.count} superseded stage(s)`);
+  console.log(`✓ growth stages (${GROWTH_STAGES.length})`);
+}
+
+async function importBenefits() {
+  let order = 0;
+  for (const rule of BENEFIT_RULES) {
+    await prisma.benefit.upsert({
+      where: { slug: rule.slug },
+      update: { name: rule.name, order },
+      create: { slug: rule.slug, name: rule.name, order },
+    });
+    order += 1;
+  }
+  console.log(`✓ canonical benefits (${BENEFIT_RULES.length})`);
+}
+
+async function importCategories(categories: SourceCategory[]) {
+  let order = 0;
+  for (const category of categories) {
+    await prisma.productCategory.upsert({
+      where: { slug: category.slug },
+      update: { name: category.name, description: category.description, order },
+      create: { slug: category.slug, name: category.name, description: category.description, order },
+    });
+    order += 1;
+  }
+  console.log(`✓ categories (${categories.length})`);
+}
+
+/**
+ * Crops discovered in a product's own "suitable crops" text sort after every
+ * curated crop. content/crops.json is the owner's taxonomy and is ordered
+ * deliberately; without this offset an incidental mention creates a crop at
+ * order 0 that then outranks the whole curated list on every crop listing.
+ */
+const DISCOVERED_CROP_ORDER = 1000;
+
+async function importCrops(crops: SourceCrop[]) {
+  let order = 0;
+  for (const crop of crops) {
+    // Written on both create and update, and always to a concrete value, so
+    // that clearing a note in content/crops.json actually clears it here
+    // rather than leaving the previous run's text behind.
+    const family = {
+      familyName: crop.familyName ?? null,
+      signature: crop.signature ?? null,
+      notes: crop.notes ?? [],
+      alsoIncludes: crop.alsoIncludes ?? [],
+    };
+    await prisma.crop.upsert({
+      where: { slug: crop.slug },
+      update: { name: crop.name, aka: crop.aka ?? [], order, ...family },
+      create: { slug: crop.slug, name: crop.name, aka: crop.aka ?? [], order, ...family },
+    });
+    order += 1;
+  }
+  // Parents in a second pass: the list is written parent-first, but nothing
+  // should depend on that — a child edited to point at a parent further down
+  // must still resolve.
+  const idBySlug = new Map(
+    (await prisma.crop.findMany({ select: { id: true, slug: true } })).map((c) => [c.slug, c.id]),
+  );
+  for (const crop of crops) {
+    const parentId = crop.parentSlug ? (idBySlug.get(crop.parentSlug) ?? null) : null;
+    if (crop.parentSlug && !parentId) {
+      throw new Error(`crop "${crop.slug}" names parent "${crop.parentSlug}", which is not in content/crops.json`);
+    }
+    if (parentId === idBySlug.get(crop.slug)) {
+      throw new Error(`crop "${crop.slug}" is its own parent`);
+    }
+    await prisma.crop.update({ where: { slug: crop.slug }, data: { parentId } });
+  }
+
+  // Crops that came from a product's own text rather than the curated list get
+  // pushed below it. Doing this every run, not just at creation, is what makes
+  // it true of databases seeded before the curated list existed — otherwise an
+  // incidentally-discovered crop keeps order 0 forever and leads the listing.
+  const demoted = await prisma.crop.updateMany({
+    where: { slug: { notIn: crops.map((crop) => crop.slug) } },
+    data: { order: DISCOVERED_CROP_ORDER },
+  });
+  if (demoted.count > 0) console.log(`✓ crops (${crops.length}, ${demoted.count} discovered)`);
+  else console.log(`✓ crops (${crops.length})`);
+}
+
+async function ensureCrop(nameRaw: string): Promise<string> {
+  const name = nameRaw.trim();
+  const slug = slugify(name);
+  const existing = await prisma.crop.findUnique({ where: { slug } });
+  if (existing) return existing.id;
+  // Also match by aka
+  const byAka = await prisma.crop.findFirst({ where: { aka: { has: name.toLowerCase() } } });
+  if (byAka) return byAka.id;
+  const created = await prisma.crop.create({
+    data: {
+      slug,
+      name: name.charAt(0).toUpperCase() + name.slice(1),
+      order: DISCOVERED_CROP_ORDER,
+    },
+  });
+  return created.id;
+}
+
+async function importProducts(products: SourceProduct[]) {
+  let order = 0;
+  for (const source of products) {
+    const fullText = [
+      source.name,
+      source.shortDescription ?? "",
+      source.descriptionHtml ?? "",
+      source.benefits.join(" "),
+      source.applicationMethods.join(" "),
+      source.applicationRates.map((rate) => `${rate.context ?? ""} ${rate.notes ?? ""}`).join(" "),
+    ].join(" \n ");
+
+    const methods: ApplicationMethod[] = [
+      ...new Set(source.applicationMethods.map(mapMethod).filter((m) => m !== ApplicationMethod.OTHER)),
+    ];
+    // Method evidence can also live in description text.
+    for (const [pattern, method] of METHOD_RULES) {
+      if (pattern.test(fullText) && !methods.includes(method)) methods.push(method);
+    }
+
+    // A product belongs to every range its own published text supports. This
+    // used to pick one and drop the rest, which is why Physio — the same ten
+    // products as Organic on the old shop — never had a single member.
+    const ranges = await prisma.productCategory.findMany({
+      where: { slug: { in: source.categorySlugs } },
+      select: { id: true, slug: true },
+    });
+    const missingRange = source.categorySlugs.find((slug) => !ranges.some((r) => r.slug === slug));
+    if (missingRange) {
+      throw new Error(`product "${source.slug}" names range "${missingRange}", which is not in content/categories.json`);
+    }
+
+    const descriptionHtml = source.descriptionHtml ? sanitizeRichHtml(source.descriptionHtml) : null;
+
+    const product = await prisma.product.upsert({
+      where: { slug: source.slug },
+      update: {
+        name: source.name,
+        brand: source.brand ?? null,
+        shortDescription: source.shortDescription,
+        descriptionHtml,
+        composition: source.composition,
+        benefitClaims: source.benefits,
+        priceUsd: source.priceUsd ?? undefined,
+        applicationMethods: methods,
+        sourceUrls: source.oldUrls,
+        notes: source.notes ?? null,
+        status: PublishStatus.PUBLISHED,
+        publishedAt: new Date(),
+        order,
+        featured: source.featured ?? false,
+      },
+      create: {
+        name: source.name,
+        slug: source.slug,
+        brand: source.brand ?? null,
+        shortDescription: source.shortDescription,
+        descriptionHtml,
+        composition: source.composition,
+        benefitClaims: source.benefits,
+        priceUsd: source.priceUsd,
+        applicationMethods: methods,
+        sourceUrls: source.oldUrls,
+        notes: source.notes ?? null,
+        status: PublishStatus.PUBLISHED,
+        publishedAt: new Date(),
+        order,
+        featured: source.featured ?? false,
+      },
+    });
+
+    await prisma.productCategoryLink.deleteMany({
+      where: { productId: product.id, categoryId: { notIn: ranges.map((r) => r.id) } },
+    });
+    for (const range of ranges) {
+      await prisma.productCategoryLink.upsert({
+        where: { productId_categoryId: { productId: product.id, categoryId: range.id } },
+        update: {},
+        create: { productId: product.id, categoryId: range.id },
+      });
+    }
+    order += 1;
+
+    // Images. Roles steer placement: "primary" wins the hero slot, a
+    // "catalogue" shot becomes that product's flipbook/catalogue plate
+    // (recorded here, applied in buildDefaultCatalogue), everything else is
+    // gallery. Without roles the first image stays primary, as before.
+    await prisma.productImage.deleteMany({ where: { productId: product.id } });
+    let explicitPrimaryId: string | null = null;
+    let firstNonCatalogueId: string | null = null;
+    let firstImageId: string | null = null;
+    let imageOrder = 0;
+    for (const image of source.images) {
+      const mediaId = await ensureMedia(
+        { ...image, alt: image.alt || `${source.name} — Humuson Complex product` },
+        "product",
+      );
+      if (!mediaId) continue;
+      if (!firstImageId) firstImageId = mediaId;
+      if (image.role === "primary" && !explicitPrimaryId) explicitPrimaryId = mediaId;
+      if (image.role !== "catalogue" && !firstNonCatalogueId) firstNonCatalogueId = mediaId;
+      if (image.role === "catalogue" && !catalogueImageByProduct.has(product.id)) {
+        catalogueImageByProduct.set(product.id, mediaId);
+      }
+      await prisma.productImage.create({
+        data: { productId: product.id, mediaId, order: imageOrder },
+      });
+      imageOrder += 1;
+    }
+    await prisma.product.update({
+      where: { id: product.id },
+      data: { primaryImageId: explicitPrimaryId ?? firstNonCatalogueId ?? firstImageId },
+    });
+
+    // Package sizes
+    await prisma.packageSize.deleteMany({ where: { productId: product.id } });
+    let sizeOrder = 0;
+    for (const pack of source.packSizes) {
+      await prisma.packageSize.create({
+        data: { productId: product.id, size: pack.size, priceUsd: pack.priceUsd, order: sizeOrder },
+      });
+      sizeOrder += 1;
+    }
+
+    // Application guides
+    await prisma.applicationGuide.deleteMany({ where: { productId: product.id } });
+    let guideOrder = 0;
+    for (const rate of source.applicationRates) {
+      await prisma.applicationGuide.create({
+        data: {
+          productId: product.id,
+          rate: rate.rate,
+          unit: rate.context,
+          notes: rate.notes,
+          order: guideOrder,
+        },
+      });
+      guideOrder += 1;
+    }
+
+    // Crops
+    await prisma.productCrop.deleteMany({ where: { productId: product.id } });
+    for (const cropName of source.suitableCrops) {
+      const cropId = await ensureCrop(cropName);
+      await prisma.productCrop.upsert({
+        where: { productId_cropId: { productId: product.id, cropId } },
+        update: {},
+        create: { productId: product.id, cropId },
+      });
+    }
+
+    // Canonical benefits — only when the product's own text evidences them.
+    await prisma.productBenefit.deleteMany({ where: { productId: product.id } });
+    let benefitOrder = 0;
+    for (const rule of BENEFIT_RULES) {
+      if (rule.pattern.test(fullText)) {
+        const benefit = await prisma.benefit.findUnique({ where: { slug: rule.slug } });
+        if (benefit) {
+          await prisma.productBenefit.create({
+            data: { productId: product.id, benefitId: benefit.id, order: benefitOrder },
+          });
+          benefitOrder += 1;
+        }
+      }
+    }
+
+    // Growth stages — only on explicit textual evidence.
+    await prisma.productGrowthStage.deleteMany({ where: { productId: product.id } });
+    for (const rule of STAGE_RULES) {
+      if (rule.pattern.test(fullText)) {
+        const stage = await prisma.growthStage.findUnique({ where: { key: rule.key } });
+        if (stage) {
+          await prisma.productGrowthStage.create({
+            data: { productId: product.id, growthStageId: stage.id },
+          });
+        }
+      }
+    }
+  }
+  console.log(`✓ products (${products.length})`);
+}
+
+async function pruneEmptyCategories() {
+  const removed = await prisma.productCategory.deleteMany({
+    where: { products: { none: {} } },
+  });
+  if (removed.count > 0) console.log(`✓ pruned ${removed.count} empty categories`);
+}
+
+/**
+ * Drops crops that nothing references any more.
+ *
+ * `ensureCrop` mints a crop the first time a product's own text names one, and
+ * `importCrops` can only add and demote — so a crop the owner has since split
+ * into narrower ones ("vegetables" → brassicas, cucurbits, leafy vegetables)
+ * survives as a row with no products, and the crops page lists it under "other
+ * crops we supply" forever. Curated crops are never touched, however empty:
+ * content/crops.json is the owner saying the crop exists, and a crop no product
+ * covers yet is exactly what that section is for. Only a crop that is both
+ * absent from the taxonomy and referenced by nothing at all goes.
+ */
+async function pruneOrphanCrops(curated: SourceCrop[]) {
+  const removed = await prisma.crop.deleteMany({
+    where: {
+      slug: { notIn: curated.map((crop) => crop.slug) },
+      products: { none: {} },
+      faqs: { none: {} },
+      stages: { none: {} },
+      applicationGuides: { none: {} },
+      articles: { none: {} },
+      videos: { none: {} },
+      projects: { none: {} },
+    },
+  });
+  if (removed.count > 0) console.log(`✓ pruned ${removed.count} orphaned crops`);
+}
+
+async function linkRelatedProducts() {
+  // Related = shares a range, closest order — a deterministic, honest default.
+  // With several ranges per product the rule is "any range in common", which
+  // is what a reader means by related: the Bio Energy microbials relate to each
+  // other as microbiological fertilisers and to A3 as biostimulants.
+  const products = await prisma.product.findMany({
+    select: { id: true, order: true, categories: { select: { categoryId: true } } },
+    orderBy: { order: "asc" },
+  });
+  for (const product of products) {
+    const mine = new Set(product.categories.map((c) => c.categoryId));
+    const siblings = products
+      .filter((p) => p.id !== product.id && p.categories.some((c) => mine.has(c.categoryId)))
+      .slice(0, 4);
+    await prisma.product.update({
+      where: { id: product.id },
+      data: { related: { set: siblings.map((s) => ({ id: s.id })) } },
+    });
+  }
+  console.log("✓ related products linked by shared range");
+}
+
+async function importFaqs(faqs: SourceFaq[]) {
+  await prisma.faqCrop.deleteMany();
+  await prisma.questionEvent.updateMany({ data: { faqId: null } });
+  await prisma.faq.deleteMany();
+  let order = 0;
+  for (const source of faqs) {
+    const product = source.productSlugs?.[0]
+      ? await prisma.product.findUnique({ where: { slug: source.productSlugs[0] } })
+      : null;
+    const faq = await prisma.faq.create({
+      data: {
+        question: source.question,
+        answerHtml: sanitizeRichHtml(source.answer),
+        category: FAQ_CATEGORY_MAP[source.category ?? "general"] ?? FaqCategory.GENERAL,
+        aliases: source.aliases ?? [],
+        keywords: source.keywords ?? [],
+        productId: product?.id ?? null,
+        status: PublishStatus.PUBLISHED,
+        order,
+      },
+    });
+    order += 1;
+    for (const cropSlug of source.cropSlugs ?? []) {
+      const crop = await prisma.crop.findUnique({ where: { slug: cropSlug } });
+      if (crop) {
+        await prisma.faqCrop.create({ data: { faqId: faq.id, cropId: crop.id } });
+      }
+    }
+  }
+  console.log(`✓ faqs (${faqs.length})`);
+}
+
+async function importArticles(articles: SourceArticle[]) {
+  for (const source of articles) {
+    const categorySlug = source.category ?? "agronomy-advice";
+    const categoryName = categorySlug
+      .split("-")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+    const category = await prisma.articleCategory.upsert({
+      where: { slug: categorySlug },
+      update: {},
+      create: { slug: categorySlug, name: categoryName },
+    });
+
+    const coverImageId = source.coverImage ? await ensureMedia(source.coverImage, "article") : null;
+    const bodyHtml = sanitizeRichHtml(source.bodyHtml);
+    const words = bodyHtml.replace(/<[^>]*>/g, " ").split(/\s+/).filter(Boolean).length;
+
+    const productIds: { id: string }[] = [];
+    for (const slug of source.relatedProductSlugs ?? []) {
+      const product = await prisma.product.findUnique({ where: { slug } });
+      if (product) productIds.push({ id: product.id });
+    }
+
+    await prisma.article.upsert({
+      where: { slug: source.slug },
+      update: {
+        title: source.title,
+        excerpt: source.excerpt,
+        bodyHtml,
+        coverImageId,
+        categoryId: category.id,
+        products: { set: productIds },
+        readingMinutes: Math.max(1, Math.round(words / 200)),
+        status: PublishStatus.PUBLISHED,
+        publishedAt: new Date(source.publishedAt),
+        sourceUrl: source.oldUrl,
+      },
+      create: {
+        title: source.title,
+        slug: source.slug,
+        excerpt: source.excerpt,
+        bodyHtml,
+        coverImageId,
+        categoryId: category.id,
+        products: { connect: productIds },
+        readingMinutes: Math.max(1, Math.round(words / 200)),
+        status: PublishStatus.PUBLISHED,
+        publishedAt: new Date(source.publishedAt),
+        sourceUrl: source.oldUrl,
+      },
+    });
+  }
+  console.log(`✓ articles (${articles.length})`);
+}
+
+async function importVideos(videos: SourceVideo[]) {
+  let order = 0;
+  for (const source of videos) {
+    await prisma.video.upsert({
+      where: { youtubeId: source.youtubeId },
+      update: {
+        title: source.title ?? `Humuson video ${source.youtubeId}`,
+        description: source.description ?? null,
+        category: VIDEO_CATEGORY_MAP[source.category ?? ""] ?? VideoCategory.AGRONOMY_EDUCATION,
+        featured: source.featured ?? false,
+        order,
+      },
+      create: {
+        youtubeId: source.youtubeId,
+        youtubeUrl: source.youtubeUrl,
+        title: source.title ?? `Humuson video ${source.youtubeId}`,
+        description: source.description ?? null,
+        thumbnailUrl: `https://img.youtube.com/vi/${source.youtubeId}/hqdefault.jpg`,
+        category: VIDEO_CATEGORY_MAP[source.category ?? ""] ?? VideoCategory.AGRONOMY_EDUCATION,
+        featured: source.featured ?? false,
+        status: PublishStatus.PUBLISHED,
+        order,
+      },
+    });
+    order += 1;
+  }
+  console.log(`✓ videos (${videos.length})`);
+}
+
+async function importProjects(projects: SourceProject[]) {
+  for (const source of projects) {
+    const cropId = source.crop ? await ensureCrop(source.crop) : null;
+    const productIds: { id: string }[] = [];
+    for (const slug of source.productSlugs ?? []) {
+      const product = await prisma.product.findUnique({ where: { slug } });
+      if (product) productIds.push({ id: product.id });
+    }
+
+    const project = await prisma.project.upsert({
+      where: { slug: source.slug },
+      update: {
+        title: source.title,
+        cropId,
+        location: source.location ?? null,
+        summary: source.summary ?? null,
+        bodyHtml: source.bodyHtml ? sanitizeRichHtml(source.bodyHtml) : null,
+        outcome: source.outcome ?? null,
+        products: { set: productIds },
+        status: PublishStatus.PUBLISHED,
+        publishedAt: new Date(),
+        sourceUrl: source.sourceUrl ?? null,
+      },
+      create: {
+        title: source.title,
+        slug: source.slug,
+        cropId,
+        location: source.location ?? null,
+        summary: source.summary ?? null,
+        bodyHtml: source.bodyHtml ? sanitizeRichHtml(source.bodyHtml) : null,
+        outcome: source.outcome ?? null,
+        products: { connect: productIds },
+        status: PublishStatus.PUBLISHED,
+        publishedAt: new Date(),
+        sourceUrl: source.sourceUrl ?? null,
+      },
+    });
+
+    await prisma.projectImage.deleteMany({ where: { projectId: project.id } });
+    let order = 0;
+    for (const image of source.images ?? []) {
+      const mediaId = await ensureMedia(image, "field-photo");
+      if (!mediaId) continue;
+      await prisma.projectImage.create({
+        data: { projectId: project.id, mediaId, order },
+      });
+      order += 1;
+    }
+  }
+  console.log(`✓ projects (${projects.length})`);
+}
+
+async function importTestimonials(testimonials: SourceTestimonial[]) {
+  await prisma.project.updateMany({ data: { testimonialId: null } });
+  await prisma.testimonial.deleteMany();
+  let order = 0;
+  for (const source of testimonials) {
+    await prisma.testimonial.create({
+      data: {
+        name: source.name,
+        role: source.role ?? null,
+        location: source.location ?? null,
+        quote: source.quote,
+        order,
+      },
+    });
+    order += 1;
+  }
+  console.log(`✓ testimonials (${testimonials.length})`);
+}
+
+async function importCompany(company: SourceCompany | null) {
+  if (!company) return;
+  const normalize = (
+    items: (string | { title: string; description?: string })[] | undefined,
+  ): { title: string; description?: string }[] =>
+    (items ?? []).map((item) => (typeof item === "string" ? { title: item } : item));
+
+  const contactValue = {
+    phones: company.phones ?? [],
+    whatsapp: (company.whatsappNumbers?.[0] ?? "263776656433").replace(/[^0-9]/g, ""),
+    // The owner's WhatsApp Business catalogue share link. Read from the content
+    // file rather than pinned here — a literal meant every correction to it
+    // needed a code change, and the one that was pinned had stopped resolving.
+    whatsappCatalogueUrl: company.whatsappCatalogueUrl ?? "",
+    emails: company.emails ?? [],
+    address: company.address ?? null,
+    // The map pin. Seeding a guess would put it somewhere plausible and wrong,
+    // so these stay null until the content file carries real coordinates —
+    // supplied by the owner from Google Maps, not derived from the address.
+    mapsLat: company.mapsLat ?? null,
+    mapsLng: company.mapsLng ?? null,
+    mapsUrl: company.mapsUrl ?? null,
+    hours: company.hours ?? null,
+    socials: company.socials ?? {},
+  };
+  await prisma.siteSetting.upsert({
+    where: { key: "contact" },
+    update: { value: contactValue },
+    create: { key: "contact", value: contactValue },
+  });
+  await prisma.siteSetting.upsert({
+    where: { key: "company" },
+    update: {
+      value: {
+        tagline: company.taglines?.[0] ?? "Home of Healthy Soil & Healthy Crop",
+        taglines: company.taglines ?? [],
+        shortAbout: company.about?.split("\n\n")[0] ?? "",
+        about: company.about ?? "",
+        services: normalize(company.services),
+        whyChooseUs: company.whyChooseUs ?? [],
+        workingProcess: normalize(company.workingProcess),
+        values: company.values ?? [],
+        partnerBrands: company.partnerBrands ?? [],
+      },
+    },
+    create: {
+      key: "company",
+      value: {
+        tagline: company.taglines?.[0] ?? "Home of Healthy Soil & Healthy Crop",
+        taglines: company.taglines ?? [],
+        shortAbout: company.about?.split("\n\n")[0] ?? "",
+        about: company.about ?? "",
+        services: normalize(company.services),
+        whyChooseUs: company.whyChooseUs ?? [],
+        workingProcess: normalize(company.workingProcess),
+        values: company.values ?? [],
+        partnerBrands: company.partnerBrands ?? [],
+      },
+    },
+  });
+  console.log("✓ company settings");
+}
+
+/** Chapter themes for the generated catalogue (presentation only). */
+const SECTION_THEMES: Record<string, string> = {
+  organic: "soil",
+  physio: "biology",
+  value: "vitality",
+  "liquid-fertilisers": "nutrition",
+  biostimulants: "canopy",
+};
+
+async function buildDefaultCatalogue() {
+  const year = new Date().getFullYear();
+  const catalogue = await prisma.catalogue.upsert({
+    where: { slug: "humuson-product-guide" },
+    update: { title: `Humuson Product Guide ${year}`, year, status: PublishStatus.PUBLISHED },
+    create: {
+      slug: "humuson-product-guide",
+      title: `Humuson Product Guide ${year}`,
+      year,
+      status: PublishStatus.PUBLISHED,
+      intro:
+        "The complete Humuson Complex range — biological crop nutrition for healthy soil and healthy crops.",
+    },
+  });
+
+  await prisma.catalogueEntry.deleteMany({ where: { section: { catalogueId: catalogue.id } } });
+  await prisma.catalogueSection.deleteMany({ where: { catalogueId: catalogue.id } });
+
+  const categories = await prisma.productCategory.findMany({
+    orderBy: { order: "asc" },
+    include: {
+      products: {
+        where: { product: { status: PublishStatus.PUBLISHED } },
+        include: { product: { include: { primaryImage: true } } },
+      },
+    },
+  });
+
+  let sectionOrder = 0;
+  for (const row of categories) {
+    // A product can appear in more than one range, so it can appear in more
+    // than one chapter of the catalogue. It is still one product record.
+    const category = {
+      ...row,
+      products: row.products.map((link) => link.product).sort((a, b) => a.order - b.order),
+    };
+    if (category.products.length === 0) continue;
+    const section = await prisma.catalogueSection.create({
+      data: {
+        catalogueId: catalogue.id,
+        title: category.name,
+        slug: category.slug,
+        intro: category.description,
+        theme: SECTION_THEMES[category.slug] ?? "soil",
+        order: sectionOrder,
+        imageId: category.products[0]?.primaryImageId ?? null,
+      },
+    });
+    sectionOrder += 1;
+
+    let entryOrder = 0;
+    for (const product of category.products) {
+      await prisma.catalogueEntry.create({
+        data: {
+          sectionId: section.id,
+          productId: product.id,
+          // The dedicated catalogue shot (role:"catalogue"), when the product
+          // has one — the flipbook/explore plate; product hero otherwise.
+          imageId: catalogueImageByProduct.get(product.id) ?? null,
+          layout: entryOrder % 2 === 0 ? "FEATURE_LEFT" : "FEATURE_RIGHT",
+          order: entryOrder,
+        },
+      });
+      entryOrder += 1;
+    }
+  }
+  console.log("✓ default catalogue generated from categories");
+}
+
+/**
+ * Removes products the owner has taken off the catalogue.
+ *
+ * `importProducts` only ever upserts, so dropping a product from
+ * content/products.json leaves the row — and the live page — exactly where it
+ * was. That silence is the dangerous part: the content file says the product is
+ * gone and the site still sells it.
+ *
+ * The list is read from content/delisted-products.json rather than inferred
+ * from "absent from products.json", because those two are not the same thing. A
+ * truncated or half-written content file would otherwise wipe the catalogue,
+ * whereas a delisting is a deliberate, recorded act.
+ *
+ * Enquiries, FAQs and catalogue entries that pointed at the product survive
+ * with a null reference (Prisma's default for an optional relation) — a
+ * customer's enquiry is a record of something that really happened and is not
+ * ours to delete along with the product.
+ */
+async function pruneDelistedProducts(delisted: DelistedProduct[]) {
+  const slugs = delisted.map((entry) => entry.slug).filter(Boolean);
+  if (slugs.length === 0) return;
+  const removed = await prisma.product.deleteMany({ where: { slug: { in: slugs } } });
+  if (removed.count > 0) console.log(`✓ delisted products removed (${removed.count})`);
+}
+
+/**
+ * Stockists, upserted by slug rather than wiped and rebuilt.
+ *
+ * Wiping was the obvious way to write this and it was wrong: checking forty
+ * addresses is hours of somebody's phone calls, that work lives in
+ * `verifiedAt` and `mapsLat/mapsLng`, and a `deleteMany` erased all of it the
+ * next time anyone re-imported content for an unrelated reason. Nothing would
+ * have said so — the row count would have looked identical.
+ *
+ * So the content file owns the facts it states, the admin keeps what only it
+ * knows, and a row the file no longer mentions is deleted at the end.
+ */
+async function importDistributors(distributors: SourceDistributor[]) {
+  let order = 0;
+  for (const source of distributors) {
+    // Half a coordinate pair is not a location. Storing one of the two would
+    // put the pin on the equator, so both go in together or neither does.
+    const hasPin = typeof source.mapsLat === "number" && typeof source.mapsLng === "number";
+    const verifiedAt = source.verifiedOn ? new Date(`${source.verifiedOn}T00:00:00Z`) : null;
+    if (source.verifiedOn && Number.isNaN(verifiedAt!.getTime())) {
+      throw new Error(`distributor "${source.slug}" has an unreadable verifiedOn: ${source.verifiedOn}`);
+    }
+    const data = {
+      name: source.name,
+      town: source.town,
+      address: source.address ?? null,
+      phones: source.phones ?? [],
+      notes: source.notes ?? null,
+      mapsLat: hasPin ? source.mapsLat : null,
+      mapsLng: hasPin ? source.mapsLng : null,
+      mapsUrl: source.mapsUrl ?? null,
+      sourceNote: source.sourceNote ?? null,
+      status: source.status === "DRAFT" ? PublishStatus.DRAFT : PublishStatus.PUBLISHED,
+      order,
+    };
+    await prisma.distributor.upsert({
+      where: { slug: source.slug },
+      // A verification the content file states wins; otherwise whatever the
+      // admin recorded stays, because the file has nothing to say about it.
+      update: { ...data, ...(verifiedAt ? { verifiedAt } : {}) },
+      create: { ...data, slug: source.slug, verifiedAt },
+    });
+    order += 1;
+  }
+  const dropped = await prisma.distributor.deleteMany({
+    where: { slug: { notIn: distributors.map((d) => d.slug) } },
+  });
+  const suffix = dropped.count > 0 ? `, ${dropped.count} removed` : "";
+  console.log(`✓ distributors (${distributors.length}${suffix})`);
+}
+
+export async function runImport() {
+  console.log("── Humuson content import ──");
+  const products = loadJson<SourceProduct[]>("products.json");
+  const categories = loadJson<SourceCategory[]>("categories.json");
+  const crops = loadJson<SourceCrop[]>("crops.json");
+  const faqs = loadJson<SourceFaq[]>("faqs.json");
+  const articles = loadJson<SourceArticle[]>("articles.json");
+  const videos = loadJson<SourceVideo[]>("videos.json");
+  const projects = loadJson<SourceProject[]>("projects.json");
+  const testimonials = loadJson<SourceTestimonial[]>("testimonials.json");
+  const distributors = loadJson<SourceDistributor[]>("distributors.json");
+  const delisted = loadJson<DelistedProduct[]>("delisted-products.json");
+  const company = loadJson<SourceCompany>("company.json");
+  const urlMap = loadJson<OldUrlMapEntry[]>("old-url-map.json");
+
+  await importUsers();
+  await importGrowthStages();
+  await importBenefits();
+  if (categories) await importCategories(categories);
+  if (crops) await importCrops(crops);
+  if (products) await importProducts(products);
+  // Before the category prune, so a range left holding only delisted products
+  // disappears with them instead of lingering as an empty filter.
+  if (delisted) await pruneDelistedProducts(delisted);
+  if (products) await pruneEmptyCategories();
+  if (products) await linkRelatedProducts();
+  if (faqs) await importFaqs(faqs);
+  if (articles) await importArticles(articles);
+  if (videos) await importVideos(videos);
+  if (projects) await importProjects(projects);
+  if (testimonials) await importTestimonials(testimonials);
+  if (distributors) await importDistributors(distributors);
+  // Last of the content steps: every table that can point at a crop has been
+  // written by now, so "referenced by nothing" is finally true when it says so.
+  if (crops) await pruneOrphanCrops(crops);
+  await importCompany(company);
+  if (products) await buildDefaultCatalogue();
+
+  if (urlMap) console.log(`✓ redirect map present (${urlMap.length} URLs, applied in next.config.ts)`);
+  console.log("── import complete ──");
+}
+
+if (process.argv[1] && process.argv[1].endsWith("import.ts")) {
+  runImport()
+    .catch((error) => {
+      console.error(error);
+      process.exitCode = 1;
+    })
+    .finally(() => prisma.$disconnect());
+}

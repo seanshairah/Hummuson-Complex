@@ -2,7 +2,8 @@
 // PostgreSQL (Neon in production, local cluster in development).
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
@@ -113,15 +114,30 @@ enum CatalogueLayout {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model User {
-  id           String    @id @default(cuid())
-  email        String    @unique
-  name         String
-  passwordHash String
-  role         Role      @default(EDITOR)
-  active       Boolean   @default(true)
-  lastLoginAt  DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id                String    @id @default(cuid())
+  email             String    @unique
+  name              String
+  passwordHash      String
+  role              Role      @default(EDITOR)
+  active            Boolean   @default(true)
+  lastLoginAt       DateTime?
+  /// Sessions issued before this instant are refused. Bumped on a password
+  /// change, a role change and on deactivation, which makes "sign out
+  /// everywhere" a single field update rather than a session store to build.
+  sessionsValidFrom DateTime  @default(now())
+
+  /// Base32 TOTP secret. Present from the moment enrolment starts; the factor
+  /// is only actually required once totpConfirmedAt is set, so an abandoned
+  /// enrolment cannot lock anyone out of their own account.
+  totpSecret      String?
+  totpConfirmedAt DateTime?
+  /// bcrypt hashes of single-use recovery codes. Hashed rather than stored,
+  /// because a recovery code is a password that bypasses the second factor.
+  recoveryCodes   String[]
+
+  mfaChallenges MfaChallenge[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 
   articles Article[]
 }
@@ -171,7 +187,23 @@ model ProductCategory {
   image       Media?  @relation(fields: [imageId], references: [id])
   order       Int     @default(0)
 
-  products Product[]
+  products ProductCategoryLink[]
+}
+
+/// A product's membership of a range. A range is a way of reading the
+/// catalogue, not a property of the product, and several readings can be true
+/// of the same pack at once — Grow+ is an organic fertiliser AND a crop
+/// nutrition product. This used to be `Product.categoryId`, one range per
+/// product, which meant the import had to pick a winner from the several the
+/// old shop recorded and silently drop the rest.
+model ProductCategoryLink {
+  productId  String
+  product    Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, categoryId])
+  @@index([categoryId])
 }
 
 model Product {
@@ -183,17 +215,24 @@ model Product {
   featured Boolean       @default(false)
   order    Int           @default(0)
 
-  tagline          String?
-  shortDescription String?
+  /// Supplier brand this product is sold under (IKAR, Nando, Avensis, …).
+  brand String?
+
+  tagline            String?
+  shortDescription   String?
   /// Full description as sanitized HTML (rendered on the product page).
-  descriptionHtml  String?
+  descriptionHtml    String?
   /// "How it works" — mechanism / operating principle.
   operatingPrinciple String?
   /// "How to apply" — instructions as sanitized HTML.
-  instructionsHtml String?
+  instructionsHtml   String?
 
   /// Active ingredients / microbial strains, in order, exactly as published.
   composition String[]
+
+  /// Verbatim-faithful benefit claims from published material (display list).
+  /// Canonical, filterable benefits live in ProductBenefit.
+  benefitClaims String[]
 
   priceUsd    Decimal? @db.Decimal(10, 2)
   /// Reference into the WhatsApp Business catalogue (item id or link).
@@ -201,8 +240,8 @@ model Product {
 
   applicationMethods ApplicationMethod[]
 
-  categoryId String?
-  category   ProductCategory? @relation(fields: [categoryId], references: [id])
+  /// Every range this product belongs to; see ProductCategoryLink.
+  categories ProductCategoryLink[]
   tags       String[]
 
   primaryImageId String?
@@ -238,7 +277,7 @@ model Product {
   publishedAt DateTime?
 
   @@index([status, featured])
-  @@index([categoryId])
+  @@index([brand])
 }
 
 model ProductImage {
@@ -298,16 +337,49 @@ model ProductDocument {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Crop {
-  id          String  @id @default(cuid())
+  id          String   @id @default(cuid())
   name        String
-  slug        String  @unique
+  slug        String   @unique
   /// Alternative names used in search ("mealies" → maize).
   aka         String[]
   description String?
-  imageId     String?
-  image       Media?  @relation(fields: [imageId], references: [id])
-  order       Int     @default(0)
-  featured    Boolean @default(false)
+
+  /// The botanical family this group belongs to ("Brassicaceae"). Set on the
+  /// groups a farmer plants by, not on the individual crops inside them.
+  familyName String?
+
+  /// How a grower tells the family apart in the field — "four petals opening
+  /// in a cross". Only some families have one worth printing.
+  signature String?
+
+  /// The owner's agronomy notes for the family: root depth, feeding habit, the
+  /// pests to expect. Free text, one line each, shown in order.
+  notes String[]
+
+  /// Crops of this family that no product's own guidance names yet. They are
+  /// listed as text on the family page rather than given a page of their own,
+  /// because a crop page that can only say "nothing listed" is a dead end —
+  /// and inventing a product-crop claim to fill it would be worse.
+  alsoIncludes String[]
+  imageId      String?
+  image        Media?   @relation(fields: [imageId], references: [id])
+  order        Int      @default(0)
+  featured     Boolean  @default(false)
+
+  /// Parent group ("cabbage" → "brassicas"). One level deep on purpose: the
+  /// catalogue is organised by the groups a farmer shops by, not by taxonomy,
+  /// and a second level would have to invent distinctions nothing in the
+  /// product text supports.
+  ///
+  /// A parent is itself a crop, not a separate kind of row, because products
+  /// really are listed against "brassicas" — that is what their own published
+  /// text says. Those associations would be lost if groups lived apart.
+  /// Filtering by a parent returns its own products plus its children's;
+  /// filtering by a child returns only that child's, so a product listed for
+  /// cabbage is never presented as suitable for broccoli.
+  parentId String?
+  parent   Crop?   @relation("CropHierarchy", fields: [parentId], references: [id])
+  children Crop[]  @relation("CropHierarchy")
 
   products          ProductCrop[]
   stages            CropStage[]
@@ -316,6 +388,8 @@ model Crop {
   articles          Article[]
   videos            Video[]
   projects          Project[]
+
+  @@index([parentId])
 }
 
 model ProductCrop {
@@ -552,6 +626,65 @@ model Testimonial {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Stockists
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// A shop that sells Humuson product, grouped by the town it trades in.
+///
+/// `town` is a plain string rather than a table: the list is short, a town has
+/// nothing to hold beyond its name, and a join would buy nothing but an extra
+/// query. Grouping happens in the query.
+///
+/// The map pin is optional on purpose. Humuson supplies the addresses from the
+/// shop fronts, and a street address on a Zimbabwean high street is not
+/// something Google always resolves to the right building — so until somebody
+/// reads real coordinates off the map, the "Directions" link hands Google the
+/// address text and lets it do its best, exactly as the contact page does.
+/// Guessing coordinates would put a confident pin on the wrong shop.
+model Distributor {
+  id      String   @id @default(cuid())
+  name    String
+  slug    String   @unique
+  /// "Mutare", "Bulawayo" — the heading this shop is listed under.
+  town    String
+  /// Street address as the owner supplied it. Null where none was given yet.
+  address String?
+  /// One or more contact numbers, in the order they were supplied.
+  phones  String[]
+  /// Anything a caller needs to know that the address does not say.
+  notes   String?
+
+  /// Decimal degrees, once somebody has read them off the map. Both or neither.
+  mapsLat Float?
+  mapsLng Float?
+  /// A maps.app.goo.gl share link, which beats coordinates when it exists
+  /// because it carries the shop's own place record.
+  mapsUrl String?
+
+  /// Where this row came from and how much to trust it — admin-only, never
+  /// rendered publicly. Most of the network branches were transcribed from a
+  /// third-party directory that rates its own listing "0% accurate", and a
+  /// wrong address sends a farmer on a wasted drive. Keeping the provenance on
+  /// the row is what lets whoever checks it know what they are checking.
+  sourceNote String?
+
+  /// Set when the address has been confirmed against a primary source — the
+  /// shop itself, its own listing or flyer, or evidence the owner supplied.
+  /// Null means nobody has, which is the honest default for a transcribed
+  /// list. A date rather than a flag, so a check from two years ago is
+  /// visibly old.
+  verifiedAt DateTime?
+
+  status PublishStatus @default(PUBLISHED)
+  order  Int           @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([town])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Interactive catalogue
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -671,4 +804,76 @@ model AnalyticsEvent {
 
   @@index([type, createdAt])
   @@index([entityType, entityId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Abuse control
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// Fixed-window counters for rate limiting. Kept in the database rather than in
+/// process memory because the app runs as serverless functions: an in-memory
+/// counter would be per-instance, so an attacker gets the limit multiplied by
+/// however many instances happen to be warm.
+model RateLimit {
+  key         String   @id
+  count       Int      @default(0)
+  windowStart DateTime @default(now())
+  expiresAt   DateTime
+
+  @@index([expiresAt])
+}
+
+/// Append-only record of who did what, when, and from where.
+///
+/// Enforced append-only by a database trigger (see the accompanying
+/// migration), not merely by convention: a log the application can rewrite is
+/// not evidence. Rows may be deleted once they are past the retention window,
+/// which is what makes pruning possible without making tampering possible.
+model AuditEvent {
+  id     String @id @default(cuid())
+  /// "<subject>.<verb>", e.g. "user.deactivated", "product.published".
+  action String
+
+  /// Null for a failed sign-in, where there may be no account behind it.
+  actorId    String?
+  /// Denormalised on purpose: the record has to outlive the account.
+  actorEmail String?
+
+  entityType  String?
+  entityId    String?
+  /// What the thing was called at the time — names change, and a log that
+  /// only holds an id stops meaning anything once the row is gone.
+  entityLabel String?
+
+  ip        String?
+  userAgent String?
+  /// Structured context: which fields changed, why an attempt was refused.
+  meta      Json?
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([action, createdAt])
+  @@index([actorId, createdAt])
+  @@index([entityType, entityId])
+}
+
+/// A password step that has been passed but is waiting on a second factor.
+///
+/// Exists so the second step does not have to carry the password back to the
+/// server — the row is proof that the password was accepted, is single use,
+/// and expires in minutes.
+model MfaChallenge {
+  id         String    @id @default(cuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt  DateTime
+  consumedAt DateTime?
+  /// Wrong codes entered against this challenge. Caps guessing at a fixed
+  /// number of attempts even within the challenge's short life.
+  attempts   Int       @default(0)
+  createdAt  DateTime  @default(now())
+
+  @@index([userId, createdAt])
+  @@index([expiresAt])
 }

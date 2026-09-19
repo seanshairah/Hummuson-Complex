@@ -8,6 +8,9 @@
    ──────────────────────────────────────────────────────────────────────────── */
 
 @theme {
+  /* Humuson logo green (extracted from the original brand mark) */
+  --color-brand: #005820;
+
   /* Brand core */
   --color-humus-950: #08110b;
   --color-humus-900: #0c1810;
@@ -77,7 +80,75 @@
   --animate-marquee: marquee 42s linear infinite;
   --animate-pulse-soft: pulse-soft 3.2s ease-in-out infinite;
   --animate-float-y: float-y 7s ease-in-out infinite;
+  --animate-fade-in: fade-in 0.25s var(--ease-smooth) both;
+  --animate-slide-in-right: slide-in-right 0.3s var(--ease-out-expo) both;
+  --animate-slide-in-up: slide-in-up 0.3s var(--ease-out-expo) both;
+  --animate-scale-in: scale-in 0.22s var(--ease-out-expo) both;
+  --animate-accordion-down: accordion-down 0.25s var(--ease-smooth) both;
+  --animate-accordion-up: accordion-up 0.2s var(--ease-smooth) both;
 
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes slide-in-right {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes slide-in-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  /*
+   * Scale only — never translate. The dialog is centred by Tailwind's
+   * `-translate-x-1/2 -translate-y-1/2`, which in v4 compile to the standalone
+   * `translate` property rather than into `transform`. A keyframe that also
+   * said `transform: translate(-50%, -50%)` therefore did not override that
+   * centring, it composed with it: the offset was applied twice and the dialog
+   * opened a half-width up and to the left of centre, cropped off the top of
+   * the viewport on desktop and off the top-left corner on a phone.
+   */
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes accordion-down {
+    from {
+      height: 0;
+      opacity: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+      opacity: 1;
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+      opacity: 0;
+    }
+  }
   @keyframes marquee {
     from {
       transform: translateX(0);
@@ -163,6 +234,107 @@
   }
 }
 
+/* ── Vertical rhythm ──────────────────────────────────────────────────────────
+   Section padding was ad hoc before this: pb-16, pb-20, pb-24, pt-8, pt-10,
+   py-14, py-16 md:py-20 all appeared across the public pages, so no two pages
+   breathed the same way and the seams between sections landed at different
+   heights. Three steps, used through <Section>, replace all of it.
+
+   The scale is deliberately coarse. Three choices that are clearly different
+   beat eight that are nearly the same — "a bit more room here" is how the
+   drift started.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+@utility section-y-tight {
+  padding-block: 2.5rem;
+  @media (width >= 48rem) {
+    padding-block: 3rem;
+  }
+  @media (width >= 80rem) {
+    padding-block: 3.5rem;
+  }
+}
+
+@utility section-y {
+  padding-block: 3.5rem;
+  @media (width >= 48rem) {
+    padding-block: 4.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-block: 5.5rem;
+  }
+}
+
+@utility section-y-loose {
+  padding-block: 5rem;
+  @media (width >= 48rem) {
+    padding-block: 6.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-block: 8rem;
+  }
+}
+
+/* One-sided variants, for a section that butts against the page opener or the
+   footer and should not double up on the gap. */
+@utility section-pt-tight {
+  padding-top: 2.5rem;
+  @media (width >= 48rem) {
+    padding-top: 3rem;
+  }
+  @media (width >= 80rem) {
+    padding-top: 3.5rem;
+  }
+}
+
+@utility section-pt {
+  padding-top: 3.5rem;
+  @media (width >= 48rem) {
+    padding-top: 4.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-top: 5.5rem;
+  }
+}
+
+@utility section-pb-tight {
+  padding-bottom: 2.5rem;
+  @media (width >= 48rem) {
+    padding-bottom: 3rem;
+  }
+  @media (width >= 80rem) {
+    padding-bottom: 3.5rem;
+  }
+}
+
+@utility section-pb {
+  padding-bottom: 3.5rem;
+  @media (width >= 48rem) {
+    padding-bottom: 4.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-bottom: 5.5rem;
+  }
+}
+
+@utility section-pb-loose {
+  padding-bottom: 5rem;
+  @media (width >= 48rem) {
+    padding-bottom: 6.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-bottom: 8rem;
+  }
+}
+
+/* Reading measure for editorial bodies. Characters, not pixels: the line
+   length that stays readable is a function of the type, not the viewport. */
+@utility container-reading {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 68ch;
+}
+
 @utility container-wide {
   margin-inline: auto;
   width: 100%;
@@ -198,6 +370,18 @@
   font-size: clamp(1.75rem, 1.45rem + 1.6vw, 2.75rem);
   line-height: 1.08;
   letter-spacing: -0.02em;
+  font-weight: 500;
+}
+
+/* Sub-page h1. Sits between display-2 (a homepage hero, which earns its size)
+   and display-3 (a section heading). Page titles were running at display-2 —
+   68px on a laptop — which pushed the first useful line of every page most of
+   a screen down. */
+@utility text-page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.6rem + 1.9vw, 3.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
   font-weight: 500;
 }
 
@@ -241,17 +425,23 @@
 }
 
 /* Floating glass card on imagery — used sparingly */
+/*
+ * Frosted panels. Do NOT hand-write `-webkit-backdrop-filter` here: the build
+ * auto-prefixes from the browser targets, and writing the prefixed property
+ * alongside the standard one made Lightning CSS collapse the pair — glass-light
+ * shipped with only the -webkit- declaration and glass-dark lost the blur
+ * outright, so the scrolled header was plain translucent cream with the page
+ * showing through it sharply. One standard declaration, no prefix.
+ */
 @utility glass-dark {
   background: rgb(10 20 13 / 0.55);
   backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgb(255 255 255 / 0.12);
 }
 
 @utility glass-light {
   background: rgb(251 250 245 / 0.72);
   backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgb(19 26 18 / 0.08);
 }
 
@@ -269,6 +459,18 @@
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* Admin dashboard: no visible scrollbars anywhere — every pane still
+   scrolls, but chrome stays clean (textareas and tables included). */
+.admin-shell,
+.admin-shell * {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.admin-shell::-webkit-scrollbar,
+.admin-shell *::-webkit-scrollbar {
+  display: none;
 }
 
 /* ── Rich text (article bodies, product descriptions) ─────────────────────── */
