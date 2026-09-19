@@ -419,3 +419,39 @@ Open with the owner:
    sit at the same street number. Worth one glance.
 5. Shop names follow the document's spelling ("Farmer's Choice"), and Bulawayo Seed
    Centre carries a public note that its signage reads "Seed Co Bulawayo Depot".
+
+## Pavet Agrikno (added 19 Sep 2026)
+
+Four branches of **Pavet Agrikno (Pvt) Ltd**, trading as *Pavet Seedlings &
+Chemicals*, added from the owner's screenshots of Pavet's own Facebook page:
+
+| Branch | Address | Town filed under |
+| --- | --- | --- |
+| Pavet Agrikno Epworth | 617A Makomo, Epworth, Harare | Harare |
+| Pavet Agrikno Macheke | NRZ Complex, Macheke Railway Station | Macheke *(new town)* |
+| Pavet Agrikno Marondera | 42 Elm Street, Marondera CBD | Marondera |
+| Pavet Agrikno Shepperton Road | 151 Shepperton Road, Industrial Site, Marondera | Marondera |
+
+Phones for all four: 0714 660 491, 0786 801 551. Web pavetagrikno.com, email
+pavetagrikno@gmail.com.
+
+**Provenance.** These come from Pavet's own advert dated 17 April — self-published
+by the business, which is firmer than the directory rows that make up most of this
+list. But it evidences *Pavet's outlets*, not that they carry Humuson product, so
+`verifiedOn` stays null and the Checked column in the admin still wants working
+through.
+
+**Owner follow-ups:**
+
+- **742 Mbuya Nehanda Road, Marondera is held back.** Pavet's Facebook Details
+  panel gives it as their address, but that panel is undated while the advert is
+  dated, and publishing it would put three Marondera branches on the page. If it
+  is a real third site, add it; if the advert superseded it, nothing to do.
+- **A second number appears only on the Details panel:** 0773 597 453, against
+  0786 801 551 on the advert. Worth confirming which one reaches a branch.
+- **Epworth is filed under Harare**, the way NTS's Mbare, Southerton, Cameron and
+  Bluff Hill branches are. Epworth is its own local authority, but a farmer
+  driving there thinks of it as Harare. Say if it should stand as its own town.
+- **Does Pavet actually stock Humuson product?** The screenshots do not say so.
+  The page already tells growers to ring ahead, but if Pavet is a prospect rather
+  than a stockist they should come off it.

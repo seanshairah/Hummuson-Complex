@@ -337,5 +337,49 @@
     "town": "Rusape",
     "address": "Stand 7, Chimurenga Street, Rusape",
     "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "Pavet Agrikno Epworth",
+    "slug": "pavet-agrikno-epworth",
+    "town": "Harare",
+    "address": "617A Makomo, Epworth, Harare",
+    "phones": [
+      "0714 660 491",
+      "0786 801 551"
+    ],
+    "sourceNote": "Branch addresses printed on Pavet Agrikno (Pvt) Ltd's own Facebook advert dated 17 April, under its \"Pavet Seedlings & Chemicals\" banner (a comment on the post is five months old, consistent with April 2026). Self-published by the business, so firmer than the directory rows — but it evidences Pavet's own outlets, not that they carry Humuson product. Unverified: ring before sending anyone. Pavet's Facebook Details panel also gives 742 Mbuya Nehanda Road, Marondera, undated and held back here in case the advert supersedes it. Filed under Harare, as NTS's Mbare and Southerton branches are — Epworth is its own local authority but a Harare suburb to anyone driving there."
+  },
+  {
+    "name": "Pavet Agrikno Macheke",
+    "slug": "pavet-agrikno-macheke",
+    "town": "Macheke",
+    "address": "NRZ Complex, Macheke Railway Station",
+    "phones": [
+      "0714 660 491",
+      "0786 801 551"
+    ],
+    "sourceNote": "Branch addresses printed on Pavet Agrikno (Pvt) Ltd's own Facebook advert dated 17 April, under its \"Pavet Seedlings & Chemicals\" banner (a comment on the post is five months old, consistent with April 2026). Self-published by the business, so firmer than the directory rows — but it evidences Pavet's own outlets, not that they carry Humuson product. Unverified: ring before sending anyone. Pavet's Facebook Details panel also gives 742 Mbuya Nehanda Road, Marondera, undated and held back here in case the advert supersedes it. Macheke is a new town for this list; no other stockist is recorded there."
+  },
+  {
+    "name": "Pavet Agrikno Marondera",
+    "slug": "pavet-agrikno-marondera",
+    "town": "Marondera",
+    "address": "42 Elm Street, Marondera CBD",
+    "phones": [
+      "0714 660 491",
+      "0786 801 551"
+    ],
+    "sourceNote": "Branch addresses printed on Pavet Agrikno (Pvt) Ltd's own Facebook advert dated 17 April, under its \"Pavet Seedlings & Chemicals\" banner (a comment on the post is five months old, consistent with April 2026). Self-published by the business, so firmer than the directory rows — but it evidences Pavet's own outlets, not that they carry Humuson product. Unverified: ring before sending anyone. Pavet's Facebook Details panel also gives 742 Mbuya Nehanda Road, Marondera, undated and held back here in case the advert supersedes it."
+  },
+  {
+    "name": "Pavet Agrikno Shepperton Road",
+    "slug": "pavet-agrikno-shepperton-road",
+    "town": "Marondera",
+    "address": "151 Shepperton Road, Industrial Site, Marondera",
+    "phones": [
+      "0714 660 491",
+      "0786 801 551"
+    ],
+    "sourceNote": "Branch addresses printed on Pavet Agrikno (Pvt) Ltd's own Facebook advert dated 17 April, under its \"Pavet Seedlings & Chemicals\" banner (a comment on the post is five months old, consistent with April 2026). Self-published by the business, so firmer than the directory rows — but it evidences Pavet's own outlets, not that they carry Humuson product. Unverified: ring before sending anyone. Pavet's Facebook Details panel also gives 742 Mbuya Nehanda Road, Marondera, undated and held back here in case the advert supersedes it. The advert lists this alongside the Elm Street shop, so the two read as a retail outlet and an industrial site rather than a duplicate."
   }
 ]

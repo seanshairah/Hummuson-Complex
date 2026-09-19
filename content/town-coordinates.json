@@ -80,6 +80,12 @@
       "kind": "settlement",
       "osmMatch": "Kwekwe [city]"
     },
+    "Macheke": {
+      "lat": -18.14538,
+      "lng": 31.84714,
+      "kind": "settlement",
+      "osmMatch": "Macheke [town]"
+    },
     "Marondera": {
       "lat": -18.1901,
       "lng": 31.54554,
