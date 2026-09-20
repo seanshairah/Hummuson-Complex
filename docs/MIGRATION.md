@@ -487,3 +487,41 @@ Tested Seeds' own Facebook announcement dated 22 Aug 2024 for a 23 Aug 2024 open
 Chiredzi is a new town for the list and gets its OSM point with the rest. The
 announcement is two years old, so it is worth a call to confirm the branch still
 trades before anyone drives there.
+
+## Winpat Agrochem (added 20 Sep 2026)
+
+**Winpat Agrochem P/L** added as a Harare stockist, from an owner-supplied
+screenshot of the shop's Google business listing:
+
+| Field | Value |
+| --- | --- |
+| Address | 52 Kenneth Kaunda Avenue, corner Second Street, Harare |
+| Phone | 077 136 6208 |
+| Website | winpatagrochem.co.zw |
+
+The listing describes the business as an agrochemicals supplier in Harare and
+rates it 4.7 from three reviews. The shop's own banner among the listing's
+photos reads *"Cnr Second Str & Kenneth Kaunda Ave"*, which corroborates
+Google's street and is why the corner is recorded alongside the street number.
+Harare already had a coordinate, so no new town point was needed; the list is
+now 45 outlets across 23 towns, still with no drafts.
+
+> **Not the row that was deleted.** The 0%-accurate directory used to place NTS's
+> head office at 75 Kenneth Kaunda Avenue, and that row was removed on 19 Sep when
+> the owner confirmed Bluff Hill. Winpat at number 52 is a different business on
+> the same street, not that entry coming back.
+
+**Provenance and what is still open:**
+
+- The banner prints four further contact numbers beside the one Google shows, but
+  the photograph is far too small to read the digits. They are **left out rather
+  than guessed at** — a wrong number on a stockist row sends a farmer to a dead
+  line. A legible photo of that banner would add them.
+- As with Pavet, the listing evidences *Winpat's shop*, not that they carry
+  Humuson product. `verifiedOn` stays null and the row keeps its place in the
+  admin's Checked queue.
+- **Hours are not recorded.** The screenshot caught only "Closed · Opens 8am Sun",
+  which says it trades on Sundays but nothing about the rest of the week.
+- There is no `website` field on `Distributor`, so winpatagrochem.co.zw lives in
+  the admin-only `sourceNote` rather than on the public card. Winpat is the first
+  stockist to have brought a website with it; if more do, the model needs a field.
