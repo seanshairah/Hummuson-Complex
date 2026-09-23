@@ -509,7 +509,10 @@ now 45 outlets across 23 towns, still with no drafts.
 > **Not the row that was deleted.** The 0%-accurate directory used to place NTS's
 > head office at 75 Kenneth Kaunda Avenue, and that row was removed on 19 Sep when
 > the owner confirmed Bluff Hill. Winpat at number 52 is a different business on
-> the same street, not that entry coming back.
+> the same street, not that entry coming back. (NTS is back on this street from
+> 23 Sep, but as its Harare *town branch* and with no street number — see below.
+> Three separate things share Kenneth Kaunda Avenue now: Winpat at 52, NTS's town
+> branch somewhere on it, and the deleted head-office row that claimed 75.)
 
 **Provenance and what is still open:**
 
@@ -525,3 +528,33 @@ now 45 outlets across 23 towns, still with no drafts.
 - There is no `website` field on `Distributor`, so winpatagrochem.co.zw lives in
   the admin-only `sourceNote` rather than on the public card. Winpat is the first
   stockist to have brought a website with it; if more do, the model needs a field.
+
+## NTS Harare moved to Kenneth Kaunda Avenue (corrected 23 Sep 2026)
+
+**The owner withdrew the Robert Mugabe address.** `nts-harare` carried *173 Robert
+Mugabe Street, Harare*, from the branch list on thedirectory.co.zw — the source that
+rates its own listing "0% accurate". The owner says the Harare town branch is on
+**Kenneth Kaunda Avenue**, so the Robert Mugabe address is gone.
+
+| | Before | After |
+| --- | --- | --- |
+| Address | 173 Robert Mugabe Street, Harare | Kenneth Kaunda Avenue, Harare |
+| Source | 0%-accurate directory | Owner, 23 Sep 2026 (street only) |
+
+The row keeps its slug, so the importer updates it in place rather than deleting and
+recreating it; the list is still 45 outlets across 23 towns with no drafts.
+
+> **No street number, deliberately.** The owner named the street, not a number. The
+> only Kenneth Kaunda number this project has ever held is **75**, and that sat on the
+> directory's separate "NTS Head Office" row — the one the owner corrected to Bluff
+> Hill on 19 Sep. Moving 75 onto the town branch would republish an address the owner
+> has already told us is wrong, on a row they never attached it to. The street alone
+> is honest and sends a farmer to the right road; a number would be a guess dressed up
+> as a correction. **Open with the owner: the street number.**
+
+Three other rows still carry a Robert Mugabe address and were **not** touched, because
+the correction was about Harare and those are different towns with their own Robert
+Mugabe streets: `nts-gweru-2` (50 Robert Mugabe Way, Gweru), `nts-masvingo`
+(26 Robert Mugabe Street, Masvingo), and the two Farmer's Choice rows in Bulawayo and
+Gweru. If NTS Gweru 2 or NTS Masvingo is wrong in the same way, say so and they go the
+same route — both are still directory-sourced and unverified.
