@@ -575,7 +575,7 @@
     "brand": "IKAR"
   },
   {
-    "name": "IN5",
+    "name": "iN5 NPK 3-30-0",
     "displayMark": true,
     "slug": "in5",
     "oldUrls": [
@@ -643,22 +643,22 @@
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/1N6--1152x1536.jpg",
         "localPath": "/images/products/in5/1.jpg",
-        "alt": "IN5 — product pack"
+        "alt": "iN5 NPK 3-30-0 — product pack"
       },
       {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2025/06/bigo-wff-768x1024.jpg",
         "localPath": "/images/products/in5/2.jpg",
-        "alt": "IN5 — product pack"
+        "alt": "iN5 NPK 3-30-0 — product pack"
       },
       {
         "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.47.jpeg",
         "localPath": "/images/products/in5/wa-bottle.jpg",
-        "alt": "IN5 — Humuson Complex product photograph",
+        "alt": "iN5 NPK 3-30-0 — Humuson Complex product photograph",
         "role": "catalogue"
       }
     ],
     "featured": true,
-    "notes": "Merged duplicate of /product/in5-2/ (5L, $54.00; carries the composition data). The canonical 1L listing shows $0.00 — treated as price not set (priceUsd null). Oxide notation normalized from the listing’s \"P205\"/\"K20\" OCR style. IKAR product line.",
+    "notes": "Merged duplicate of /product/in5-2/ (5L, $54.00; carries the composition data). The canonical 1L listing shows $0.00 — treated as price not set (priceUsd null). Oxide notation normalized from the listing’s \"P205\"/\"K20\" OCR style. IKAR product line. Renamed from “IN5” to “iN5 NPK 3-30-0” on 25 Sep 2026 at the owner's request; the pack reads “IN5 /NPK 3-30-0+Zn”, so the figures are hyphenated as the label has them. The +Zn stays in the composition rather than the name. Slug unchanged.",
     "sourceUrl": "https://humusoncomplex.com/product/in5/",
     "brand": "IKAR"
   },
@@ -1668,7 +1668,7 @@
     "brand": "IKAR"
   },
   {
-    "name": "NPK 12-11-30+TE",
+    "name": "iN3 NPK 12-11-30",
     "displayMark": false,
     "slug": "npk-12-11-30-te",
     "oldUrls": [],
@@ -1697,12 +1697,12 @@
       {
         "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.41 (2).jpeg",
         "localPath": "/images/products/npk-12-11-30-te/wa-front.jpg",
-        "alt": "npk-12-11-30-te product photograph",
+        "alt": "iN3 NPK 12-11-30 — product pack",
         "role": "primary"
       }
     ],
     "featured": false,
-    "notes": "New product from the August 2026 catalogue photo set — front label only; specification to be confirmed with Humuson technical support.",
+    "notes": "New product from the August 2026 catalogue photo set — front label only; specification to be confirmed with Humuson technical support. The owner named it iN3 on 25 Sep 2026 and asked for the NPK figures in the name; company.json already listed “IN5, IN3” in the IKAR line, so the record had the name before the product did. The slug stays npk-12-11-30-te so the importer updates this row in place and the existing URL keeps working.",
     "sourceUrl": "",
     "brand": "IKAR"
   }

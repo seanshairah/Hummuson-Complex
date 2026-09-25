@@ -56,6 +56,26 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
   const [loading, setLoading] = useState(false);
   const [started, setStarted] = useState(false);
 
+  /**
+   * The finder asks a grower what they grow, so it offers crops — not the
+   * classes those crops are filed under.
+   *
+   * Brassicas, Cereals and the rest earn their place on the Crops pages, where
+   * they are navigation a grower reads. Here they sat in the same list as their
+   * own members and returned the same products, so the question offered
+   * "Brassicas", "Broccoli", "Cabbage" and "Cauliflower" as four answers with
+   * nothing to choose between them. Every product filed under a class is also
+   * filed under at least one of its members, so dropping the class rows puts
+   * no product out of reach — it just stops asking a question that has no
+   * answer.
+   */
+  const cropOptions = useMemo(() => {
+    const classes = new Set(
+      options.crops.flatMap((crop) => (crop.parentSlug ? [crop.parentSlug] : [])),
+    );
+    return options.crops.filter((crop) => !classes.has(crop.slug));
+  }, [options.crops]);
+
   const steps = useMemo(
     () => [
       {
@@ -64,10 +84,11 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
         question: "What are you growing?",
         hint: "Crops as listed in Humuson product guidance.",
         options: [
-          ...options.crops.map((crop) => ({
+          ...cropOptions.map((crop) => ({
             value: crop.slug,
             label: crop.name.charAt(0).toUpperCase() + crop.name.slice(1),
-          indent: Boolean(crop.parentSlug),
+            // Flat: with the classes gone there is no tree left to indent under.
+            indent: false,
             meta: `${crop.count} product${crop.count === 1 ? "" : "s"}`,
           })),
           { value: "", label: "Other / not listed", meta: "We’ll match broadly", indent: false },
@@ -107,7 +128,7 @@ export function FinderWizard({ options }: { options: FinderOptions }) {
         set: (value: string) => setAnswers((a) => ({ ...a, method: value })),
       },
     ],
-    [options, answers],
+    [options, cropOptions, answers],
   );
 
   const current = steps[step];

@@ -663,3 +663,82 @@ addresses and phone numbers they actually came for were below it.
 The list is now first and the map follows. Both `lg:order-*` overrides are gone
 with it: the grid's own column order already puts the list in the wider first
 column and the map beside it on a wide screen, so the desktop layout is unchanged.
+
+## Owner corrections, 25 Sep 2026 (second round) — crop classes, two photographs, the Intense names
+
+### Crop classes leave the Product Finder and stay on Crops
+
+The crop taxonomy has six classes — Brassicas, Cereals, Cucurbits, Fruits,
+Legumes and Solanaceous — each with two or three members. They are useful
+navigation on the Crops pages, which is where the owner says they belong. In the
+finder they were being offered as answers *alongside their own members*:
+
+> What are you growing? → **Brassicas** (13 products) · **Broccoli** (13) ·
+> **Cabbage** (13) · **Cauliflower** (13)
+
+Four answers, one result. The counts are identical because every product filed
+under a class is also filed under each of its members — the class row added a
+choice with nothing behind it, and made the list 25 rows long.
+
+The finder's crop question now offers the 19 real crops and no classes. A row is
+a class if any other row names it as a parent, so the rule needs no list to
+maintain. **Nothing became unreachable:** the check that mattered was whether any
+product sits on a class and on none of its members, and none does — 0 for all
+five classes that carry products. The indentation went with the classes, since a
+tree with no parents left is just a list.
+
+`filterProducts` is untouched, so a class still works as a filter everywhere else
+and an existing `?crop=brassicas` link still resolves.
+
+### Two photographs were reframed
+
+Neither image was retouched — no colour, contrast or sharpening was applied.
+Both were re-cropped, so what a farmer sees is the photograph that was taken.
+
+| | Before | After | Why |
+| --- | --- | --- | --- |
+| `bigo-w/1.jpg` | 1152x1536, bottle 43% of frame width | 833x1111, bottle 60% | Loosest framing of the whole IKAR studio set (the rest run 44-61%). Trimmed the surplus white to match the best of its neighbours; aspect kept at 3:4 so nothing else about the card changes. |
+| `fosto/wa-front.jpg` | 608x1080 | 470x627 | A phone photograph of the bottle on a table, backlit by a window. The card's landscape crop took a band from the middle, which clipped the product name against the bottom edge and filled half the frame with curtain and table. Recropped with the IKAR mark and the name centred, so the band the card shows is the label. |
+
+> **Fosto's photograph is the limit here, not the crop.** It is the only image
+> the product has, and it is a backlit snapshot: the white bottle sits against a
+> bright window with a green curtain and a wooden table in shot. Cropping makes
+> the product identifiable; it cannot make it a product photograph. A plain
+> background shot, like the IKAR studio images the other bottles have, is what
+> would actually fix it. **Open with the owner.**
+
+Bigo W keeps its `role: "catalogue"` photograph (`wa-bottle.jpg`) untouched —
+that is a different image from the one the card shows, and it was not what the
+instruction was about.
+
+### iN5 and iN3 carry their NPK figures
+
+| Slug | Before | After |
+| --- | --- | --- |
+| `in5` | IN5 | **iN5 NPK 3-30-0** |
+| `npk-12-11-30-te` | NPK 12-11-30+TE | **iN3 NPK 12-11-30** |
+
+The second product had never carried its own name — it was filed under its
+analysis. `company.json` has listed *"Mendelenium, Bora, Ocean, IN5, **IN3**,
+Enzo Pro..."* in the IKAR line since the partner strip was written, so the record
+held the name before the product did.
+
+**The figures are hyphenated because the packs are.** The owner wrote them with
+dots; the iN5 label in the catalogue photograph reads `IN5 /NPK 3-30-0+Zn` and
+the iN3 label reads `NPK 12-11-30+TE`, and `plan.ts` already quotes a March 2026
+price-sheet row as `Ikar NPK 3-30-0+zn`. The trailing `+Zn` and `+TE` stay out of
+the names and remain in the composition and the description.
+
+**Both slugs are unchanged** (`in5`, `npk-12-11-30-te`), so the importer updates
+each row in place and existing URLs keep working — the same reason NTS Harare
+kept its slug on 23 Sep. `npk-12-11-30-te` now reads oddly against the name
+"iN3 NPK 12-11-30"; changing it would need a redirect and is worth doing only if
+the owner wants the tidier URL.
+
+> **One side effect worth knowing.** `plan.ts` carried a comment naming this
+> exact product as the thing "no string matcher will ever work out" — the price
+> sheet says `Ikar NPK 3-30-0+zn` and the catalogue said `IN5`. With the figures
+> now in the name, that particular row is within reach of the matcher. The rule
+> that the plan never applies itself is unchanged, because the next sheet will
+> carry its own name for something; the comment was updated so it no longer
+> claims a case that has been fixed.

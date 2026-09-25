@@ -6,10 +6,13 @@ import { nameTokens, normaliseName, parsePackSize, parsePrice, type PackSize } f
  * Turning a parsed sheet into a reviewable plan.
  *
  * The plan never applies itself. Everything below produces a proposal that an
- * admin confirms row by row, and the reason is a row from the March 2026
- * sheet: "Ikar NPK 3-30-0+zn" is the product this catalogue calls IN5, which
- * no string matcher will ever work out. A matcher confident enough to act
- * alone is a matcher confident enough to be wrong alone.
+ * admin confirms row by row, and the reason was a row from the March 2026
+ * sheet: "Ikar NPK 3-30-0+zn" was the product this catalogue then called IN5,
+ * which no string matcher could have worked out. That product was renamed to
+ * "iN5 NPK 3-30-0" on 25 Sep 2026, so this particular row is now within reach —
+ * but the rule stands, because the next sheet will carry its own name for
+ * something. A matcher confident enough to act alone is a matcher confident
+ * enough to be wrong alone.
  */
 
 export interface CatalogueProduct {
