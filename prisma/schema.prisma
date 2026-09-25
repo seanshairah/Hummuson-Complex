@@ -27,14 +27,18 @@ enum PublishStatus {
 }
 
 /// Application methods actually used across the Humuson range.
+///
+/// SOIL_DRENCH is one value because "soil application" and "drench" are the
+/// same instruction to a farmer — put it on the ground, in water — and two
+/// filters for one answer split the catalogue in half for no gain. Fertigation
+/// and basal dressing were dropped at the owner's instruction on 25 Sep 2026:
+/// they describe when and through what a product goes out, not how, and the
+/// products that carried them are reachable under the methods that remain.
 enum ApplicationMethod {
   FOLIAR
-  SOIL
+  SOIL_DRENCH
   SEED_TREATMENT
   TOP_DRESSING
-  BASAL_DRESSING
-  FERTIGATION
-  DRENCH
   OTHER
 }
 

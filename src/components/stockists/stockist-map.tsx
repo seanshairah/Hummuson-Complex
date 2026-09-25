@@ -93,36 +93,13 @@ export function StockistMap({ towns }: { towns: StockistTown[] }) {
         </p>
       </div>
 
- <div className="grid gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-start">
-        {/* Map first in the DOM so the phone gets its control before the list;
-            `lg:order-2` puts it back on the right on a wide screen, where both
-            columns then start on the same line. */}
-        <div className="lg:order-2 lg:sticky lg:top-24">
-          <button
-            type="button"
-            onClick={() => setMapOpen((open) => !open)}
-            aria-expanded={mapOpen}
-            className="mb-3 flex h-11 w-full items-center justify-between gap-3 rounded-full border border-line bg-cream px-4 text-sm font-medium text-ink transition-colors hover:border-leaf-600 lg:hidden"
-          >
-            <span className="flex items-center gap-2">
-              <MapIcon className="size-4 text-leaf-700" strokeWidth={2} />
-              {mapOpen ? "Hide map" : `View map of ${current.town}`}
-            </span>
-            <ChevronDown
-              className={cn("size-4 text-ink-faint transition-transform", mapOpen && "rotate-180")}
-              strokeWidth={2}
-            />
-          </button>
-          <MapPanel
-            query={`${current.town}, Zimbabwe`}
-            caption={`${current.town}, Zimbabwe`}
-            pin={place?.pin}
-            scale={place?.scale}
-            hidden={!mapOpen}
-          />
-        </div>
-
-        <div className="lg:order-1">
+      <div className="grid gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-start">
+        {/* The stockist list comes first in the DOM, so a phone shows the
+            addresses and phone numbers before anything else. The map is how
+            you orient yourself once you have them, not a control to get past
+            first. On a wide screen the grid puts the list in the wider column
+            and the map beside it, so neither needs an order override. */}
+        <div>
           {results.length === 0 ? (
             <div className="rounded-3xl border border-dashed border-line px-6 py-12 text-center">
               <p className="font-display text-lg font-semibold text-ink">
@@ -213,6 +190,31 @@ export function StockistMap({ towns }: { towns: StockistTown[] }) {
               )}
             </>
           )}
+        </div>
+
+        <div className="lg:sticky lg:top-24">
+          <button
+            type="button"
+            onClick={() => setMapOpen((open) => !open)}
+            aria-expanded={mapOpen}
+            className="mb-3 flex h-11 w-full items-center justify-between gap-3 rounded-full border border-line bg-cream px-4 text-sm font-medium text-ink transition-colors hover:border-leaf-600 lg:hidden"
+          >
+            <span className="flex items-center gap-2">
+              <MapIcon className="size-4 text-leaf-700" strokeWidth={2} />
+              {mapOpen ? "Hide map" : `View map of ${current.town}`}
+            </span>
+            <ChevronDown
+              className={cn("size-4 text-ink-faint transition-transform", mapOpen && "rotate-180")}
+              strokeWidth={2}
+            />
+          </button>
+          <MapPanel
+            query={`${current.town}, Zimbabwe`}
+            caption={`${current.town}, Zimbabwe`}
+            pin={place?.pin}
+            scale={place?.scale}
+            hidden={!mapOpen}
+          />
         </div>
       </div>
     </div>

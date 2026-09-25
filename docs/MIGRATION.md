@@ -558,3 +558,108 @@ Mugabe streets: `nts-gweru-2` (50 Robert Mugabe Way, Gweru), `nts-masvingo`
 (26 Robert Mugabe Street, Masvingo), and the two Farmer's Choice rows in Bulawayo and
 Gweru. If NTS Gweru 2 or NTS Masvingo is wrong in the same way, say so and they go the
 same route — both are still directory-sourced and unverified.
+
+## Owner corrections, 25 Sep 2026 — ranges, application methods, Bacto-Seed
+
+Five instructions in one message, and the last of them is a layout change rather
+than a content one.
+
+### Master is a powder
+
+`master` had no formulation recorded anywhere. Its note carried a guess — *"photo
+filename suggests 5L — confirm"* — which had quietly read the pack as a liquid.
+The owner says Master is a **powder**, so the 5 L is withdrawn and the note now
+says why. No pack size replaces it: none is stated in any source we hold, and the
+one number we had turned out to be a misreading of the form, not a size.
+
+The word now appears where a farmer sees it. `shortDescription` opens
+*"Microbial powder that promotes soil biological and enzymatic activity…"*, which
+follows the two products that already state their form in the same place — Bio NPK
+Powder S (*"Microbial powder for seed dressing…"*) and Ocean (*"Liquid fertilizer
+with a high concentration of seaweed extract…"*).
+
+> **Still open: Master's pack size.** Bacto-Seed, now delisted, was the row that
+> gave the 5 L its plausibility — both were Bio Energy, both were photographed in
+> the same set. With Bacto-Seed gone and the form corrected, nothing in the
+> project supports a size for Master at all.
+
+### Grow+ and CarboAmin are biostimulants; Organic is the four the owner named
+
+| Product | Ranges before | Ranges after |
+| --- | --- | --- |
+| Grow+ Top Dressing | Crop Nutrition, Organic | Crop Nutrition, **Biostimulants** |
+| CarboAmin Basal Dressing | Crop Nutrition, Organic | Crop Nutrition, **Biostimulants** |
+| eMAXX Ultra | Biostimulants | Biostimulants, **Organic** |
+| Ocean | Biostimulants, Liquid Foliar | Biostimulants, Liquid Foliar, **Organic** |
+| Bio NPK Powder S | Microbiological | Microbiological, **Organic** |
+| Master | Microbiological | Microbiological, **Organic** |
+
+Organic is now exactly **eMAXX Ultra, Ocean, Bio NPK Powder S and Master**. Both
+products kept Crop Nutrition — the owner's instruction was about where they sit as
+biostimulants, and a product belongs to every range its own text supports.
+
+> **The Organic description had to change with the membership.** It read
+> *"…humified carbon, humic and fulvic acids, amino acids and natural-origin trace
+> elements"* — which is Grow+ and CarboAmin, the two products that just left. Left
+> alone, the range page would have described its own former contents. It now reads
+> *"seaweed extract, amino acids, and the bacteria and fungi that release what the
+> soil already holds"*, which is the four that are actually in it, and a `note`
+> records the reclassification so the next person does not read the rewrite as
+> drift.
+
+### Soil and drench are one method; fertigation and basal dressing are gone
+
+`ApplicationMethod` went from eight values to five:
+
+| Before | After |
+| --- | --- |
+| FOLIAR, **SOIL**, SEED_TREATMENT, TOP_DRESSING, **BASAL_DRESSING**, **FERTIGATION**, **DRENCH**, OTHER | FOLIAR, **SOIL_DRENCH**, SEED_TREATMENT, TOP_DRESSING, OTHER |
+
+"Soil application" and "drench" are the same instruction to a farmer — put it on
+the ground, in water — and as two filters they split one answer, so a grower
+picking either saw half the products that suited them. Three products declared
+both and are now listed once.
+
+Migration `20260925110000_application_method_merge` rebuilds the enum, because
+Postgres cannot drop a value from one in place. The data moves through `TEXT` so
+the remap is ordinary SQL: SOIL and DRENCH both land on SOIL_DRENCH and are
+de-duplicated, and the two dropped values are removed from the arrays. It was
+applied against a populated database before it was committed.
+
+> **A dropped method does not become SOIL_DRENCH.** `ApplicationGuide.method` goes
+> to null on those rows and keeps its rate — the rate is what Humuson published,
+> and re-filing the row under a method nobody chose would invent a recommendation.
+> The importer has no rule for `basal` or `fertigation` either, so a label that
+> still says one falls through to OTHER and is filtered out, rather than being
+> mapped onto SOIL_DRENCH and putting the same filter back under a new name.
+
+Two product **names** still carry the dropped words: *Grow+ Top Dressing* and
+*CarboAmin Basal Dressing*. Those were not touched — they are the names on the
+packs, and the method taxonomy is a filter, not a product name. **Open with the
+owner:** whether CarboAmin should still be called "Basal Dressing" now that basal
+dressing is not a method the site offers.
+
+### Bacto-Seed is withdrawn
+
+The last of the Bacto line, after Bacto-K and Bactoforce went on 17 Sep. It
+follows the same route as those five: out of `products.json`, into
+`delisted-products.json` dated 2026-09-25, and its old WordPress URL
+(`/product/bacto-seed/`) now redirects to `/products` instead of to a page that
+would 404. Its photo stays in `assets.json` and `public/images/products/`, exactly
+as the 17 Sep delistings did — the importer prunes the product, not the archive.
+The catalogue is **21 products**.
+
+The finder's unit-test fixture was named after Bacto-Seed. It now names Bio NPK
+Powder S, which is genuinely seed-dressed and soil-applied, so the test no longer
+asserts behaviour through a product that does not exist.
+
+### Stockist details sit above the map on a phone
+
+The Where to Buy list and map share a two-column grid. The map was **first in the
+DOM** so that a phone got its collapsed "View map of …" control before the list —
+which meant the first thing a farmer met on the page was a control, and the
+addresses and phone numbers they actually came for were below it.
+
+The list is now first and the map follows. Both `lg:order-*` overrides are gone
+with it: the grid's own column order already puts the list in the wider first
+column and the map beside it on a wide screen, so the desktop layout is unchanged.

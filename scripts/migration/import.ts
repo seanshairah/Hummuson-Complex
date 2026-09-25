@@ -60,14 +60,15 @@ function slugify(input: string): string {
 
 // ─── Conservative mapping rule tables ────────────────────────────────────────
 
+// There is deliberately no rule for "basal" or "fertigation". Both were dropped
+// from the taxonomy on 25 Sep 2026, so a label that still says either falls
+// through to OTHER and is filtered out below — mapping them onto SOIL_DRENCH
+// would put the same filter back under a different name.
 const METHOD_RULES: [RegExp, ApplicationMethod][] = [
   [/foliar/i, ApplicationMethod.FOLIAR],
   [/seed (dressing|treatment|soaking|coating)/i, ApplicationMethod.SEED_TREATMENT],
   [/top.?dress/i, ApplicationMethod.TOP_DRESSING],
-  [/basal/i, ApplicationMethod.BASAL_DRESSING],
-  [/fertigation|drip/i, ApplicationMethod.FERTIGATION],
-  [/drench/i, ApplicationMethod.DRENCH],
-  [/soil/i, ApplicationMethod.SOIL],
+  [/drench|soil/i, ApplicationMethod.SOIL_DRENCH],
 ];
 
 function mapMethod(label: string): ApplicationMethod {

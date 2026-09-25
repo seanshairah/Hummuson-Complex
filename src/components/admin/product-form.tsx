@@ -14,16 +14,7 @@ import { ListInput, PairedListInput } from "@/components/admin/list-input";
 import { MediaPicker, type MediaOption } from "@/components/admin/media-picker";
 import { humanize } from "@/lib/utils";
 
-const METHODS = [
-  "FOLIAR",
-  "SOIL",
-  "SEED_TREATMENT",
-  "TOP_DRESSING",
-  "BASAL_DRESSING",
-  "FERTIGATION",
-  "DRENCH",
-  "OTHER",
-];
+const METHODS = ["FOLIAR", "SOIL_DRENCH", "SEED_TREATMENT", "TOP_DRESSING", "OTHER"];
 
 export interface ProductFormOptions {
   categories: { id: string; name: string }[];

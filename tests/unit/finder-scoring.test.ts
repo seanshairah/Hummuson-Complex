@@ -8,12 +8,12 @@ import {
 
 const rootProduct: FinderCandidate = {
   id: "1",
-  slug: "bacto-seed",
-  name: "Bacto-Seed",
+  slug: "bio-npk-powder-s",
+  name: "Bio NPK Powder S",
   cropSlugs: ["maize", "vegetables", "cereals"],
   benefitSlugs: ["root-development", "nutrient-uptake"],
   stageKeys: ["seed", "emergence"],
-  methods: ["SEED_TREATMENT", "SOIL"],
+  methods: ["SEED_TREATMENT", "SOIL_DRENCH"],
 };
 
 const foliarProduct: FinderCandidate = {
@@ -44,7 +44,7 @@ describe("finder scoring", () => {
       stageKey: "seed",
       method: "SEED_TREATMENT",
     });
-    expect(results[0]?.candidate.slug).toBe("bacto-seed");
+    expect(results[0]?.candidate.slug).toBe("bio-npk-powder-s");
     expect(results[0]?.reasons.length).toBeGreaterThan(0);
   });
 
@@ -72,7 +72,7 @@ describe("finder scoring", () => {
   });
 
   it("disqualifies a product whose declared methods exclude the one asked for", () => {
-    expect(scoreCandidate(foliarProduct, { method: "SOIL" }).disqualified).toBe(true);
+    expect(scoreCandidate(foliarProduct, { method: "SOIL_DRENCH" }).disqualified).toBe(true);
   });
 
   it("never returns a product with no positive evidence for any answer", () => {
@@ -114,18 +114,18 @@ describe("finder fallback", () => {
       benefitSlug: "root-development",
     });
     expect(outcome.relaxed).toEqual([]);
-    expect(outcome.results[0]?.candidate.slug).toBe("bacto-seed");
+    expect(outcome.results[0]?.candidate.slug).toBe("bio-npk-powder-s");
   });
 
   it("relaxes the least binding criterion first and reports it", () => {
-    // Bacto-Seed fits maize + root development, but is never applied FOLIAR.
+    // Bio NPK fits maize + root development, but is never applied FOLIAR.
     const outcome = recommendWithFallback([rootProduct], {
       cropSlug: "maize",
       benefitSlug: "root-development",
       method: "FOLIAR",
     });
     expect(outcome.relaxed).toEqual(["method"]);
-    expect(outcome.results[0]?.candidate.slug).toBe("bacto-seed");
+    expect(outcome.results[0]?.candidate.slug).toBe("bio-npk-powder-s");
   });
 
   it("reports an honest empty result when nothing can satisfy the answers", () => {

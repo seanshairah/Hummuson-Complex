@@ -38,5 +38,13 @@
     "delistedOn": "2026-09-17",
     "reason": "Withdrawn from the Bio Energy range at the owner's instruction.",
     "redirectTo": "/products"
+  },
+  {
+    "slug": "bacto-seed",
+    "name": "Bacto-Seed",
+    "brand": "Bio Energy",
+    "delistedOn": "2026-09-25",
+    "reason": "Withdrawn at the owner's instruction, 25 Sep 2026 — the last of the Bacto line to go, after Bacto-K and Bactoforce on 17 Sep.",
+    "redirectTo": "/products"
   }
 ]

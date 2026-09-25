@@ -1,46 +1,5 @@
 [
   {
-    "name": "Bacto-Seed",
-    "displayMark": false,
-    "slug": "bacto-seed",
-    "oldUrls": [
-      "https://humusoncomplex.com/product/bacto-seed/"
-    ],
-    "categorySlugs": [
-      "microbiological"
-    ],
-    "shortDescription": "Contains a bacterial complex that promotes seed viability and germination and improves growth and development of the root system.",
-    "descriptionHtml": "<h4>Why Bacto-Seed?</h4>\n<ul>\n<li>Promotes seed viability and germination;</li>\n<li>Improves growth and development of root system;</li>\n<li>Bacto-Seed enhances the uptake of phosphorus and potassium from the soil;</li>\n<li>Improves soil structure.</li>\n</ul>\n<h4>Operating principle:</h4>\n<p>Bacto-Seed product contains a bacterial complex that releases biologically active substances that promote seed germination and the development of young plants, balancing vital metabolic processes and increasing resistance to stress.</p>\n\n<p>Additional Information: <a href=\"https://www.bioenergy.lt/wp-content/uploads/2021/03/Bacto-Seed_Onepage-INFO-WEB.pdf\"><strong>Click Me</strong></a></p>",
-    "composition": [],
-    "packSizes": [
-      {
-        "size": "5 L",
-        "priceUsd": 80
-      }
-    ],
-    "applicationRates": [],
-    "applicationMethods": [],
-    "suitableCrops": [],
-    "benefits": [
-      "Promotes seed viability and germination",
-      "Improves growth and development of root system",
-      "Enhances the uptake of phosphorus and potassium from the soil",
-      "Improves soil structure"
-    ],
-    "priceUsd": 80,
-    "images": [
-      {
-        "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_BACTO-SEED_5L_1080x1080-600x600-1.jpg",
-        "localPath": "/images/products/bacto-seed/1.jpg",
-        "alt": "Bacto-Seed — product pack"
-      }
-    ],
-    "featured": false,
-    "notes": "Bioenergy LT product line. Original description repeated one passage twice (copy-paste error) — duplicate removed, wording untouched. Pack size not stated in listing text; photo filename suggests 5L — confirm.",
-    "sourceUrl": "https://humusoncomplex.com/product/bacto-seed/",
-    "brand": "Bio Energy"
-  },
-  {
     "name": "Master",
     "displayMark": false,
     "slug": "master",
@@ -48,9 +7,10 @@
       "https://humusoncomplex.com/product/master/"
     ],
     "categorySlugs": [
-      "microbiological"
+      "microbiological",
+      "organic"
     ],
-    "shortDescription": "Promotes soil biological and enzymatic activity and increases the amount of phosphorus and potassium available to plants.",
+    "shortDescription": "Microbial powder that promotes soil biological and enzymatic activity and increases the amount of phosphorus and potassium available to plants.",
     "descriptionHtml": "<h4>Why Master?</h4>\n<ul>\n<li>Promotes soil biological and enzymatic activity;</li>\n<li>Increases the amount of phosphorus and potassium available to plants;</li>\n<li>Increases N reserves in soil;</li>\n<li>Promotes plant growth and accordingly, better resistance to stress;</li>\n<li>Improves soil structure.</li>\n</ul>\n<h4>Operating principle:</h4>\n<p>The product contains a complex of bacteria that exudes biologically active substances, vitamins, enzymes, plant hormones that promote plant development and secrete micro and macro elements that are especially needed by plants. Improving the physical and chemical properties of the soil and the uptake of nutrients by plants. Its action begins immediately after contact with the soil or parts of the plant and acts under favorable physiological conditions for up to 8 weeks.</p>\n<p>Additional Information: <a href=\"https://www.bioenergy.lt/wp-content/uploads/2021/03/Master-Onepage-INFO-WEB.pdf\"><strong>Click Me</strong></a></p>",
     "composition": [],
     "packSizes": [],
@@ -85,7 +45,7 @@
       }
     ],
     "featured": false,
-    "notes": "Bioenergy LT product line. Acts for up to 8 weeks after contact with soil or plant parts (per description). Pack size not stated in listing text; photo filename suggests 5L — confirm. Front-of-pack details transcribed from the August 2026 photo set.",
+    "notes": "Bioenergy LT product line. Acts for up to 8 weeks after contact with soil or plant parts (per description). The owner confirmed on 25 Sep 2026 that Master is a powder, so the 5 L that the photo filename suggested is withdrawn — that guess had read the pack as a liquid. No pack size is stated anywhere and none is recorded here. Front-of-pack details transcribed from the August 2026 photo set.",
     "sourceUrl": "https://humusoncomplex.com/product/master/",
     "tagline": "For improvement of soil fertility",
     "brand": "Bio Energy"
@@ -155,7 +115,7 @@
     ],
     "categorySlugs": [
       "crop-nutrition",
-      "organic"
+      "biostimulants"
     ],
     "shortDescription": "Organic top dressing containing humified and water-soluble organic carbon, natural vitamins, organic acids, enzymes and more than 40 natural-origin nutrition elements.",
     "descriptionHtml": "<ul>\n  <li>ORGANIC CARBON (HUMIFIED AND WATER SOLUBLE)</li>\n  <li>VITAMINS (CAROTENE, B1, B2, B3, B5, B6, B12, E, C, D, P)</li>\n  <li>ORGANIC ACIDS (FOLIC, HUMIC, FULVIC)</li>\n  <li>ENZYMES (CATALASE, PEROXIDASE, REDUCTASE, PROTEASE)</li>\n  <li>MORE THAN 40 DIFFERENT, NATURAL ORIGINAL NUTRITION ELEMENTS (Co., Mn, Cu, B, Zn, I, Br, Mo, V, Cr, Be, Ni&#8230;)</li>\n</ul>",
@@ -187,7 +147,7 @@
     "applicationMethods": [
       "top dressing",
       "foliar spray",
-      "drench"
+      "soil drench"
     ],
     "suitableCrops": [],
     "benefits": [
@@ -250,7 +210,7 @@
     ],
     "categorySlugs": [
       "crop-nutrition",
-      "organic"
+      "biostimulants"
     ],
     "shortDescription": "Basal dressing containing humic and fulvic acids, amino acids and phytohormones — prevents nitrogen leaching, stabilizes phosphorus and increases nutrient availability and absorption.",
     "descriptionHtml": "<p>CONTAINS HUMIC &amp; FULVIC ACIDS</p>\n<ul>\n  <li>Prevent nitrogen leaching</li>\n  <li>Provides food for the microbes</li>\n  <li>Stabilizes phosphorus</li>\n  <li>Increases nutrient availability and absorption</li>\n  <li>Enhances for growth</li>\n  <li>Increase water retention</li>\n  <li>Improve overall soil structure</li>\n  <li>Improve soil CEC</li>\n  <li>Improves crop vigor</li>\n  <li>Improves seed germination</li>\n  <li>Increase iron uptake</li>\n</ul>\n<p>BIOSTIMULANT PROPERTIES — NUTRITIONAL COMPONENTS</p>\n<ul>\n  <li>Contains 17 essential amino acids</li>\n  <li>Phytohormones (Auxins and cytokinins)</li>\n  <li>Chelating agents (Amino acids, fulvic acid and humic acids)</li>\n  <li>Micro and Macro Nutrients</li>\n</ul>\n<ul>\n  <li>Makroelements: organic NPK</li>\n  <li>organic carbon (humified carbon and watersoluble carbon)</li>\n  <li>rich with natural vitamins: contains carotene (provitamin A), B1 B2 B3 B5 B6 B12 E, C, D, P)</li>\n  <li>organic acids: folic acid, humic acids fulvic acid</li>\n  <li>trace elements (Mn, Cu, B, Zn, I, Br, Mo, V, Cr, Be, Ni, Ag, Sn, Pb As, Ba, Sr, Ti)</li>\n  <li>amino acids (Glutamic acid, Glycine, Valine, Arginine, Aspartic acid, Alanine, Serine, Leucine, Isoleucine, Phenylalanine, Tyrosine, Lysine, Methionine, Threonine, Cystine)</li>\n  <li>contains enzymes ( peroxidase, reductase, protease)</li>\n  <li>glycoprotein, glomalin</li>\n  <li>phytohormones (auxin and cytokinin)</li>\n</ul>\n<p><strong>Humic acids</strong></p>\n<p>Here are some potential advantages of using humic acids for seed soaking:</p>\n<ol>\n  <li>Enhanced seed germination: Humic acids can help stimulate seed germination by breaking seed dormancy and promoting the activation of enzymes involved in germination processes. Soaking seeds in humic acids can potentially result in faster and more uniform germination rates.</li>\n  <li>Improved nutrient availability: Humic acids have the ability to chelate or bind with essential nutrients, such as iron, zinc, and manganese, making them more available for plant uptake. By soaking seeds in humic acids, the nutrients bound to these compounds can be released and absorbed more efficiently by the emerging seedlings, promoting healthy growth.</li>\n  <li>Increased root development: Humic acids can stimulate root growth and development. Soaking seeds in humic acids can help initiate root elongation, increase the number of root hairs, and enhance lateral root branching. This can lead to improved nutrient and water uptake, as well as better anchorage and overall plant vigor</li>\n  <li>Stress tolerance: Humic acids have been reported to enhance plant tolerance to various abiotic stresses, including drought, salinity, and heavy metal toxicity. Soaking seeds in humic acids can potentially prime the seedlings stress response mechanisms, allowing them to better withstand adverse environmental conditions.</li>\n  <li>Microbial activity promotion: Humic acids can act as a food source and stimulant for beneficial soil microorganisms. Soaking seeds in humic acids can promote the growth and activity of beneficial bacteria and fungi in the rhizosphere, leading to improved nutrient cycling, disease suppression, and overall soil health.</li>\n  <li>Seedling vigor and establishment: By providing a nutrient-rich and conducive environment for seed germination, humic acid seed soaking can result in stronger and more vigorous seedlings. This can lead to better establishment in the field, higher survival rates, and improved early growth stages</li>\n</ol>",
@@ -289,8 +249,7 @@
       }
     ],
     "applicationMethods": [
-      "basal dressing",
-      "soil application"
+      "soil drench"
     ],
     "suitableCrops": [],
     "benefits": [
@@ -345,7 +304,8 @@
       "https://humusoncomplex.com/product/4287/"
     ],
     "categorySlugs": [
-      "microbiological"
+      "microbiological",
+      "organic"
     ],
     "shortDescription": "Microbial powder for seed dressing and soil application, formulated with beneficial bacteria and fungi that provide plants with nitrogen, phosphorus, potassium and silicon through natural microbial processes.",
     "descriptionHtml": "<ul>\n  <li>Paenibacillus azotofixans</li>\n  <li>Bacillus megaterium Bacillus mucilaginosus Bacillus subtilis</li>\n  <li>Trichoderma viride</li>\n  <li>Mycorrhizal fungi</li>\n</ul>\n<p>BioNPK Powder S is a microbial powder for seed dressing and soil application, formulated with beneficial bacteria and fungi. The product provides plants with nitrogen, phosphorus, potassium and silicon through natural microbial processes. It enhances plant resistance to environmental stresses including drought and low temperatures, while promoting root system development and nutrient uptake efficiency. The powder strengthens plants&#8217; natural defenses against diseases, reduces lodging risk and improves the utilization of mineral fertilizers. The microbial consortium activates soil nutrients and supports vigorous plant growth throughout the development cycle. Ideal for cereals, oilseeds, potatoes, maize, legumes and vegetable crops.</p>\n<p>Package Size: 50g</p>\n<p>Rate per Ha: 50g depending on crop and application method</p>",
@@ -380,7 +340,7 @@
     ],
     "applicationMethods": [
       "seed dressing",
-      "soil application"
+      "soil drench"
     ],
     "suitableCrops": [
       "cereals",
@@ -528,7 +488,8 @@
     ],
     "categorySlugs": [
       "biostimulants",
-      "liquid-fertilisers"
+      "liquid-fertilisers",
+      "organic"
     ],
     "shortDescription": "Liquid fertilizer with a high concentration of seaweed extract and amino acids, designed for foliar application or watering.",
     "descriptionHtml": "<p>Ocean is a liquid fertilizer with a high concentration of seaweed extract and amino acids, designed for foliar application or watering. Seaweed extract strengthens the plant&#8217;s immune system, provides energy for early growth, and enhances stress tolerance. The fertilizer promotes protein formation, sugar accumulation and water balance, while improving soil moisture retention and microbial activity. Ideal for cereals, legumes, maize, potatoes, vegetables, berry bushes and ornamentals.</p>\n<p>Package Size: 5L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
@@ -1393,7 +1354,6 @@
       }
     ],
     "applicationMethods": [
-      "soil application",
       "foliar spray",
       "soil drench"
     ],
@@ -1456,7 +1416,8 @@
     "slug": "emaxx-ultra",
     "oldUrls": [],
     "categorySlugs": [
-      "biostimulants"
+      "biostimulants",
+      "organic"
     ],
     "tagline": "Plant growth enhancer",
     "shortDescription": "Cold-processed, full-spectrum Ecklonia maxima (kelp) formulation enhanced with selected bioactives — for stronger plant growth, abiotic stress resilience and consistent crop performance.",
@@ -1490,8 +1451,7 @@
     ],
     "applicationMethods": [
       "foliar spray",
-      "drench",
-      "soil application"
+      "soil drench"
     ],
     "suitableCrops": [
       "fruits",
@@ -1584,8 +1544,7 @@
     ],
     "applicationMethods": [
       "foliar spray",
-      "fertigation",
-      "soil application"
+      "soil drench"
     ],
     "suitableCrops": [
       "fruits",
