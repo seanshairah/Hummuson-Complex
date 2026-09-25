@@ -816,3 +816,104 @@ stages, for exactly this: something the owner knows that the label does not say.
 An unknown key warns rather than failing silently, so a typo cannot quietly drop
 a stage. Bigo W's `notes` record who stated it and when. Seed soaking now
 returns CarboAmin and Bigo W.
+
+## Production import, 25 Sep 2026
+
+The owner supplied the Neon connection string with "Do all that is required
+there is the database connection". Everything from the four correction rounds
+above was in the repository and in the local database; none of it was in
+production. This is the run that moved it.
+
+### What production looked like first
+
+The survey runs before the import, every time, because `importDistributors`
+overwrites `mapsLat`, `mapsLng` and `mapsUrl` from the content files — a pin
+somebody read off the map by hand would be silently replaced by the null the
+content carries. All 45 stockists had no pin before the import and none after,
+so nothing was lost. That is the third import in a row where the answer was
+zero, and it is still not a reason to skip the check: the day somebody drops a
+pin in the dashboard, the survey is the only thing standing between that pin and
+the next import.
+
+The enum rebuild (`20260925110000_application_method_merge`) was **already
+applied**. `npm run build` runs `scripts/migration/apply-pending.mjs`, so the
+Vercel deploy of the first correction commit applied it to Neon hours before
+this import ran. Deploys apply migrations; they never import content. All twelve
+migrations were up to date and the applier was a no-op.
+
+### Production was missing a product nobody had noticed
+
+Production held **20** products. The content file held 21, and before Bacto-Seed
+was withdrawn it held 22. The two it never had were `bacto-seed` — which is now
+delisted anyway, so no loss — and **`perfect-stick`**, which had been in
+`content/products.json` since 28 Aug and had never once reached the production
+database.
+
+The created timestamps show all 20 rows written in one sequence on 28 Aug, and
+`perfect-stick` is not among them. They do not show *why* — the gap either side
+of the position it occupies in the file is unremarkable next to gaps elsewhere in
+the same run, so there is nothing in the timings to read. The 21 Sep import then
+updated all 20 existing rows and still did not create it, which is not something
+an upsert does on its own. The cause is not established. The effect is: it stood
+for four weeks, `/products/perfect-stick` was a 404 on the live site, and the
+product was absent from the listing, the finder and the catalogue.
+
+It imports cleanly and always did — the local database has had it the whole time,
+which is exactly why nothing caught it. **A product can be correct in content, in
+the local database, in every test and still be absent from production**, and no
+check in the repository compares the two. That is the gap; this entry is the
+record of it rather than a fix for it.
+
+### Verification
+
+Twenty-eight assertions against the production database after the import, all
+passing: 21 products with `perfect-stick` present and `bacto-seed` gone; Master
+reading as a powder; Organic holding eMAXX, Ocean, Bio NPK and Master and no
+longer holding Grow+ or CarboAmin; no `FERTIGATION` or `BASAL_DRESSING` on any
+product; `iN5 NPK 3-30-0` and `iN3 NPK 12-11-30`; all thirteen IKAR products
+carrying 1 L and 5 L; the range order with Crop Nutrition ahead of Liquid Foliar
+Fertilisers; CarboAmin's sachet photograph as its primary image; Bigo W tagged
+for seed soaking; all 30 catalogue entries carrying a plate, up from 27 entries
+with 8 blank; NTS Harare on Kenneth Kaunda Avenue.
+
+On the live site, `/products/perfect-stick` returns 200. That page could not
+render an hour earlier, because the product did not exist — it is the one check
+that cannot pass by accident. The catalogue chapters read Microbiological →
+Biostimulants → Crop Nutrition → Liquid Foliar Fertilisers → Organic, Kalisto
+shows its 5 L pack, and `/products/bacto-seed` redirects.
+
+### Two things the import surfaced and did not change
+
+**iN5's own prose still says "IN5".** The heading reads `iN5 NPK 3-30-0`, as
+asked. The description below it — the manufacturer's published text — says "IN5
+improves germination" and "IN5 is a liquid phosphorus and zinc fertilizer". The
+instruction was about the name, and rewriting a manufacturer's published wording
+is a different decision from restyling a title, so the prose is untouched and
+the owner can say whether it should follow.
+
+**Every `ApplicationGuide` row has a null `method`.** All 23 in production, and
+all 24 locally — so this is not the enum rebuild nulling rows it should have
+remapped, it is the importer never setting the field at all. The rates are intact
+and the rates are what the site shows. Left alone pending a decision, and noted
+here so the next person reading `method` does not assume the data was lost.
+
+### The finder's crop question is now actually tested
+
+Dropping the crop classes out of the Product Finder (second round, above) had no
+test that would notice if they came back. The suite asserted that
+`?crop=brassicas` still resolves as a filter — which it must, and which passes
+whether or not the class is offered as an answer — and nothing read the rendered
+question. `e2e/public.spec.ts` now asserts that none of the six classes appears
+as an option and that the member crops do, so "no classes offered" cannot pass by
+rendering an empty question.
+
+It was checked against its own failure: with the filter in `cropOptions` removed,
+the test fails on `Brassicas` — expected 0, received 1.
+
+> **`npm run e2e` serves the last `npm run build`, not the working tree.**
+> `playwright.config.ts` starts the suite with `next start`, which serves
+> whatever is in `.next`. The first falsification run passed with the filter
+> removed, because the bundle being served predated the edit. A source change has
+> to be built before the suite says anything about it locally. CI is not exposed
+> to this — it builds and then tests — which is exactly why it is the layer that
+> caught the `IN5` rename breaking two assertions earlier today.

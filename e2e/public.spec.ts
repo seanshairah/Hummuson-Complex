@@ -72,6 +72,31 @@ test.describe("public site", () => {
     for (const slug of child) expect(group).toContain(slug);
   });
 
+  test("the finder asks for a crop, not the class it is filed under", async ({ page }) => {
+    // The classes still earn their place on the Crops pages and still resolve
+    // as a filter — the test above covers both. What the finder must not do is
+    // offer "Brassicas" alongside "Cabbage", "Broccoli" and "Cauliflower" as
+    // four answers returning the same products. Asserting it here is the only
+    // layer that reads the rendered question: the filter test passes either
+    // way, so the class rows could come back without anything going red.
+    await page.goto("/product-finder");
+    await expect(page.getByRole("heading", { name: /what are you growing/i })).toBeVisible();
+
+    // Each option's accessible name is its label followed by the product count
+    // ("Cabbage13 products"), so these anchor at the start rather than matching
+    // the whole string.
+    const classes = ["Brassicas", "Cereals", "Cucurbits", "Fruits", "Legumes", "Solanaceous"];
+    for (const name of classes) {
+      await expect(page.getByRole("button", { name: new RegExp(`^${name}`) })).toHaveCount(0);
+    }
+
+    // The members are what a grower actually picks, so they have to be there —
+    // otherwise "no classes offered" would also pass on an empty question.
+    for (const name of ["Cabbage", "Broccoli", "Cauliflower", "Maize", "Tomato"]) {
+      await expect(page.getByRole("button", { name: new RegExp(`^${name}`) })).toBeVisible();
+    }
+  });
+
   test("product detail shows verified facts and confirm-note", async ({ page }) => {
     await page.goto("/products/in5");
     await expect(
