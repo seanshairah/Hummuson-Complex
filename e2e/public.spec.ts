@@ -56,7 +56,8 @@ test.describe("public site", () => {
   });
 
   test("a multi-range product is listed once under each of its ranges", async ({ page }) => {
-    // NPK 12-11-30+TE is both a liquid foliar fertiliser and crop nutrition.
+    // iN3 is both a liquid foliar fertiliser and crop nutrition. Its slug is
+    // still npk-12-11-30-te, from before the product carried its own name.
     for (const range of ["liquid-fertilisers", "crop-nutrition"]) {
       const slugs = await gridSlugs(page, `/products?category=${range}`);
       expect(slugs.filter((s) => s === "/products/npk-12-11-30-te")).toHaveLength(1);
@@ -73,7 +74,9 @@ test.describe("public site", () => {
 
   test("product detail shows verified facts and confirm-note", async ({ page }) => {
     await page.goto("/products/in5");
-    await expect(page.getByRole("heading", { name: "IN5", exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "iN5 NPK 3-30-0", exact: true }),
+    ).toBeVisible();
     await expect(page.getByText("Package sizes")).toBeVisible();
     await expect(page.getByText(/confirm the recommended application/i).first()).toBeVisible();
   });

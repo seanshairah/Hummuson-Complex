@@ -34,7 +34,7 @@ test.describe("admin", () => {
 
     // Products table lists the migrated range
     await page.goto("/admin/products");
-    await expect(page.getByRole("link", { name: /IN5/ }).first()).toBeVisible();
+    await expect(page.getByRole("link", { name: /iN5/ }).first()).toBeVisible();
 
     // FAQ test tool answers a known question
     await page.goto("/admin/faqs");
