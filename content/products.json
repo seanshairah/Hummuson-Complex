@@ -261,6 +261,12 @@
     "priceUsd": 3,
     "images": [
       {
+        "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.45.jpeg",
+        "localPath": "/images/products/carboamin-basal-dressing/wa-sachets.jpg",
+        "alt": "CarboAmin Basal Dressing — 160 ml sachets",
+        "role": "gallery"
+      },
+      {
         "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/22.jpg",
         "localPath": "/images/products/carboamin-basal-dressing/1.jpg",
         "alt": "CarboAmin Basal Dressing — product pack"
@@ -280,16 +286,10 @@
         "localPath": "/images/products/carboamin-basal-dressing/wa-jerrican.jpg",
         "alt": "CarboAmin Basal Dressing — Humuson Complex product photograph",
         "role": "catalogue"
-      },
-      {
-        "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.45.jpeg",
-        "localPath": "/images/products/carboamin-basal-dressing/wa-sachets.jpg",
-        "alt": "CarboAmin Basal Dressing — product label",
-        "role": "gallery"
       }
     ],
     "featured": true,
-    "notes": "Merged duplicate of /product/carboamin-basal-dressing-sachet/ ($3.00 sachet listing, tag \"satchets\", empty description). Main-pack size not stated ($40.00). Site FAQ states: \"We recommend applying basal at the land preparation and/or planting stage.\" Description also carries a long passage on the advantages of humic-acid seed soaking (kept in descriptionHtml). Part of the HUMUSON Complex / Sapropel Organics range. Label data transcribed from the August 2026 product photo set supplied by Humuson Complex.",
+    "notes": "Merged duplicate of /product/carboamin-basal-dressing-sachet/ ($3.00 sachet listing, tag \"satchets\", empty description). Main-pack size not stated ($40.00). Site FAQ states: \"We recommend applying basal at the land preparation and/or planting stage.\" Description also carries a long passage on the advantages of humic-acid seed soaking (kept in descriptionHtml). Part of the HUMUSON Complex / Sapropel Organics range. Label data transcribed from the August 2026 product photo set supplied by Humuson Complex. The 160 ml sachet photograph was moved to the front on 25 Sep 2026 at the owner's request, so seed soaking pictures the sachets rather than the 2.5 L jerrican — a sachet is the pack a grower actually doses a knapsack from. The jerrican photographs are still in the gallery.",
     "sourceUrl": "https://humusoncomplex.com/product/carboamin-basal-dressing/",
     "tagline": "Organic basal fertiliser",
     "instructionsHtml": "<h3>Preparation</h3><p>Dilute 160 ml of CarboAmin+ in 1 litre of water, then mix the concentrate with 15 litres of water — one 16 L knapsack.</p><h3>Application</h3><p>Applied for soil conditioning after harvesting, or as a basal fertiliser at the planting stage.</p><p><em>Producer: Sapropel Organics Ltd, Lithuania (EU). Approved by Ecocert. Distributed by Humuson Complex.</em></p>",
@@ -1294,9 +1294,12 @@
       }
     ],
     "featured": false,
-    "notes": "Merged duplicate of /product/bico-w/ (5L, $121.00 — a misspelled slug \"bico-w\" for the same BIGO W product). Canonical slug normalized to \"bigo-w\" (1L listing). Crops are the union of both listings (5L says \"cereals, legumes, maize and more\"). 1L listing misprints \"Phosphosphorus\" — normalized in composition. IKAR product line.",
+    "notes": "Merged duplicate of /product/bico-w/ (5L, $121.00 — a misspelled slug \"bico-w\" for the same BIGO W product). Canonical slug normalized to \"bigo-w\" (1L listing). Crops are the union of both listings (5L says \"cereals, legumes, maize and more\"). 1L listing misprints \"Phosphosphorus\" — normalized in composition. IKAR product line. Seed soaking is recorded on this product from the owner's statement of 25 Sep 2026, not from its published text, which never mentions soaking — hence the explicit growthStageKeys rather than a word planted in the description to make the importer infer it.",
     "sourceUrl": "https://humusoncomplex.com/product/bigo-w/",
-    "brand": "IKAR"
+    "brand": "IKAR",
+    "growthStageKeys": [
+      "seed-soaking"
+    ]
   },
   {
     "name": "A3 Biostimulant",
@@ -1607,6 +1610,10 @@
       {
         "size": "1 L",
         "priceUsd": 16
+      },
+      {
+        "size": "5 L",
+        "priceUsd": null
       }
     ],
     "applicationRates": [],
@@ -1645,6 +1652,10 @@
       {
         "size": "1 L",
         "priceUsd": 23
+      },
+      {
+        "size": "5 L",
+        "priceUsd": null
       }
     ],
     "applicationRates": [],
@@ -1684,6 +1695,10 @@
       {
         "size": "1 L",
         "priceUsd": 18
+      },
+      {
+        "size": "5 L",
+        "priceUsd": null
       }
     ],
     "applicationRates": [],

@@ -742,3 +742,77 @@ the owner wants the tidier URL.
 > that the plan never applies itself is unchanged, because the next sheet will
 > carry its own name for something; the comment was updated so it no longer
 > claims a case that has been fixed.
+
+## Owner corrections, 25 Sep 2026 (third round) — packs, catalogue plates, chapter order, seed soaking
+
+### Every IKAR product is 1 L and 5 L
+
+Ten of the thirteen already were. Kalisto, Fosto and iN3 were listed with 1 L
+only, because their pack data came from a front-label photograph and the 5 L was
+never written down. The owner says the whole IKAR range comes in both.
+
+The 5 L rows carry **no price**. The size is the owner's statement; a price is
+not, and the three products' 1 L prices ($16, $23, $18) give no ratio worth
+guessing from — the existing 1 L→5 L multiples across the range run from 3.4x
+(iN5, Koral) to 4.6x (Bigo W). The cards read "1 L · 5 L" and still price
+"from" the 1 L. **Open with the owner: the 5 L prices.**
+
+### The catalogue stopped showing a product from Kalisto onwards
+
+Six products have no `role: "catalogue"` photograph — Silicare, eMAXX Ultra,
+Kalisto, Fosto, iN3 and Fortik Solid. Their catalogue plates rendered as an
+empty blur: the chapter kept printing a name and a description with no product
+above them, and because the three at the end of the Liquid Foliar chapter are
+consecutive, the break showed from Kalisto to the end of the chapter.
+
+`buildDefaultCatalogue` already documented the behaviour that was wanted —
+*"the dedicated catalogue shot … the flipbook/explore plate; product hero
+otherwise"* — and then never implemented the fallback:
+
+```diff
+- imageId: catalogueImageByProduct.get(product.id) ?? null,
++ imageId: catalogueImageByProduct.get(product.id) ?? product.primaryImageId ?? null,
+```
+
+All 30 catalogue entries now have a plate, where 6 had none. A hero photograph
+is a worse plate than a staged one and far better than no plate at all.
+
+### Liquid Foliar Fertilisers moves under Crop Nutrition
+
+`content/categories.json` is the order of the catalogue's chapters and of the
+Range filter. Liquid Foliar sat third and Crop Nutrition fourth; they are
+swapped, so the chapters now run Microbiological → Biostimulants → Crop
+Nutrition → Liquid Foliar Fertilisers → Organic.
+
+This is an ordering change, not a nesting one. `ProductCategory` has no parent
+column — unlike `Crop`, which does — so a range cannot yet *contain* another
+range. If the owner wants Liquid Foliar to read as a sub-range of Crop Nutrition
+rather than the chapter after it, that is a schema change and a separate job.
+
+### Seed soaking: the sachets, and Bigo W
+
+**The picture.** Seed soaking listed one product, CarboAmin Basal Dressing, and
+pictured it with the 2.5 L jerrican — the wrong pack for the job, since a grower
+soaking seed doses from a sachet. The 160 ml sachet photograph
+(`wa-sachets.jpg`) moves to the front of the product's images, which makes it
+the primary image, which is what every card shows. The jerrican photographs stay
+in the gallery.
+
+> **This changes the CarboAmin card everywhere, not only under seed soaking.**
+> A product has one primary image, and nothing in the model attaches a picture to
+> a product *per stage*. The sachet shot is arguably the better card anyway — it
+> is the only CarboAmin photograph that carries HUMUSON COMPLEX branding and a
+> legible label — but if the owner wanted the swap only inside the seed-soaking
+> view, that needs a per-stage image and is a separate job.
+
+**Bigo W.** The owner says it also works for seed soaking. Growth stages are
+otherwise derived by the importer from a product's own published text, and Bigo
+W's text never mentions soaking, so there was no honest way to record it — short
+of writing the phrase into the description so the matcher would find it, which
+would put words in a manufacturer's mouth.
+
+`SourceProduct` gains an optional `growthStageKeys`, unioned with the derived
+stages, for exactly this: something the owner knows that the label does not say.
+An unknown key warns rather than failing silently, so a typo cannot quietly drop
+a stage. Bigo W's `notes` record who stated it and when. Seed soaking now
+returns CarboAmin and Bigo W.

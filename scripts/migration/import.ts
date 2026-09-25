@@ -523,17 +523,25 @@ async function importProducts(products: SourceProduct[]) {
       }
     }
 
-    // Growth stages — only on explicit textual evidence.
+    // Growth stages — on explicit textual evidence, plus any the owner has
+    // stated outright. `growthStageKeys` exists because a label does not list
+    // every job its product does, and the only other way to record what the
+    // owner knows would have been to write the phrase into the description so
+    // the matcher picked it up — which would put words in a manufacturer's
+    // mouth. Unknown keys are reported rather than skipped silently, or a typo
+    // would quietly drop the stage the owner asked for.
     await prisma.productGrowthStage.deleteMany({ where: { productId: product.id } });
-    for (const rule of STAGE_RULES) {
-      if (rule.pattern.test(fullText)) {
-        const stage = await prisma.growthStage.findUnique({ where: { key: rule.key } });
-        if (stage) {
-          await prisma.productGrowthStage.create({
-            data: { productId: product.id, growthStageId: stage.id },
-          });
-        }
+    const derived = STAGE_RULES.filter((rule) => rule.pattern.test(fullText)).map((r) => r.key);
+    const stated = source.growthStageKeys ?? [];
+    for (const key of [...new Set([...derived, ...stated])]) {
+      const stage = await prisma.growthStage.findUnique({ where: { key } });
+      if (!stage) {
+        console.warn(`  ! ${source.slug}: unknown growth stage "${key}" — skipped`);
+        continue;
       }
+      await prisma.productGrowthStage.create({
+        data: { productId: product.id, growthStageId: stage.id },
+      });
     }
   }
   console.log(`✓ products (${products.length})`);
@@ -912,8 +920,15 @@ async function buildDefaultCatalogue() {
           sectionId: section.id,
           productId: product.id,
           // The dedicated catalogue shot (role:"catalogue"), when the product
-          // has one — the flipbook/explore plate; product hero otherwise.
-          imageId: catalogueImageByProduct.get(product.id) ?? null,
+          // has one — the flipbook/explore plate; the product hero otherwise.
+          //
+          // The fallback is the point. Six products have no catalogue shot, and
+          // without it their plates rendered as an empty blur: from Kalisto
+          // onwards the chapter stopped showing a product at all, while still
+          // showing its name and description. A hero photograph is a worse
+          // plate than a staged one and a far better plate than none.
+          imageId:
+            catalogueImageByProduct.get(product.id) ?? product.primaryImageId ?? null,
           layout: entryOrder % 2 === 0 ? "FEATURE_LEFT" : "FEATURE_RIGHT",
           order: entryOrder,
         },

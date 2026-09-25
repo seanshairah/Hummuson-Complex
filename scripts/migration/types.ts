@@ -33,6 +33,18 @@ export interface SourceProduct {
   benefits: string[];
   priceUsd: number | null;
   images: SourceImage[];
+  /**
+   * Growth stages the owner has stated for this product, for the cases its own
+   * published text cannot evidence.
+   *
+   * The importer otherwise derives stages from the product's own words, which
+   * is the right default — but it leaves no way to record something the owner
+   * knows and the label does not say. The alternative was to plant a phrase in
+   * the description so the matcher would find it, which would put words in a
+   * manufacturer's mouth. These are unioned with the derived stages, and the
+   * product's `notes` should say who stated them and when.
+   */
+  growthStageKeys?: string[];
   featured?: boolean;
   notes?: string | null;
   sourceUrl: string;
