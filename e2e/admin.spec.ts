@@ -49,6 +49,55 @@ test.describe("admin", () => {
     await expect(preview).toHaveText(/would answer|no confident match/i);
   });
 
+  /**
+   * The whole point of the dashboard: an edit made there has to show on the
+   * public site, and show now rather than whenever the ISR window happens to
+   * lapse. Public pages read through `unstable_cache` with a 600s life and
+   * render with `revalidate = 300`, so without the `revalidateTag` calls in
+   * `revalidateContent` an owner would change a price, reload the shop, see
+   * the old one, and reasonably conclude the dashboard is broken.
+   *
+   * Nothing else in the suite crosses that seam — the editorial-flow test
+   * above logs in and reads, it never writes and never looks at the public
+   * site. This one writes a marker, checks the three surfaces a product
+   * appears on, and puts the text back in a `finally` so a failure here
+   * cannot leave a probe string on a product page.
+   */
+  test("an edit in the dashboard reaches the public site immediately", async ({ page }) => {
+    const marker = `Propagation check ${unique()}`;
+    await page.goto("/admin/login");
+    await page.fill('input[name="email"]', ADMIN_EMAIL);
+    await page.fill('input[name="password"]', ADMIN_PASSWORD);
+    await page.click('button[type="submit"]');
+    await page.waitForURL("**/admin");
+
+    await page.goto("/admin/products");
+    await page.getByRole("link", { name: /Kalisto/ }).first().click();
+    const field = page.locator('textarea[name="shortDescription"]').first();
+    await expect(field).toBeVisible();
+    const original = await field.inputValue();
+    expect(original.length).toBeGreaterThan(0);
+
+    try {
+      await field.fill(`${marker} — ${original}`);
+      await page.getByRole("button", { name: /^Save/ }).first().click();
+      await expect(page.getByText(/saved/i).first()).toBeVisible({ timeout: 15000 });
+
+      for (const route of ["/products/kalisto", "/products", "/catalogue"]) {
+        await page.goto(route, { waitUntil: "domcontentloaded" });
+        await expect(page.getByText(marker, { exact: false }).first(), route).toBeVisible({
+          timeout: 15000,
+        });
+      }
+    } finally {
+      await page.goto("/admin/products");
+      await page.getByRole("link", { name: /Kalisto/ }).first().click();
+      await page.locator('textarea[name="shortDescription"]').first().fill(original);
+      await page.getByRole("button", { name: /^Save/ }).first().click();
+      await expect(page.getByText(/saved/i).first()).toBeVisible({ timeout: 15000 });
+    }
+  });
+
   test("signs in when autofill leaves whitespace or odd case in the email", async ({ page }) => {
     // Reported from production: a pasted/autofilled address with a stray space
     // failed .email() validation and surfaced as "invalid email or password".
