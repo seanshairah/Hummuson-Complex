@@ -384,22 +384,40 @@ test.describe("public site", () => {
   });
 
   /**
-   * A navigation crosses through the route veil and the veil clears again.
-   * The clearing is the half worth guarding: a veil that appears and never
-   * leaves would be a page nobody can see, and the state machine that lets it
-   * go has a branch for the route changing mid-fade that passed a first draft
-   * by silently never firing.
+   * A link click dissolves the page being left into the next one: the old
+   * page is copied into an overlay, the new page renders underneath, and the
+   * copy fades away. Three things are worth guarding. The copy is of the page
+   * being LEFT (a copy of the new page would make the whole thing invisible).
+   * It actually goes up. And it comes down again: a copy that stayed would be
+   * an inert sheet of stale page over the real one, invisible to every check
+   * that looks for the new page's content, because that content is there.
    */
-  test("a navigation passes through the veil and the veil clears", async ({ page }) => {
+  test("a link dissolves the page being left into the next one", async ({ page }) => {
     await page.goto("/");
-    const veil = page.locator("[data-route-veil]");
-    await expect(veil).toHaveCount(0);
+    // The transition listens from an effect, so wait for hydration: the hero
+    // eyebrow is server-rendered at opacity 0 and animated in on mount.
+    await expect(page.locator("#home p").first()).toHaveCSS("opacity", "1");
+    await page.evaluate(() => {
+      const seen = { overlay: false, copyOfHome: false };
+      (window as unknown as { __dissolve: typeof seen }).__dissolve = seen;
+      new MutationObserver(() => {
+        const overlay = document.querySelector("[data-route-ghost]");
+        if (!overlay) return;
+        seen.overlay = true;
+        if (overlay.textContent?.includes("Healthy soil")) seen.copyOfHome = true;
+      }).observe(document.body, { childList: true });
+    });
 
     await page.getByRole("link", { name: /explore products/i }).first().click();
-    await expect(veil).toHaveCount(1);
-
     await page.waitForURL("**/products");
-    await expect(veil).toHaveCount(0);
+
+    await expect
+      .poll(() =>
+        page.evaluate(() => (window as unknown as { __dissolve: unknown }).__dissolve),
+      )
+      .toEqual({ overlay: true, copyOfHome: true });
+    await expect(page.locator("[data-route-ghost]")).toHaveCount(0);
+    await expect(page.locator("html")).not.toHaveAttribute("data-route-transition");
     await expect(page.getByTestId("product-results")).toBeVisible();
   });
 

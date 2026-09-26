@@ -1,57 +1,51 @@
 "use client";
 
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { routeTone, type RouteTone } from "@/lib/route-tone";
-import { cn } from "@/lib/utils";
+import {
+  capturePage,
+  dissolvePage,
+  type PageSnapshot,
+  type SettleDissolve,
+} from "@/components/layout/route-snapshot";
+import { setRouteStage } from "@/lib/route-stage";
 
 /**
- * The route veil: what a navigation looks like between one page and the next.
+ * What a navigation looks like between one page and the next: a crossfade.
  *
- * Without it a navigation was a hard cut — the old page vanished, a skeleton
- * flashed for a few frames, then the new page appeared in its place, and the
- * scroll jumped to the top somewhere in the middle. Three things happening in
- * a row, none of them animated.
+ * The page being left dissolves into the one arriving. For about half a
+ * second both are on screen: the old page fading and lifting slightly away,
+ * the new one underneath with its opener rising into place (the page openers,
+ * src/components/motion/enter.tsx, start a beat into the dissolve). Nothing
+ * covers the screen and nothing blinks to a flat colour, which is what the
+ * two earlier versions did: a tinted veil that faded in and out read as a
+ * flash, and a full-height curtain sweeping up and off read as a loading
+ * screen.
  *
- * With it: the moment an internal link is clicked, a curtain sweeps up over
- * the page from the bottom edge, its leading edge a hairline of leaf with a
- * soft bloom behind it. It holds while the next page is fetched (with a thin
- * progress line along its top so a slow one is visibly still coming), and once
- * the new route has rendered underneath it, it carries on upward and off the
- * top, uncovering the new page from the bottom up. One continuous motion,
- * with the scroll reset and the swap happening behind it, unseen. The page
- * openers (src/components/motion/enter.tsx) know to wait for it.
+ * How. A link click copies the page as it is on screen into an inert overlay
+ * (route-snapshot.ts explains the copy), and lets Next navigate as it always
+ * does. The live page stays up and usable while the next one loads, with a
+ * thin progress line if the load takes long enough to notice. When the new
+ * route commits, the copy goes over it before the browser paints (a layout
+ * effect), so the swap itself is never seen, and the copy dissolves away.
  *
- * The veil is tinted to the page being *revealed*, not the one being left —
- * dark into the catalogue, paper into a product page — so the uncover reads as
- * the next page arriving. A neutral colour would flash between two dark pages.
- * It sits above the header too, so the header's own tone change — light-on-dark
- * to frosted, or back — happens behind it rather than as a second visible switch.
- *
- * Why a veil and not a transform on the page. The natural implementation is a
- * `template.tsx` that slides the page up as it fades in. But a transformed
- * element is a containing block for `position: fixed` descendants, and the
- * product page's mobile action bar, the flipbook's glow layer and the reading
- * progress bar are all fixed children of the page — each would render at the
- * bottom of the page for the length of the animation and then jump into the
- * viewport. Transforming a fixed *sibling* has none of that. It also never sits
- * between the pointer and the page (`pointer-events-none`), so a click during
- * the sweep lands where it was aimed.
+ * Why the old page is not simply animated in place: it is gone the moment the
+ * new one commits, and holding the commit back would hold back the page.
+ * Why not a transform on the new page: a transformed element is a containing
+ * block for `position: fixed` descendants, and the product page's action bar,
+ * the flipbook's glow and the reading-progress bar are fixed children of the
+ * page. The overlay is a sibling, `pointer-events: none` throughout, so a
+ * click during the dissolve lands on the new page where it was aimed.
  *
  * Only link clicks start it. Back and forward, `router.push` from the finder
- * and the search box, and form submissions arrive instantly, as before: the
- * veil only ever animates *out* on those, from already-gone, which is a no-op.
- * Under `prefers-reduced-motion` it renders nothing at all.
+ * and the search box, and form submissions arrive instantly, as before.
+ * `html[data-route-transition]` says where it is (src/lib/route-stage.ts):
+ * the openers wait for "dissolving" so that their rise is always seen.
+ * Under `prefers-reduced-motion` nothing is copied and nothing animates.
  */
 
-type Phase = "idle" | "covering" | "covered" | "uncovering";
-
-/** In-out quart: the curtain leaves rest, crosses fast, and settles. */
-const SWEEP = [0.76, 0, 0.24, 1] as const;
-const COVER_S = 0.42;
-const UNCOVER_S = 0.66;
-/** How long a navigation may take before the veil gives up and clears. */
+/** How long a navigation may take before the transition stands down. */
 const STALL_MS = 8000;
 
 function internalDestination(event: MouseEvent): string | null {
@@ -71,15 +65,12 @@ function internalDestination(event: MouseEvent): string | null {
   }
   if (url.origin !== window.location.origin) return null;
   if (url.pathname.startsWith("/admin") || url.pathname.startsWith("/api")) return null;
-  // Same document (a query change, a hash) is not a page change.
+  // Same document (a hash) is not a page change.
   if (url.pathname === window.location.pathname && url.search === window.location.search) {
     return null;
   }
   return url.pathname;
 }
-
-const EDGE_LINE =
-  "absolute inset-x-0 h-px bg-leaf-400/90 shadow-[0_0_18px_2px_rgb(165_224_95/0.55)]";
 
 export function RouteTransition() {
   const reduce = useReducedMotion();
@@ -87,106 +78,119 @@ export function RouteTransition() {
   const search = useSearchParams();
   const route = `${pathname}?${search.toString()}`;
 
-  const [phase, setPhase] = useState<Phase>("idle");
-  const [tone, setTone] = useState<RouteTone>("light");
-  const phaseRef = useRef<Phase>("idle");
+  const [loading, setLoading] = useState(false);
+  const snapshot = useRef<PageSnapshot | null>(null);
   const routeRef = useRef(route);
   const stallTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const settleDissolve = useRef<SettleDissolve | null>(null);
+  // Each click is a generation; anything finishing late (a dissolve hurried
+  // along by a second click, a stall timer) only tidies up after its own.
+  const generation = useRef(0);
 
-  const go = (next: Phase) => {
-    phaseRef.current = next;
-    setPhase(next);
-  };
-
-  // A link click starts the cover.
+  // A link click takes the copy, before Next's own handler starts the
+  // navigation (this listens in the capture phase).
   useEffect(() => {
     if (reduce) return;
     const onClick = (event: MouseEvent) => {
-      const destination = internalDestination(event);
-      if (!destination) return;
-      setTone(routeTone(destination));
-      go("covering");
+      if (!internalDestination(event)) return;
+      settleDissolve.current?.("hurry");
+      settleDissolve.current = null;
+      const taken = capturePage();
+      if (!taken) return;
+      const mine = ++generation.current;
+      snapshot.current = taken;
+      setRouteStage("leaving");
+      setLoading(true);
       if (stallTimer.current) clearTimeout(stallTimer.current);
       stallTimer.current = setTimeout(() => {
-        if (phaseRef.current !== "idle") go("uncovering");
+        if (generation.current !== mine) return;
+        snapshot.current = null;
+        setLoading(false);
+        setRouteStage(null);
       }, STALL_MS);
     };
     document.addEventListener("click", onClick, true);
     return () => document.removeEventListener("click", onClick, true);
   }, [reduce]);
 
-  // The route changing means the next page is rendered under the veil.
+  // The copy must show the page where it was when it went, even if the
+  // reader scrolled while the next page loaded.
   useEffect(() => {
+    if (!loading) return;
+    const onScroll = () => {
+      if (snapshot.current) snapshot.current.scrollY = window.scrollY;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [loading]);
+
+  // The route changing means the next page is in the document. A layout
+  // effect runs before the browser paints it, so the copy is over it first.
+  useLayoutEffect(() => {
     if (routeRef.current === route) return;
     routeRef.current = route;
     if (stallTimer.current) {
       clearTimeout(stallTimer.current);
       stallTimer.current = null;
     }
-    // Mid-sweep-in: finish covering first, then the cover-complete handler
-    // uncovers. Already covered: uncover now. Idle: nothing to do.
-    if (phaseRef.current === "covering") go("covered");
-    else if (phaseRef.current === "covered") go("uncovering");
+    setLoading(false);
+    const taken = snapshot.current;
+    snapshot.current = null;
+    if (!taken) {
+      setRouteStage(null);
+      return;
+    }
+    setRouteStage("arriving");
+    const mine = generation.current;
+    const settle = dissolvePage(taken, {
+      onStart: () => {
+        if (generation.current === mine) setRouteStage("dissolving");
+      },
+      onDone: () => {
+        if (generation.current !== mine) return;
+        settleDissolve.current = null;
+        setRouteStage(null);
+      },
+    });
+    settleDissolve.current = settle;
   }, [route]);
 
-  const pending = phase === "covering" || phase === "covered";
-  const visible = phase !== "idle";
+  useEffect(
+    () => () => {
+      settleDissolve.current?.("now");
+      if (stallTimer.current) clearTimeout(stallTimer.current);
+    },
+    [],
+  );
 
   if (reduce) return null;
 
   return (
     <AnimatePresence>
-      {visible && (
-        <motion.div
-          key="route-veil"
-          data-route-veil={phase}
+      {loading && (
+        // Progress: only for a load long enough to notice. It waits a beat
+        // before appearing, creeps while the next page is on its way, and
+        // completes as it goes.
+        <motion.span
+          key="route-progress"
+          data-route-chrome
           aria-hidden
-          initial={{ y: "100%" }}
-          animate={{ y: phase === "uncovering" ? "-100%" : "0%" }}
-          // By the time it leaves the tree it is already off the top.
-          exit={{ y: "-100%", transition: { duration: 0 } }}
-          transition={{ duration: phase === "uncovering" ? UNCOVER_S : COVER_S, ease: SWEEP }}
-          onAnimationComplete={() => {
-            const current = phaseRef.current;
-            if (current === "covering") {
-              // Fully covered and the next page is still on its way: hold.
-              go("covered");
-            } else if (current === "covered") {
-              // The route moved while we were still sweeping in (the usual
-              // case with a prefetched link) and the route effect parked us
-              // here; now that the cover is complete, let the new page through.
-              go("uncovering");
-            } else if (current === "uncovering") {
-              go("idle");
-            }
+          className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-leaf-400 shadow-[0_0_10px_rgb(165_224_95/0.7)]"
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{
+            scaleX: 0.82,
+            opacity: 1,
+            transition: {
+              scaleX: { duration: 3.2, delay: 0.15, ease: [0.1, 0.8, 0.2, 1] },
+              opacity: { duration: 0.2, delay: 0.15 },
+            },
           }}
-          className={cn(
-            // Above the header (z-40): the bar changes tone with the route,
-            // and that change belongs under the veil, not on top of it.
-            "pointer-events-none fixed inset-0 z-[45] will-change-transform",
-            tone === "dark" ? "bg-grain bg-humus-950" : "bg-paper",
-          )}
-        >
-          {/* The leading edge on the way up and the trailing edge on the way
-              out: a hairline of leaf with a bloom fading in behind it, so the
-              sweep has a front. Each edge is off-screen during the other's
-              phase. */}
-          <span className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-leaf-400/25 to-transparent" />
-          <span className={cn(EDGE_LINE, "top-0")} />
-          <span className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-leaf-400/25 to-transparent" />
-          <span className={cn(EDGE_LINE, "bottom-0")} />
-          {/* Progress: creeps while the next page is on its way, then completes. */}
-          <motion.span
-            className="absolute inset-x-0 top-0 h-[3px] origin-left bg-leaf-400 shadow-[0_0_12px_rgb(165_224_95/0.8)]"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: pending ? 0.82 : 1 }}
-            transition={
-              pending
-                ? { duration: 3.2, ease: [0.1, 0.8, 0.2, 1] }
-                : { duration: 0.18, ease: "easeOut" }
-            }
-          />
-        </motion.div>
+          exit={{
+            scaleX: 1,
+            opacity: 0,
+            transition: { scaleX: { duration: 0.2 }, opacity: { duration: 0.3, delay: 0.1 } },
+          }}
+        />
       )}
     </AnimatePresence>
   );

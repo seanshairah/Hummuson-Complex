@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { useVeilLead } from "@/components/motion/enter";
+import { useArrival } from "@/components/motion/enter";
 import { ArrowRight, Leaf, MessageCircle, ScanSearch } from "lucide-react";
 import { useRef } from "react";
 import type { ProductCardData } from "@/server/data/products";
@@ -30,8 +30,10 @@ export function HomeHero({
   partnerCount: number;
 }) {
   const reduce = useReducedMotion();
-  // Arriving under the route veil, the choreography waits for it to clear.
-  const lead = useVeilLead();
+  // Arriving by a route transition, the choreography holds until the page
+  // being left starts to dissolve, then starts a beat into it.
+  const { held, lead } = useArrival();
+  const arrive = <T,>(target: T) => (held ? undefined : target);
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
@@ -84,7 +86,7 @@ export function HomeHero({
           <div>
             <motion.p
               initial={reduce ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={arrive({ opacity: 1, y: 0 })}
               transition={{ duration: 0.6, delay: lead, ease: EASE }}
               className="flex items-center gap-3 text-eyebrow text-leaf-400"
             >
@@ -98,7 +100,7 @@ export function HomeHero({
                   <motion.span
                     className={`block ${line.className}`}
                     initial={reduce ? false : { y: "105%" }}
-                    animate={{ y: 0 }}
+                    animate={arrive({ y: 0 })}
                     transition={{ duration: 0.85, delay: lead + 0.12 + i * 0.12, ease: EASE }}
                   >
                     {line.text}
@@ -109,7 +111,7 @@ export function HomeHero({
 
             <motion.p
               initial={reduce ? false : { opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={arrive({ opacity: 1, y: 0 })}
               transition={{ duration: 0.7, delay: lead + 0.5, ease: EASE }}
               className="mt-6 max-w-xl text-base leading-relaxed text-paper/75 md:text-lg"
             >
@@ -120,7 +122,7 @@ export function HomeHero({
 
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={arrive({ opacity: 1, y: 0 })}
               transition={{ duration: 0.7, delay: lead + 0.62, ease: EASE }}
               className="mt-9 flex flex-wrap items-center gap-3"
             >
@@ -135,7 +137,7 @@ export function HomeHero({
             {/* Real numbers only */}
             <motion.dl
               initial={reduce ? false : { opacity: 0 }}
-              animate={{ opacity: 1 }}
+              animate={arrive({ opacity: 1 })}
               transition={{ duration: 0.8, delay: lead + 0.85 }}
               className="mt-10 flex flex-wrap gap-x-10 gap-y-5"
             >
@@ -177,7 +179,7 @@ export function HomeHero({
           >
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 32, rotate: -1.5 }}
-              animate={{ opacity: 1, y: 0, rotate: 0 }}
+              animate={arrive({ opacity: 1, y: 0, rotate: 0 })}
               transition={{ duration: 0.9, delay: lead + 0.55, ease: EASE }}
             >
               {spotlight && (
@@ -238,7 +240,7 @@ export function HomeHero({
               target="_blank"
               rel="noopener noreferrer"
               initial={reduce ? false : { opacity: 0, y: 32 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={arrive({ opacity: 1, y: 0 })}
               transition={{ duration: 0.9, delay: lead + 0.72, ease: EASE }}
               className="mt-4 flex items-center gap-4 rounded-3xl p-5 shadow-float glass-dark transition-transform duration-300 hover:-translate-y-1"
             >
@@ -258,7 +260,7 @@ export function HomeHero({
 
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 32 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={arrive({ opacity: 1, y: 0 })}
               transition={{ duration: 0.9, delay: lead + 0.86, ease: EASE }}
               className="mt-4 flex items-center justify-between gap-4 rounded-3xl p-5 shadow-float glass-dark"
             >
@@ -285,7 +287,7 @@ export function HomeHero({
        */}
       <motion.div
         initial={reduce ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
+        animate={arrive({ opacity: 1 })}
         transition={{ duration: 0.9, delay: lead + 1.05 }}
         className="relative border-t border-paper/10"
       >

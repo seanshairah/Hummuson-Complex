@@ -97,13 +97,13 @@ every page most of a screen down.
   Table, Skeleton/Spinner, EmptyState (always includes a next action), SectionHeading + `Em`.
 - Motion: `src/components/motion` — `Reveal`/`RevealGroup`/`RevealItem` in five shapes
   (`rise`, `wipe`, `scale`, `blur`, `fade`), `Enter` (the same shapes played on mount, for
-  page openers, timed to the route veil), `ImageReveal` (curtain + settle), `Spotlight`
+  page openers, timed to the route transition), `ImageReveal` (curtain + settle), `Spotlight`
   (pointer-following pool of light on a card), `Parallax`, `Tilt`, `Counter` (real numbers
   only). See **Motion & transitions** below. **Every motion component renders statically
   under `prefers-reduced-motion`.**
 - Scrolling: `src/components/layout/smooth-scroll.tsx` (Lenis, wheel devices only) with
-  `src/lib/smooth-scroll.ts` (`useLenis`, `scrollToElement`); `route-transition.tsx` is
-  the veil between pages.
+  `src/lib/smooth-scroll.ts` (`useLenis`, `scrollToElement`); `route-transition.tsx` and
+  `route-snapshot.ts` are the crossfade between pages.
 - Homepage screens: `src/components/home/screen.tsx` (`Screen`, `Ambient`),
   `screen-nav.tsx` (dot navigation and the snap), `src/lib/screens.ts` (which screen is
   under a point).
@@ -151,9 +151,11 @@ Three rules for anything that scrolls inside the page:
 | `fade`  | opacity only                          | anything already in motion    |
 
 `Reveal` plays when scrolled into view. `Enter` (`src/components/motion/enter.tsx`) plays
-the same shapes on mount, for page openers that are in view from the first frame, and
-holds for the route veil when it mounts under one (`useVeilLead`, which the homepage hero
-uses too). `PageIntro` is the reference choreography — crumbs fade, eyebrow rises, title
+the same shapes on mount, for page openers that are in view from the first frame. When it
+mounts during a route transition it holds until the page being left starts to dissolve,
+then starts a beat later (`useArrival`, which the homepage hero uses too), so the rise is
+always seen: a slow device can take a visible moment to paint the new page, and an opener
+on a clock started at mount would rise unseen under the old one. `PageIntro` is the reference choreography — crumbs fade, eyebrow rises, title
 wipes, lede rises, actions last — and the article and result pages open the same way.
 
 `wipe` clips with `inset()` whose resting value is negative on every side, so nothing is
@@ -180,22 +182,40 @@ moved by transform on a 26–34s cycle, slow enough never to be seen moving.
 
 ### Route transitions
 
-`src/components/layout/route-transition.tsx`. An internal link click sweeps a curtain up
-over the page from the bottom edge — a hairline of leaf with a soft bloom at its front —
-holds while the next page loads (a progress line creeps along its top), and once the new
-route has rendered underneath, carries on up and off the top, uncovering the new page from
-the bottom up: 0.42s in, 0.66s out, one continuous motion, with the scroll reset and the
-swap happening behind it. The veil is tinted to the *destination* (`src/lib/route-tone.ts`,
-shared with the header) so a move into a dark page reads as that page arriving, not a blink
-to paper on the way. The `(site)` layout has **no `loading.tsx`** — a route-level skeleton
-is exactly the hard cut the veil replaces.
+`src/components/layout/route-transition.tsx` with `route-snapshot.ts`. A link click
+**crossfades** the page being left into the next one. For about half a second both are on
+screen: the old page fading out (0.52s) and lifting 28px, the header and anything else
+pinned to the viewport fading in place, and the new page underneath with its opener rising
+into place as the old page thins (`useArrival`). Nothing covers the screen and nothing blinks to a
+flat colour. The two earlier versions did, and both read wrong: a tinted veil fading in and
+out read as a flash, and a full-height curtain sweeping up and off read as a loading screen.
 
-It is a veil and not a transform on the page for a reason worth keeping: a transformed
-element is a containing block for `position: fixed` descendants, and the product page's
-mobile action bar, the flipbook's glow and the reading-progress bar are all fixed children
-of the page. Transforming a fixed *sibling* breaks none of them. The veil is
-`pointer-events-none` throughout, so a click during the sweep lands where it was aimed, and
-it renders nothing under `prefers-reduced-motion`.
+How: the click copies the page as it is on screen into an inert overlay and lets Next
+navigate as usual. The live page stays up and usable while the next one loads, with a thin
+leaf progress line only if the load lasts long enough to notice (it waits 0.15s). When the
+route commits, a layout effect puts the copy over the new page before the browser paints,
+so the swap itself is never seen, and dissolves it. `html[data-route-transition]`
+(`src/lib/route-stage.ts`) is `leaving` from the click to the commit, `arriving` while the
+copy is up but not yet painted, and `dissolving` once its fade has started on screen; the
+openers wait for `dissolving`. The copy's own CSS animations (drifting light, the WhatsApp
+pulse) are held at the frame they were on, which keeps it cheap to paint.
+
+The copy, and not the View Transitions API: the API freezes the screen from the moment it
+starts until the new page is in the document, which for the per-request product listing is
+a server round trip from Zimbabwe. React's own integration avoids that but needs the
+experimental React build in this version of Next. The copy has to be faithful to pass
+unseen, and `route-snapshot.ts` documents what that takes: a scroller at the page's scroll
+position (sticky elements stay stuck), fixed elements lifted out so they do not drift, CSS
+animations resumed at the frame they were on, already-loaded lazy images made eager, and no
+ids, test ids or screen markers, so nothing that looks the page up finds the copy.
+
+Why not animate the new page itself: a transformed element is a containing block for
+`position: fixed` descendants, and the product page's mobile action bar, the flipbook's
+glow and the reading-progress bar are fixed children of the page. The overlay is a
+sibling, `pointer-events: none`, so a click during the dissolve lands on the new page. Only
+link clicks start it; back, forward and `router.push` arrive instantly. The `(site)` layout
+has **no `loading.tsx`**: a route-level skeleton is a hard cut. Under
+`prefers-reduced-motion` nothing is copied and nothing animates.
 
 ## Voice & honesty in UI
 

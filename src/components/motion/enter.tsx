@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { ROUTE_DISSOLVE_EVENT, getRouteStage } from "@/lib/route-stage";
 import { REVEAL_EASE, entranceShape, type RevealVariant } from "@/components/motion/reveal";
 
 /**
@@ -10,16 +11,16 @@ import { REVEAL_EASE, entranceShape, type RevealVariant } from "@/components/mot
  *
  * `Reveal` waits to be scrolled into view; a page's first screen is in view
  * the moment it exists, and what it wants is a choreographed arrival —
- * crumbs, eyebrow, title, lede, actions, each a beat after the last — timed
- * to the route veil clearing above it. `Enter` plays on mount, and when it
- * mounts under a veil (a client-side navigation) it holds for the veil to
- * pass: the veil lifts off the top of the viewport last, so without the hold
- * a title would be finished arriving before it could be seen. A veil still on
- * its way *in* when the page mounts (a prefetched link) is held for longer.
+ * crumbs, eyebrow, title, lede, actions, each a beat after the last. `Enter`
+ * plays on mount.
  *
- * The hold is read once, when the component first renders, so that Motion has
- * the delay when it starts the animation: a `transition` that changes later
- * does not restart one. There is no veil on a hard load, and no hold.
+ * When it mounts during a route transition, the page being left is still on
+ * screen as a copy over this one (src/components/layout/route-transition.tsx),
+ * and it holds until that copy starts to dissolve (`useArrival`): the rise
+ * then plays as the old page thins out, instead of on a clock started at
+ * mount that a slow device would spend painting, with the rise over before
+ * anything was visible. A fallback releases it if the signal never comes.
+ * There is no transition on a hard load, and no hold.
  *
  * `wipe` is the same CSS curtain as Reveal's, switched on a frame after mount
  * so the clipped state is painted first and the transition has somewhere to
@@ -27,22 +28,41 @@ import { REVEAL_EASE, entranceShape, type RevealVariant } from "@/components/mot
  */
 export type EnterVariant = RevealVariant;
 
-/** Seconds a clearing veil takes to uncover enough of the page for an opener to be seen. */
-const VEIL_LEAD = 0.26;
-/** Seconds a veil still covering takes to finish covering, on top of the lead. */
-const VEIL_COVER = 0.42;
+/** Seconds into the dissolve at which an arriving page's opener starts to rise. */
+const ARRIVAL_LEAD = 0.05;
+/** How long an opener waits for the dissolve before it goes anyway. */
+const ARRIVAL_FALLBACK_MS = 900;
 
-function veilLead() {
-  if (typeof document === "undefined") return 0;
-  const veil = document.querySelector("[data-route-veil]");
-  if (!veil) return 0;
-  return veil.getAttribute("data-route-veil") === "covering" ? VEIL_COVER + VEIL_LEAD : VEIL_LEAD;
+function waitingForDissolve() {
+  const stage = getRouteStage();
+  return stage === "leaving" || stage === "arriving";
 }
 
-/** The delay page-opening motion adds when it is mounting under a route veil. */
-export function useVeilLead(): number {
-  const [lead] = useState(veilLead);
-  return lead;
+/**
+ * For page-opening motion: `held` while the page it belongs to is arriving
+ * under the copy of the one being left, false from the moment that copy
+ * starts to dissolve (or at once, outside a transition); `lead` is the beat
+ * to add after that. Both are read at first render, so Motion has them when
+ * it starts: a `transition` that changes later does not restart an animation.
+ */
+export function useArrival(): { held: boolean; lead: number } {
+  const [lead] = useState(() => (getRouteStage() ? ARRIVAL_LEAD : 0));
+  const [held, setHeld] = useState(waitingForDissolve);
+  useEffect(() => {
+    if (!held) return;
+    const release = () => setHeld(false);
+    if (!waitingForDissolve()) {
+      release();
+      return;
+    }
+    window.addEventListener(ROUTE_DISSOLVE_EVENT, release);
+    const fallback = setTimeout(release, ARRIVAL_FALLBACK_MS);
+    return () => {
+      window.removeEventListener(ROUTE_DISSOLVE_EVENT, release);
+      clearTimeout(fallback);
+    };
+  }, [held]);
+  return { held, lead };
 }
 
 export function Enter({
@@ -59,7 +79,7 @@ export function Enter({
   className?: string;
 }) {
   const reduce = useReducedMotion();
-  const lead = useVeilLead();
+  const { held, lead } = useArrival();
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     const frame = requestAnimationFrame(() => setMounted(true));
@@ -71,7 +91,7 @@ export function Enter({
 
   if (variant === "wipe") {
     return (
-      <div data-inview={mounted ? "" : undefined}>
+      <div data-inview={mounted && !held ? "" : undefined}>
         <div
           className={cn("reveal-wipe", className)}
           style={start ? { transitionDelay: `${start}s` } : undefined}
@@ -87,7 +107,7 @@ export function Enter({
     <motion.div
       className={className}
       initial={hidden}
-      animate={show}
+      animate={held ? hidden : show}
       transition={{ duration, delay: start, ease: REVEAL_EASE }}
     >
       {children}
