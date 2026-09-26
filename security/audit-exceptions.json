@@ -1,0 +1,40 @@
+{
+  "$comment": [
+    "Advisories that have been read, assessed as not reachable in this application, and",
+    "accepted until an upgrade path exists. scripts/qa/audit-gate.mjs fails CI on any",
+    "high or critical advisory that is NOT listed here, so a new one cannot be absorbed",
+    "into an existing exception. Review each entry on its reviewBy date, or sooner if",
+    "the upgrade it is waiting for lands.",
+    "",
+    "An entry here is a decision with a name on it, not a way of silencing the tool."
+  ],
+  "exceptions": [
+    {
+      "advisory": 1145093,
+      "package": "deepmerge-ts",
+      "title": "Stack exhaustion when merging recursive object graphs",
+      "reachedVia": "prisma → @prisma/config",
+      "assessment": "The Prisma config loader runs at build and migrate time and merges prisma.config.ts, which is repository content. No request path reaches it, and nothing an attacker controls is ever merged. The runtime @prisma/client does not pull this in.",
+      "waitingFor": "A prisma 6.x release that updates @prisma/config. The advertised fix is prisma 7/8, which is a major upgrade and not worth taking for a build-time dependency.",
+      "reviewBy": "2026-12-01"
+    },
+    {
+      "advisory": 1124252,
+      "package": "postcss",
+      "title": "Arbitrary file read via attacker-controlled sourceMappingURL",
+      "reachedVia": "next",
+      "assessment": "PostCSS runs at build time over CSS authored in this repository. No user-supplied CSS is ever compiled, and the build runs on trusted input only.",
+      "waitingFor": "Next.js 16, which is a major upgrade and is scheduled separately.",
+      "reviewBy": "2026-12-01"
+    },
+    {
+      "advisory": 1139510,
+      "package": "postcss",
+      "title": "Path traversal in previous source map auto-loading",
+      "reachedVia": "next",
+      "assessment": "Same reasoning as advisory 1124252 — build-time only, over repository-authored CSS.",
+      "waitingFor": "Next.js 16.",
+      "reviewBy": "2026-12-01"
+    }
+  ]
+}

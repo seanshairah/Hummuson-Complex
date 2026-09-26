@@ -1,0 +1,391 @@
+[
+  {
+    "name": "NTS Harare",
+    "slug": "nts-harare",
+    "town": "Harare",
+    "address": "Kenneth Kaunda Avenue, Harare",
+    "sourceNote": "Owner corrected this on 23 Sep 2026: the Harare town branch is on Kenneth Kaunda Avenue, not the 173 Robert Mugabe Street that the 0%-accurate directory gave, so the Robert Mugabe address is withdrawn. The STREET is the owner's. They gave no street number, and none is recorded here rather than reusing the directory's 75 — that number sat on its separate “NTS Head Office” row, which the owner has already placed at Bluff Hill instead, so carrying it over would republish an address they have corrected once. Unverified: ring before sending anyone, and a street number would finish this row. Not the same shop as Winpat Agrochem at number 52 on the same street."
+  },
+  {
+    "name": "NTS Cameron",
+    "slug": "nts-cameron",
+    "town": "Harare",
+    "address": "35 Cameron Street, Harare",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "NTS Southerton",
+    "slug": "nts-southerton",
+    "town": "Harare",
+    "address": "Farmec Building, 36 Birmingham Road, Southerton, Harare",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "NTS Mbare",
+    "slug": "nts-mbare",
+    "town": "Harare",
+    "address": "Shop 15, Farmers Market, Mbare, Harare",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "NTS FarmShop Bluff Hill",
+    "slug": "nts-farmshop-bluff-hill",
+    "town": "Harare",
+    "address": "750 Lorraine Drive, Bluff Hill, Harare",
+    "sourceNote": "Owner confirmed on 19 Sep 2026 that NTS's head office is at Bluff Hill, not the 75 Kenneth Kaunda Avenue address the 0%-accurate directory gave — so the separate \"NTS Head Office\" row was merged into this one rather than publishing the same site twice. The SUBURB is the owner's; the street address (750 Lorraine Drive) and the +263 242 253866 line still come from that directory and are unverified.",
+    "phones": [
+      "+263 242 253866"
+    ],
+    "notes": "NTS's head office as well as a FarmShop counter."
+  },
+  {
+    "name": "NTS Bulawayo",
+    "slug": "nts-bulawayo",
+    "town": "Bulawayo",
+    "address": "62 George Silundika Street, Bulawayo",
+    "sourceNote": "Address confirmed by a branch-listing screenshot the owner supplied, agreeing with the NTS directory entry. Two independent sources.",
+    "verifiedOn": "2026-09-17"
+  },
+  {
+    "name": "Farmer's Choice Bulawayo",
+    "slug": "farmers-choice-bulawayo",
+    "town": "Bulawayo",
+    "address": "Corner 4th Avenue & Robert Mugabe Way, Bulawayo",
+    "phones": [
+      "0781 469 078",
+      "0777 723 649"
+    ],
+    "sourceNote": "Address and 0781 469 078 confirmed by Farmer's Choice's own branch-opening flyer (owner-supplied), which announced this branch for 1 Aug 2025. 0777 723 649 is from the Bulldozer flyer and is unconfirmed.",
+    "verifiedOn": "2026-09-17"
+  },
+  {
+    "name": "Bulawayo Seed Centre",
+    "slug": "bulawayo-seed-centre",
+    "town": "Bulawayo",
+    "address": "109 Fife Street, cnr 11th Avenue, Bulawayo",
+    "notes": "Signage reads \"Seed Co — Bulawayo Depot\".",
+    "sourceNote": "Confirmed by the shop's own Google Business listing (owner-supplied screenshot): name, address and a photograph of the shopfront.",
+    "verifiedOn": "2026-09-17"
+  },
+  {
+    "name": "Frontline Farming",
+    "slug": "frontline-farming-bulawayo",
+    "town": "Bulawayo",
+    "sourceNote": "Name supplied directly by Humuson; address, hours and number from an owner-supplied screenshot of the shop's own contact card, which carried no business name. The two were held apart — a stockist with no address, an address with no stockist — until the owner confirmed on 19 Sep 2026 that they are the same shop. Merged then; the placeholder \"Unnamed outlet, Belmont\" draft is gone.",
+    "address": "No. 2 Swansea Street, Belmont, Bulawayo",
+    "phones": [
+      "+263 29 2260277"
+    ],
+    "notes": "Mon–Fri 08:00–17:00, Sat 08:00–12:00, closed Sunday.",
+    "verifiedOn": "2026-09-19"
+  },
+  {
+    "name": "NTS Mutare",
+    "slug": "nts-mutare",
+    "town": "Mutare",
+    "address": "Shop 9, First Street, Mutare",
+    "phones": [
+      "+263 202 020302"
+    ],
+    "notes": "Open 08:00–17:00.",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified. Matches the \"Farmshop NTS, Shop 9 1st Street\" Humuson supplied."
+  },
+  {
+    "name": "Farmline Supplies",
+    "slug": "farmline-supplies-mutare",
+    "town": "Mutare",
+    "address": "9 First Street, Mutare",
+    "phones": [
+      "0774 235 077"
+    ],
+    "sourceNote": "Supplied directly by Humuson."
+  },
+  {
+    "name": "Rain Root Agro",
+    "slug": "rain-root-agro-mutare",
+    "town": "Mutare",
+    "address": "5 First Street, Mutare",
+    "phones": [
+      "0711 397 766",
+      "0780 998 611"
+    ],
+    "sourceNote": "Supplied directly by Humuson."
+  },
+  {
+    "name": "Farmtec",
+    "slug": "farmtec-mutare",
+    "town": "Mutare",
+    "address": "59 First Street, Mutare",
+    "phones": [
+      "0776 843 238"
+    ],
+    "sourceNote": "Supplied directly by Humuson."
+  },
+  {
+    "name": "NTS Gweru",
+    "slug": "nts-gweru",
+    "town": "Gweru",
+    "address": "69 6th Street, Gweru",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "NTS Gweru 2",
+    "slug": "nts-gweru-2",
+    "town": "Gweru",
+    "address": "50 Robert Mugabe Way, Gweru",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "Farmer's Choice Gweru",
+    "slug": "farmers-choice-gweru",
+    "town": "Gweru",
+    "address": "45 Robert Mugabe Way, Gweru",
+    "phones": [
+      "0787 777 801"
+    ],
+    "sourceNote": "Farmer's Choice, from their Bulldozer insecticide flyer. Unverified."
+  },
+  {
+    "name": "NTS Kwekwe",
+    "slug": "nts-kwekwe",
+    "town": "Kwekwe",
+    "address": "8th Street, Kwekwe",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "Farmer's Choice Kwekwe 1",
+    "slug": "farmers-choice-kwekwe-1",
+    "town": "Kwekwe",
+    "address": "8C Second Street, CBD, Kwekwe",
+    "phones": [
+      "055 25 23315",
+      "0718 715 583"
+    ],
+    "notes": "Farmer's Choice head office.",
+    "sourceNote": "Farmer's Choice, from their Bulldozer insecticide flyer. Unverified."
+  },
+  {
+    "name": "Farmer's Choice Kwekwe 2",
+    "slug": "farmers-choice-kwekwe-2",
+    "town": "Kwekwe",
+    "address": "Shop 2, Danziger House, CBD, Kwekwe",
+    "phones": [
+      "055 252 3314",
+      "0781 469 085"
+    ],
+    "sourceNote": "Farmer's Choice, from their Bulldozer insecticide flyer. Unverified."
+  },
+  {
+    "name": "NTS Gokwe",
+    "slug": "nts-gokwe",
+    "town": "Gokwe",
+    "address": "Stand 1028, Machokoto Building, Gokwe",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "Farmer's Choice Gokwe",
+    "slug": "farmers-choice-gokwe",
+    "town": "Gokwe",
+    "address": "1030 CBD, Gokwe Centre, Gokwe",
+    "phones": [
+      "0781 469 082"
+    ],
+    "sourceNote": "Farmer's Choice, from their Bulldozer insecticide flyer. Unverified."
+  },
+  {
+    "name": "NTS Kadoma",
+    "slug": "nts-kadoma",
+    "town": "Kadoma",
+    "address": "28a Herbert Chitepo Avenue, Kadoma",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "Farmer's Choice Kadoma",
+    "slug": "farmers-choice-kadoma",
+    "town": "Kadoma",
+    "address": "916 Cameron Square, Kadoma",
+    "phones": [
+      "0717 917 018"
+    ],
+    "sourceNote": "Farmer's Choice, from their Bulldozer insecticide flyer. Unverified."
+  },
+  {
+    "name": "NTS Chivhu",
+    "slug": "nts-chivhu",
+    "town": "Chivhu",
+    "address": "Stand 539, Chivhu",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "Farmer's Choice Chivhu",
+    "slug": "farmers-choice-chivhu",
+    "town": "Chivhu",
+    "address": "York Street, Chivhu",
+    "phones": [
+      "0715 677 207",
+      "054 212 2362"
+    ],
+    "sourceNote": "Farmer's Choice, from their Bulldozer insecticide flyer. Unverified."
+  },
+  {
+    "name": "NTS Karoi",
+    "slug": "nts-karoi",
+    "town": "Karoi",
+    "address": "Stand 248, Fred Jameson Road, Karoi",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "Farmer's Choice Karoi",
+    "slug": "farmers-choice-karoi",
+    "town": "Karoi",
+    "address": "196 Jamer Street, Karoi",
+    "sourceNote": "Supplied directly by Humuson. NOT in Farmer's Choice's own seven-branch flyer, which lists no Karoi outlet; and NTS Karoi is at \"Fred Jameson Road\", which may be the same street. Confirm the name and the number."
+  },
+  {
+    "name": "Farmer's Choice Banket",
+    "slug": "farmers-choice-banket",
+    "town": "Banket",
+    "address": "83 Ginnery Road, Banket",
+    "sourceNote": "Supplied directly by Humuson. NOT in Farmer's Choice's own seven-branch flyer, which lists no Banket outlet. Confirm the name."
+  },
+  {
+    "name": "NTS FarmShop Centenary",
+    "slug": "nts-farmshop-centenary",
+    "town": "Centenary",
+    "address": "145 Centenary Gatu, Muzarabani",
+    "sourceNote": "NTS FarmShop, from NTS Facebook posts / a search summary. Unverified. The shop is called Centenary while the address names Muzarabani."
+  },
+  {
+    "name": "NTS Chegutu",
+    "slug": "nts-chegutu",
+    "town": "Chegutu",
+    "address": "King Street, Chegutu",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "NTS Chinhoyi",
+    "slug": "nts-chinhoyi",
+    "town": "Chinhoyi",
+    "address": "29 Magamba Way, Chinhoyi",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "NTS Guruve",
+    "slug": "nts-guruve",
+    "town": "Guruve",
+    "address": "Stand 276, Guruve",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "NTS Marondera",
+    "slug": "nts-marondera",
+    "town": "Marondera",
+    "address": "59 Alpine House, The Green, Marondera",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "NTS Masvingo",
+    "slug": "nts-masvingo",
+    "town": "Masvingo",
+    "address": "26 Robert Mugabe Street, Masvingo",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "NTS FarmShop Mhangura",
+    "slug": "nts-farmshop-mhangura",
+    "town": "Mhangura",
+    "address": "Shop 1, Stand 244 Chebanga, Mhangura",
+    "notes": "Opened October 2025.",
+    "sourceNote": "NTS FarmShop, from NTS Facebook posts / a search summary. Unverified."
+  },
+  {
+    "name": "NTS FarmShop Murehwa",
+    "slug": "nts-farmshop-murehwa",
+    "town": "Murehwa",
+    "address": "Stand 244, Murehwa",
+    "sourceNote": "NTS FarmShop, from NTS Facebook posts / a search summary. Unverified. A second address was also given — 287 Makunde Building, opposite CBZ — and \"Stand 244\" is the same number as Mhangura, so one of the two is probably wrong. Confirm before anyone drives there."
+  },
+  {
+    "name": "NTS Mvurwi",
+    "slug": "nts-mvurwi",
+    "town": "Mvurwi",
+    "address": "Lot 1 of 5 Chatham Avenue, Mvurwi",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "NTS Norton",
+    "slug": "nts-norton",
+    "town": "Norton",
+    "address": "29 Galloway Road, Norton",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "NTS Rusape",
+    "slug": "nts-rusape",
+    "town": "Rusape",
+    "address": "Stand 7, Chimurenga Street, Rusape",
+    "sourceNote": "NTS branch list from thedirectory.co.zw, which rates its own listing \"0% accurate\". Unverified."
+  },
+  {
+    "name": "Pavet Agrikno Epworth",
+    "slug": "pavet-agrikno-epworth",
+    "town": "Harare",
+    "address": "617A Makomo, Epworth, Harare",
+    "phones": [
+      "0714 660 491",
+      "0786 801 551"
+    ],
+    "sourceNote": "Branch addresses printed on Pavet Agrikno (Pvt) Ltd's own Facebook advert dated 17 April, under its \"Pavet Seedlings & Chemicals\" banner (a comment on the post is five months old, consistent with April 2026). Self-published by the business, so firmer than the directory rows — but it evidences Pavet's own outlets, not that they carry Humuson product. Unverified: ring before sending anyone. Pavet's Facebook Details panel also gives 742 Mbuya Nehanda Road, Marondera, undated and held back here in case the advert supersedes it. Filed under Harare, as NTS's Mbare and Southerton branches are — Epworth is its own local authority but a Harare suburb to anyone driving there."
+  },
+  {
+    "name": "Winpat Agrochem",
+    "slug": "winpat-agrochem-harare",
+    "town": "Harare",
+    "address": "52 Kenneth Kaunda Avenue, corner Second Street, Harare",
+    "phones": [
+      "077 136 6208"
+    ],
+    "sourceNote": "Google business listing for \"Winpat Agrochem P/L\", an agrochemicals supplier in Harare, from an owner-supplied screenshot taken 20 Sep 2026: 52 Kenneth Kaunda Ave, 077 136 6208, winpatagrochem.co.zw, rated 4.7 from three reviews. The shop's own banner among the listing's photos gives the location as \"Cnr Second Str & Kenneth Kaunda Ave\", which corroborates the street and is why the corner is recorded here. That banner prints four further contact numbers, but the photograph is too small to read them, so they are left out rather than guessed at. Part of the listing is business-supplied material, which puts it above the directory rows, but it evidences Winpat's own shop and not that they carry Humuson product. Unverified: ring before sending anyone. No hours are recorded because the screenshot caught only \"Closed, opens 8am Sun\" — it trades on Sundays, but the rest of the week is unknown."
+  },
+  {
+    "name": "Pavet Agrikno Macheke",
+    "slug": "pavet-agrikno-macheke",
+    "town": "Macheke",
+    "address": "NRZ Complex, Macheke Railway Station",
+    "phones": [
+      "0714 660 491",
+      "0786 801 551"
+    ],
+    "sourceNote": "Branch addresses printed on Pavet Agrikno (Pvt) Ltd's own Facebook advert dated 17 April, under its \"Pavet Seedlings & Chemicals\" banner (a comment on the post is five months old, consistent with April 2026). Self-published by the business, so firmer than the directory rows — but it evidences Pavet's own outlets, not that they carry Humuson product. Unverified: ring before sending anyone. Pavet's Facebook Details panel also gives 742 Mbuya Nehanda Road, Marondera, undated and held back here in case the advert supersedes it. Macheke is a new town for this list; no other stockist is recorded there."
+  },
+  {
+    "name": "Pavet Agrikno Marondera",
+    "slug": "pavet-agrikno-marondera",
+    "town": "Marondera",
+    "address": "42 Elm Street, Marondera CBD",
+    "phones": [
+      "0714 660 491",
+      "0786 801 551"
+    ],
+    "sourceNote": "Branch addresses printed on Pavet Agrikno (Pvt) Ltd's own Facebook advert dated 17 April, under its \"Pavet Seedlings & Chemicals\" banner (a comment on the post is five months old, consistent with April 2026). Self-published by the business, so firmer than the directory rows — but it evidences Pavet's own outlets, not that they carry Humuson product. Unverified: ring before sending anyone. Pavet's Facebook Details panel also gives 742 Mbuya Nehanda Road, Marondera, undated and held back here in case the advert supersedes it."
+  },
+  {
+    "name": "Pavet Agrikno Shepperton Road",
+    "slug": "pavet-agrikno-shepperton-road",
+    "town": "Marondera",
+    "address": "151 Shepperton Road, Industrial Site, Marondera",
+    "phones": [
+      "0714 660 491",
+      "0786 801 551"
+    ],
+    "sourceNote": "Branch addresses printed on Pavet Agrikno (Pvt) Ltd's own Facebook advert dated 17 April, under its \"Pavet Seedlings & Chemicals\" banner (a comment on the post is five months old, consistent with April 2026). Self-published by the business, so firmer than the directory rows — but it evidences Pavet's own outlets, not that they carry Humuson product. Unverified: ring before sending anyone. Pavet's Facebook Details panel also gives 742 Mbuya Nehanda Road, Marondera, undated and held back here in case the advert supersedes it. The advert lists this alongside the Elm Street shop, so the two read as a retail outlet and an industrial site rather than a duplicate."
+  },
+  {
+    "name": "NTS FarmShop Chiredzi",
+    "slug": "nts-farmshop-chiredzi",
+    "town": "Chiredzi",
+    "address": "B72 Knobthorn Road, Chiredzi",
+    "phones": [],
+    "sourceNote": "Address from National Tested Seeds' own Facebook announcement dated 22 Aug 2024, opening the branch on 23 Aug 2024 — the company's own claim about its own shop, so firmer than the directory rows. Unverified only in that nobody has rung it since; the announcement is two years old, so confirm the branch is still trading."
+  }
+]

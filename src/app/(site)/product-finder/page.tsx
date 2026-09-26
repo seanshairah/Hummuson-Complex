@@ -1,0 +1,38 @@
+import type { Metadata } from "next";
+import { FinderWizard } from "@/components/finder/wizard";
+import { Em } from "@/components/ui/section-heading";
+import { getFilterOptions } from "@/server/data/products";
+
+export const revalidate = 300;
+
+export const metadata: Metadata = {
+  title: "Product finder — three questions to the right product",
+  description:
+    "Answer three quick questions about your crop, your purpose and how you apply — get matched with the Humuson products listed for exactly that situation.",
+  alternates: { canonical: "/product-finder" },
+};
+
+export default async function ProductFinderPage() {
+  const options = await getFilterOptions();
+
+  return (
+    <div className="bg-grain relative min-h-dvh overflow-hidden bg-humus-950">
+      <div aria-hidden className="absolute inset-0 glow-leaf" />
+      <div className="relative">
+        <header className="container-site pt-24 section-pb-tight text-center md:pt-28 lg:pt-32">
+          <p className="text-eyebrow text-leaf-400">Product finder</p>
+          <h1 className="mx-auto mt-4 max-w-3xl text-display-2 text-paper">
+            Find your <Em className="text-leaf-300">solution</Em>
+          </h1>
+        </header>
+        <FinderWizard
+          options={{
+            crops: options.crops,
+            benefits: options.benefits,
+            methods: options.methods,
+          }}
+        />
+      </div>
+    </div>
+  );
+}

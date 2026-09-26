@@ -1,0 +1,31 @@
+[
+  {
+    "name": "Microbiological Fertilisers",
+    "slug": "microbiological",
+    "description": "Live bacteria and fungi that fix atmospheric nitrogen, release the phosphorus and potassium already locked in the soil, and turn crop residue back into humus.",
+    "note": "Replaces the old shop's Physio category, which held the same products as Organic and carried no description a grower could use."
+  },
+  {
+    "name": "Biostimulants",
+    "slug": "biostimulants",
+    "description": "Amino-acid, seaweed and microbial formulations that help a crop hold its yield through cold, drought, waterlogging and transplant shock."
+  },
+  {
+    "name": "Crop Nutrition",
+    "slug": "crop-nutrition",
+    "description": "The feeding programme itself: basal dressings, top dressings and NPK fertilisers whose job is to supply the crop's macro-nutrients.",
+    "note": "Replaces the old shop's Value category. Membership is the products that supply nutrients directly — a microbial product that makes existing nutrients available is filed under Microbiological Fertilisers instead."
+  },
+  {
+    "name": "Liquid Foliar Fertilisers",
+    "slug": "liquid-fertilisers",
+    "description": "The liquid range, fed through the leaf or the irrigation line — macro-nutrients, trace elements and the adjuvant that carries them.",
+    "note": "Slug kept as liquid-fertilisers so existing ?category= links keep working; the name now says how the range is applied. Ordered after Crop Nutrition from 25 Sep 2026 at the owner's request; the order of this file is the order of the catalogue's chapters and of the Range filter."
+  },
+  {
+    "name": "Organic",
+    "slug": "organic",
+    "description": "Fertilisers whose nutrition and activity come from living or natural-origin matter — seaweed extract, amino acids, and the bacteria and fungi that release what the soil already holds.",
+    "note": "Membership was set by the owner on 25 Sep 2026: eMAXX Ultra, Ocean, Bio NPK Powder S and Master. Grow+ and CarboAmin moved out to Biostimulants in the same instruction, which is why the description no longer leads on humified carbon and humic acids — those belong to the two products that left."
+  }
+]
