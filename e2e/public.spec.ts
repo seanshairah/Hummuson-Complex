@@ -271,6 +271,93 @@ test.describe("public site", () => {
     await page.waitForURL("**/crops");
   });
 
+  /**
+   * The homepage is a run of viewport-height screens the document snaps to,
+   * with a dot navigation down the right edge on desktop. Each half of that is
+   * a thing that could quietly stop being true — a section that grows past the
+   * viewport, the `:has()` rule that switches snapping on going missing, the
+   * nav losing its screens — without any other test noticing.
+   */
+  test("the homepage is a run of screens with a dot navigation", async ({ page, isMobile }) => {
+    test.skip(isMobile, "the dot navigation is desktop-only");
+    await page.goto("/");
+    const screens = page.locator("[data-screen]");
+    await expect(screens).toHaveCount(8);
+
+    // Every screen fills the viewport, so a settled scroll never shows the
+    // bottom of one and the top of the next.
+    const shorterThanViewport = await screens.evaluateAll(
+      (els) => els.filter((el) => el.getBoundingClientRect().height < window.innerHeight - 1).length,
+    );
+    expect(shorterThanViewport).toBe(0);
+
+    // And the document snaps to them — gently. Chromium serialises the
+    // computed value as plain "y" because proximity is the default strictness;
+    // the pattern accepts that and would still catch a `mandatory`.
+    const snap = await page.evaluate(
+      () => getComputedStyle(document.documentElement).scrollSnapType,
+    );
+    expect(snap).toMatch(/^y(\s+proximity)?$/);
+
+    const nav = page.getByRole("navigation", { name: "Sections" });
+    await expect(nav.getByRole("button")).toHaveCount(8);
+    await nav.getByRole("button", { name: "Go to Finder" }).click();
+    await expect
+      .poll(() =>
+        page.evaluate(() =>
+          Math.round(document.getElementById("finder")!.getBoundingClientRect().top),
+        ),
+      )
+      .toBeLessThanOrEqual(1);
+    await expect(nav.getByRole("button", { name: "Go to Finder" })).toHaveAttribute(
+      "aria-current",
+      "true",
+    );
+
+    // The screen's heading has actually revealed. A heading that stays clipped
+    // is invisible to a person and visible to every other kind of check: it
+    // has a box, it has text, it is "in the viewport". Only the clip says
+    // otherwise, so the clip is what is read. (Chromium serialises the
+    // resting inset in shorthand; the starting one still names 100%.)
+    await expect
+      .poll(() =>
+        page.evaluate(
+          () => getComputedStyle(document.querySelector("#finder .reveal-wipe")!).clipPath,
+        ),
+      )
+      .not.toContain("100%");
+
+    // And a photograph: same trap, same read. The crops photograph is desktop-only.
+    await nav.getByRole("button", { name: "Go to Crops" }).click();
+    await expect
+      .poll(() =>
+        page.evaluate(
+          () => getComputedStyle(document.querySelector("#crops .image-reveal")!).clipPath,
+        ),
+      )
+      .not.toContain("100%");
+  });
+
+  /**
+   * A navigation crosses through the route veil and the veil clears again.
+   * The clearing is the half worth guarding: a veil that appears and never
+   * leaves would be a page nobody can see, and the state machine that lets it
+   * go has a branch for the route changing mid-fade that passed a first draft
+   * by silently never firing.
+   */
+  test("a navigation passes through the veil and the veil clears", async ({ page }) => {
+    await page.goto("/");
+    const veil = page.locator("[data-route-veil]");
+    await expect(veil).toHaveCount(0);
+
+    await page.getByRole("link", { name: /explore products/i }).first().click();
+    await expect(veil).toHaveCount(1);
+
+    await page.waitForURL("**/products");
+    await expect(veil).toHaveCount(0);
+    await expect(page.getByTestId("product-results")).toBeVisible();
+  });
+
   test("404 page offers useful next actions", async ({ page }) => {
     await page.goto("/definitely-not-a-page");
     await expect(page.getByText(/404/i)).toBeVisible();

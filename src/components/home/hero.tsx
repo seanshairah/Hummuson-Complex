@@ -3,13 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { ArrowRight, ChevronDown, Leaf, MessageCircle, ScanSearch } from "lucide-react";
+import { ArrowRight, Leaf, MessageCircle, ScanSearch } from "lucide-react";
 import { useRef } from "react";
 import type { ProductCardData } from "@/server/data/products";
 import { ButtonLink } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MediaImage } from "@/components/shared/media-image";
 import { Counter } from "@/components/motion/counter";
+import { PartnerLogos } from "@/components/shared/partner-logos";
 import { whatsappLink, whatsappAdviceMessage } from "@/lib/whatsapp";
 import heroField from "../../../public/images/field/hero-seedlings-drip-IMG_0553.jpg";
 
@@ -42,7 +43,12 @@ export function HomeHero({
   return (
     <section
       ref={ref}
-      className="bg-grain relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-humus-950"
+      id="home"
+      data-screen
+      data-label="Home"
+      data-tone="dark"
+      aria-label="Home"
+      className="bg-grain relative isolate flex min-h-[100svh] snap-start flex-col overflow-hidden bg-humus-950"
     >
       {/* Layered field imagery */}
       <motion.div style={reduce ? undefined : { y: bgY }} className="absolute inset-0 -z-10">
@@ -69,7 +75,7 @@ export function HomeHero({
       </motion.div>
       <div aria-hidden className="absolute inset-0 -z-10 glow-leaf" />
 
-      <div className="container-site flex flex-1 items-center pt-24 section-pb md:pt-28 lg:pt-32">
+      <div className="container-site flex flex-1 items-center pt-24 pb-8 md:pt-28 md:pb-10">
  <div className="grid w-full items-center gap-8 lg:gap-12 lg:grid-cols-[1.2fr_0.8fr] xl:gap-14">
           {/* Copy */}
           <div>
@@ -128,7 +134,7 @@ export function HomeHero({
               initial={reduce ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.85 }}
-              className="mt-12 flex flex-wrap gap-x-10 gap-y-5"
+              className="mt-10 flex flex-wrap gap-x-10 gap-y-5"
             >
               {/*
                 A count of zero here means the underlying data is missing, not
@@ -268,15 +274,25 @@ export function HomeHero({
         </div>
       </div>
 
-      {/* Scroll cue */}
+      {/*
+       * The producers, at the foot of the first screen. This used to be its
+       * own slim band between the hero and the next section — which, once the
+       * page became a run of viewport-height screens, was only ever visible as
+       * a sliver mid-scroll. Here it is part of the screen it belongs to.
+       */}
       <motion.div
         initial={reduce ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.8 }}
-        className="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2 text-paper/50"
-        aria-hidden
+        transition={{ duration: 0.9, delay: 1.05 }}
+        className="relative border-t border-paper/10"
       >
-        <ChevronDown className="mx-auto size-5 animate-float-y" />
+        <div className="container-site flex flex-col items-center gap-4 py-4 md:flex-row md:justify-between">
+          <p className="flex items-center gap-3 text-eyebrow text-[0.62rem] text-paper/50">
+            <span aria-hidden className="h-px w-6 bg-paper/25" />
+            Distributing for
+          </p>
+          <PartnerLogos variant="compact" tone="dark" />
+        </div>
       </motion.div>
     </section>
   );

@@ -38,12 +38,20 @@ const LOGOS: {
 
 /**
  * The producer logos, in the two sizes the site shows them at: `compact` for
- * the band under the home hero, where they sit beside a line of copy and stay
- * greyed until you point at them, and `full` for the "Our producers" section on
+ * the strip at the foot of the home hero, where they stay greyed until you
+ * point at them, and `full` for the "Our producers" section on
  * the About page, which is about the producers rather than the products.
  */
-export function PartnerLogos({ variant = "full" }: { variant?: "compact" | "full" }) {
+export function PartnerLogos({
+  variant = "full",
+  tone = "light",
+}: {
+  variant?: "compact" | "full";
+  /** `dark` for the strip at the foot of the home hero: dimmed until pointed at. */
+  tone?: "light" | "dark";
+}) {
   const compact = variant === "compact";
+  const dark = tone === "dark";
   return (
     <div
       className={cn(
@@ -60,7 +68,11 @@ export function PartnerLogos({ variant = "full" }: { variant?: "compact" | "full
           className={cn(
             "w-auto object-contain",
             compact
-              ? cn(logo.compact, "rounded-md grayscale transition hover:grayscale-0")
+              ? cn(
+                  logo.compact,
+                  "rounded-md grayscale transition duration-300 hover:grayscale-0",
+                  dark && "opacity-70 hover:opacity-100",
+                )
               : cn(logo.full, "rounded-lg"),
           )}
         />

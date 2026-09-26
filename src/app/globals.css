@@ -80,6 +80,8 @@
   --animate-marquee: marquee 42s linear infinite;
   --animate-pulse-soft: pulse-soft 3.2s ease-in-out infinite;
   --animate-float-y: float-y 7s ease-in-out infinite;
+  --animate-drift-a: drift-a 26s ease-in-out infinite alternate;
+  --animate-drift-b: drift-b 34s ease-in-out infinite alternate;
   --animate-fade-in: fade-in 0.25s var(--ease-smooth) both;
   --animate-slide-in-right: slide-in-right 0.3s var(--ease-out-expo) both;
   --animate-slide-in-up: slide-in-up 0.3s var(--ease-out-expo) both;
@@ -175,6 +177,30 @@
       transform: translateY(-10px);
     }
   }
+  /* Ambient light behind dark screens: transform only, on a cycle long enough
+     that it is never seen to move. */
+  @keyframes drift-a {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(-7%, 9%, 0) scale(1.12);
+    }
+    100% {
+      transform: translate3d(5%, -6%, 0) scale(0.96);
+    }
+  }
+  @keyframes drift-b {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(8%, -7%, 0) scale(1.1);
+    }
+    100% {
+      transform: translate3d(-6%, 5%, 0) scale(1.04);
+    }
+  }
 }
 
 /* ── Base ──────────────────────────────────────────────────────────────────── */
@@ -217,6 +243,21 @@
       transition-duration: 0.01ms !important;
     }
   }
+}
+
+/* ── Screens ──────────────────────────────────────────────────────────────────
+   The homepage is a run of viewport-height screens (src/components/home/
+   screen.tsx). `scroll-snap-type` has to live on the scroll container, which
+   for the document is <html>, so it is switched on by the page that wants it
+   rather than declared globally: any page can opt in by rendering an element
+   carrying `data-screens`. `proximity`, not `mandatory` — the browser settles
+   on a screen's top edge when a scroll ends near it, and does nothing at all
+   when it ends mid-way through a screen taller than the viewport. Nothing is
+   ever trapped. Browsers without `:has()` simply do not snap.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+html:has([data-screens]) {
+  scroll-snap-type: y proximity;
 }
 
 /* ── Composition utilities ────────────────────────────────────────────────── */
@@ -471,6 +512,47 @@
 .admin-shell::-webkit-scrollbar,
 .admin-shell *::-webkit-scrollbar {
   display: none;
+}
+
+/* ── Reveals driven by CSS ─────────────────────────────────────────────────────
+   The heading wipe and the photograph curtain (src/components/motion). Both
+   animate `clip-path` as a browser transition, and both keep the clip on a
+   CHILD of the element the in-view observer watches: Chromium's
+   IntersectionObserver applies a target's own clip-path, so an element
+   clipped to nothing is never seen as intersecting and would wait forever to
+   unclip. The in-view attribute is set on the wrapper by Motion's observer and
+   these selectors reach down from it. The reduced-motion block above zeroes
+   the transitions with everything else, and the components render the resting
+   state outright in that case.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+@layer components {
+  .reveal-wipe {
+    clip-path: inset(-40% -40% 100% -40%);
+    transform: translateY(28px);
+    transition:
+      clip-path 0.95s var(--ease-out-expo),
+      transform 0.95s var(--ease-out-expo);
+  }
+  [data-inview] > .reveal-wipe {
+    clip-path: inset(-40% -40% -40% -40%);
+    transform: none;
+  }
+
+  .image-reveal {
+    clip-path: var(--reveal-from, inset(100% 0 0 0));
+    transition: clip-path 1.1s var(--ease-out-expo);
+  }
+  .image-reveal-inner {
+    transform: scale(1.16);
+    transition: transform 1.5s var(--ease-out-expo);
+  }
+  [data-inview] > .image-reveal {
+    clip-path: inset(0 0 0 0);
+  }
+  [data-inview] > .image-reveal > .image-reveal-inner {
+    transform: none;
+  }
 }
 
 /* ── Rich text (article bodies, product descriptions) ─────────────────────── */

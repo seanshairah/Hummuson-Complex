@@ -95,12 +95,67 @@ every page most of a screen down.
 - UI kit: `src/components/ui` — Button/ButtonLink (pill), Badge, Field/Input/Textarea/
   NativeSelect (implicit label association — no ids), Dialog/Sheet, Tabs, Accordion,
   Table, Skeleton/Spinner, EmptyState (always includes a next action), SectionHeading + `Em`.
-- Motion: `src/components/motion` — `Reveal`/`RevealGroup`/`RevealItem` (expo-ease rise),
-  `Parallax`, `Tilt`, `Counter` (real numbers only). **Every motion component renders
-  statically under `prefers-reduced-motion`.**
+- Motion: `src/components/motion` — `Reveal`/`RevealGroup`/`RevealItem` in five shapes
+  (`rise`, `wipe`, `scale`, `blur`, `fade`), `ImageReveal` (curtain + settle), `Spotlight`
+  (pointer-following pool of light on a card), `Parallax`, `Tilt`, `Counter` (real numbers
+  only). See **Motion & transitions** below. **Every motion component renders statically
+  under `prefers-reduced-motion`.**
+- Homepage screens: `src/components/home/screen.tsx` (`Screen`, `Ambient`),
+  `screen-nav.tsx` (dot navigation), `src/lib/screens.ts` (which screen is under a point).
 - Signatures: ProductCard (hover quick-facts), GrowthTimeline (stage tabs + growing rail),
   FinderWizard, Flipbook (CSS-3D page turn), catalogue chapter themes
   (`soil / biology / vitality / nutrition`).
+
+## Motion & transitions
+
+One ease everywhere — `cubic-bezier(0.16, 1, 0.3, 1)`, the expo-out — and one idea:
+an element is already where it belongs, and arrives there. Nothing bounces in from
+off-screen; nothing loops for attention.
+
+### Entrances (`Reveal`, `RevealItem`)
+
+| shape   | what it is                                | use it for                       |
+| ------- | ----------------------------------------- | -------------------------------- |
+| `rise`  | fade up (the default)                     | most content                     |
+| `wipe`  | a curtain lifting off the block           | display headings                 |
+| `scale` | settles from slightly larger              | media, a single feature          |
+| `blur`  | sharpens as it rises                      | staggered cards                  |
+| `fade`  | opacity only                              | anything already in motion       |
+
+`wipe` clips with `inset()` whose resting value is negative on every side, so nothing
+is left clipped afterwards — a card's hover shadow still shows. `blur` clears its filter
+once it has landed: `filter: blur(0px)` is not `none`, and would keep costing a layer.
+`ImageReveal` is the photograph version: the curtain draws across the frame while the
+picture settles from 1.16× to rest.
+
+### The homepage as screens
+
+The homepage is eight viewport-height screens (`min-h-[100svh]`, content centred,
+chapter number in each eyebrow), and the document snaps to them:
+`html:has([data-screens]) { scroll-snap-type: y proximity }`, each screen
+`snap-start`. **`proximity`, never `mandatory`**: a screen taller than a small phone
+stays scrollable through, and nobody is dragged back. Browsers without `:has()` simply
+don't snap. The header takes its tone from the screen under its own bar (transparent
+over dark, frosted over light); the dot navigation on the right marks the screen at the
+middle of the viewport. Dark screens carry `Ambient`: two radial gradients moved by
+transform on a 26–34s cycle — slow enough never to be seen moving.
+
+### Route transitions
+
+`src/components/layout/route-transition.tsx`. An internal link click fades a veil in
+over the page; it holds while the next page loads (a 2px progress bar creeps along its
+top); once the new route has rendered underneath, it fades out. The veil is tinted to the
+*destination* (`src/lib/route-tone.ts`, shared with the header) so a move into a dark
+page reads as that page arriving, not a blink to paper on the way. The `(site)` layout
+has **no `loading.tsx`** — a route-level skeleton is exactly the hard cut the veil
+replaces.
+
+It is a veil and not a transform on the page for a reason worth keeping: a transformed
+element is a containing block for `position: fixed` descendants, and the product page's
+mobile action bar, the flipbook's glow and the reading-progress bar are all fixed
+children of the page. Opacity on a sibling breaks none of them. The veil is
+`pointer-events-none` throughout, so a click during the fade lands where it was aimed,
+and it renders nothing under `prefers-reduced-motion`.
 
 ## Voice & honesty in UI
 

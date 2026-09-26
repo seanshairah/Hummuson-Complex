@@ -7,9 +7,9 @@ import {
   FeaturedProducts,
   FinderBand,
   KnowledgePreview,
-  RangesBand,
   SoilStory,
 } from "@/components/home/sections";
+import { ScreenNav } from "@/components/home/screen-nav";
 import { getCatalogueStats, getFeaturedProducts, getFilterOptions } from "@/server/data/products";
 import { getAllCrops } from "@/server/data/crops";
 import { getAllArticles, getAllVideos } from "@/server/data/content";
@@ -48,20 +48,27 @@ export default async function HomePage() {
   return (
     <>
       <JsonLd data={organizationJsonLd(toMapPin(contact))} />
-      <HomeHero
-        spotlight={spotlight}
-        productCount={stats.products}
-        cropCount={stats.crops}
-        partnerCount={company.partnerBrands.length}
-      />
-      <RangesBand />
-      <BenefitNav options={options} />
-      <FeaturedProducts products={featured} />
-      <FinderBand />
-      <CropsBand crops={crops} />
-      <SoilStory claims={company.whyChooseUs} />
-      <KnowledgePreview articles={articles} videos={videos} />
-      <CatalogueTeaser products={featured} />
+      {/*
+       * `data-screens` is what switches scroll snapping on for this page (see
+       * globals.css); `contents` keeps the wrapper out of the layout. The
+       * screens themselves are the sections inside.
+       */}
+      <div data-screens className="contents">
+        <HomeHero
+          spotlight={spotlight}
+          productCount={stats.products}
+          cropCount={stats.crops}
+          partnerCount={company.partnerBrands.length}
+        />
+        <BenefitNav options={options} />
+        <FeaturedProducts products={featured} />
+        <FinderBand />
+        <CropsBand crops={crops} />
+        <SoilStory claims={company.whyChooseUs} />
+        <KnowledgePreview articles={articles} videos={videos} />
+        <CatalogueTeaser products={featured} />
+      </div>
+      <ScreenNav />
     </>
   );
 }

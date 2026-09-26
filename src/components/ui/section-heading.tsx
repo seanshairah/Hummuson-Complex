@@ -4,9 +4,14 @@ import type { ReactNode } from "react";
 /**
  * Standard editorial section opener: eyebrow → display heading → lede.
  * `tone="dark"` for humus-ground sections.
+ *
+ * `index` puts a chapter number ahead of the eyebrow ("02 — The range"). The
+ * homepage screens carry one each, so a visitor moving through them can feel
+ * how far along they are; sub-pages leave it off.
  */
 export function SectionHeading({
   eyebrow,
+  index,
   title,
   lede,
   tone = "light",
@@ -15,6 +20,7 @@ export function SectionHeading({
   className,
 }: {
   eyebrow?: string;
+  index?: number;
   title: ReactNode;
   lede?: ReactNode;
   tone?: "light" | "dark";
@@ -33,6 +39,9 @@ export function SectionHeading({
             dark ? "text-leaf-400" : "text-leaf-700",
           )}
         >
+          {index !== undefined && (
+            <span className="tabular-nums opacity-60">{String(index).padStart(2, "0")}</span>
+          )}
           <span
             aria-hidden
             className={cn("h-px w-8", dark ? "bg-leaf-400/60" : "bg-leaf-700/50")}

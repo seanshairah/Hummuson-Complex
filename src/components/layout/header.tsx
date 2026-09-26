@@ -2,26 +2,37 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MessageCircle, Menu, X } from "lucide-react";
 import { mainNav, secondaryNav } from "@/lib/nav";
+import { routeTone } from "@/lib/route-tone";
+import { useActiveScreen } from "@/lib/screens";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/layout/logo";
 import { whatsappLink, whatsappAdviceMessage } from "@/lib/whatsapp";
 import { AskHumusonLauncher } from "@/components/ask/launcher";
 import { SearchLauncher } from "@/components/search/launcher";
 
-/** Routes that open with a dark immersive hero → header starts light-on-dark. */
-const DARK_ROUTE_PREFIXES = ["/catalogue", "/product-finder", "/about"];
-
 export function Header() {
   const pathname = usePathname();
+  const barRef = useRef<HTMLElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const onDarkRoute =
-    pathname === "/" || DARK_ROUTE_PREFIXES.some((prefix) => pathname.startsWith(prefix));
-  const onDark = onDarkRoute && !scrolled;
+  /*
+   * Tone. On a page built from screens (the homepage) the header follows
+   * whatever screen is beneath its own bar: transparent and light-on-dark over
+   * a dark screen, frosted cream over a light one, switching as each boundary
+   * passes underneath. Elsewhere it starts light-on-dark on the routes that
+   * open with a dark hero (see src/lib/route-tone.ts — the route veil uses the
+   * same list) and turns frosted once scrolled.
+   */
+  const { active: screen } = useActiveScreen(
+    () => (barRef.current?.offsetHeight ?? 72) / 2,
+    pathname,
+  );
+  const onDark = screen ? screen.tone === "dark" : routeTone(pathname) === "dark" && !scrolled;
+  const frosted = scrolled && !open && !onDark;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -42,6 +53,7 @@ export function Header() {
   return (
     <>
       <header
+        ref={barRef}
         className={cn(
           "fixed inset-x-0 top-0 z-40 transition-all duration-300",
           // Above the mobile menu panel, which is a sibling below: the bar keeps
@@ -50,8 +62,11 @@ export function Header() {
           // ...but transparent while it is open, so the dark panel behind shows
           // through and the light logo and close button keep their contrast.
           // The panel used to sit inside the header and cover this itself.
-          scrolled && !open && "shadow-card glass-light",
-          scrolled && !open && "supports-[backdrop-filter]:bg-cream/70",
+          frosted && "shadow-card glass-light",
+          frosted && "supports-[backdrop-filter]:bg-cream/70",
+          // Over a dark screen, once content is moving under the bar, a soft
+          // scrim keeps the logo legible without turning the bar into a slab.
+          onDark && scrolled && !open && "bg-gradient-to-b from-humus-950/75 to-transparent",
         )}
       >
         <div className="container-wide flex h-16 items-center justify-between gap-4 md:h-[4.5rem]">
