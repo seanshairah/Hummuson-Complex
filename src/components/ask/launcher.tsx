@@ -184,7 +184,7 @@ export function AskSheet({
       }
     >
       <div className="flex h-full flex-col">
-        <div ref={listRef} className="flex-1 space-y-5 overflow-y-auto pb-4" aria-live="polite">
+        <div data-lenis-prevent ref={listRef} className="flex-1 space-y-5 overflow-y-auto pb-4" aria-live="polite">
           {thread.length === 0 && (
             <div className="rounded-2xl bg-paper-dim p-4">
               <p className="flex items-center gap-2 font-display text-sm font-medium text-ink">

@@ -31,13 +31,15 @@ import { cn } from "@/lib/utils";
  * `blur` clears its filter once it has landed: `blur(0px)` is not `none`, and
  * would keep costing a compositing layer.
  *
- * Every shape renders statically under `prefers-reduced-motion`.
+ * Every shape renders statically under `prefers-reduced-motion`. `Enter`
+ * (enter.tsx) is the mount-timed sibling of this for page openers, and shares
+ * the shapes and the ease.
  */
 export type RevealVariant = "rise" | "wipe" | "scale" | "blur" | "fade";
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+export const REVEAL_EASE = [0.16, 1, 0.3, 1] as const;
 
-function shape(variant: Exclude<RevealVariant, "wipe">, y: number) {
+export function entranceShape(variant: Exclude<RevealVariant, "wipe">, y: number) {
   switch (variant) {
     case "scale":
       return {
@@ -49,12 +51,12 @@ function shape(variant: Exclude<RevealVariant, "wipe">, y: number) {
       return {
         hidden: { opacity: 0, y, filter: "blur(12px)" },
         show: { opacity: 1, y: 0, filter: "blur(0px)" },
-        duration: 0.7,
+        duration: 0.8,
       };
     case "fade":
       return { hidden: { opacity: 0 }, show: { opacity: 1 }, duration: 0.6 };
     default:
-      return { hidden: { opacity: 0, y }, show: { opacity: 1, y: 0 }, duration: 0.7 };
+      return { hidden: { opacity: 0, y }, show: { opacity: 1, y: 0 }, duration: 0.85 };
   }
 }
 
@@ -62,7 +64,7 @@ export function Reveal({
   children,
   variant = "rise",
   delay = 0,
-  y = 28,
+  y = 40,
   once = true,
   className,
   amount = 0.12,
@@ -96,7 +98,7 @@ export function Reveal({
     );
   }
 
-  const { hidden, show, duration } = shape(variant, y);
+  const { hidden, show, duration } = entranceShape(variant, y);
   return (
     <motion.div
       ref={ref}
@@ -106,7 +108,7 @@ export function Reveal({
       // Low threshold, no negative margin: tall sections must never sit
       // blank while a fast scroll waits for a large visible fraction.
       viewport={{ once, amount }}
-      transition={{ duration, delay, ease: EASE }}
+      transition={{ duration, delay, ease: REVEAL_EASE }}
       onAnimationComplete={() => {
         if (variant === "blur" && ref.current) ref.current.style.filter = "";
       }}
@@ -153,7 +155,7 @@ export function RevealItem({
   children,
   className,
   variant = "rise",
-  y = 24,
+  y = 32,
 }: {
   children: ReactNode;
   className?: string;
@@ -163,14 +165,14 @@ export function RevealItem({
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   if (reduce) return <div className={className}>{children}</div>;
-  const { hidden, show, duration } = shape(variant, y);
+  const { hidden, show, duration } = entranceShape(variant, y);
   return (
     <motion.div
       ref={ref}
       className={className}
       variants={{
         hidden,
-        show: { ...show, transition: { duration, ease: EASE } },
+        show: { ...show, transition: { duration, ease: REVEAL_EASE } },
       }}
       onAnimationComplete={() => {
         if (variant === "blur" && ref.current) ref.current.style.filter = "";

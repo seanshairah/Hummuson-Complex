@@ -49,7 +49,7 @@ export default async function AboutPage() {
 
       {/* Story */}
  <section className="container-site grid items-center gap-8 lg:gap-12 section-y lg:grid-cols-2">
-        <Reveal>
+        <Reveal variant="wipe">
           <SectionHeading
             eyebrow="Our story"
             title={
@@ -112,7 +112,7 @@ export default async function AboutPage() {
       {/* Values */}
       {company.values.length > 0 && (
         <section className="container-site section-y">
-          <Reveal>
+          <Reveal variant="wipe">
             <SectionHeading
               eyebrow="What we stand for"
               title={
@@ -141,17 +141,21 @@ export default async function AboutPage() {
       {/* Partners */}
       <section className="border-y border-line bg-cream py-14">
         <div className="container-site flex flex-col items-center gap-8 text-center">
-          <SectionHeading
-            align="center"
-            eyebrow="Our producers"
-            title={
-              <>
-                Renowned <Em className="text-brand">European brands</Em>
-              </>
-            }
-            lede="Humuson Complex distributes for established European producers of crop nutrition, biostimulants and agricultural biotechnology."
-          />
-          <PartnerLogos />
+          <Reveal variant="wipe">
+            <SectionHeading
+              align="center"
+              eyebrow="Our producers"
+              title={
+                <>
+                  Renowned <Em className="text-brand">European brands</Em>
+                </>
+              }
+              lede="Humuson Complex distributes for established European producers of crop nutrition, biostimulants and agricultural biotechnology."
+            />
+          </Reveal>
+          <Reveal delay={0.15}>
+            <PartnerLogos />
+          </Reveal>
         </div>
       </section>
 

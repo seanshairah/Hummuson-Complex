@@ -196,7 +196,7 @@ export function SearchDialog({
             </DialogPrimitive.Close>
           </div>
 
-          <div className="min-h-0 flex-1 overflow-y-auto p-2 sm:max-h-[55dvh] sm:flex-none">
+          <div data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto p-2 sm:max-h-[55dvh] sm:flex-none">
             {!searched && !loading && (
               <div className="px-4 py-8 text-center text-sm text-ink-faint">
                 Try <SearchHint onPick={setQuery} q="maize" />,{" "}

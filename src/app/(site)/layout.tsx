@@ -3,6 +3,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppFab } from "@/components/layout/whatsapp-fab";
 import { RouteTransition } from "@/components/layout/route-transition";
+import { SmoothScroll } from "@/components/layout/smooth-scroll";
 
 /**
  * No `loading.tsx` at this level, on purpose. A route-level skeleton streams in
@@ -32,6 +33,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <Suspense fallback={null}>
         <RouteTransition />
       </Suspense>
+      <SmoothScroll />
     </div>
   );
 }

@@ -168,7 +168,7 @@ export function Combobox({
             />
           </div>
 
-          <div
+          <div data-lenis-prevent
             ref={listRef}
             id={listId}
             role="listbox"

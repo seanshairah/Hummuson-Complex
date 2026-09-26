@@ -341,7 +341,7 @@ function FilterPopover({
         </button>
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content
+        <Popover.Content data-lenis-prevent
           align="start"
           sideOffset={8}
           className="z-40 max-h-80 w-60 overflow-y-auto rounded-2xl border border-line bg-cream p-1.5 shadow-pop data-[state=open]:animate-fade-in"

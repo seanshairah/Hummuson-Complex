@@ -7,6 +7,7 @@ import { MessageCircle, Menu, X } from "lucide-react";
 import { mainNav, secondaryNav } from "@/lib/nav";
 import { routeTone } from "@/lib/route-tone";
 import { useActiveScreen } from "@/lib/screens";
+import { getLenis } from "@/lib/smooth-scroll";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/layout/logo";
 import { whatsappLink, whatsappAdviceMessage } from "@/lib/whatsapp";
@@ -45,8 +46,17 @@ export function Header() {
 
   useEffect(() => {
     document.documentElement.style.overflow = open ? "hidden" : "";
+    // A hidden overflow stops native scrolling only; Lenis would still glide
+    // the page under the menu on a wheel, so it is stopped too — and started
+    // again only if nothing else (a dialog) still holds the body locked.
+    const release = () => {
+      if (!document.body.hasAttribute("data-scroll-locked")) getLenis()?.start();
+    };
+    if (open) getLenis()?.stop();
+    else release();
     return () => {
       document.documentElement.style.overflow = "";
+      release();
     };
   }, [open]);
 
@@ -171,7 +181,7 @@ export function Header() {
         )}
       >
         <div className="absolute inset-0 glow-leaf" aria-hidden />
-        <nav aria-label="Mobile" className="relative mt-24 flex-1 overflow-y-auto px-6 pb-10">
+        <nav data-lenis-prevent aria-label="Mobile" className="relative mt-24 flex-1 overflow-y-auto px-6 pb-10">
           <ul className="space-y-1">
             {mainNav.map((item, i) => (
               <li key={item.href}>

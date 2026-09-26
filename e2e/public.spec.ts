@@ -291,13 +291,14 @@ test.describe("public site", () => {
     );
     expect(shorterThanViewport).toBe(0);
 
-    // And the document snaps to them — gently. Chromium serialises the
-    // computed value as plain "y" because proximity is the default strictness;
-    // the pattern accepts that and would still catch a `mandatory`.
+    // On a desktop the page scrolls through Lenis (its own `lenis` class on
+    // <html> is the marker), and under it the document must *not* also
+    // CSS-snap: the two would fight. The snap is Lenis's, exercised below.
+    await expect(page.locator("html")).toHaveClass(/\blenis\b/);
     const snap = await page.evaluate(
       () => getComputedStyle(document.documentElement).scrollSnapType,
     );
-    expect(snap).toMatch(/^y(\s+proximity)?$/);
+    expect(snap).toBe("none");
 
     const nav = page.getByRole("navigation", { name: "Sections" });
     await expect(nav.getByRole("button")).toHaveCount(8);
@@ -336,6 +337,50 @@ test.describe("public site", () => {
         ),
       )
       .not.toContain("100%");
+
+    // The glide snaps. A wheel that carries the page more than a fifth of the
+    // way into a screen is completed to the next screen's top edge a beat
+    // after the wheel goes quiet — the rule in screen-nav.tsx, driven through
+    // a real wheel event so that the whole chain (Lenis taking the wheel, the
+    // settle timer, the retargeted glide) is what is under test.
+    await nav.getByRole("button", { name: "Go to Home" }).click();
+    await expect.poll(() => page.evaluate(() => Math.round(window.scrollY))).toBe(0);
+    const { firstHeight, viewport, secondId } = await page.evaluate(() => {
+      const screens = document.querySelectorAll<HTMLElement>("[data-screen]");
+      return {
+        firstHeight: screens[0]!.getBoundingClientRect().height,
+        viewport: window.innerHeight,
+        secondId: screens[1]!.id,
+      };
+    });
+    await page.mouse.move(640, 360);
+    await page.mouse.wheel(0, Math.round(firstHeight - viewport * 0.4));
+    await expect
+      .poll(
+        () =>
+          page.evaluate(
+            (id) => Math.abs(document.getElementById(id)!.getBoundingClientRect().top),
+            secondId,
+          ),
+        { timeout: 8_000 },
+      )
+      .toBeLessThanOrEqual(1);
+  });
+
+  test("on a phone the homepage keeps the browser's own snap", async ({ page, isMobile }) => {
+    test.skip(!isMobile, "a desktop scrolls through Lenis instead");
+    await page.goto("/");
+    // Lenis is created in an effect, so "no class" proves nothing until the
+    // page has hydrated and its effects have run: the hero's eyebrow arriving
+    // (server-rendered at opacity 0, animated to 1 on mount) is that moment.
+    await expect(page.locator("#home p").first()).toHaveCSS("opacity", "1");
+    // No Lenis on a touch device — native scrolling is already inertial — so
+    // the CSS proximity snap on the document is what does the settling there.
+    await expect(page.locator("html")).not.toHaveClass(/\blenis\b/);
+    const snap = await page.evaluate(
+      () => getComputedStyle(document.documentElement).scrollSnapType,
+    );
+    expect(snap).toMatch(/^y(\s+proximity)?$/);
   });
 
   /**

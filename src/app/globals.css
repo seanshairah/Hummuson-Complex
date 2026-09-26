@@ -254,10 +254,49 @@
    on a screen's top edge when a scroll ends near it, and does nothing at all
    when it ends mid-way through a screen taller than the viewport. Nothing is
    ever trapped. Browsers without `:has()` simply do not snap.
+
+   Under Lenis (`html.lenis`, below) it is off: the browser's snapping and
+   Lenis's interpolation would each correct the other into a stutter, so the
+   homepage snaps through Lenis instead (src/components/home/screen-nav.tsx),
+   by the same rule. This CSS is what phones and reduced-motion get.
    ──────────────────────────────────────────────────────────────────────────── */
 
-html:has([data-screens]) {
+html:has([data-screens]):not(.lenis) {
   scroll-snap-type: y proximity;
+}
+
+/* ── Smooth scroll (Lenis) ────────────────────────────────────────────────────
+   src/components/layout/smooth-scroll.tsx puts `lenis` on <html> for as long
+   as it runs, `lenis-stopped` while a dialog holds it, and `lenis-smooth`
+   only for the frames a glide is in progress. These are Lenis's own rules,
+   minus one: it also asks for `pointer-events: none` on every iframe, which
+   would kill the YouTube and map embeds. The `scroll-behavior` reset is the
+   one that matters most, and it is keyed to the permanent class on purpose:
+   with the base `smooth` above still in force, every native scroll under
+   Lenis — a hash jump, a restored position on back, Next's reset to the top
+   of a new page — is animated by the browser as well, and Lenis then adopts
+   the half-way positions of an animation it cannot see. (Lenis's own
+   per-frame writes ask for `behavior: instant` and are not affected.)
+   `lenis-stopped` clips the root so that neither the keyboard nor the
+   scrollbar moves the page under an overlay.
+   ──────────────────────────────────────────────────────────────────────────── */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+html.lenis {
+  scroll-behavior: auto !important;
+}
+html.lenis.lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch],
+.lenis [data-lenis-prevent-vertical],
+.lenis [data-lenis-prevent-horizontal] {
+  overscroll-behavior: contain;
 }
 
 /* ── Composition utilities ────────────────────────────────────────────────── */

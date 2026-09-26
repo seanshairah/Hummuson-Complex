@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { useVeilLead } from "@/components/motion/enter";
 import { ArrowRight, Leaf, MessageCircle, ScanSearch } from "lucide-react";
 import { useRef } from "react";
 import type { ProductCardData } from "@/server/data/products";
@@ -29,6 +30,8 @@ export function HomeHero({
   partnerCount: number;
 }) {
   const reduce = useReducedMotion();
+  // Arriving under the route veil, the choreography waits for it to clear.
+  const lead = useVeilLead();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
@@ -82,7 +85,7 @@ export function HomeHero({
             <motion.p
               initial={reduce ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: EASE }}
+              transition={{ duration: 0.6, delay: lead, ease: EASE }}
               className="flex items-center gap-3 text-eyebrow text-leaf-400"
             >
               <span aria-hidden className="h-px w-10 bg-leaf-400/70" />
@@ -96,7 +99,7 @@ export function HomeHero({
                     className={`block ${line.className}`}
                     initial={reduce ? false : { y: "105%" }}
                     animate={{ y: 0 }}
-                    transition={{ duration: 0.85, delay: 0.12 + i * 0.12, ease: EASE }}
+                    transition={{ duration: 0.85, delay: lead + 0.12 + i * 0.12, ease: EASE }}
                   >
                     {line.text}
                   </motion.span>
@@ -107,7 +110,7 @@ export function HomeHero({
             <motion.p
               initial={reduce ? false : { opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
+              transition={{ duration: 0.7, delay: lead + 0.5, ease: EASE }}
               className="mt-6 max-w-xl text-base leading-relaxed text-paper/75 md:text-lg"
             >
               Humuson Complex brings modern agricultural technology to Zimbabwe — microbiological
@@ -118,7 +121,7 @@ export function HomeHero({
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.62, ease: EASE }}
+              transition={{ duration: 0.7, delay: lead + 0.62, ease: EASE }}
               className="mt-9 flex flex-wrap items-center gap-3"
             >
               <ButtonLink href="/products" variant="accent" size="xl">
@@ -133,7 +136,7 @@ export function HomeHero({
             <motion.dl
               initial={reduce ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.85 }}
+              transition={{ duration: 0.8, delay: lead + 0.85 }}
               className="mt-10 flex flex-wrap gap-x-10 gap-y-5"
             >
               {/*
@@ -175,7 +178,7 @@ export function HomeHero({
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 32, rotate: -1.5 }}
               animate={{ opacity: 1, y: 0, rotate: 0 }}
-              transition={{ duration: 0.9, delay: 0.55, ease: EASE }}
+              transition={{ duration: 0.9, delay: lead + 0.55, ease: EASE }}
             >
               {spotlight && (
                 <Link
@@ -236,7 +239,7 @@ export function HomeHero({
               rel="noopener noreferrer"
               initial={reduce ? false : { opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.72, ease: EASE }}
+              transition={{ duration: 0.9, delay: lead + 0.72, ease: EASE }}
               className="mt-4 flex items-center gap-4 rounded-3xl p-5 shadow-float glass-dark transition-transform duration-300 hover:-translate-y-1"
             >
               <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-leaf-400 text-humus-950">
@@ -256,7 +259,7 @@ export function HomeHero({
             <motion.div
               initial={reduce ? false : { opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.86, ease: EASE }}
+              transition={{ duration: 0.9, delay: lead + 0.86, ease: EASE }}
               className="mt-4 flex items-center justify-between gap-4 rounded-3xl p-5 shadow-float glass-dark"
             >
               <p className="text-xs leading-relaxed text-paper/70">
@@ -283,7 +286,7 @@ export function HomeHero({
       <motion.div
         initial={reduce ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.9, delay: 1.05 }}
+        transition={{ duration: 0.9, delay: lead + 1.05 }}
         className="relative border-t border-paper/10"
       >
         <div className="container-site flex flex-col items-center gap-4 py-4 md:flex-row md:justify-between">

@@ -9,6 +9,8 @@ import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import { ViewTracker } from "@/components/products/view-tracker";
 import { getAllProjects, getProjectBySlug } from "@/server/data/content";
 import { whatsappAdviceMessage } from "@/lib/whatsapp";
+import { Enter } from "@/components/motion/enter";
+import { Reveal } from "@/components/motion/reveal";
 
 export const revalidate = 300;
 export const dynamicParams = true;
@@ -50,46 +52,53 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <ViewTracker type="PROJECT_VIEW" entityType="project" entityId={project.id} />
       <article className="pt-28 pb-16 md:pt-36">
         <header className="container-site max-w-4xl">
-          <Breadcrumbs
-            crumbs={[{ label: "Results", href: "/projects" }, { label: project.title }]}
-            className="mb-6"
-          />
-          <div className="flex flex-wrap gap-2">
-            {project.cropName && (
-              <Badge variant="leaf" className="capitalize">
-                {project.cropName}
-              </Badge>
-            )}
-            {project.location && <Badge variant="outline">{project.location}</Badge>}
-          </div>
-          <h1 className="mt-5 text-display-2 text-ink capitalize">{project.title}</h1>
+          <Enter variant="fade">
+            <Breadcrumbs
+              crumbs={[{ label: "Results", href: "/projects" }, { label: project.title }]}
+              className="mb-6"
+            />
+          </Enter>
+          <Enter delay={0.06} y={16}>
+            <div className="flex flex-wrap gap-2">
+              {project.cropName && (
+                <Badge variant="leaf" className="capitalize">
+                  {project.cropName}
+                </Badge>
+              )}
+              {project.location && <Badge variant="outline">{project.location}</Badge>}
+            </div>
+          </Enter>
+          <Enter variant="wipe" delay={0.12}>
+            <h1 className="mt-5 text-display-2 text-ink capitalize">{project.title}</h1>
+          </Enter>
           {project.summary && (
-            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">
-              {project.summary}
-            </p>
+            <Enter delay={0.34} y={24}>
+              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-soft">
+                {project.summary}
+              </p>
+            </Enter>
           )}
         </header>
 
         {project.images.length > 0 && (
           <div className="container-site mt-10 max-w-5xl space-y-5">
             {project.images.map((image, i) => (
-              <figure
-                key={image.url}
-                className="overflow-hidden rounded-3xl border border-line bg-white shadow-card"
-              >
-                <MediaImage
-                  image={image}
-                  alt={image.caption ?? `${project.title} — image ${i + 1}`}
-                  sizes="(max-width: 1024px) 92vw, 1000px"
-                  className="h-auto w-full"
-                  priority={i === 0}
-                />
-                {image.caption && (
-                  <figcaption className="px-5 py-3 text-xs text-ink-faint">
-                    {image.caption}
-                  </figcaption>
-                )}
-              </figure>
+              <Reveal key={image.url} variant="scale" delay={i === 0 ? 0.2 : 0}>
+                <figure className="overflow-hidden rounded-3xl border border-line bg-white shadow-card">
+                  <MediaImage
+                    image={image}
+                    alt={image.caption ?? `${project.title} — image ${i + 1}`}
+                    sizes="(max-width: 1024px) 92vw, 1000px"
+                    className="h-auto w-full"
+                    priority={i === 0}
+                  />
+                  {image.caption && (
+                    <figcaption className="px-5 py-3 text-xs text-ink-faint">
+                      {image.caption}
+                    </figcaption>
+                  )}
+                </figure>
+              </Reveal>
             ))}
           </div>
         )}

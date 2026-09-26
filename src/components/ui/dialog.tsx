@@ -25,7 +25,7 @@ export function DialogContent({
   return (
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-humus-950/60 backdrop-blur-sm data-[state=open]:animate-fade-in" />
-      <DialogPrimitive.Content
+      <DialogPrimitive.Content data-lenis-prevent
         className={cn(
           "fixed top-1/2 left-1/2 z-50 max-h-[85dvh] w-[calc(100vw-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl bg-cream p-6 shadow-pop focus:outline-none data-[state=open]:animate-scale-in",
           className,
@@ -101,7 +101,7 @@ export function SheetContent({
             <X className="size-4" />
           </DialogPrimitive.Close>
         </header>
-        <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4">{children}</div>
+        <div data-lenis-prevent className="flex-1 overflow-y-auto overscroll-contain px-5 py-4">{children}</div>
       </DialogPrimitive.Content>
     </DialogPrimitive.Portal>
   );

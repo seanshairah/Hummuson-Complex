@@ -13,6 +13,9 @@ import { articleJsonLd } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 import { whatsappAdviceMessage } from "@/lib/whatsapp";
 import { JsonLd } from "@/components/shared/json-ld";
+import { Enter } from "@/components/motion/enter";
+import { ImageReveal } from "@/components/motion/image-reveal";
+import { Reveal } from "@/components/motion/reveal";
 
 export const revalidate = 300;
 export const dynamicParams = true;
@@ -53,28 +56,39 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
       <article className="pt-28 pb-16 md:pt-36">
         <header className="container-site max-w-3xl">
-          <Breadcrumbs
-            crumbs={[{ label: "Knowledge", href: "/knowledge" }, { label: article.title }]}
-            className="mb-6"
-          />
-          <div className="flex flex-wrap items-center gap-2.5">
-            {article.category && <Badge variant="leaf">{article.category.name}</Badge>}
-            <span className="text-xs text-ink-faint">
-              {formatDate(article.publishedAt)}
-              {article.readingMinutes && ` · ${article.readingMinutes} min read`}
-            </span>
-          </div>
-          <h1 className="mt-5 text-display-2 text-balance text-ink">{article.title}</h1>
+          <Enter variant="fade">
+            <Breadcrumbs
+              crumbs={[{ label: "Knowledge", href: "/knowledge" }, { label: article.title }]}
+              className="mb-6"
+            />
+          </Enter>
+          <Enter delay={0.06} y={16}>
+            <div className="flex flex-wrap items-center gap-2.5">
+              {article.category && <Badge variant="leaf">{article.category.name}</Badge>}
+              <span className="text-xs text-ink-faint">
+                {formatDate(article.publishedAt)}
+                {article.readingMinutes && ` · ${article.readingMinutes} min read`}
+              </span>
+            </div>
+          </Enter>
+          <Enter variant="wipe" delay={0.12}>
+            <h1 className="mt-5 text-display-2 text-balance text-ink">{article.title}</h1>
+          </Enter>
           {article.excerpt && (
-            <p className="mt-5 text-editorial text-xl leading-relaxed text-ink-soft">
-              {article.excerpt}
-            </p>
+            <Enter delay={0.34} y={24}>
+              <p className="mt-5 text-editorial text-xl leading-relaxed text-ink-soft">
+                {article.excerpt}
+              </p>
+            </Enter>
           )}
         </header>
 
         {article.cover && (
           <div className="container-site mt-10 max-w-4xl">
-            <div className="relative aspect-[16/8.5] overflow-hidden rounded-3xl shadow-card">
+            <ImageReveal
+              className="aspect-[16/8.5] overflow-hidden rounded-3xl shadow-card"
+              delay={0.2}
+            >
               <MediaImage
                 image={article.cover}
                 alt=""
@@ -83,7 +97,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 sizes="(max-width: 1024px) 92vw, 900px"
                 className="object-cover"
               />
-            </div>
+            </ImageReveal>
           </div>
         )}
 
@@ -132,8 +146,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       {others.length > 0 && (
         <section className="border-t border-line bg-paper-dim/60 py-14">
           <div className="container-site">
-            <h2 className="text-display-3 text-ink">Keep reading</h2>
-            <div className="mt-7 grid gap-4 md:grid-cols-3">
+            <Reveal variant="wipe">
+              <h2 className="text-display-3 text-ink">Keep reading</h2>
+            </Reveal>
+            <Reveal delay={0.1} className="mt-7 grid gap-4 md:grid-cols-3">
               {others.map((other) => (
                 <Link
                   key={other.id}
@@ -149,7 +165,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                   <p className="mt-3 text-xs text-ink-faint">{formatDate(other.publishedAt)}</p>
                 </Link>
               ))}
-            </div>
+            </Reveal>
           </div>
         </section>
       )}

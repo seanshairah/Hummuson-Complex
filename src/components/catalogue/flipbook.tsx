@@ -502,7 +502,7 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
       {/* Thumbnails dialog */}
       <Dialog open={thumbsOpen} onOpenChange={setThumbsOpen}>
         <DialogContent title="Pages" className="max-w-3xl">
-          <div className="grid max-h-[60dvh] grid-cols-3 gap-3 overflow-y-auto pr-1 sm:grid-cols-4 md:grid-cols-5">
+          <div data-lenis-prevent className="grid max-h-[60dvh] grid-cols-3 gap-3 overflow-y-auto pr-1 sm:grid-cols-4 md:grid-cols-5">
             {pages.map((page, i) => (
               <button
                 key={i}

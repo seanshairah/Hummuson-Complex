@@ -15,6 +15,8 @@ import { footerNav } from "@/lib/nav";
 import { site } from "@/lib/site";
 import { Logo } from "@/components/layout/logo";
 import { Em } from "@/components/ui/section-heading";
+import { Ambient } from "@/components/home/screen";
+import { Reveal } from "@/components/motion/reveal";
 import { getContactSettings } from "@/server/data/settings";
 import { googleMapsLink, toMapPin } from "@/lib/maps";
 import { whatsappLink, whatsappAdviceMessage } from "@/lib/whatsapp";
@@ -33,18 +35,23 @@ export async function Footer() {
   return (
     <footer className="bg-grain bg-humus-950 text-paper">
       {/* CTA band */}
-      <div className="relative overflow-hidden border-b border-paper/10">
-        <div className="absolute inset-0 glow-leaf" aria-hidden />
+      <div className="relative isolate overflow-hidden border-b border-paper/10">
+        <div className="absolute inset-0 -z-10 glow-leaf" aria-hidden />
+        <Ambient />
         <div className="relative container-site flex flex-col items-start gap-8 section-y md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <p className="text-eyebrow text-leaf-400">Talk to an agronomist</p>
-            <h2 className="mt-3 text-display-2 text-paper">
-              Ready for <Em className="text-leaf-300">healthier soil</Em> and stronger crops?
-            </h2>
-            <p className="mt-4 max-w-xl text-paper/70">
-              Get product guidance, application support and field advice — directly from the Humuson
-              team on WhatsApp.
-            </p>
+            <Reveal variant="wipe">
+              <p className="text-eyebrow text-leaf-400">Talk to an agronomist</p>
+              <h2 className="mt-3 text-display-2 text-paper">
+                Ready for <Em className="text-leaf-300">healthier soil</Em> and stronger crops?
+              </h2>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <p className="mt-4 max-w-xl text-paper/70">
+                Get product guidance, application support and field advice — directly from the
+                Humuson team on WhatsApp.
+              </p>
+            </Reveal>
           </div>
           <div className="flex shrink-0 flex-wrap gap-3">
             <a

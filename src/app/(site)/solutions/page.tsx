@@ -62,7 +62,7 @@ export default async function SolutionsPage() {
       {/* Ranges */}
       <section className="border-t border-line bg-paper-dim/60 py-16">
         <div className="container-site">
-          <Reveal>
+          <Reveal variant="wipe">
             <SectionHeading
               eyebrow="The ranges"
               title={
