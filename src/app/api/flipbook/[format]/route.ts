@@ -62,28 +62,37 @@ export async function GET(
     ? "private, no-store"
     : "public, max-age=3600, s-maxage=31536000, stale-while-revalidate=86400";
 
-  if (format === "pdf") {
-    const pdf = await renderFlipbookPdf(pages, flipbook.title);
-    return new NextResponse(new Uint8Array(pdf), {
+  try {
+    if (format === "pdf") {
+      const pdf = await renderFlipbookPdf(pages, flipbook.title);
+      return new NextResponse(new Uint8Array(pdf), {
+        headers: {
+          "Content-Type": "application/pdf",
+          "Content-Disposition": `attachment; filename="${filename}"`,
+          "Content-Length": String(pdf.length),
+          "Cache-Control": caching,
+        },
+      });
+    }
+
+    const html = await renderFlipbookHtml(pages, {
+      title: flipbook.title,
+      siteUrl: site.url,
+      pdfUrl: draft ? null : `${site.url}${flipbookDownloads(flipbook.hash).pdf}`,
+    });
+    return new NextResponse(html, {
       headers: {
-        "Content-Type": "application/pdf",
+        "Content-Type": "text/html; charset=utf-8",
         "Content-Disposition": `attachment; filename="${filename}"`,
-        "Content-Length": String(pdf.length),
         "Cache-Control": caching,
       },
     });
+  } catch (error) {
+    // Logged in full for the host's function logs; the reader gets no internals.
+    console.error(`[flipbook] ${format} download failed`, error);
+    return NextResponse.json(
+      { error: `The ${format.toUpperCase()} could not be made just now. Please try again shortly.` },
+      { status: 500, headers: { "Cache-Control": "no-store" } },
+    );
   }
-
-  const html = await renderFlipbookHtml(pages, {
-    title: flipbook.title,
-    siteUrl: site.url,
-    pdfUrl: draft ? null : `${site.url}${flipbookDownloads(flipbook.hash).pdf}`,
-  });
-  return new NextResponse(html, {
-    headers: {
-      "Content-Type": "text/html; charset=utf-8",
-      "Content-Disposition": `attachment; filename="${filename}"`,
-      "Cache-Control": caching,
-    },
-  });
 }

@@ -181,12 +181,17 @@ const nextConfig: NextConfig = {
   },
   // The flipbook downloads embed the site's fonts and pictures, read from
   // disk at request time. Serverless bundles only carry files the build can
-  // see being imported, so these are listed for the route by hand.
+  // see being imported, so these are listed for the route by hand. pdfkit is
+  // on the list for the same reason: it loads its built-in fonts through
+  // createRequire and a `#standard-fonts/*` import map, which the tracer does
+  // not follow — without them every PDF request failed on the host while
+  // passing everywhere else. `npm run qa:trace` checks the list after a build.
   outputFileTracingIncludes: {
     "/api/flipbook/[format]": [
       "./node_modules/@fontsource/inter/files/inter-latin-*",
       "./node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-*",
       "./node_modules/@fontsource/fraunces/files/fraunces-latin-*",
+      "./node_modules/pdfkit/js/standard-fonts/**/*",
       "./public/images/**/*",
     ],
   },

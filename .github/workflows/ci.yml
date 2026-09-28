@@ -75,6 +75,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Check the flipbook download's file trace
+        run: npm run qa:trace
+
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
         env:
