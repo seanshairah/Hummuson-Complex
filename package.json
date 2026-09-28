@@ -27,6 +27,7 @@
     "e2e": "playwright test",
     "assets:logos": "node scripts/assets/extract-brand-logos.mjs",
     "catalogue:pdf": "tsx scripts/generate-catalogue-pdf.ts",
+    "catalogue:standalone": "node scripts/catalogue/export-standalone.mjs",
     "qa:data": "tsx scripts/qa/validate-data.ts",
     "qa:finder": "tsx scripts/qa/finder-matrix.ts",
     "qa:browser": "node scripts/qa/browser-qa.mjs",

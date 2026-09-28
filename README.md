@@ -47,6 +47,7 @@ in `.env` (seeded on `db:seed`). **Change them before deploying.**
 | `npm test`             | Unit tests (search engine, finder scoring, catalogue pages…)    |
 | `npm run e2e`          | Playwright end-to-end suite (builds on a fresh port)            |
 | `npm run catalogue:pdf`| Render the flipbook to `public/catalogue/…pdf` (server running) |
+| `npm run catalogue:standalone` | The flipbook as one offline HTML file, verified (build served on :3222) |
 
 ## What's inside
 
