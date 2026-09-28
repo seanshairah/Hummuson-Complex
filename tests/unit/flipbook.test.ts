@@ -237,6 +237,23 @@ describe("resolveDesign", () => {
     expect(relative.blocks.find((b) => b.id === "far")!.href).toBeNull();
   });
 
+  it("points download links at the site they came from, and still prints the brand domain", () => {
+    const page = blankPage({
+      productId: "Azofix",
+      blocks: [buttonBlock({ id: "go", link: { kind: "product" } }), textBlock({ id: "site", text: "{{website}}" })],
+    });
+    const [resolved] = resolveDesign(design([page]), context, {
+      absoluteLinks: true,
+      linkBase: "https://hummuson-complex.vercel.app/",
+    });
+    expect(resolved!.blocks.find((b) => b.id === "go")!.href).toEqual({
+      kind: "href",
+      href: "https://hummuson-complex.vercel.app/products/azofix",
+      external: false,
+    });
+    expect(text(resolved!, "site")).toBe("humusoncomplex.com");
+  });
+
   it("draws a QR code for the link", () => {
     const qr = resolveDesign(design([blankPage({ productId: "Azofix", blocks: [qrBlock({ id: "q" })] })]), context)[0]!.blocks[0]!;
     expect(qr.type === "qr" && qr.qr?.size).toBeGreaterThan(20);

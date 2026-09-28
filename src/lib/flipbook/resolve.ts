@@ -133,6 +133,12 @@ export interface ResolveOptions {
   pad?: boolean;
   /** Write site links as full addresses (the downloads leave the site). */
   absoluteLinks?: boolean;
+  /**
+   * The address those links and QR codes start with; the context's siteUrl
+   * when unset. `{{website}}` and `{{link}}` always print siteUrl, the name
+   * on the cover — this is only where a tap or a scan lands.
+   */
+  linkBase?: string;
 }
 
 const TOKEN = /\{\{\s*([A-Za-z]+)\s*\}\}/g;
@@ -242,7 +248,8 @@ export function resolveDesign(
     }
   });
 
-  const siteLink = (path: string) => (options.absoluteLinks ? `${ctx.siteUrl}${path}` : path);
+  const linkBase = (options.linkBase ?? ctx.siteUrl).replace(/\/$/, "");
+  const siteLink = (path: string) => (options.absoluteLinks ? `${linkBase}${path}` : path);
 
   const resolveLink = (link: LinkTarget, product: FlipbookProduct | null): ResolvedLink | null => {
     switch (link.kind) {
@@ -390,7 +397,7 @@ export function resolveDesign(
         const value =
           target?.kind === "href"
             ? target.href.startsWith("/")
-              ? `${ctx.siteUrl}${target.href}`
+              ? `${linkBase}${target.href}`
               : target.href
             : "";
         const qr = qrMatrix(value);

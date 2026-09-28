@@ -24,6 +24,30 @@ export const maxDuration = 60;
  * `?draft=1` is the designer's preview of unpublished work: signed-in only,
  * never cached.
  */
+/**
+ * Where a download's links and QR codes should land: the site the reader
+ * downloaded it from. Until the domain moves, the brand domain still serves
+ * the old WordPress shop, and a PDF whose "View product" opened that would
+ * be a PDF of dead links; the deployment's own address works now and keeps
+ * working after the move. Anything unexpected falls back to the site URL.
+ */
+function linkOrigin(request: NextRequest): string {
+  const host = request.nextUrl.hostname;
+  let home = "";
+  try {
+    home = new URL(site.url).hostname.replace(/^www\./, "");
+  } catch {
+    // site.url always parses; keep the fallback below regardless
+  }
+  const known =
+    host === home ||
+    host === `www.${home}` ||
+    host.endsWith(".vercel.app") ||
+    host === "localhost" ||
+    host === "127.0.0.1";
+  return known ? request.nextUrl.origin : site.url;
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ format: string }> },
@@ -56,7 +80,12 @@ export async function GET(
     }
   }
 
-  const pages = resolveDesign(flipbook.design, flipbook.context, { pad: true, absoluteLinks: true });
+  const origin = linkOrigin(request);
+  const pages = resolveDesign(flipbook.design, flipbook.context, {
+    pad: true,
+    absoluteLinks: true,
+    linkBase: origin,
+  });
   const filename = `${flipbook.slug}${draft ? "-draft" : ""}.${format}`;
   const caching = draft
     ? "private, no-store"
@@ -77,8 +106,8 @@ export async function GET(
 
     const html = await renderFlipbookHtml(pages, {
       title: flipbook.title,
-      siteUrl: site.url,
-      pdfUrl: draft ? null : `${site.url}${flipbookDownloads(flipbook.hash).pdf}`,
+      siteUrl: origin,
+      pdfUrl: draft ? null : `${origin}${flipbookDownloads(flipbook.hash).pdf}`,
     });
     return new NextResponse(html, {
       headers: {
