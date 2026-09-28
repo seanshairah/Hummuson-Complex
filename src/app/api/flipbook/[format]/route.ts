@@ -1,12 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/server/auth";
-import { loadDraftFlipbook, loadPublishedFlipbook } from "@/server/flipbook/load";
-import { renderFlipbookPdf } from "@/server/flipbook/pdf";
-import { renderFlipbookHtml } from "@/server/flipbook/standalone";
+import { loadPublishedFlipbook } from "@/server/flipbook/load";
+import { flipbookDownload, isDownloadFormat, linkOrigin } from "@/server/flipbook/respond";
 import { limitByIp, tooManyRequests } from "@/server/rate-limit";
-import { resolveDesign } from "@/lib/flipbook/resolve";
 import { flipbookDownloads } from "@/lib/flipbook/downloads";
-import { site } from "@/lib/site";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -14,114 +10,43 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 /**
- * The flipbook as a download: `/api/flipbook/pdf` or `/api/flipbook/html`.
+ * The published flipbook as a download: `/api/flipbook/pdf` or
+ * `/api/flipbook/html`. Only ever the published flipbook — the designer's
+ * unpublished draft has its own signed-in route (api/admin/flipbook).
  *
- * Readers get the published flipbook. The address carries the flipbook's
- * fingerprint (`?v=`), and anything else is sent to the current one first —
- * so each version is built once and then served from the edge cache, and a
- * changed `v` cannot be used to make the server rebuild on every request.
- *
- * `?draft=1` is the designer's preview of unpublished work: signed-in only,
- * never cached.
+ * The address carries the flipbook's fingerprint (`?v=`), and anything else
+ * is sent to the current one first — so each version is built once and then
+ * served from the edge cache, and a changed `v` cannot be used to make the
+ * server rebuild on every request.
  */
-/**
- * Where a download's links and QR codes should land: the site the reader
- * downloaded it from. Until the domain moves, the brand domain still serves
- * the old WordPress shop, and a PDF whose "View product" opened that would
- * be a PDF of dead links; the deployment's own address works now and keeps
- * working after the move. Anything unexpected falls back to the site URL.
- */
-function linkOrigin(request: NextRequest): string {
-  const host = request.nextUrl.hostname;
-  let home = "";
-  try {
-    home = new URL(site.url).hostname.replace(/^www\./, "");
-  } catch {
-    // site.url always parses; keep the fallback below regardless
-  }
-  const known =
-    host === home ||
-    host === `www.${home}` ||
-    host.endsWith(".vercel.app") ||
-    host === "localhost" ||
-    host === "127.0.0.1";
-  return known ? request.nextUrl.origin : site.url;
-}
-
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ format: string }> },
 ) {
   const { format } = await params;
-  if (format !== "pdf" && format !== "html") {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
-  }
+  if (!isDownloadFormat(format)) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-  const draft = request.nextUrl.searchParams.get("draft") === "1";
-  if (draft) {
-    const session = await auth();
-    if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  const flipbook = draft ? await loadDraftFlipbook() : await loadPublishedFlipbook();
+  const flipbook = await loadPublishedFlipbook();
   if (!flipbook) return NextResponse.json({ error: "No catalogue is published" }, { status: 404 });
 
-  if (!draft) {
-    if (request.nextUrl.searchParams.get("v") !== flipbook.hash) {
-      const current = flipbookDownloads(flipbook.hash)[format];
-      return new NextResponse(null, {
-        status: 307,
-        headers: { Location: current, "Cache-Control": "public, max-age=0, s-maxage=60" },
-      });
-    }
-    const verdict = await limitByIp(request.headers, "flipbook:download", 30, 600);
-    if (!verdict.allowed) {
-      return tooManyRequests(verdict, "Too many downloads — please try again in a few minutes.");
-    }
+  const current = flipbookDownloads(flipbook.hash);
+  if (request.nextUrl.searchParams.get("v") !== flipbook.hash) {
+    return new NextResponse(null, {
+      status: 307,
+      headers: { Location: current[format], "Cache-Control": "public, max-age=0, s-maxage=60" },
+    });
+  }
+
+  const verdict = await limitByIp(request.headers, "flipbook:download", 30, 600);
+  if (!verdict.allowed) {
+    return tooManyRequests(verdict, "Too many downloads — please try again in a few minutes.");
   }
 
   const origin = linkOrigin(request);
-  const pages = resolveDesign(flipbook.design, flipbook.context, {
-    pad: true,
-    absoluteLinks: true,
-    linkBase: origin,
+  return flipbookDownload(flipbook, format, {
+    origin,
+    filename: flipbook.slug,
+    cacheControl: "public, max-age=3600, s-maxage=31536000, stale-while-revalidate=86400",
+    pdfUrl: `${origin}${current.pdf}`,
   });
-  const filename = `${flipbook.slug}${draft ? "-draft" : ""}.${format}`;
-  const caching = draft
-    ? "private, no-store"
-    : "public, max-age=3600, s-maxage=31536000, stale-while-revalidate=86400";
-
-  try {
-    if (format === "pdf") {
-      const pdf = await renderFlipbookPdf(pages, flipbook.title);
-      return new NextResponse(new Uint8Array(pdf), {
-        headers: {
-          "Content-Type": "application/pdf",
-          "Content-Disposition": `attachment; filename="${filename}"`,
-          "Content-Length": String(pdf.length),
-          "Cache-Control": caching,
-        },
-      });
-    }
-
-    const html = await renderFlipbookHtml(pages, {
-      title: flipbook.title,
-      siteUrl: origin,
-      pdfUrl: draft ? null : `${origin}${flipbookDownloads(flipbook.hash).pdf}`,
-    });
-    return new NextResponse(html, {
-      headers: {
-        "Content-Type": "text/html; charset=utf-8",
-        "Content-Disposition": `attachment; filename="${filename}"`,
-        "Cache-Control": caching,
-      },
-    });
-  } catch (error) {
-    // Logged in full for the host's function logs; the reader gets no internals.
-    console.error(`[flipbook] ${format} download failed`, error);
-    return NextResponse.json(
-      { error: `The ${format.toUpperCase()} could not be made just now. Please try again shortly.` },
-      { status: 500, headers: { "Cache-Control": "no-store" } },
-    );
-  }
 }

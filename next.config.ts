@@ -166,6 +166,15 @@ const SECURITY_HEADERS = [
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
 ];
 
+/** Files the flipbook downloads read from disk at request time (see below). */
+const FLIPBOOK_RUNTIME_FILES = [
+  "./node_modules/@fontsource/inter/files/inter-latin-*",
+  "./node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-*",
+  "./node_modules/@fontsource/fraunces/files/fraunces-latin-*",
+  "./node_modules/pdfkit/js/standard-fonts/**/*",
+  "./public/images/**/*",
+];
+
 const nextConfig: NextConfig = {
   // "X-Powered-By: Next.js" tells an attacker which advisories to read first.
   poweredByHeader: false,
@@ -187,13 +196,8 @@ const nextConfig: NextConfig = {
   // not follow — without them every PDF request failed on the host while
   // passing everywhere else. `npm run qa:trace` checks the list after a build.
   outputFileTracingIncludes: {
-    "/api/flipbook/[format]": [
-      "./node_modules/@fontsource/inter/files/inter-latin-*",
-      "./node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-*",
-      "./node_modules/@fontsource/fraunces/files/fraunces-latin-*",
-      "./node_modules/pdfkit/js/standard-fonts/**/*",
-      "./public/images/**/*",
-    ],
+    "/api/flipbook/[format]": FLIPBOOK_RUNTIME_FILES,
+    "/api/admin/flipbook/[format]": FLIPBOOK_RUNTIME_FILES,
   },
   images: {
     formats: ["image/avif", "image/webp"],

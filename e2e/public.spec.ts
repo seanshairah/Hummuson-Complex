@@ -531,6 +531,7 @@ test.describe("catalogue", () => {
     expect(body).not.toMatch(/<link[^>]+stylesheet/);
 
     // The designer's unpublished draft is for signed-in users only.
-    expect((await request.get("/api/flipbook/pdf?draft=1")).status()).toBe(401);
+    expect((await request.get("/api/admin/flipbook/pdf")).status()).toBe(401);
+    expect((await request.get("/api/admin/flipbook/html")).status()).toBe(401);
   });
 });

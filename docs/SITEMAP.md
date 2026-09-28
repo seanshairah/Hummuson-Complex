@@ -44,7 +44,8 @@ Media · Enquiries · Analytics · Settings · Users · Login (`/admin/login`)
 ## API
 
 `GET /api/search` · `POST /api/ask` · `POST /api/finder` · `POST /api/events` ·
-`GET /api/flipbook/{pdf,html}` (`?draft=1` signed-in) · `POST /api/admin/upload` ·
+`GET /api/flipbook/{pdf,html}` · `GET /api/admin/flipbook/{pdf,html}` (the draft, signed-in) ·
+`POST /api/admin/upload` ·
 `GET /media-files/[id]/[name]` · `/api/auth/[...nextauth]`
 
 ## SEO surface

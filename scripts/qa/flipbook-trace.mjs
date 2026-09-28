@@ -1,6 +1,6 @@
 /**
- * Checks, after a build, that the flipbook download route carries the files
- * it reads at run time.
+ * Checks, after a build, that the flipbook download routes carry the files
+ * they read at run time.
  *
  * The serverless host ships a route with only the files the build traced as
  * imports. The downloads also read fonts, pictures and pdfkit's built-in
@@ -13,16 +13,10 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 
-const TRACE = ".next/server/app/api/flipbook/[format]/route.js.nft.json";
-
-if (!existsSync(TRACE)) {
-  console.error(`✗ ${TRACE} not found — run \`npm run build\` first.`);
-  process.exit(1);
-}
-
-const files = JSON.parse(readFileSync(TRACE, "utf8")).files.map((file) =>
-  path.normalize(path.join(path.dirname(TRACE), file)),
-);
+const TRACES = [
+  ".next/server/app/api/flipbook/[format]/route.js.nft.json",
+  ".next/server/app/api/admin/flipbook/[format]/route.js.nft.json",
+];
 
 const REQUIRED = [
   // pdfkit's standard fonts, loaded through createRequire at run time.
@@ -38,15 +32,29 @@ const REQUIRED = [
   "public/images/products",
 ];
 
-const missing = REQUIRED.filter(
-  (required) => !files.some((file) => file === required || file.startsWith(required + path.sep)),
-);
-
-if (missing.length > 0) {
-  console.error("✗ The flipbook download route would ship without files it reads at run time:");
-  for (const file of missing) console.error(`  - ${file}`);
-  console.error("Add them to outputFileTracingIncludes in next.config.ts.");
-  process.exit(1);
+let failed = false;
+for (const trace of TRACES) {
+  if (!existsSync(trace)) {
+    console.error(`✗ ${trace} not found — run \`npm run build\` first.`);
+    failed = true;
+    continue;
+  }
+  const files = JSON.parse(readFileSync(trace, "utf8")).files.map((file) =>
+    path.normalize(path.join(path.dirname(trace), file)),
+  );
+  const missing = REQUIRED.filter(
+    (required) => !files.some((file) => file === required || file.startsWith(required + path.sep)),
+  );
+  if (missing.length > 0) {
+    console.error(`✗ ${trace} would ship without files it reads at run time:`);
+    for (const file of missing) console.error(`  - ${file}`);
+    failed = true;
+  } else {
+    console.log(`✓ ${trace}: runtime files present (${files.length} traced).`);
+  }
 }
 
-console.log(`✓ Flipbook download route carries its runtime files (${files.length} traced).`);
+if (failed) {
+  console.error("Add the missing files to outputFileTracingIncludes in next.config.ts.");
+  process.exit(1);
+}
