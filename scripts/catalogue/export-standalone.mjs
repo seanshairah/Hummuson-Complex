@@ -28,10 +28,26 @@
  * faces themselves are the server-rendered ones, byte for byte, so the pages
  * cannot drift from the site's; only the turning is reimplemented.
  */
-import { chromium } from "@playwright/test";
-import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { chromium, request } from "@playwright/test";
+import { existsSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  Download,
+  LayoutGrid,
+  Link2,
+  List,
+  Maximize,
+  Minimize,
+  X,
+  ZoomIn,
+  ZoomOut,
+} from "lucide-react";
 
 const args = parseArgs(process.argv.slice(2));
 const BASE = (args.base ?? "http://127.0.0.1:3222").replace(/\/$/, "");
@@ -41,21 +57,6 @@ const OUT = path.resolve(args.out ?? "humuson-product-guide.html");
 /** Product plates are the page's subject; chapter openers sit at 25% opacity. */
 const PLATE = { w: 1024, q: 70 };
 const OPENER = { w: 640, q: 55 };
-
-const ICONS = [
-  "arrow-left",
-  "arrow-right",
-  "list",
-  "layout-grid",
-  "zoom-in",
-  "zoom-out",
-  "maximize",
-  "minimize",
-  "link-2",
-  "check",
-  "download",
-  "x",
-];
 
 function parseArgs(argv) {
   const out = {};
@@ -77,12 +78,34 @@ function launchOptions() {
   return executablePath ? { executablePath, args: ["--no-sandbox"] } : {};
 }
 
-async function dataUri(url, accept) {
-  const response = await fetch(url, { headers: accept ? { Accept: accept } : {} });
-  if (!response.ok) throw new Error(`${response.status} fetching ${url}`);
-  const type = (response.headers.get("content-type") ?? "application/octet-stream").split(";")[0];
-  const body = Buffer.from(await response.arrayBuffer());
-  return `data:${type};base64,${body.toString("base64")}`;
+/** Fetches through Playwright's request context — the one HTTP client the script uses. */
+async function fetchOk(api, url, accept) {
+  const response = await api.get(url, { headers: accept ? { Accept: accept } : {} });
+  if (!response.ok()) throw new Error(`${response.status()} fetching ${url}`);
+  return response;
+}
+
+async function dataUri(api, url, accept) {
+  const response = await fetchOk(api, url, accept);
+  const type = (response.headers()["content-type"] ?? "application/octet-stream").split(";")[0];
+  return `data:${type};base64,${(await response.body()).toString("base64")}`;
+}
+
+/**
+ * The first url(...) at or after `from`, found by scanning rather than by a
+ * regular expression: the stylesheet is fetched text, and a pattern with
+ * overlapping whitespace runs would backtrack polynomially on a hostile one.
+ */
+function cssUrl(text, from = 0) {
+  const start = text.indexOf("url(", from);
+  if (start === -1) return null;
+  const close = text.indexOf(")", start + 4);
+  if (close === -1) return null;
+  const value = text
+    .slice(start + 4, close)
+    .trim()
+    .replace(/^["']|["']$/g, "");
+  return { start, end: close + 1, value };
 }
 
 /** The original path behind a next/image URL (or the src itself when unoptimised). */
@@ -102,35 +125,21 @@ async function replaceAsync(text, pattern, replacer) {
   return parts.join("");
 }
 
-/** Lucide's icon nodes, read from the installed package, as inline SVG. */
-function icon(name, className = "size-4") {
-  const file = new URL(`../../node_modules/lucide-react/dist/esm/icons/${name}.js`, import.meta.url);
-  const source = readFileSync(file, "utf8");
-  const literal = /createLucideIcon\("[^"]+",\s*(\[[\s\S]*\])\s*\);/.exec(source)?.[1];
-  if (!literal) throw new Error(`could not read the ${name} icon`);
-  const nodes = new Function(`return ${literal}`)();
-  const children = nodes
-    .map(([tag, attrs]) => {
-      const list = Object.entries(attrs)
-        .filter(([key]) => key !== "key")
-        .map(([key, value]) => `${key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)}="${value}"`);
-      return `<${tag} ${list.join(" ")}/>`;
-    })
-    .join("");
-  return (
-    `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" ` +
-    `stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ` +
-    `class="lucide lucide-${name} ${className}" aria-hidden="true">${children}</svg>`
-  );
-}
+/** A lucide icon rendered exactly as the site renders it. */
+const icon = (Icon, className = "size-4") =>
+  renderToStaticMarkup(createElement(Icon, { className, "aria-hidden": true }));
 
 const escapeHtml = (value) =>
-  String(value).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  String(value).replace(
+    /[&<>"']/g,
+    (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c],
+  );
 
 /* ── Capture ─────────────────────────────────────────────────────────────── */
 
 async function capture() {
   const browser = await chromium.launch(launchOptions());
+  const api = await request.newContext();
   try {
     const page = await browser.newPage({ viewport: { width: 1440, height: 960 } });
     const response = await page.goto(`${BASE}/catalogue/flipbook`, { waitUntil: "networkidle" });
@@ -174,6 +183,7 @@ async function capture() {
       const { w, q } = image.opener ? OPENER : PLATE;
       const original = originalImage(image.src);
       uris[key] = await dataUri(
+        api,
         `${BASE}/_next/image?url=${encodeURIComponent(original)}&w=${w}&q=${q}`,
         "image/webp",
       );
@@ -210,27 +220,36 @@ async function capture() {
 
     let css = "";
     for (const href of shape.stylesheets) {
-      const response = await fetch(href);
-      if (!response.ok) throw new Error(`${response.status} fetching ${href}`);
-      css += `${await response.text()}\n`;
+      css += `${await (await fetchOk(api, href)).text()}\n`;
     }
     // Fonts: the Latin subset of each face, inlined. The other subsets are for
     // scripts the catalogue never prints, and would triple the file. The
     // minifier writes Latin's range as u+00?? rather than U+0000-00FF.
     css = await replaceAsync(css, /@font-face\s*{[^}]*}/g, async (block) => {
-      const range = /unicode-range:\s*([^;}]*)/i.exec(block)?.[1]?.trim();
-      if (range && !/^u\+(?:0000-00ff|00\?\?)(?:,|$)/i.test(range)) return "";
-      const url = /url\(\s*["']?([^"')]+)["']?\s*\)/.exec(block)?.[1];
-      if (!url || url.startsWith("data:")) return block;
-      return block.replace(/url\([^)]*\)/, `url(${await dataUri(new URL(url, BASE).href)})`);
+      const at = block.indexOf("unicode-range:");
+      const range =
+        at === -1 ? "" : block.slice(at + 14).split(/[;}]/, 1)[0].trim().toLowerCase();
+      if (range && !range.startsWith("u+0000-00ff") && !range.startsWith("u+00??")) return "";
+      const url = cssUrl(block);
+      if (!url || url.value.startsWith("data:")) return block;
+      const inlined = await dataUri(api, new URL(url.value, BASE).href);
+      return `${block.slice(0, url.start)}url(${inlined})${block.slice(url.end)}`;
     });
-    const external = [...css.matchAll(/url\(\s*["']?(\/[^"')]+)/g)].map((m) => m[1]);
-    for (const url of new Set(external)) {
-      css = css.split(url).join(await dataUri(new URL(url, BASE).href));
+    // Anything else the stylesheet loads from the site goes in too.
+    let inlinedCss = "";
+    let cursor = 0;
+    for (let url = cssUrl(css); url; url = cssUrl(css, url.end)) {
+      inlinedCss += css.slice(cursor, url.start);
+      inlinedCss += url.value.startsWith("/")
+        ? `url(${await dataUri(api, new URL(url.value, BASE).href)})`
+        : css.slice(url.start, url.end);
+      cursor = url.end;
     }
+    inlinedCss += css.slice(cursor);
 
-    return { ...shape, faces, css };
+    return { ...shape, faces, css: inlinedCss };
   } finally {
+    await api.dispose();
     await browser.close();
   }
 }
@@ -427,9 +446,8 @@ function engine() {
     dialog.querySelector(".fb-close").addEventListener("click", () => dialog.close());
   });
 
-  const swap = (button, name) => {
-    button.querySelector("svg").outerHTML = data.icons[name];
-  };
+  // Each two-state button carries both icons; the state only shows one.
+  const setOn = (button, on) => button.toggleAttribute("data-on", on);
 
   d.querySelectorAll("[data-act]").forEach((button) => {
     button.addEventListener("click", async () => {
@@ -440,7 +458,7 @@ function engine() {
       if (act === "thumbs") open("fb-thumbs");
       if (act === "zoom") {
         const zoomed = zoomBox.classList.toggle("scale-125");
-        swap(button, zoomed ? "zoom-out" : "zoom-in");
+        setOn(button, zoomed);
         button.setAttribute("aria-label", zoomed ? "Zoom out" : "Zoom in");
         button.title = button.getAttribute("aria-label");
       }
@@ -459,8 +477,8 @@ function engine() {
           if (navigator.share) await navigator.share({ title: data.title, url });
           else {
             await navigator.clipboard.writeText(url);
-            swap(button, "check");
-            setTimeout(() => swap(button, "link-2"), 1600);
+            setOn(button, true);
+            setTimeout(() => setOn(button, false), 1600);
           }
         } catch {
           // Cancelled, or no clipboard from a local file: show the link instead.
@@ -472,7 +490,7 @@ function engine() {
   d.addEventListener("fullscreenchange", () => {
     const button = d.querySelector('[data-act="fullscreen"]');
     const on = Boolean(d.fullscreenElement);
-    swap(button, on ? "minimize" : "maximize");
+    setOn(button, on);
     button.setAttribute("aria-label", on ? "Exit fullscreen" : "Fullscreen");
     button.title = button.getAttribute("aria-label");
   });
@@ -507,11 +525,12 @@ function assemble(shot) {
     "flex size-10 items-center justify-center rounded-full border border-paper/20 text-paper/85 transition-colors hover:border-paper/50";
   const ARROW =
     "flex size-12 shrink-0 items-center justify-center rounded-full border border-paper/20 text-paper transition-all hover:border-leaf-400 hover:text-leaf-300 disabled:opacity-25";
-  const icons = Object.fromEntries(ICONS.map((name) => [name, icon(name, "size-4")]));
   const pdf = shot.pdf ? new URL(shot.pdf, SITE).href : null;
 
   const shellCss = `
 .fb-top{padding-top:1.25rem}
+.fb-on,[data-on] .fb-off{display:none}
+[data-on] .fb-on{display:block}
 @media (min-width:768px){.fb-top{padding-top:1.75rem}}
 .fb-face{-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .fb-thumb [inert]{pointer-events:none}
@@ -535,12 +554,12 @@ html.no-js .fb-page{width:min(82vw,26rem)}
     ),
   ].join("");
 
-  const close = `<button type="button" class="fb-close absolute top-4 right-4 rounded-full p-2 text-ink-faint transition-colors hover:bg-ink/5 hover:text-ink" aria-label="Close">${icons.x}</button>`;
+  const close = `<button type="button" class="fb-close absolute top-4 right-4 rounded-full p-2 text-ink-faint transition-colors hover:bg-ink/5 hover:text-ink" aria-label="Close">${icon(X)}</button>`;
 
-  const data = { title: shot.title, site: SITE, icons };
+  const data = { title: shot.title, site: SITE };
 
   return `<!doctype html>
-<html lang="en" class="${shot.htmlClass} no-js">
+<html lang="en" class="${escapeHtml(shot.htmlClass)} no-js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -554,24 +573,24 @@ html.no-js .fb-page{width:min(82vw,26rem)}
 <div id="fb" class="bg-grain flex min-h-dvh flex-col bg-humus-950">
 <div aria-hidden="true" class="pointer-events-none fixed inset-0 glow-leaf"></div>
 <header class="fb-top relative z-10 flex items-center justify-between gap-3 px-4 pb-2 md:px-8">
-<a href="${SITE}/catalogue" target="_blank" rel="noopener" class="flex shrink-0 items-center gap-2 rounded-full border border-paper/20 px-3 py-2 text-sm font-medium whitespace-nowrap text-paper/85 transition-colors hover:border-paper/50 sm:px-4">${icon("arrow-left", "size-4")} Explore<span class="max-sm:hidden"> mode</span></a>
+<a href="${escapeHtml(SITE)}/catalogue" target="_blank" rel="noopener" class="flex shrink-0 items-center gap-2 rounded-full border border-paper/20 px-3 py-2 text-sm font-medium whitespace-nowrap text-paper/85 transition-colors hover:border-paper/50 sm:px-4">${icon(ArrowLeft)} Explore<span class="max-sm:hidden"> mode</span></a>
 <div class="fb-tools flex items-center gap-1.5">
-<button type="button" data-act="toc" aria-label="Contents" title="Contents" class="${TOOL}">${icons.list}</button>
-<button type="button" data-act="thumbs" aria-label="Thumbnails" title="Thumbnails" class="${TOOL}">${icons["layout-grid"]}</button>
-<button type="button" data-act="zoom" aria-label="Zoom in" title="Zoom in" class="${TOOL} max-md:hidden">${icons["zoom-in"]}</button>
-<button type="button" data-act="fullscreen" aria-label="Fullscreen" title="Fullscreen" class="${TOOL}">${icons.maximize}</button>
-<button type="button" data-act="share" aria-label="Share this page" title="Share this page" class="${TOOL}">${icons["link-2"]}</button>
-${pdf ? `<a href="${pdf}" target="_blank" rel="noopener" aria-label="Download PDF" title="Download PDF" class="${TOOL}">${icons.download}</a>` : ""}
+<button type="button" data-act="toc" aria-label="Contents" title="Contents" class="${TOOL}">${icon(List)}</button>
+<button type="button" data-act="thumbs" aria-label="Thumbnails" title="Thumbnails" class="${TOOL}">${icon(LayoutGrid)}</button>
+<button type="button" data-act="zoom" aria-label="Zoom in" title="Zoom in" class="${TOOL} max-md:hidden">${icon(ZoomIn, "size-4 fb-off")}${icon(ZoomOut, "size-4 fb-on")}</button>
+<button type="button" data-act="fullscreen" aria-label="Fullscreen" title="Fullscreen" class="${TOOL}">${icon(Maximize, "size-4 fb-off")}${icon(Minimize, "size-4 fb-on")}</button>
+<button type="button" data-act="share" aria-label="Share this page" title="Share this page" class="${TOOL}">${icon(Link2, "size-4 fb-off")}${icon(Check, "size-4 fb-on text-leaf-400")}</button>
+${pdf ? `<a href="${escapeHtml(pdf)}" target="_blank" rel="noopener" aria-label="Download PDF" title="Download PDF" class="${TOOL}">${icon(Download)}</a>` : ""}
 </div>
 </header>
 <div class="fb-desk relative z-10 hidden flex-1 items-center justify-center px-8 py-6 md:flex">
-<button type="button" data-act="prev" aria-label="Previous pages" class="mr-6 ${ARROW}">${icon("arrow-left", "size-5")}</button>
+<button type="button" data-act="prev" aria-label="Previous pages" class="mr-6 ${ARROW}">${icon(ArrowLeft, "size-5")}</button>
 <div id="fb-zoom" class="transition-transform duration-500">
 <div id="fb-book" class="relative" style="perspective:2600px;width:min(60vw,58rem);aspect-ratio:3 / 2.05">
 <div aria-hidden="true" class="absolute inset-x-8 -bottom-5 h-10 rounded-[50%] bg-black/45 blur-xl"></div>
 </div>
 </div>
-<button type="button" data-act="next" aria-label="Next pages" class="ml-6 ${ARROW}">${icon("arrow-right", "size-5")}</button>
+<button type="button" data-act="next" aria-label="Next pages" class="ml-6 ${ARROW}">${icon(ArrowRight, "size-5")}</button>
 </div>
 <div class="fb-mobile relative z-10 flex-1 md:hidden">
 <div id="fb-reader" class="scrollbar-none relative flex h-full snap-x snap-mandatory gap-4 overflow-x-auto px-6 py-4">
@@ -672,6 +691,10 @@ async function verify(file, shot) {
 
     await page.locator('[data-act="zoom"]').click();
     expect(await page.locator("#fb-zoom").evaluate((e) => e.classList.contains("scale-125")), "zoom scales the book");
+    expect(
+      await page.locator('[data-act="zoom"] .lucide-zoom-out').isVisible(),
+      "the zoom button shows zoom-out while zoomed",
+    );
 
     const text = await page.locator("#fb-reader").textContent();
     expect(!/liquid foliar/i.test(text), "no page names the Liquid Foliar range");
@@ -704,8 +727,16 @@ async function verify(file, shot) {
     await phone.page.locator("#fb-reader .fb-page").nth(6).evaluate((el) =>
       el.parentElement.scrollTo({ left: el.offsetLeft - (el.parentElement.clientWidth - el.clientWidth) / 2 }),
     );
-    await phone.page.waitForTimeout(400);
-    expect((await phone.page.locator("#fb-label").textContent()) === `Page 7 / ${total}`, "a phone reads page by page");
+    // The label follows an IntersectionObserver, which reports on its own
+    // schedule — wait for the text rather than for a clock.
+    const phoneLabel = await phone.page
+      .waitForFunction(
+        (want) => document.getElementById("fb-label")?.textContent === want,
+        `Page 7 / ${total}`,
+        { timeout: 5000 },
+      )
+      .then(() => true, () => false);
+    expect(phoneLabel, "a phone reads page by page");
     expect(phone.errors.length === 0, `no script errors on a phone (${phone.errors.join(" | ")})`);
 
     const bare = await context({ viewport: { width: 1440, height: 900 }, javaScriptEnabled: false });
