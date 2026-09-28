@@ -58,7 +58,7 @@
     "@react-pdf/renderer": "^4.9.0",
     "@tiptap/extension-image": "^2.11.0",
     "@tiptap/extension-link": "^2.11.0",
-    "@tiptap/extension-placeholder": "^2.11.0",
+    "@tiptap/extension-placeholder": "^3.31.3",
     "@tiptap/pm": "^2.11.0",
     "@tiptap/react": "^2.11.0",
     "@tiptap/starter-kit": "^2.11.0",
