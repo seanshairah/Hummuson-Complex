@@ -28,16 +28,6 @@
     "priceUsd": 33,
     "images": [
       {
-        "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_MASTER_5L_1080x1080-600x600-1.jpg",
-        "localPath": "/images/products/master/1.jpg",
-        "alt": "Master — product pack"
-      },
-      {
-        "sourceUrl": "https://humusoncomplex.com/wp-content/uploads/2023/07/BIOENERGY_MASTER_5L_1080x1080-600x600-1-1.jpg",
-        "localPath": "/images/products/master/2.jpg",
-        "alt": "Master — product pack"
-      },
-      {
         "sourceUrl": "upload:WhatsApp Image 2026-08-28 at 09.30.37.jpeg",
         "localPath": "/images/products/master/wa-front.jpg",
         "alt": "Master — Humuson Complex product photograph",
@@ -45,7 +35,7 @@
       }
     ],
     "featured": false,
-    "notes": "Bioenergy LT product line. Acts for up to 8 weeks after contact with soil or plant parts (per description). The owner confirmed on 25 Sep 2026 that Master is a powder, so the 5 L that the photo filename suggested is withdrawn — that guess had read the pack as a liquid. No pack size is stated anywhere and none is recorded here. Front-of-pack details transcribed from the August 2026 photo set.",
+    "notes": "Bioenergy LT product line. Acts for up to 8 weeks after contact with soil or plant parts (per description). The owner confirmed on 25 Sep 2026 that Master is a powder, so the 5 L that the photo filename suggested is withdrawn — that guess had read the pack as a liquid. On 28 Sep 2026 the two photographs from the old shop went for the same reason: they show a green 5 L jerrican, which is not how Master is sold. The owner's photograph of the powder pouch is now its only picture. That pouch reads NETO 250 g; no pack size is recorded here until the owner confirms which size the $33 price is for. Front-of-pack details transcribed from the August 2026 photo set.",
     "sourceUrl": "https://humusoncomplex.com/product/master/",
     "tagline": "For improvement of soil fertility",
     "brand": "Bio Energy"
@@ -114,7 +104,6 @@
       "https://humusoncomplex.com/product/grow-top-dressing-sachet/"
     ],
     "categorySlugs": [
-      "crop-nutrition",
       "biostimulants"
     ],
     "shortDescription": "Organic top dressing containing humified and water-soluble organic carbon, natural vitamins, organic acids, enzymes and more than 40 natural-origin nutrition elements.",
@@ -209,7 +198,6 @@
       "https://humusoncomplex.com/product/carboamin-basal-dressing-sachet/"
     ],
     "categorySlugs": [
-      "crop-nutrition",
       "biostimulants"
     ],
     "shortDescription": "Basal dressing containing humic and fulvic acids, amino acids and phytohormones — prevents nitrogen leaching, stabilizes phosphorus and increases nutrient availability and absorption.",
@@ -417,7 +405,7 @@
       "https://humusoncomplex.com/product/perfect-stick-2/"
     ],
     "categorySlugs": [
-      "liquid-fertilisers"
+      "crop-nutrition"
     ],
     "shortDescription": "Silicone-based, non-toxic and environmentally friendly penetrating substance (spray adjuvant) designed to enhance the absorption and effectiveness of foliar applications.",
     "descriptionHtml": "<ul>\n  <li>Polyether Modified Siloxane: 80.0%</li>\n  <li>pH(1:10 H20):5.0-7.0</li>\n  <li>Density (20°C): 1.01-1.03 g/ml</li>\n</ul>\n<p>Perfect Stick is a silicone-based non-toxic and environmentally friendly penetrating substance designed to enhance the absorption and effectiveness of foliar applications. It improves the penetration and spreading of solutions (pesticides and foliar fertilizers) through the leaf surface ensuring better coverage and reducing losses of applied products. It also helps maintain nutrient balance in plants and increases the efficiency of foliar treatments. Ideal for use with growth regulators herbicides fungicides and foliar fertilizers..</p>\n<p>Package Size: 1L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
@@ -488,7 +476,7 @@
     ],
     "categorySlugs": [
       "biostimulants",
-      "liquid-fertilisers",
+      "crop-nutrition",
       "organic"
     ],
     "shortDescription": "Liquid fertilizer with a high concentration of seaweed extract and amino acids, designed for foliar application or watering.",
@@ -583,7 +571,7 @@
       "https://humusoncomplex.com/product/in5-2/"
     ],
     "categorySlugs": [
-      "liquid-fertilisers"
+      "crop-nutrition"
     ],
     "shortDescription": "Liquid phosphorus and zinc fertilizer designed to enhance root development, flowering and nutrient uptake.",
     "descriptionHtml": "<ul>\n  <li>Phosphorus (P205): 30.0%</li>\n  <li>Nitrogen (N):3.0%</li>\n  <li>zinc (Zn):0.5%</li>\n</ul>\n<p>IN5 is a liquid phosphorus and zinc fertilizer designed to enhance root development, flowering and nutrient uptake. Phosphorus is crucial for energy transfer, root growth and flowering, while zinc supports enzyme activity, chlorophyll synthesis and carbohydrate metabolism. IN5 improves germination, stimulates tillering and enhances the efficiency of macronutrient absorption, ensuring healthy plant growth and high-quality yields. Ideal for cereals, oilseeds, legumes, maize, potatoes, vegetables and ornamentals.</p>\n<p>Package Size: 5L</p>\n<p>Rate per Ha: 1L- 3L depending on crop and application method</p>",
@@ -671,7 +659,7 @@
       "https://humusoncomplex.com/product/koral-2/"
     ],
     "categorySlugs": [
-      "liquid-fertilisers"
+      "crop-nutrition"
     ],
     "shortDescription": "Liquid calcium fertilizer enriched with amino acids, designed to strengthen plant tissues and cell walls and improve overall plant health.",
     "descriptionHtml": "<ul>\n  <li>Calcium (CaO):14.0%</li>\n  <li>Nitrate Nitrogen (N-NO3):8.0%</li>\n  <li>Potassium (K20):5.0%</li>\n  <li>Boron (B):0.2%</li>\n  <li>Polysaccharides: 4.5%</li>\n  <li>Amino Acid L-Alanine: 0.05%</li>\n  <li>Amino Acid L-Methionine: 0.05%</li>\n  <li>Amino Acid L-Valine:0.05%</li>\n</ul>\n<p>Koral is a liquid calcium fertilizer enriched with amino acids designed to strengthen plant tissues, enhance metabolic processes and improve overall plant health. Calcium ensures structural integrity and elasticity of cell walls, activates enzymes and supports hormone regulation. Amino acids enhance photosynthesis, increase chlorophyll content and improve pollination efficiency.</p>\n<p>Polysaccharides provide energy for faster recovery from stress. Ideal for fruits, vegetables and field crops, improving quality, shelf life and resilience.</p>\n<p>Package Size:1L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
@@ -769,7 +757,7 @@
       "https://humusoncomplex.com/product/enzo-pro-2/"
     ],
     "categorySlugs": [
-      "liquid-fertilisers"
+      "crop-nutrition"
     ],
     "shortDescription": "Liquid fertilizer enriched with manganese, zinc, copper and the amino acid L-Proline, designed to enhance plant growth and development.",
     "descriptionHtml": "<ul>\n  <li>Manganese (Mn): 9.2%</li>\n  <li>Zinc (Zn):4.6%</li>\n  <li>Nitrogen (N):7.0%</li>\n  <li>Nitrate Nitrogen (N-NO3): 7.0%</li>\n  <li>Copper (Cu): 1.35%</li>\n  <li>Amino Acid L-Proline:0.34%</li>\n</ul>\n<p>Enzo Pro is a liquid fertilizer enriched with manganese, zinc, copper and the amino acid L-Proline, designed to enhance plant growth and development. Manganese is essential for enzyme activity and oxidation-reduction reactions, while zinc supports energy and nutrient metabolism, particularly during early growth stages. Copper strengthens plant cell walls, increasing resistance to fungal and bacterial diseases. L-Proline aids in regulating osmotic pressure, chlorophyll formation and pollen germination. Enzo Pro improves plant resistance to pathogens, stimulates root and stem development, enhances sugar production and transport, and reduces the risk of chlorosis. Ideal for a wide range of crops, including cereals, oilseeds, vegetables, maize and ornamental plants.</p>\n<p>Package Size:5L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
@@ -857,7 +845,7 @@
       "https://humusoncomplex.com/product/mendelenium-2/"
     ],
     "categorySlugs": [
-      "liquid-fertilisers"
+      "crop-nutrition"
     ],
     "shortDescription": "Liquid trace element fertilizer containing sulphur, boron, iron, manganese, molybdenum, zinc and the amino acid L-Proline.",
     "descriptionHtml": "<ul>\n  <li>Iron (Fe):4%</li>\n  <li>Sulphur (SO3):10%</li>\n  <li>Boron (B):0.7%</li>\n  <li>Manganese (Mn):2%</li>\n  <li>Molybdenum (Mo):0.35%</li>\n  <li>zinc (Zn):0.7%</li>\n  <li>Amino Acid L-Proline: 0.37%</li>\n</ul>\n<p>Mendelenium is a liquid trace element fertilizer containing sulphur, boron, iron, manganese, molybdenum, zinc, and the amino acid L-Proline.</p>\n<p>Sulphur enhances protein synthesis, enzyme activation and chlorophyll formation, while also improving nitrogen metabolism and stress resistance. The nutrients in Mendelenium strengthen cell walls, improve membrane integrity and enhance resistance to rot, drought, and pathogens. It supports chlorophyll formation, carbohydrate metabolism and pollen viability, ensuring healthy growth and high-quality yields.</p>\n<p>Ideal for cereals, oilseeds, legumes, maize, potatoes, vegetables and ornamentals.</p>\n<p>Package Size: 1L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
@@ -948,7 +936,7 @@
       "https://humusoncomplex.com/product/bora-2/"
     ],
     "categorySlugs": [
-      "liquid-fertilisers"
+      "crop-nutrition"
     ],
     "shortDescription": "Liquid concentrated boron-molybdenum-cobalt fertilizer designed for legumes.",
     "descriptionHtml": "<ul>\n  <li>Boron(B):11%</li>\n  <li>Molybdenum (Mo):0.5%</li>\n  <li>Cobalt (Co): 0.0002%</li>\n  <li>Polysaccharides: 2%</li>\n</ul>\n<p>Bora is a liquid concentrated boron-molybdenum-cobalt fertilizer designed for legumes. Boron stimulates the formation of generative plant parts seed and fruit growth and root system development. Molybdenum enhances nitrogen fixation in legume roots while cobalt supports enzyme activity protein synthesis and drought resistance. Bora improves flower formation pollen viability and resistance to fungal diseases and drought. Ideal for cereals oilseeds, legumes, maize, potatoes and vegetables.</p>\n<p>Package Size: 1L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
@@ -1036,7 +1024,7 @@
       "https://humusoncomplex.com/product/elais-2/"
     ],
     "categorySlugs": [
-      "liquid-fertilisers"
+      "crop-nutrition"
     ],
     "shortDescription": "Sulphur and nitrogen fertilizer enriched with molybdenum, designed to enhance photosynthesis, chlorophyll production and nitrogen metabolism.",
     "descriptionHtml": "<ul>\n  <li>Sulphur (S):22%</li>\n  <li>Sulphur (SO3):55%</li>\n  <li>Nitrogen (N):15%</li>\n  <li>Ammonia Nitrogen (N-NH4):10%</li>\n  <li>Amide Nitrogen (N-NH2):5%</li>\n  <li>Molybdenum (Mo): 0.4%</li>\n</ul>\n<p>Elais is a sulphur and nitrogen fertilizer enriched with molybdenum designed to enhance photosynthesis chlorophyll production and nitrogen metabolism.</p>\n<p>Sulphur supports protein synthesis enzyme activation and chlorophyll formation while nitrogen regulates growth and development. Molybdenum improves nitrogen and phosphorus efficiency boosting crop quality and yield. Elais enhances the taste smell and overall quality of produce making it ideal for cereals, potatoes, oilseeds, legumes vegetables and maize.</p>\n<p>Package Size: 1L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
@@ -1131,7 +1119,7 @@
       "https://humusoncomplex.com/product/silicare-2/"
     ],
     "categorySlugs": [
-      "liquid-fertilisers"
+      "crop-nutrition"
     ],
     "shortDescription": "Liquid fertilizer containing potassium, phosphorus and silicon, designed to enhance plant resilience and nutrient efficiency.",
     "descriptionHtml": "<ul>\n  <li>Silicon (Sio2): 8%</li>\n  <li>Water-Soluble Silicon (SiO2):2.8%</li>\n  <li>Potassium (K20):20%</li>\n  <li>Phosphorus (P205):10%</li>\n  <li>Amino Acid L-Proline: 0.3%</li>\n  <li>Algae Extract: 0.1%</li>\n</ul>\n<p>Silicare is a liquid fertilizer containing potassium, phosphorus and silicon, designed to enhance plant resilience and nutrient efficiency. Silicon strengthens plant tissues, improves stress resistance and boosts photosynthesis, while potassium and phosphorus support fluid balance and energy metabolism. L-Proline enhances natural immunity and pollen viability. Silicare promotes robust growth and higher yields. Ideal for cereals, legumes, maize, potatoes, vegetables and ornamentals.</p>\n<p>Package Size:5L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
@@ -1216,7 +1204,7 @@
     ],
     "categorySlugs": [
       "biostimulants",
-      "liquid-fertilisers"
+      "crop-nutrition"
     ],
     "shortDescription": "Liquid fertilizer with biostimulants, amino acids and seaweed extract, designed to strengthen root systems, boost plant immunity and provide energy for early growth.",
     "descriptionHtml": "<ul>\n  <li>Polysaccharides: 5%</li>\n  <li>Biostimulants: 0.45%</li>\n  <li>Seaweed Extract: 2%</li>\n  <li>Amino Acids: 5%</li>\n  <li>Nitrogen (N):5%</li>\n  <li>Phosphosphorus (P205):5%</li>\n  <li>Potassium (K20):5%</li>\n</ul>\n<p>Micronutrients (B, Fe, Mn, Mo, Zn, Cu): 0.01-0.2% Bigo W is a liquid fertilizer designed to strengthen root systems, boost plant immunity and provide energy for early growth. It contains biostimulants, amino acids and seaweed extract, which enhance nutrient uptake, photosynthesis and stress resistance. Bigo W is ideal for improving plant resilience and productivity under adverse conditions. Suitable for cereals, legumes, maize, potatoes, oil seeds, vegetables.</p>\n<p>Package Size: 1L</p>\n<p>Rate per Ha: 0.5L &#8211; 1L depending on crop and application method</p>",
@@ -1600,7 +1588,7 @@
     "slug": "kalisto",
     "oldUrls": [],
     "categorySlugs": [
-      "liquid-fertilisers"
+      "crop-nutrition"
     ],
     "tagline": "IKAR Add Value line",
     "shortDescription": "Liquid fertiliser from IKAR's Add Value speciality line.",
@@ -1642,7 +1630,7 @@
     "slug": "fosto",
     "oldUrls": [],
     "categorySlugs": [
-      "liquid-fertilisers"
+      "crop-nutrition"
     ],
     "tagline": "IKAR Add Value line",
     "shortDescription": "Liquid fertiliser from IKAR's Add Value speciality line.",
@@ -1684,8 +1672,7 @@
     "slug": "npk-12-11-30-te",
     "oldUrls": [],
     "categorySlugs": [
-      "crop-nutrition",
-      "liquid-fertilisers"
+      "crop-nutrition"
     ],
     "tagline": "IKAR Intense line",
     "shortDescription": "High-potassium NPK 12-11-30 liquid fertiliser with trace elements, from IKAR's Intense concentrated-nutrition line.",

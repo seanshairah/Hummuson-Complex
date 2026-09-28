@@ -8,19 +8,14 @@
   {
     "name": "Biostimulants",
     "slug": "biostimulants",
-    "description": "Amino-acid, seaweed and microbial formulations that help a crop hold its yield through cold, drought, waterlogging and transplant shock."
+    "description": "Humic, amino-acid and seaweed formulations that help a crop hold its yield through cold, drought, waterlogging and transplant shock.",
+    "note": "On 28 Sep 2026 the owner placed Grow+ Top Dressing and CarboAmin Basal Dressing under this range only. The description gained humic substances, which is what those two carry (humified carbon; humic and fulvic acids) alongside A3's humics, and lost \"microbial\": no product in this range is a microbial formulation — Master and Bio NPK Powder S are, and they are filed under Microbiological Fertilisers."
   },
   {
     "name": "Crop Nutrition",
     "slug": "crop-nutrition",
-    "description": "The feeding programme itself: basal dressings, top dressings and NPK fertilisers whose job is to supply the crop's macro-nutrients.",
-    "note": "Replaces the old shop's Value category. Membership is the products that supply nutrients directly — a microbial product that makes existing nutrients available is filed under Microbiological Fertilisers instead."
-  },
-  {
-    "name": "Liquid Foliar Fertilisers",
-    "slug": "liquid-fertilisers",
-    "description": "The liquid range, fed through the leaf or the irrigation line — macro-nutrients, trace elements and the adjuvant that carries them.",
-    "note": "Slug kept as liquid-fertilisers so existing ?category= links keep working; the name now says how the range is applied. Ordered after Crop Nutrition from 25 Sep 2026 at the owner's request; the order of this file is the order of the catalogue's chapters and of the Range filter."
+    "description": "The feeding programme itself — NPK, macro-nutrient and trace-element fertilisers fed through the leaf or the irrigation line, and the spray adjuvant that carries them.",
+    "note": "Replaces the old shop's Value category. On 28 Sep 2026 the owner folded Liquid Foliar Fertilisers into this range: its thirteen products are listed here and the separate range is gone, and ?category=liquid-fertilisers resolves to this range so older links keep working. In the same instruction Grow+ Top Dressing and CarboAmin Basal Dressing moved to Biostimulants only, which is why the description no longer leads on basal and top dressings. Membership is the products that supply nutrients directly, plus Perfect Stick, the spray adjuvant that came with the liquid range — a microbial product that makes existing nutrients available is filed under Microbiological Fertilisers instead."
   },
   {
     "name": "Organic",

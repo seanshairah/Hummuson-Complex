@@ -137,24 +137,32 @@ export interface ProductFilterParams {
 }
 
 /**
- * Ranges that were renamed, pointed at what replaced them.
+ * Ranges that were renamed or folded into another, pointed at what replaced
+ * them.
  *
  * `?category=` is a filter rather than a route, so a stale one fails silently:
- * the page renders the whole catalogue and looks like the link worked. These
- * two were live on the old shop and are in links and bookmarks, so they keep
- * resolving.
+ * the page renders the whole catalogue and looks like the link worked. `value`
+ * and `physio` were live on the old shop and are in links and bookmarks;
+ * `liquid-fertilisers` was this site's own Liquid Foliar range until the owner
+ * folded it into Crop Nutrition on 28 Sep 2026. All three keep resolving.
  */
 const CATEGORY_ALIASES: Record<string, string> = {
   value: "crop-nutrition",
   physio: "microbiological",
+  "liquid-fertilisers": "crop-nutrition",
 };
+
+/** The range a `?category=` value means today, after renames and merges. */
+export function resolveCategory(slug: string | undefined): string | undefined {
+  return slug ? (CATEGORY_ALIASES[slug] ?? slug) : undefined;
+}
 
 /** Pure filter over the cached product list. */
 export function filterProducts(
   products: ProductCardData[],
   params: ProductFilterParams,
 ): ProductCardData[] {
-  const category = params.category ? (CATEGORY_ALIASES[params.category] ?? params.category) : undefined;
+  const category = resolveCategory(params.category);
   return products.filter((product) => {
     if (params.brand && product.brand !== params.brand) return false;
     if (category && !product.categories.some((c) => c.slug === category)) return false;

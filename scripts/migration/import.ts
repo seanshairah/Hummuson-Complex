@@ -859,7 +859,9 @@ const SECTION_THEMES: Record<string, string> = {
   organic: "soil",
   physio: "biology",
   value: "vitality",
-  "liquid-fertilisers": "nutrition",
+  // The liquid range's treatment, which Crop Nutrition took over with its
+  // products when the owner folded the two together on 28 Sep 2026.
+  "crop-nutrition": "nutrition",
   biostimulants: "canopy",
 };
 

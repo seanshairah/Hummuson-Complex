@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { filterProducts, type ProductCardData } from "@/server/data/products";
+import { filterProducts, resolveCategory, type ProductCardData } from "@/server/data/products";
 
 /**
  * The two classification rules this catalogue turns on, and the one that is
@@ -39,11 +39,11 @@ function product(overrides: Partial<ProductCardData> & { slug: string }): Produc
 }
 
 const CROP_NUTRITION = { name: "Crop Nutrition", slug: "crop-nutrition" };
-const LIQUID = { name: "Liquid Foliar Fertilisers", slug: "liquid-fertilisers" };
+const BIOSTIMULANTS = { name: "Biostimulants", slug: "biostimulants" };
 const MICRO = { name: "Microbiological Fertilisers", slug: "microbiological" };
 
 /** One record, two ranges — the case the single-category column could not hold. */
-const npk = product({ slug: "npk", categories: [LIQUID, CROP_NUTRITION] });
+const npk = product({ slug: "npk", categories: [BIOSTIMULANTS, CROP_NUTRITION] });
 const fortik = product({ slug: "fortik", categories: [CROP_NUTRITION] });
 const master = product({ slug: "master", categories: [MICRO] });
 
@@ -51,7 +51,7 @@ const catalogue = [npk, fortik, master];
 
 describe("range filtering", () => {
   it("finds a multi-range product under each of its ranges", () => {
-    expect(filterProducts(catalogue, { category: "liquid-fertilisers" })).toContain(npk);
+    expect(filterProducts(catalogue, { category: "biostimulants" })).toContain(npk);
     expect(filterProducts(catalogue, { category: "crop-nutrition" })).toContain(npk);
   });
 
@@ -75,6 +75,16 @@ describe("range filtering", () => {
       "fortik",
     ]);
     expect(filterProducts(catalogue, { category: "physio" }).map((p) => p.slug)).toEqual(["master"]);
+  });
+
+  it("resolves the liquid range to Crop Nutrition, which it was folded into", () => {
+    expect(resolveCategory("liquid-fertilisers")).toBe("crop-nutrition");
+    expect(
+      filterProducts(catalogue, { category: "liquid-fertilisers" }).map((p) => p.slug),
+    ).toEqual(["npk", "fortik"]);
+    // Ranges that exist are passed through untouched.
+    expect(resolveCategory("organic")).toBe("organic");
+    expect(resolveCategory(undefined)).toBeUndefined();
   });
 
   it("returns nothing for a range that does not exist", () => {

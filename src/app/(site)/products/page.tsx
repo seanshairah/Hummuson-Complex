@@ -8,16 +8,21 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { ButtonLink } from "@/components/ui/button";
 import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import { RevealGroup, RevealItem } from "@/components/motion/reveal";
-import { filterProducts, getAllProducts, getFilterOptions } from "@/server/data/products";
+import {
+  filterProducts,
+  getAllProducts,
+  getFilterOptions,
+  resolveCategory,
+} from "@/server/data/products";
 import { searchAll } from "@/server/data/search-index";
 import { whatsappAdviceMessage } from "@/lib/whatsapp";
 
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: "Products — microbiological fertilisers, biostimulants & liquid foliar feeds",
+  title: "Products — microbiological fertilisers, biostimulants & crop nutrition",
   description:
-    "Explore the full Humuson Complex range: microbiological fertilisers, biostimulants and liquid foliar fertilisers, plus the basal and top dressings that feed the crop — with published composition, rates and crop suitability.",
+    "Explore the full Humuson Complex range: microbiological fertilisers, biostimulants and crop nutrition — foliar and irrigation feeds, trace elements, and basal and top dressings — with published composition, rates and crop suitability.",
   alternates: { canonical: "/products" },
 };
 
@@ -36,7 +41,9 @@ export default async function ProductsPage({
   const params = await searchParams;
   const active: ActiveFilters = {
     brand: firstParam(params, "brand"),
-    category: firstParam(params, "category"),
+    // An old or merged range name (?category=liquid-fertilisers) shows the
+    // range it now means as the selected one, not a filter nothing matches.
+    category: resolveCategory(firstParam(params, "category")),
     crop: firstParam(params, "crop"),
     benefit: firstParam(params, "benefit"),
     method: firstParam(params, "method"),
@@ -69,7 +76,7 @@ export default async function ProductsPage({
         eyebrow="The Humuson range"
         title="Crop nutrition and biological solutions,"
         titleAccent="from soil to leaf."
-        lede="Microbiological fertilisers, biostimulants and liquid foliar fertilisers, alongside the basal and top dressings that feed the crop. Each carries its own published composition, rates and crop suitability — nothing is listed for a job its documentation does not claim."
+        lede="Microbiological fertilisers, biostimulants and crop nutrition — foliar and irrigation feeds, trace elements, and basal and top dressings. Each carries its own published composition, rates and crop suitability — nothing is listed for a job its documentation does not claim."
         crumbs={[{ label: "Products" }]}
       />
 

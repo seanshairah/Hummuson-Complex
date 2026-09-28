@@ -116,8 +116,8 @@ export function HomeHero({
               className="mt-6 max-w-xl text-base leading-relaxed text-paper/75 md:text-lg"
             >
               Humuson Complex brings modern agricultural technology to Zimbabwe — microbiological
-              fertilisers, biostimulants and liquid foliar fertilisers from renowned European
-              producers, matched to your crop, your soil and your growth stage.
+              fertilisers, biostimulants and crop nutrition from renowned European producers,
+              matched to your crop, your soil and your growth stage.
             </motion.p>
 
             <motion.div

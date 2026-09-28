@@ -6,14 +6,17 @@ import { describe, expect, it } from "vitest";
  * Invariants of the content files that a person editing them by hand cannot
  * see, and that fail quietly on the live site rather than loudly in a build.
  *
- * Two families of mistake are covered here:
+ * Three families of mistake are covered here:
  *
  *   - a delisting that only half happened — the product is out of the
  *     catalogue but its URL still 404s, or it is recorded as delisted and
  *     still on sale;
  *   - a crop taxonomy that promises something it cannot show — a family that
  *     names a crop as text when that crop actually has a page, or a group that
- *     answers to one of its own members' names.
+ *     answers to one of its own members' names;
+ *   - a range placement the owner has settled drifting back — a product filed
+ *     under a range that no longer exists, or listed where the owner said it
+ *     does not belong.
  */
 function content<T>(name: string): T {
   return JSON.parse(readFileSync(path.join(process.cwd(), "content", name), "utf8")) as T;
@@ -24,6 +27,12 @@ interface Product {
   name: string;
   brand?: string | null;
   suitableCrops?: string[];
+  categorySlugs: string[];
+  shortDescription?: string;
+}
+interface Range {
+  slug: string;
+  name: string;
 }
 interface Delisted {
   slug: string;
@@ -48,6 +57,7 @@ const products = content<Product[]>("products.json");
 const delisted = content<Delisted[]>("delisted-products.json");
 const crops = content<Crop[]>("crops.json");
 const urlMap = content<UrlMapEntry[]>("old-url-map.json");
+const ranges = content<Range[]>("categories.json");
 
 const productSlugs = new Set(products.map((p) => p.slug));
 const cropSlugs = new Set(crops.map((c) => c.slug));
@@ -74,6 +84,41 @@ describe("delisted products", () => {
       expect(entry.slug, "slug").toBeTruthy();
       expect(entry.delistedOn, `${entry.slug} delistedOn`).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(entry.redirectTo ?? "/products", `${entry.slug} redirectTo`).toMatch(/^\//);
+    }
+  });
+});
+
+describe("ranges", () => {
+  const rangeSlugs = new Set(ranges.map((r) => r.slug));
+
+  it("file every product under at least one range, and only ranges that exist", () => {
+    // The importer refuses a range it cannot find, but only once it reaches
+    // that product — halfway through a production import.
+    for (const product of products) {
+      expect(product.categorySlugs.length, `${product.slug} has no range`).toBeGreaterThan(0);
+      for (const slug of product.categorySlugs) {
+        expect(rangeSlugs, `${product.slug} is filed under "${slug}"`).toContain(slug);
+      }
+    }
+  });
+
+  it("keep the liquid range folded into Crop Nutrition", () => {
+    // Owner, 28 Sep 2026: liquid foliar fertilisers are crop nutrition, not a
+    // range of their own. Every product that describes itself as a liquid
+    // fertiliser is therefore listed under Crop Nutrition.
+    expect([...rangeSlugs]).not.toContain("liquid-fertilisers");
+    const liquids = products.filter((p) => /^liquid\b/i.test(p.shortDescription ?? ""));
+    expect(liquids.length).toBeGreaterThan(0);
+    for (const product of liquids) {
+      expect(product.categorySlugs, product.slug).toContain("crop-nutrition");
+    }
+  });
+
+  it("list Grow+ and CarboAmin under Biostimulants alone", () => {
+    // Owner, 28 Sep 2026. Both were also under Crop Nutrition until then.
+    for (const slug of ["grow-top-dressing", "carboamin-basal-dressing"]) {
+      const product = products.find((p) => p.slug === slug);
+      expect(product?.categorySlugs, slug).toEqual(["biostimulants"]);
     }
   });
 });

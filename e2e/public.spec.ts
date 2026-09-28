@@ -50,17 +50,39 @@ test.describe("public site", () => {
     const current = await gridSlugs(page, "/products?category=crop-nutrition");
     expect(current.length).toBeGreaterThan(0);
 
-    // "Value" was renamed to Crop Nutrition; links to the old one are in the
-    // wild and have to land on the same products rather than the whole shop.
+    // "Value" was renamed to Crop Nutrition, and the Liquid Foliar range was
+    // folded into it; links to either are in the wild and have to land on the
+    // same products rather than the whole shop.
     expect(await gridSlugs(page, "/products?category=value")).toEqual(current);
+    expect(await gridSlugs(page, "/products?category=liquid-fertilisers")).toEqual(current);
+  });
+
+  test("the liquid range is Crop Nutrition, and Grow+ and CarboAmin are biostimulants only", async ({
+    page,
+  }) => {
+    const cropNutrition = await gridSlugs(page, "/products?category=crop-nutrition");
+    // Koral and iN5 came from the liquid range; iN3 was already in both.
+    for (const slug of ["koral", "in5", "npk-12-11-30-te"]) {
+      expect(cropNutrition).toContain(`/products/${slug}`);
+    }
+    const biostimulants = await gridSlugs(page, "/products?category=biostimulants");
+    for (const slug of ["grow-top-dressing", "carboamin-basal-dressing"]) {
+      expect(cropNutrition).not.toContain(`/products/${slug}`);
+      expect(biostimulants).toContain(`/products/${slug}`);
+    }
+    // The catalogue's chapters are the ranges, so the liquid chapter is gone
+    // from it too rather than printed as an empty or stale heading.
+    await page.goto("/catalogue");
+    const chapters = page.locator("#main h2");
+    await expect(chapters.filter({ hasText: /^Crop Nutrition$/ })).toHaveCount(1);
+    await expect(chapters.filter({ hasText: /liquid/i })).toHaveCount(0);
   });
 
   test("a multi-range product is listed once under each of its ranges", async ({ page }) => {
-    // iN3 is both a liquid foliar fertiliser and crop nutrition. Its slug is
-    // still npk-12-11-30-te, from before the product carried its own name.
-    for (const range of ["liquid-fertilisers", "crop-nutrition"]) {
+    // Ocean is a biostimulant, crop nutrition and organic at once.
+    for (const range of ["biostimulants", "crop-nutrition", "organic"]) {
       const slugs = await gridSlugs(page, `/products?category=${range}`);
-      expect(slugs.filter((s) => s === "/products/npk-12-11-30-te")).toHaveLength(1);
+      expect(slugs.filter((s) => s === "/products/ocean")).toHaveLength(1);
     }
   });
 

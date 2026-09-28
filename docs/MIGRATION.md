@@ -83,25 +83,29 @@ once in any combined result.
 
 The ranges themselves were reworked to say what a grower is choosing between:
 
-| slug                 | name                        | what it means                                                                 |
-| -------------------- | --------------------------- | ----------------------------------------------------------------------------- |
-| `microbiological`    | Microbiological Fertilisers | contains live bacteria or fungi, by its own description                       |
-| `biostimulants`      | Biostimulants               | amino acids, seaweed, or a microbial product that calls itself a biostimulant |
-| `liquid-fertilisers` | Liquid Foliar Fertilisers   | the liquid range, fed through leaf or irrigation                              |
-| `crop-nutrition`     | Crop Nutrition              | supplies the crop's macro-nutrients: basal and top dressings, NPKs            |
-| `organic`            | Organic                     | nutrition from organic matter; both members are titled "organic … fertiliser" |
+| slug              | name                        | what it means                                                                     |
+| ----------------- | --------------------------- | --------------------------------------------------------------------------------- |
+| `microbiological` | Microbiological Fertilisers | contains live bacteria or fungi, by its own description                           |
+| `biostimulants`   | Biostimulants               | humic substances, amino acids or seaweed; Grow+ and CarboAmin sit only here       |
+| `crop-nutrition`  | Crop Nutrition              | supplies nutrients directly — NPKs, macro and trace elements — plus Perfect Stick |
+| `organic`         | Organic                     | the four the owner named on 25 Sep 2026                                           |
+
+That is the table as of 28 Sep 2026, when the owner folded Liquid Foliar
+Fertilisers into Crop Nutrition — the owner corrections of that date, below, have
+the detail.
 
 `value` and `physio` are gone. They were live on the old shop and are in links,
 so `filterProducts` maps them onto `crop-nutrition` and `microbiological`
 respectively — `?category=` is a filter, not a route, so a stale one would
 otherwise render the whole catalogue and look like it had worked.
+`liquid-fertilisers` joined them on 28 Sep and maps onto `crop-nutrition`.
 
 Two judgement calls worth knowing: **Bio NPK Powder S** was in Value and is not
 in Crop Nutrition, because it is a microbial product that releases nutrients
-already in the soil rather than supplying them. **Perfect Stick** is in Liquid
-Foliar Fertilisers and is a spray adjuvant, not a fertiliser — it has no other
-home and belongs in the tank with them, but say so and it can stand outside the
-ranges instead.
+already in the soil rather than supplying them. **Perfect Stick** is a spray
+adjuvant, not a fertiliser; it came into Crop Nutrition with the rest of the
+liquid range because it belongs in the tank with them, but say so and it can
+stand outside the ranges instead.
 
 ### Crops: one level of groups
 
@@ -843,6 +847,10 @@ migrations were up to date and the applier was a no-op.
 
 ### Production was missing a product nobody had noticed
 
+> **Corrected 28 Sep 2026.** The audit log shows Perfect Stick was deleted from
+> the dashboard on 25 Sep, a few hours before this import — not missing all along.
+> The entry below is kept as written; the 28 Sep owner corrections have the record.
+
 Production held **20** products. The content file held 21, and before Bacto-Seed
 was withdrawn it held 22. The two it never had were `bacto-seed` — which is now
 delisted anyway, so no loss — and **`perfect-stick`**, which had been in
@@ -917,3 +925,145 @@ the test fails on `Brassicas` — expected 0, received 1.
 > to be built before the suite says anything about it locally. CI is not exposed
 > to this — it builds and then tests — which is exactly why it is the layer that
 > caught the `IN5` rename breaking two assertions earlier today.
+
+## Owner corrections, 28 Sep 2026 — Liquid Foliar folded into Crop Nutrition, Grow+ and CarboAmin, Master's photograph
+
+Three instructions, and the first is the 25 Sep one read properly this time.
+
+### Liquid Foliar Fertilisers is Crop Nutrition now
+
+On 25 Sep *"Liquid Foliar Fertilisers moves under Crop Nutrition"* was carried out
+as a change of order — the liquid chapter went from third to fourth and stayed a
+range of its own (see the third round of 25 Sep, above). It was meant as a merge:
+the owner sticks to Crop Nutrition, and liquid foliar fertilisers are part of it.
+The range is gone and its thirteen products are filed under Crop Nutrition.
+
+| Product | Ranges before | Ranges after |
+| --- | --- | --- |
+| Perfect Stick, iN5, Koral, Enzo Pro, Mendelenium, Bora, Elais, Silicare, Kalisto, Fosto | Liquid Foliar | Crop Nutrition |
+| iN3 NPK 12-11-30 | Crop Nutrition, Liquid Foliar | Crop Nutrition |
+| Ocean | Biostimulants, Liquid Foliar, Organic | Biostimulants, Crop Nutrition, Organic |
+| Bigo W | Biostimulants, Liquid Foliar | Biostimulants, Crop Nutrition |
+
+Crop Nutrition is those thirteen plus Fortik Solid — fourteen products.
+
+- **The description had to follow the membership**, as Organic's did on 25 Sep. It
+  read *"basal dressings, top dressings and NPK fertilisers whose job is to supply
+  the crop's macro-nutrients"*; the dressings have left (below) and the trace
+  elements have arrived. It now reads *"The feeding programme itself — NPK,
+  macro-nutrient and trace-element fertilisers fed through the leaf or the
+  irrigation line, and the spray adjuvant that carries them."*
+- **Old links keep working.** `?category=liquid-fertilisers` has been in circulation
+  since the range existed, so `resolveCategory` maps it onto `crop-nutrition`
+  beside `value` and `physio`. The products page now also shows the range a
+  renamed or merged slug means as the selected Range, where before a
+  `?category=value` link filtered correctly with nothing selected.
+- **The catalogue follows by itself.** Its chapters are the ranges, rebuilt on
+  every import, so the flipbook and the explore page now run Microbiological →
+  Biostimulants → Crop Nutrition → Organic, 27 entries where there were 30. The
+  Crop Nutrition chapter takes the liquid chapter's paper-deep `nutrition`
+  treatment; it had been falling back to `soil`, the same as Organic beside it.
+- **The importer needed no change to drop the range.** Each product's range links
+  are rebuilt from its `categorySlugs`, and `pruneEmptyCategories` deletes a range
+  nothing is filed under: `✓ categories (4)`, `✓ pruned 1 empty categories`.
+- **The positioning copy said "liquid foliar fertilisers"** as the third of three
+  things Humuson supplies — the hero, the site description, About, the Products
+  title, description and lede, and the company tagline, about text and services
+  line. Each now says crop nutrition.
+
+### Grow+ and CarboAmin sit under Biostimulants alone
+
+On 25 Sep both moved out of Organic into Biostimulants and kept Crop Nutrition,
+on the reading that the instruction was about where they sit as biostimulants.
+The owner has now said Biostimulants only, and that is what they carry.
+
+The Biostimulants description changed with them. It read *"Amino-acid, seaweed and
+microbial formulations…"*; it now reads *"Humic, amino-acid and seaweed
+formulations…"* — humic substances are what Grow+ (humified organic carbon) and
+CarboAmin (humic and fulvic acids) carry, alongside A3's humics, and "microbial"
+went because no product in the range is a microbial formulation. Master and Bio
+NPK Powder S are, and they are filed under Microbiological Fertilisers.
+
+### Master's photograph
+
+Master's first two images were the old shop's photographs of a green 5 L
+jerrican (`BIOENERGY_MASTER_5L_…`), which made the jerrican its primary image: the
+card, the product page, and — because a chapter opens on its first product's
+primary image — the openers of both the Microbiological and Organic chapters.
+Master is a powder (25 Sep), so the picture was of something it is not sold as.
+Both are out of `content/products.json`. The owner's photograph of the powder
+pouch, `wa-front.jpg`, is now its only image, and so its primary image and its
+catalogue plate. The two files stay in `public/images/products/master/` with the
+rest of the old shop's downloaded photographs, which `content/assets.json`
+records; nothing links to them.
+
+> **Still open, with new evidence: Master's pack size.** The pouch in that
+> photograph reads **NETO 250 g**. It is not recorded, because nothing says the
+> $33 price is for that pack. Confirm 250 g at $33 and it goes in.
+
+### Tests
+
+- `tests/unit/content-taxonomy.test.ts` gains a `ranges` block: every product is
+  filed under at least one range and only under ranges that exist (the importer
+  otherwise finds out halfway through a production run); there is no
+  `liquid-fertilisers` range and every product whose short description calls it a
+  liquid is in Crop Nutrition; Grow+ and CarboAmin are exactly `["biostimulants"]`.
+- `tests/unit/product-filters.test.ts` resolves `liquid-fertilisers` to Crop
+  Nutrition.
+- `e2e/public.spec.ts` checks that `?category=liquid-fertilisers` lists exactly what
+  `?category=crop-nutrition` lists, that Koral, iN5 and iN3 are in Crop Nutrition,
+  that Grow+ and CarboAmin are in Biostimulants and not Crop Nutrition, and that the
+  catalogue has a Crop Nutrition chapter and no liquid one. The multi-range test
+  moved from iN3, which now has one range, to Ocean, which has three.
+
+### A correction to the 25 Sep import notes: Perfect Stick
+
+The 25 Sep entry *Production was missing a product nobody had noticed* says
+`perfect-stick` never reached production and that the cause was not established.
+The audit log, which that survey did not read, says otherwise:
+
+| When (UTC) | Event | By |
+| --- | --- | --- |
+| 25 Sep 13:08 | `product.deleted` · Bacto-Seed | info@humusoncomplex.com |
+| 25 Sep 13:21 | `product.deleted` · Perfect Stick | info@humusoncomplex.com |
+| 25 Sep 16:21 | content import — Perfect Stick recreated from `content/products.json` | — |
+
+Production held 20 products that afternoon because both had just been deleted
+from the dashboard, and the import recreated Perfect Stick because the content file
+still listed it. Bacto-Seed was withdrawn on the owner's instruction the same day;
+nothing on record says Perfect Stick was. It stays listed — under Crop Nutrition
+now — and whether that deletion was meant is a question for the owner.
+
+The lesson is for the survey rather than the importer. A deleted row leaves no
+`updatedAt` behind, so "nothing written since the last import" can be true while
+the dashboard has removed something. The audit log is the only record of a
+dashboard deletion, and a survey before an import has to read it.
+
+### Production, 28 Sep 2026
+
+The owner supplied the connection string again with the instruction; it was used
+for the run and is written nowhere.
+
+**Survey first.** 12 migrations applied and none pending; 21 products, the same 21
+as the content file; the latest write to every content table was the 25 Sep
+import (16:21–16:22 UTC) and the audit log has nothing after 25 Sep 13:21, so the
+import had no dashboard edit to overwrite; 0 map pins against 0 in content; 4
+verified stockists, which the import keeps; 3 active admins, so the importer's
+admin step is a no-op.
+
+**The run:** `✓ categories (4)`, `✓ products (21)`, `✓ pruned 1 empty categories`,
+`✓ default catalogue generated from categories`.
+
+**After:**
+
+| Check | Result |
+| --- | --- |
+| Ranges | Microbiological 2 · Biostimulants 7 · Crop Nutrition 14 · Organic 4 — no liquid range |
+| Grow+, CarboAmin | Biostimulants only |
+| Master's primary image | `/images/products/master/wa-front.jpg`, the pouch |
+| Catalogue chapters | Microbiological (2) → Biostimulants (7) → Crop Nutrition (14, `nutrition`) → Organic (4) |
+| Chapter openers | Microbiological and Organic open on the pouch, no longer the jerrican |
+| Stockists | 45 rows, the 4 verified ones still verified, 0 pins |
+
+The jerrican's two `Media` rows are still in the media library, attached to
+nothing — as the delisted products' photographs are.
