@@ -36,6 +36,26 @@ export function linkOrigin(request: NextRequest): string {
 }
 
 /**
+ * The host refuses a function response over 4.5 MB unless it is streamed. A
+ * catalogue of today's size is well under that, but one the owner fills with
+ * photographs need not be — so the file goes out in chunks either way.
+ */
+function streamed(data: Uint8Array): ReadableStream<Uint8Array> {
+  const CHUNK = 256 * 1024;
+  let offset = 0;
+  return new ReadableStream<Uint8Array>({
+    pull(controller) {
+      if (offset >= data.length) {
+        controller.close();
+        return;
+      }
+      controller.enqueue(data.subarray(offset, offset + CHUNK));
+      offset += CHUNK;
+    },
+  });
+}
+
+/**
  * Builds the PDF or the standalone HTML of a loaded flipbook as a download
  * response. Callers decide which flipbook (published or draft) and who may
  * have it; this only draws it.
@@ -55,11 +75,10 @@ export async function flipbookDownload(
   try {
     if (format === "pdf") {
       const pdf = await renderFlipbookPdf(pages, flipbook.title);
-      return new NextResponse(new Uint8Array(pdf), {
+      return new NextResponse(streamed(new Uint8Array(pdf)), {
         headers: {
           "Content-Type": "application/pdf",
           "Content-Disposition": disposition,
-          "Content-Length": String(pdf.length),
           "Cache-Control": options.cacheControl,
         },
       });
@@ -70,7 +89,7 @@ export async function flipbookDownload(
       siteUrl: options.origin,
       pdfUrl: options.pdfUrl,
     });
-    return new NextResponse(html, {
+    return new NextResponse(streamed(new TextEncoder().encode(html)), {
       headers: {
         "Content-Type": "text/html; charset=utf-8",
         "Content-Disposition": disposition,

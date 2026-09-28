@@ -5,6 +5,7 @@ import { useMemo, useRef, useState } from "react";
 import { Search, Upload } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Spinner } from "@/components/ui/skeleton";
+import { prepareUpload, uploadError } from "@/lib/prepare-upload";
 import { cn } from "@/lib/utils";
 
 export interface LibraryItem {
@@ -74,12 +75,13 @@ export function MediaDialog({
     setError(null);
     try {
       const body = new FormData();
-      body.append("file", file);
+      body.append("file", await prepareUpload(file));
       const response = await fetch("/api/admin/upload", { method: "POST", body });
+      if (!response.ok) throw new Error(await uploadError(response));
       const data = (await response.json().catch(() => null)) as
-        | { id: string; url: string; width: number | null; height: number | null; alt: string | null; error?: string }
+        | { id: string; url: string; width: number | null; height: number | null; alt: string | null }
         | null;
-      if (!response.ok || !data?.id) throw new Error(data?.error ?? "Upload failed");
+      if (!data?.id) throw new Error("Upload failed");
       const item: LibraryItem = {
         id: data.id,
         url: data.url,
@@ -147,7 +149,8 @@ export function MediaDialog({
         </div>
         {error && <p className="mt-2 text-sm font-medium text-danger">{error}</p>}
         <p className="mt-2 text-xs text-ink-faint">
-          JPEG, PNG, WebP, AVIF or GIF up to 8 MB. Uploads are added to the media library.
+          JPEG, PNG, WebP, AVIF or GIF. Large photographs are resized before they are sent. Uploads
+          are added to the media library.
         </p>
         <div
           data-lenis-prevent

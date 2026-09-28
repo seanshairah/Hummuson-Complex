@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Upload } from "lucide-react";
 import { Spinner } from "@/components/ui/skeleton";
+import { prepareUpload, uploadError } from "@/lib/prepare-upload";
 
 export function UploadButton() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -18,12 +19,9 @@ export function UploadButton() {
     try {
       for (const file of Array.from(files)) {
         const body = new FormData();
-        body.append("file", file);
+        body.append("file", await prepareUpload(file));
         const response = await fetch("/api/admin/upload", { method: "POST", body });
-        if (!response.ok) {
-          const data = (await response.json().catch(() => null)) as { error?: string } | null;
-          throw new Error(data?.error ?? "Upload failed");
-        }
+        if (!response.ok) throw new Error(await uploadError(response));
       }
       router.refresh();
     } catch (err) {
