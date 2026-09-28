@@ -350,6 +350,25 @@ export async function deleteMedia(id: string): Promise<{ error?: string } | void
   if (uses > 0)
     return { error: `This file is used in ${uses} place(s). Remove those references first.` };
   const media = await db.media.findUnique({ where: { id }, select: { url: true } });
+  // Flipbook designs refer to pictures inside their JSON, where no foreign key
+  // can see them: look for the id and the address in the published design,
+  // the draft, and the revisions a publish could be rolled back to.
+  const inDesigns = await db.catalogue.findMany({ select: { design: true, draftDesign: true } });
+  const revisions = await db.catalogueRevision.findMany({ select: { design: true } });
+  const mentions = (value: unknown) => {
+    if (!value) return false;
+    const text = JSON.stringify(value);
+    return text.includes(`"${id}"`) || Boolean(media?.url && text.includes(`"${media.url}"`));
+  };
+  if (inDesigns.some((row) => mentions(row.design) || mentions(row.draftDesign))) {
+    return { error: "This picture is on a flipbook page. Take it off the page in the flipbook designer first." };
+  }
+  if (revisions.some((row) => mentions(row.design))) {
+    return {
+      error:
+        "An earlier version of the flipbook uses this picture, and restoring that version would need it. It has to stay while that version is in the history.",
+    };
+  }
   await db.media.delete({ where: { id } });
   await audit("media.deleted", { entityType: "media", entityId: id, label: media?.url });
 }

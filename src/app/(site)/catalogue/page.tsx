@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, BookOpen, Download } from "lucide-react";
 import { getPublishedCatalogue } from "@/server/data/catalogue";
+import { loadPublishedFlipbook } from "@/server/flipbook/load";
+import { flipbookDownloads } from "@/lib/flipbook/downloads";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ButtonLink } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -66,7 +68,11 @@ const THEMES: Record<
 const DARK_THEMES = new Set(["biology", "canopy"]);
 
 export default async function CataloguePage() {
-  const catalogue = await getPublishedCatalogue();
+  const [catalogue, flipbook] = await Promise.all([
+    getPublishedCatalogue(),
+    loadPublishedFlipbook(),
+  ]);
+  const downloads = flipbook ? flipbookDownloads(flipbook.hash) : null;
 
   if (!catalogue) {
     return (
@@ -110,8 +116,10 @@ export default async function CataloguePage() {
             <ButtonLink href="/catalogue/flipbook" variant="accent" size="xl">
               <BookOpen className="size-5" strokeWidth={1.8} /> Open flipbook
             </ButtonLink>
-            {catalogue.pdfUrl && (
-              <ButtonLink href={catalogue.pdfUrl} variant="outline-light" size="xl" external>
+            {downloads && (
+              // A plain anchor (external), never next/link: a Link would
+              // prefetch the address, and this one builds a PDF.
+              <ButtonLink href={downloads.pdf} variant="outline-light" size="xl" external download>
                 <Download className="size-5" strokeWidth={1.8} /> Download PDF
               </ButtonLink>
             )}

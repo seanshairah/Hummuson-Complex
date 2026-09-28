@@ -57,10 +57,33 @@ middleware builds from it so no Prisma reaches the edge bundle. The full config
 (`src/server/auth.ts`) adds the credentials provider (bcrypt) for the Node runtime and
 exposes `requireUser`/`requireAdmin` guards used by every server action.
 
-### Catalogue: one page sequence, three consumers
-`buildCataloguePages` flattens the catalogue models into an ordered page list used by
-the flipbook (desktop spreads), the mobile swipe reader, the thumbnail grid and the PDF
-exporter — page numbers and `?page=` deep links always agree.
+### Catalogue: one design, four renderers
+The flipbook is a *design* (`src/lib/flipbook/model.ts`): pages of freely placed blocks
+— text, pictures, shapes, buttons, a contents list, QR codes — on a 600 × 820 unit page,
+stored as JSON on the `Catalogue` row (`design` published, `draftDesign` in progress,
+every publish kept as a `CatalogueRevision`). Text carries `{{tokens}}` (`{{name}}`,
+`{{packs}}`, `{{chapter}}`, `{{page}}` …) and blocks can be bound to a product, so a page
+stays right when the product is edited.
+
+- `schema.ts` validates anything coming in (clamps numbers, allows only safe link and
+  picture addresses) — designs from the dashboard and from the database alike.
+- `resolve.ts` turns a design plus live data into the exact pages a reader sees: tokens
+  filled, pictures looked up, hidden pages and deleted products dropped, contents
+  numbered, a blank page inserted before the back cover when the count is odd.
+- `tree.ts` draws a resolved page as a renderer-neutral element tree, sized with a
+  container-query unit so a page looks the same at any size. The web flipbook, the
+  print view and the designer canvas render it with React (`components/flipbook/
+  page-view.tsx`); the standalone HTML download serialises the very same tree
+  (`html.ts`, `server/flipbook/standalone.ts`).
+- `server/flipbook/pdf.tsx` draws the resolved pages with react-pdf (live links,
+  clickable contents, chapter bookmarks).
+- With no design published, `generate.ts` lays the flipbook out from the chapters
+  (cover, contents, a chapter opener and a page per product) — the designer's
+  "Rebuild from the ranges" starts from the same layout.
+
+Download addresses carry a fingerprint of the design and its data (`?v=`); the route
+redirects any other value to the current one, so each version is built once and then
+served from the edge cache.
 
 ### Analytics: first-party by default
 `AnalyticsEvent` / `SearchEvent` / `QuestionEvent` rows are written via a sendBeacon

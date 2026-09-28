@@ -98,6 +98,55 @@ test.describe("admin", () => {
     }
   });
 
+  /**
+   * The flipbook designer end to end: add a heading, let it autosave, publish,
+   * and find it in the public flipbook. The `finally` puts the site back on
+   * the automatic layout, so no probe text outlives the test.
+   */
+  test("a page designed in the dashboard is what the flipbook shows", async ({ page }, testInfo) => {
+    // The designer is a desktop tool, and one publish per run is enough.
+    test.skip(testInfo.project.name !== "admin-desktop", "desktop only");
+    const marker = `Designer check ${unique()}`;
+
+    await page.goto("/admin/login");
+    await page.fill('input[name="email"]', ADMIN_EMAIL);
+    await page.fill('input[name="password"]', ADMIN_PASSWORD);
+    await page.click('button[type="submit"]');
+    await page.waitForURL("**/admin");
+
+    try {
+      await page.goto("/admin/catalogue");
+      await expect(page.getByRole("heading", { name: "Flipbook designer" })).toBeVisible();
+
+      await page.getByRole("button", { name: "Text", exact: true }).click();
+      await page.getByRole("menuitem", { name: "Heading" }).click();
+      await page.locator("aside textarea[aria-label='Text']").fill(marker);
+      await expect(page.getByText(/Draft saved/)).toBeVisible({ timeout: 15000 });
+
+      await page.getByRole("button", { name: "Publish", exact: true }).first().click();
+      await page.getByRole("dialog").getByRole("button", { name: "Publish" }).click();
+      await expect(page.getByText(/Published — the flipbook/)).toBeVisible({ timeout: 20000 });
+
+      await page.goto("/catalogue/flipbook");
+      await expect(page.getByText(marker).first()).toBeVisible({ timeout: 15000 });
+    } finally {
+      await page.goto("/admin/catalogue");
+      await page.getByRole("button", { name: "More" }).click();
+      const automatic = page.getByRole("menuitem", { name: /automatic layout/i });
+      if (await automatic.isVisible()) {
+        await automatic.click();
+        await page.getByRole("dialog").getByRole("button", { name: /use the automatic layout/i }).click();
+        // The designer reloads once the change is saved and says what is live.
+        await expect(page.getByText(/Live: automatic layout/)).toBeVisible({ timeout: 20000 });
+      } else {
+        await page.keyboard.press("Escape");
+      }
+    }
+
+    await page.goto("/catalogue/flipbook");
+    await expect(page.getByText(marker)).toHaveCount(0);
+  });
+
   test("signs in when autofill leaves whitespace or odd case in the email", async ({ page }) => {
     // Reported from production: a pasted/autofilled address with a stray space
     // failed .email() validation and surfaced as "invalid email or password".

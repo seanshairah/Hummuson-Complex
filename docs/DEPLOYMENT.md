@@ -74,13 +74,15 @@ admin survive it.
 
 ## 4. Media strategy
 
-- Migrated imagery ships in the repo (`public/images`, ~10MB, optimized by next/image).
-- The admin upload driver writes to `public/uploads` — fine for a persistent Node host,
-  **not durable on Vercel's serverless filesystem**. For Vercel, either:
-  1. keep uploads out of the workflow (reference images by URL), or
-  2. wire Cloudinary: set `CLOUDINARY_URL`, replace the write in
-     `src/app/api/admin/upload/route.ts` with an upload-stream call (single file),
-     keep the Media record shape unchanged.
+- Migrated imagery ships in the repo (`public/images`, ~14MB, optimized by next/image).
+- Pictures uploaded in the dashboard (media library, flipbook designer) are stored in
+  the database: the upload route re-encodes each one to WebP (longest edge 2400px) and
+  writes the bytes to a `MediaFile` row, served from `/media-files/<id>/<name>` with a
+  one-year immutable cache. Nothing is written to disk, so uploads survive Vercel's
+  serverless filesystem and are included in database backups.
+- The flipbook downloads (`/api/flipbook/pdf`, `/api/flipbook/html`) read fonts from
+  `node_modules/@fontsource` and pictures from `public/images` at request time;
+  `outputFileTracingIncludes` in `next.config.ts` ships both with the function.
 
 ## 5. Domain cutover checklist
 
@@ -143,9 +145,8 @@ leaves mail untouched.
 2. Verify legacy redirects: `/product/in5-2/`, `/shop/`, `/our-blog/` → new URLs (301).
 3. Submit `https://humusoncomplex.com/sitemap.xml` in Search Console.
 4. Change the seeded admin password; create personal staff accounts in `/admin/users`.
-5. Generate the catalogue PDF against production:
-   `BASE_URL=https://humusoncomplex.com npm run catalogue:pdf` (commits the file, or run
-   on the host and upload) — the Download PDF buttons appear once `pdfUrl` is set.
+5. Nothing to generate for the catalogue: the flipbook's PDF and HTML downloads are
+   built on demand from the published design and cached per version.
 
 ## Local production parity
 

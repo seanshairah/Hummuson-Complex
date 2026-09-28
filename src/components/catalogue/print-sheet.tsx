@@ -1,25 +1,25 @@
-"use client";
+import { PageView } from "@/components/flipbook/page-view";
+import type { ResolvedPage } from "@/lib/flipbook/resolve";
+import { FLIPBOOK_PAGE_CSS } from "@/lib/flipbook/tree";
 
-import { PageFace } from "@/components/catalogue/flipbook";
-import type { CataloguePage } from "@/lib/catalogue-pages";
-
-/** One catalogue page per printed sheet (consumed by the PDF exporter). */
-export function PrintSheet({ pages }: { pages: CataloguePage[] }) {
+/** One flipbook page per printed sheet, for printing from the browser. */
+export function PrintSheet({ pages }: { pages: ResolvedPage[] }) {
   return (
     <div className="bg-white">
       <style>{`
-        @page { size: 160mm 214mm; margin: 0; }
+        ${FLIPBOOK_PAGE_CSS}
+        @page { size: 150mm 205mm; margin: 0; }
         @media print {
           .print-page { break-after: page; }
         }
       `}</style>
       {pages.map((page, i) => (
         <div
-          key={i}
-          className="print-page relative mx-auto overflow-hidden text-[13px]"
-          style={{ width: "160mm", height: "214mm" }}
+          key={`${page.id}-${i}`}
+          className="print-page relative mx-auto overflow-hidden"
+          style={{ width: "150mm", height: "205mm" }}
         >
-          <PageFace page={page} pageNumber={i + 1} />
+          <PageView page={page} priority />
         </div>
       ))}
     </div>

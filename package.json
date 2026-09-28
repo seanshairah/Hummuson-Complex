@@ -26,8 +26,6 @@
     "test:watch": "vitest",
     "e2e": "playwright test",
     "assets:logos": "node scripts/assets/extract-brand-logos.mjs",
-    "catalogue:pdf": "tsx scripts/generate-catalogue-pdf.ts",
-    "catalogue:standalone": "node scripts/catalogue/export-standalone.mjs",
     "qa:data": "tsx scripts/qa/validate-data.ts",
     "qa:finder": "tsx scripts/qa/finder-matrix.ts",
     "qa:browser": "node scripts/qa/browser-qa.mjs",
@@ -42,6 +40,9 @@
     "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
+    "@fontsource/fraunces": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
     "@hookform/resolvers": "^5.0.1",
     "@neondatabase/serverless": "^1.1.0",
     "@prisma/adapter-neon": "^6.19.3",
@@ -54,6 +55,7 @@
     "@radix-ui/react-select": "^2.1.0",
     "@radix-ui/react-switch": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
+    "@react-pdf/renderer": "^4.9.0",
     "@tiptap/extension-image": "^2.11.0",
     "@tiptap/extension-link": "^2.11.0",
     "@tiptap/extension-placeholder": "^2.11.0",

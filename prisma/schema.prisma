@@ -176,6 +176,20 @@ model Media {
   catalogueEntries CatalogueEntry[]
   catalogueCovers  Catalogue[]
   categoryImages   ProductCategory[]
+  /// The bytes, for files uploaded through the dashboard. Serverless hosting
+  /// has no durable disk, so uploads live in the database and are served by
+  /// src/app/media-files/[id]/[name]/route.ts.
+  file             MediaFile?
+}
+
+/// An uploaded file's bytes, stored with the database rather than on disk.
+model MediaFile {
+  id        String   @id @default(cuid())
+  mediaId   String   @unique
+  media     Media    @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+  mimeType  String
+  data      Bytes
+  createdAt DateTime @default(now())
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -704,10 +718,38 @@ model Catalogue {
   /// Path to a downloadable PDF export, when generated.
   pdfUrl       String?
 
-  sections CatalogueSection[]
+  /// The flipbook as laid out in the dashboard designer and published: every
+  /// page and block (src/lib/flipbook/model.ts). Null lays the flipbook out
+  /// from the chapters below instead. The content import never writes it.
+  design            Json?
+  /// The designer's work in progress; null when nothing is unpublished.
+  draftDesign       Json?
+  draftUpdatedAt    DateTime?
+  /// Bumped on every publish. The PDF and HTML download addresses carry it,
+  /// so a cached download can never be an older design than the flipbook.
+  designVersion     Int       @default(0)
+  designPublishedAt DateTime?
+
+  sections  CatalogueSection[]
+  revisions CatalogueRevision[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+/// A published (or replaced) flipbook design, kept so a publish can be undone.
+model CatalogueRevision {
+  id          String    @id @default(cuid())
+  catalogueId String
+  catalogue   Catalogue @relation(fields: [catalogueId], references: [id], onDelete: Cascade)
+  design      Json
+  /// designVersion this design was published as; 0 for a draft set aside.
+  version     Int
+  note        String?
+  actorEmail  String?
+  createdAt   DateTime  @default(now())
+
+  @@index([catalogueId, createdAt])
 }
 
 model CatalogueSection {

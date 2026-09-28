@@ -44,10 +44,8 @@ in `.env` (seeded on `db:seed`). **Change them before deploying.**
 | `npm run setup:db`     | Start/initialise the local PostgreSQL cluster                   |
 | `npm run db:migrate`   | Create/apply migrations (dev)                                   |
 | `npm run db:seed`      | Import audited content from `content/*.json` (idempotent)       |
-| `npm test`             | Unit tests (search engine, finder scoring, catalogue pages…)    |
+| `npm test`             | Unit tests (search engine, finder scoring, flipbook designs…)   |
 | `npm run e2e`          | Playwright end-to-end suite (builds on a fresh port)            |
-| `npm run catalogue:pdf`| Render the flipbook to `public/catalogue/…pdf` (server running) |
-| `npm run catalogue:standalone` | The flipbook as one offline HTML file, verified (build served on :3222) |
 
 ## What's inside
 
@@ -57,13 +55,18 @@ in `.env` (seeded on `db:seed`). **Change them before deploying.**
   (click-to-load embeds), results & crop programs, FAQ explorer, about/contact/solutions.
 - **Interactive catalogue** — `/catalogue` editorial chapters and `/catalogue/flipbook`,
   a dependency-free CSS-3D page-turn book with contents, thumbnails, deep links,
-  fullscreen, share, and a PDF exporter.
+  fullscreen and share. Every page is laid out in the dashboard's **flipbook designer**
+  (`/admin/catalogue`) — free placement of text, pictures, shapes, buttons, QR codes and
+  a live contents list, with product details filled in from the catalogue — and the
+  published design is also downloadable as a **PDF** and as a **single offline HTML
+  file** (`/api/flipbook/pdf`, `/api/flipbook/html`), generated on demand.
 - **Knowledge engine** — one tested retrieval engine (`src/lib/search`) powers global
   search (⌘K), the FAQ page, **Ask Humuson** (grounded Q&A with honest fallbacks), and
   the admin "Test a question" tool.
 - **Admin CMS** — `/admin`: products (structured agronomy fields, never a blob of text),
   FAQs with aliases, TipTap articles with scheduling, videos by YouTube URL, results,
-  testimonials, catalogue editor, media library, enquiries inbox, analytics insights
+  testimonials, flipbook designer and catalogue chapters, media library (uploads stored
+  in the database), enquiries inbox, analytics insights
   (zero-result searches, unanswered questions, WhatsApp clicks per product), settings, users.
 - **Migration** — `content/*.json` is the audited extraction of the old site
   (`docs/audit/AUDIT.md` documents every decision); `scripts/migration/import.ts` loads it

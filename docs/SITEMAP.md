@@ -15,8 +15,9 @@
 | `/knowledge/[slug]`    | Editorial article: reading progress, mentioned products/crops      |
 | `/videos`              | Video centre (click-to-load, category tabs)                        |
 | `/catalogue`           | Editorial catalogue (themed chapters, product spreads)             |
-| `/catalogue/flipbook`  | Page-turn publication (TOC, thumbnails, deep links, share, PDF)    |
-| `/catalogue/print`     | Print sequence consumed by the PDF exporter (noindex)              |
+| `/catalogue/flipbook`  | Page-turn publication (TOC, thumbnails, deep links, share, PDF and HTML downloads) |
+| `/catalogue/print`     | The flipbook one page per sheet, for printing from a browser (noindex) |
+| `/api/flipbook/pdf`, `/api/flipbook/html` | The published flipbook as a PDF / one offline HTML file |
 | `/projects`            | Results & crop programs + testimonials                             |
 | `/projects/[slug]`     | Case detail: images, facts, products used, testimonial             |
 | `/about`               | Story, vision/mission, values, partner brands, visit details       |
@@ -36,13 +37,15 @@ sticky product actions on mobile, skip-link, designed 404/error pages.
 ## Admin (`/admin`, Auth.js-guarded)
 
 Overview · Products (+ new/edit) · Categories · Crops · FAQs (+ test question) ·
-Articles (+ new/edit) · Videos · Results (+ new/edit) · Testimonials · Catalogue ·
+Articles (+ new/edit) · Videos · Results (+ new/edit) · Testimonials · Catalogue
+(flipbook designer; `/admin/catalogue/chapters` for the chapters) ·
 Media · Enquiries · Analytics · Settings · Users · Login (`/admin/login`)
 
 ## API
 
 `GET /api/search` · `POST /api/ask` · `POST /api/finder` · `POST /api/events` ·
-`POST /api/admin/upload` · `/api/auth/[...nextauth]`
+`GET /api/flipbook/{pdf,html}` (`?draft=1` signed-in) · `POST /api/admin/upload` ·
+`GET /media-files/[id]/[name]` · `/api/auth/[...nextauth]`
 
 ## SEO surface
 

@@ -59,10 +59,15 @@ ran the command. Options, cheapest first: a monthly calendar reminder; a cron
 job on any always-on machine; a scheduled GitHub Actions job with the connection
 string as a repository secret.
 
-**Uploaded media** lives on the filesystem under `public/uploads`, not in the
-database. On Vercel that filesystem does not survive a deployment, which is why
-`docs/DEPLOYMENT.md` recommends Cloudinary for production uploads. Media
-migrated from the old site is committed to the repository and is safe.
+**Uploaded media** lives in the database (`MediaFile` rows, served from
+`/media-files/…`), so the database backup above includes it. Media migrated from
+the old site is committed to the repository and is safe. (Files uploaded before
+28 Sep 2026 went to `public/uploads`, which the serverless host does not keep.)
+
+**The flipbook** design, its unpublished draft and the last fifty published
+versions are columns and rows in the database too (`Catalogue.design`,
+`Catalogue.draftDesign`, `CatalogueRevision`). A bad publish is undone from the
+designer: History → Restore to draft → Publish.
 
 ---
 

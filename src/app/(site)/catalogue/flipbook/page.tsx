@@ -4,8 +4,9 @@ import { BookOpen } from "lucide-react";
 import { Flipbook } from "@/components/catalogue/flipbook";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ButtonLink } from "@/components/ui/button";
-import { getPublishedCatalogue } from "@/server/data/catalogue";
-import { buildCataloguePages } from "@/lib/catalogue-pages";
+import { loadPublishedFlipbook } from "@/server/flipbook/load";
+import { resolveDesign } from "@/lib/flipbook/resolve";
+import { flipbookDownloads } from "@/lib/flipbook/downloads";
 
 export const revalidate = 300;
 
@@ -17,9 +18,9 @@ export const metadata: Metadata = {
 };
 
 export default async function FlipbookPage() {
-  const catalogue = await getPublishedCatalogue();
+  const flipbook = await loadPublishedFlipbook();
 
-  if (!catalogue) {
+  if (!flipbook) {
     return (
       <div className="container-site pt-24 md:pt-28 lg:pt-32 section-pb-loose">
         <EmptyState
@@ -32,11 +33,11 @@ export default async function FlipbookPage() {
     );
   }
 
-  const pages = buildCataloguePages(catalogue);
+  const pages = resolveDesign(flipbook.design, flipbook.context, { pad: true });
 
   return (
     <Suspense>
-      <Flipbook pages={pages} pdfUrl={catalogue.pdfUrl} />
+      <Flipbook pages={pages} title={flipbook.title} downloads={flipbookDownloads(flipbook.hash)} />
     </Suspense>
   );
 }

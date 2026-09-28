@@ -498,4 +498,39 @@ test.describe("catalogue", () => {
     await page.goto("/catalogue/flipbook?page=4");
     await expect(page.getByText(/4–5 \/ \d+/)).toBeVisible();
   });
+
+  test("the flipbook offers its PDF and HTML downloads", async ({ page }) => {
+    await page.goto("/catalogue/flipbook");
+    await page.getByRole("button", { name: "Download" }).click();
+    const dialog = page.getByRole("dialog", { name: /download the catalogue/i });
+    await expect(dialog.getByRole("link", { name: /^PDF/ })).toHaveAttribute("href", /\/api\/flipbook\/pdf\?v=/);
+    await expect(dialog.getByRole("link", { name: /Web page \(HTML\)/ })).toHaveAttribute(
+      "href",
+      /\/api\/flipbook\/html\?v=/,
+    );
+  });
+
+  test("the downloads are a real PDF and one self-contained HTML file", async ({ request }, testInfo) => {
+    // Built on demand; once per run is enough.
+    test.skip(testInfo.project.name !== "desktop", "desktop only");
+
+    const pdf = await request.get("/api/flipbook/pdf");
+    expect(pdf.status()).toBe(200);
+    expect(pdf.headers()["content-type"]).toBe("application/pdf");
+    expect(pdf.headers()["content-disposition"]).toMatch(/attachment; filename=".+\.pdf"/);
+    expect((await pdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
+
+    const html = await request.get("/api/flipbook/html");
+    expect(html.status()).toBe(200);
+    expect(html.headers()["content-type"]).toContain("text/html");
+    const body = await html.text();
+    expect(body).toContain('id="fb-reader"');
+    expect(body).toContain("@font-face");
+    // Everything inside the file: no script or stylesheet fetched from anywhere.
+    expect(body).not.toMatch(/<script[^>]+src=/);
+    expect(body).not.toMatch(/<link[^>]+stylesheet/);
+
+    // The designer's unpublished draft is for signed-in users only.
+    expect((await request.get("/api/flipbook/pdf?draft=1")).status()).toBe(401);
+  });
 });

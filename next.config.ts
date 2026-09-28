@@ -169,6 +169,27 @@ const SECURITY_HEADERS = [
 const nextConfig: NextConfig = {
   // "X-Powered-By: Next.js" tells an attacker which advisories to read first.
   poweredByHeader: false,
+  // react-pdf runs its own React reconciler, so it has to load the ordinary
+  // React build from node_modules rather than be bundled into the server
+  // layer that route handlers use.
+  serverExternalPackages: ["@react-pdf/renderer"],
+  experimental: {
+    // The flipbook designer saves the whole design through a server action;
+    // a large catalogue passes the 1 MB default. The action refuses anything
+    // over 3 MB itself (src/server/actions/admin/flipbook.ts).
+    serverActions: { bodySizeLimit: "4mb" },
+  },
+  // The flipbook downloads embed the site's fonts and pictures, read from
+  // disk at request time. Serverless bundles only carry files the build can
+  // see being imported, so these are listed for the route by hand.
+  outputFileTracingIncludes: {
+    "/api/flipbook/[format]": [
+      "./node_modules/@fontsource/inter/files/inter-latin-*",
+      "./node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-*",
+      "./node_modules/@fontsource/fraunces/files/fraunces-latin-*",
+      "./public/images/**/*",
+    ],
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [360, 480, 640, 768, 1024, 1280, 1536, 1920],

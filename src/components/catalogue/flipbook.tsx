@@ -2,13 +2,14 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   ArrowLeft,
   ArrowRight,
-  BookOpen,
   Check,
   Download,
+  FileCode2,
+  FileText,
   LayoutGrid,
   Link2,
   List,
@@ -18,205 +19,69 @@ import {
   ZoomOut,
 } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { MediaImage } from "@/components/shared/media-image";
+import { PageView } from "@/components/flipbook/page-view";
 import { cn } from "@/lib/utils";
 import { trackClient } from "@/lib/analytics-client";
-import type { CataloguePage } from "@/lib/catalogue-pages";
+import type { ResolvedPage } from "@/lib/flipbook/resolve";
+import { FLIPBOOK_PAGE_CSS } from "@/lib/flipbook/tree";
 
-const THEME_BG: Record<string, string> = {
-  soil: "bg-[#efe9d8]",
-  biology: "bg-humus-900",
-  vitality: "bg-leaf-200",
-  nutrition: "bg-paper-deep",
-  canopy: "bg-[#12351f]",
-};
-const THEME_DARK = new Set(["biology", "canopy"]);
-
-/* ── Single page face ───────────────────────────────────────────────────── */
-
-export function PageFace({ page, pageNumber }: { page: CataloguePage; pageNumber: number }) {
-  if (page.kind === "cover") {
-    return (
-      <div className="bg-grain flex h-full flex-col justify-between bg-humus-950 p-[7%] text-paper">
-        <div className="pointer-events-none absolute inset-0 glow-leaf" aria-hidden />
-        <p className="relative text-eyebrow text-[0.6em] text-leaf-400">
-          Humuson Complex{page.year ? ` · ${page.year}` : ""}
-        </p>
-        <div className="relative">
-          <h2 className="font-display text-[2.6em] leading-[1.02] font-semibold tracking-tight">
-            Product
-            <br />
-            Guide
-          </h2>
-          {page.intro && (
-            <p className="mt-[1em] text-[0.72em] leading-relaxed text-paper/65">{page.intro}</p>
-          )}
-        </div>
-        <p className="relative text-eyebrow text-[0.55em] text-paper/40">
-          Home of healthy soil &amp; healthy crop
-        </p>
-      </div>
-    );
-  }
-
-  if (page.kind === "toc") {
-    return (
-      <div className="flex h-full flex-col bg-cream p-[7%]">
-        <p className="text-eyebrow text-[0.6em] text-leaf-700">Contents</p>
-        <ol className="mt-[1.4em] space-y-[0.9em]">
-          {page.entries.map((entry, i) => (
-            <li key={entry.slug} className="flex items-baseline gap-[0.6em] text-ink">
-              <span className="font-display text-[0.7em] font-semibold text-leaf-700">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="font-display text-[0.95em] font-medium">{entry.title}</span>
-              <span aria-hidden className="mx-[0.4em] flex-1 border-b border-dotted border-line" />
-              <span className="text-[0.7em] text-ink-faint">{entry.page + 1}</span>
-            </li>
-          ))}
-        </ol>
-        <p className="mt-auto text-[0.62em] leading-relaxed text-ink-faint">
-          Tap any product page to open its full details, rates and crop guidance.
-        </p>
-      </div>
-    );
-  }
-
-  if (page.kind === "chapter") {
-    const dark = THEME_DARK.has(page.theme);
-    return (
-      <div
-        className={cn(
-          "relative flex h-full flex-col justify-end overflow-hidden p-[7%]",
-          THEME_BG[page.theme] ?? "bg-paper-dim",
-          dark ? "text-paper" : "text-ink",
-        )}
-      >
-        {page.image && (
-          <div className="absolute inset-0 opacity-25">
-            <MediaImage image={page.image} alt="" fill sizes="420px" quality={55} className="object-cover" />
-          </div>
-        )}
-        <p
-          className={cn(
-            "relative text-eyebrow text-[0.6em]",
-            dark ? "text-leaf-400" : "text-leaf-800",
-          )}
-        >
-          Chapter {String(page.number).padStart(2, "0")}
-        </p>
-        <h2 className="relative mt-[0.4em] font-display text-[2.1em] leading-[1.05] font-semibold tracking-tight">
-          {page.title}
-        </h2>
-        {page.intro && (
-          <p
-            className={cn(
-              "relative mt-[0.8em] text-[0.72em] leading-relaxed",
-              dark ? "text-paper/70" : "text-ink-soft",
-            )}
-          >
-            {page.intro}
-          </p>
-        )}
-        <p
-          className={cn(
-            "relative mt-[1em] text-[0.62em]",
-            dark ? "text-paper/50" : "text-ink-faint",
-          )}
-        >
-          {page.productCount} product{page.productCount === 1 ? "" : "s"}
-        </p>
-      </div>
-    );
-  }
-
-  if (page.kind === "product") {
-    const { product, image } = page;
-    return (
-      <div className="flex h-full flex-col bg-cream">
-        <div className="relative h-[52%] shrink-0 overflow-hidden bg-gradient-to-br from-paper-dim via-cream to-paper-deep">
-          {image && (
-            <MediaImage
-              image={image}
-              alt={`${product.name} pack`}
-              fill
-              sizes="420px"
-              quality={60}
-              className="object-cover"
-            />
-          )}
-          <span className="absolute top-[4%] left-[6%] text-eyebrow text-[0.5em] text-ink-faint">
-            {page.chapterTitle}
-          </span>
-        </div>
-        <div className="flex min-h-0 flex-1 flex-col p-[6%]">
-          <h3 className="font-display text-[1.35em] leading-tight font-semibold text-ink">
-            {product.name}
-          </h3>
-          {product.shortDescription && (
-            <p className="mt-[0.5em] line-clamp-3 text-[0.68em] leading-relaxed text-ink-soft">
-              {product.shortDescription}
-            </p>
-          )}
-          <div className="mt-auto space-y-[0.35em] pt-[0.6em] text-[0.6em] text-ink-faint">
-            {product.cropNames.length > 0 && (
-              <p className="line-clamp-1 capitalize">
-                <strong className="text-ink-soft">Crops:</strong>{" "}
-                {product.cropNames.slice(0, 5).join(", ")}
-              </p>
-            )}
-            <div className="flex items-center justify-between gap-[0.5em]">
-              <p className="line-clamp-1">
-                {product.packSizes.length > 0 && (
-                  <>
-                    <strong className="text-ink-soft">Packs:</strong>{" "}
-                    {product.packSizes.join(" · ")}
-                  </>
-                )}
-              </p>
-              <Link
-                href={`/products/${product.slug}`}
-                onClick={(e) => e.stopPropagation()}
-                className="pointer-events-auto inline-flex shrink-0 items-center gap-[0.4em] rounded-full bg-humus-900 px-[1em] py-[0.5em] font-display font-medium text-paper hover:bg-humus-700"
-              >
-                View product <ArrowRight className="size-[1em]" />
-              </Link>
-            </div>
-          </div>
-        </div>
-        <span className="pb-[3%] text-center text-[0.5em] text-ink-faint/60">{pageNumber}</span>
-      </div>
-    );
-  }
-
-  // back
-  return (
-    <div className="bg-grain flex h-full flex-col items-center justify-center bg-humus-950 p-[8%] text-center text-paper">
-      {page.title && (
-        <>
-          <BookOpen className="size-[2.2em] text-leaf-400" strokeWidth={1.4} />
-          <p className="mt-[1em] font-display text-[1.1em] font-semibold">{page.title}</p>
-          <p className="mt-[0.6em] text-[0.65em] text-paper/60">
-            humusoncomplex.com · WhatsApp +263 77 665 6433
-          </p>
-        </>
-      )}
-    </div>
-  );
+export interface FlipbookDownloads {
+  pdf: string;
+  html: string;
 }
 
-/* ── Flipbook ───────────────────────────────────────────────────────────── */
+/**
+ * Follows a tap inside a page: a contents entry or page link turns the book,
+ * a link into the site navigates in place, anything else is left to the
+ * browser. Returns true when the tap was a link, so the page does not also
+ * turn underneath it.
+ */
+function followLink(
+  event: React.MouseEvent,
+  jump: (page: number) => void,
+  navigate: (href: string) => void,
+): boolean {
+  const anchor = (event.target as Element).closest("a");
+  if (!anchor) return false;
+  event.stopPropagation();
+  const goto = anchor.getAttribute("data-goto");
+  if (goto) {
+    event.preventDefault();
+    jump(Number(goto) - 1);
+    return true;
+  }
+  const href = anchor.getAttribute("href") ?? "";
+  if (href.startsWith("/") && !href.startsWith("//") && anchor.target !== "_blank") {
+    event.preventDefault();
+    navigate(href);
+  }
+  return true;
+}
 
-export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: string | null }) {
+export function Flipbook({
+  pages,
+  title,
+  downloads,
+  onClose,
+}: {
+  pages: ResolvedPage[];
+  title: string;
+  downloads: FlipbookDownloads | null;
+  /** Shown as a preview (the designer's): a close button instead of the way back to the site. */
+  onClose?: () => void;
+}) {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const sheets = useMemo(() => {
-    const list: { front: number; back: number }[] = [];
-    for (let i = 0; i < pages.length; i += 2) list.push({ front: i, back: i + 1 });
+    const list: { front: number; back: number | null }[] = [];
+    for (let i = 0; i < pages.length; i += 2) {
+      list.push({ front: i, back: i + 1 < pages.length ? i + 1 : null });
+    }
     return list;
   }, [pages]);
 
   const [flipped, setFlipped] = useState(() => {
-    const param = Number(searchParams.get("page") ?? 0);
+    const param = onClose ? 0 : Number(searchParams.get("page") ?? 0);
     if (Number.isFinite(param) && param > 0) {
       return Math.min(sheets.length, Math.ceil(param / 2));
     }
@@ -227,8 +92,10 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
   const [fullscreen, setFullscreen] = useState(false);
   const [tocOpen, setTocOpen] = useState(false);
   const [thumbsOpen, setThumbsOpen] = useState(false);
+  const [downloadOpen, setDownloadOpen] = useState(false);
   const [shared, setShared] = useState(false);
   const shellRef = useRef<HTMLDivElement>(null);
+  const readerRef = useRef<HTMLDivElement>(null);
   const reduce =
     typeof window !== "undefined" &&
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
@@ -250,14 +117,17 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
       setFlipped(clamped);
       window.setTimeout(() => setTurning(null), reduce ? 0 : 850);
       const pageParam = clamped * 2;
-      window.history.replaceState(
-        null,
-        "",
-        pageParam > 0 ? `?page=${pageParam}` : window.location.pathname,
-      );
-      trackClient("CATALOGUE_PAGE_TURN", { meta: { page: pageParam } });
+      // A preview leaves the address and the reading figures alone.
+      if (!onClose) {
+        window.history.replaceState(
+          null,
+          "",
+          pageParam > 0 ? `?page=${pageParam}` : window.location.pathname,
+        );
+        trackClient("CATALOGUE_PAGE_TURN", { meta: { page: pageParam } });
+      }
     },
-    [flipped, sheets.length, reduce],
+    [flipped, sheets.length, reduce, onClose],
   );
 
   useEffect(() => {
@@ -275,6 +145,16 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
     return () => document.removeEventListener("fullscreenchange", onChange);
   }, []);
 
+  // A deep link opens the phone reader on its page too.
+  useEffect(() => {
+    const target = Math.max(0, Math.min(pages.length - 1, flipped * 2 - 1));
+    const reader = readerRef.current;
+    const card = reader?.children[target] as HTMLElement | undefined;
+    if (reader && card && target > 0) reader.scrollLeft = card.offsetLeft - reader.offsetLeft - 24;
+    // Only on arrival.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const toggleFullscreen = async () => {
     try {
       if (document.fullscreenElement) await document.exitFullscreen();
@@ -288,7 +168,7 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
     const url = `${window.location.origin}/catalogue/flipbook${rightPage > 0 ? `?page=${rightPage}` : ""}`;
     try {
       if (navigator.share) {
-        await navigator.share({ title: "Humuson Product Guide", url });
+        await navigator.share({ title, url });
       } else {
         await navigator.clipboard.writeText(url);
         setShared(true);
@@ -299,26 +179,51 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
     }
   };
 
-  const jumpToPage = (pageIndex: number) => {
-    go(Math.ceil(pageIndex / 2));
-    setTocOpen(false);
-    setThumbsOpen(false);
-  };
+  const jumpToPage = useCallback(
+    (pageIndex: number) => {
+      go(Math.ceil(pageIndex / 2));
+      setTocOpen(false);
+      setThumbsOpen(false);
+      const reader = readerRef.current;
+      const card = reader?.children[pageIndex] as HTMLElement | undefined;
+      if (reader && card && reader.offsetParent) {
+        reader.scrollTo({ left: card.offsetLeft - reader.offsetLeft - 24, behavior: "smooth" });
+      }
+    },
+    [go],
+  );
 
-  const toc = pages.find((page) => page.kind === "toc");
+  const navigate = useCallback((href: string) => router.push(href), [router]);
+  const chapters = pages.filter((page) => page.chapter);
 
   return (
     <div ref={shellRef} className="bg-grain flex min-h-dvh flex-col bg-humus-950">
+      <style>{FLIPBOOK_PAGE_CSS}</style>
       <div aria-hidden className="pointer-events-none fixed inset-0 glow-leaf" />
 
       {/* Top bar */}
-      <header className="relative z-10 flex items-center justify-between gap-3 px-4 pt-20 pb-2 md:px-8 md:pt-24">
-        <Link
-          href="/catalogue"
-          className="flex shrink-0 items-center gap-2 rounded-full border border-paper/20 px-3 py-2 text-sm font-medium whitespace-nowrap text-paper/85 transition-colors hover:border-paper/50 sm:px-4"
-        >
-          <ArrowLeft className="size-4" /> Explore<span className="max-sm:hidden"> mode</span>
-        </Link>
+      <header
+        className={cn(
+          "relative z-10 flex items-center justify-between gap-3 px-4 pb-2 md:px-8",
+          onClose ? "pt-4 md:pt-6" : "pt-20 md:pt-24",
+        )}
+      >
+        {onClose ? (
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex shrink-0 items-center gap-2 rounded-full border border-paper/20 px-3 py-2 text-sm font-medium whitespace-nowrap text-paper/85 transition-colors hover:border-paper/50 sm:px-4"
+          >
+            <ArrowLeft className="size-4" /> Back to the designer
+          </button>
+        ) : (
+          <Link
+            href="/catalogue"
+            className="flex shrink-0 items-center gap-2 rounded-full border border-paper/20 px-3 py-2 text-sm font-medium whitespace-nowrap text-paper/85 transition-colors hover:border-paper/50 sm:px-4"
+          >
+            <ArrowLeft className="size-4" /> Explore<span className="max-sm:hidden"> mode</span>
+          </Link>
+        )}
         <div className="flex items-center gap-1.5">
           <ToolButton label="Contents" onClick={() => setTocOpen(true)}>
             <List className="size-4" />
@@ -342,16 +247,10 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
           <ToolButton label={shared ? "Link copied" : "Share this page"} onClick={share}>
             {shared ? <Check className="size-4 text-leaf-400" /> : <Link2 className="size-4" />}
           </ToolButton>
-          {pdfUrl && (
-            <a
-              href={pdfUrl}
-              onClick={() => trackClient("PDF_DOWNLOAD", { entityType: "catalogue" })}
-              className="flex size-10 items-center justify-center rounded-full border border-paper/20 text-paper/85 transition-colors hover:border-paper/50"
-              aria-label="Download PDF"
-              title="Download PDF"
-            >
+          {downloads && (
+            <ToolButton label="Download" onClick={() => setDownloadOpen(true)}>
               <Download className="size-4" />
-            </a>
+            </ToolButton>
           )}
         </div>
       </header>
@@ -388,6 +287,7 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
                   : isFlipped
                     ? index + 1
                     : sheets.length - index;
+              const back = sheet.back === null ? null : pages[sheet.back]!;
               return (
                 <div
                   key={index}
@@ -402,13 +302,15 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
                 >
                   {/* Front face (right-hand page) */}
                   <div
-                    className="absolute inset-0 cursor-pointer overflow-hidden rounded-r-xl text-[clamp(9px,1.05vw,15px)] shadow-[0_1px_2px_rgba(0,0,0,0.35)]"
+                    className="absolute inset-0 cursor-pointer overflow-hidden rounded-r-xl shadow-[0_1px_2px_rgba(0,0,0,0.35)]"
                     style={{ backfaceVisibility: "hidden" }}
-                    onClick={() => go(flipped + 1)}
+                    onClick={(e) => {
+                      if (!followLink(e, jumpToPage, navigate)) go(flipped + 1);
+                    }}
                     role="button"
                     aria-label="Turn page forward"
                   >
-                    <PageFace page={pages[sheet.front]!} pageNumber={sheet.front + 1} />
+                    <PageView page={pages[sheet.front]!} priority={index === 0} />
                     <span
                       aria-hidden
                       className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-black/25 to-transparent"
@@ -416,13 +318,15 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
                   </div>
                   {/* Back face (left-hand page after flip) */}
                   <div
-                    className="absolute inset-0 cursor-pointer overflow-hidden rounded-l-xl text-[clamp(9px,1.05vw,15px)] shadow-[0_1px_2px_rgba(0,0,0,0.35)]"
+                    className="absolute inset-0 cursor-pointer overflow-hidden rounded-l-xl shadow-[0_1px_2px_rgba(0,0,0,0.35)]"
                     style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-                    onClick={() => go(flipped - 1)}
+                    onClick={(e) => {
+                      if (!followLink(e, jumpToPage, navigate)) go(flipped - 1);
+                    }}
                     role="button"
                     aria-label="Turn page back"
                   >
-                    <PageFace page={pages[sheet.back]!} pageNumber={sheet.back + 1} />
+                    {back && <PageView page={back} />}
                     <span
                       aria-hidden
                       className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-black/25 to-transparent"
@@ -447,13 +351,17 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
 
       {/* Mobile swipe reader */}
       <div className="relative z-10 flex-1 md:hidden">
-        <div className="scrollbar-none flex h-full snap-x snap-mandatory gap-4 overflow-x-auto px-6 py-4">
+        <div
+          ref={readerRef}
+          className="scrollbar-none flex h-full snap-x snap-mandatory gap-4 overflow-x-auto px-6 py-4"
+          onClick={(e) => followLink(e, jumpToPage, navigate)}
+        >
           {pages.map((page, i) => (
             <div
-              key={i}
-              className="relative aspect-[3/4.1] w-[82vw] shrink-0 snap-center overflow-hidden rounded-xl text-[clamp(10px,3.4vw,15px)] shadow-float"
+              key={`${page.id}-${i}`}
+              className="relative aspect-[3/4.1] w-[82vw] shrink-0 snap-center overflow-hidden rounded-xl shadow-float"
             >
-              <PageFace page={page} pageNumber={i + 1} />
+              <PageView page={page} priority={i === 0} />
             </div>
           ))}
         </div>
@@ -479,22 +387,21 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
                 Cover
               </button>
             </li>
-            {toc?.kind === "toc" &&
-              toc.entries.map((entry, i) => (
-                <li key={entry.slug}>
-                  <button
-                    type="button"
-                    onClick={() => jumpToPage(entry.page)}
-                    className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm hover:bg-leaf-300/30"
-                  >
-                    <span className="font-display text-xs font-semibold text-leaf-700">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="font-medium text-ink">{entry.title}</span>
-                    <span className="ml-auto text-xs text-ink-faint">p. {entry.page + 1}</span>
-                  </button>
-                </li>
-              ))}
+            {chapters.map((page, i) => (
+              <li key={`${page.id}-${page.number}`}>
+                <button
+                  type="button"
+                  onClick={() => jumpToPage(page.number - 1)}
+                  className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm hover:bg-leaf-300/30"
+                >
+                  <span className="font-display text-xs font-semibold text-leaf-700">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-medium text-ink">{page.chapter}</span>
+                  <span className="ml-auto text-xs text-ink-faint">p. {page.number}</span>
+                </button>
+              </li>
+            ))}
           </ol>
         </DialogContent>
       </Dialog>
@@ -505,18 +412,20 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
           <div data-lenis-prevent className="grid max-h-[60dvh] grid-cols-3 gap-3 overflow-y-auto pr-1 sm:grid-cols-4 md:grid-cols-5">
             {pages.map((page, i) => (
               <button
-                key={i}
+                key={`${page.id}-${i}`}
                 type="button"
                 onClick={() => jumpToPage(i)}
                 className={cn(
-                  "group relative aspect-[3/4] overflow-hidden rounded-lg border-2 text-[5px] transition-all",
+                  "group relative aspect-[3/4.1] overflow-hidden rounded-lg border-2 transition-all",
                   rightPage === i || rightPage - 1 === i
                     ? "border-leaf-600 shadow-card"
                     : "border-transparent opacity-80 hover:opacity-100",
                 )}
                 aria-label={`Go to page ${i + 1}`}
               >
-                <PageFace page={page} pageNumber={i + 1} />
+                <span inert className="pointer-events-none absolute inset-0">
+                  {thumbsOpen && <PageView page={page} thumbnail />}
+                </span>
                 <span className="absolute right-1 bottom-1 rounded bg-humus-950/70 px-1 text-[8px] text-paper">
                   {i + 1}
                 </span>
@@ -525,7 +434,69 @@ export function Flipbook({ pages, pdfUrl }: { pages: CataloguePage[]; pdfUrl: st
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Downloads */}
+      {downloads && (
+        <Dialog open={downloadOpen} onOpenChange={setDownloadOpen}>
+          <DialogContent
+            title="Download the catalogue"
+            description="Every page as it appears here, to keep, print or pass on."
+          >
+            <div className="mt-4 grid gap-3">
+              <DownloadOption
+                href={downloads.pdf}
+                icon={<FileText className="size-5" />}
+                label="PDF"
+                detail="For printing, email and WhatsApp. Links and the contents stay clickable."
+                onClick={() =>
+                  trackClient("PDF_DOWNLOAD", { entityType: "catalogue", meta: { format: "pdf" } })
+                }
+              />
+              <DownloadOption
+                href={downloads.html}
+                icon={<FileCode2 className="size-5" />}
+                label="Web page (HTML)"
+                detail="One file that opens in any browser, even offline — the same page-turning book."
+                onClick={() =>
+                  trackClient("PDF_DOWNLOAD", { entityType: "catalogue", meta: { format: "html" } })
+                }
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
+  );
+}
+
+function DownloadOption({
+  href,
+  icon,
+  label,
+  detail,
+  onClick,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  detail: string;
+  onClick: () => void;
+}) {
+  return (
+    <a
+      href={href}
+      download
+      onClick={onClick}
+      className="flex items-start gap-4 rounded-2xl border border-line bg-paper px-4 py-3.5 transition-colors hover:border-leaf-600"
+    >
+      <span className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-full bg-humus-900 text-paper">
+        {icon}
+      </span>
+      <span>
+        <span className="block font-display font-medium text-ink">{label}</span>
+        <span className="mt-0.5 block text-sm text-ink-faint">{detail}</span>
+      </span>
+    </a>
   );
 }
 
