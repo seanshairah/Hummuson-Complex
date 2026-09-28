@@ -42,3 +42,6 @@ public/uploads/
 
 # generated catalogue pdf (run npm run catalogue:pdf to regenerate)
 public/catalogue/humuson-catalogue.pdf
+
+# Database dumps — as sensitive as the database itself.
+backups/
