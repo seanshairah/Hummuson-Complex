@@ -35,6 +35,15 @@
       "assessment": "Same reasoning as advisory 1124252 — build-time only, over repository-authored CSS.",
       "waitingFor": "Next.js 16.",
       "reviewBy": "2026-12-01"
+    },
+    {
+      "advisory": 1240992,
+      "package": "braces",
+      "title": "Stack-exhaustion denial of service through deeply nested patterns",
+      "reachedVia": "eslint-config-next → @next/eslint-plugin-next → fast-glob → micromatch",
+      "assessment": "Lint-time only. The Next.js ESLint plugin expands glob patterns written in this repository to find page files; eslint-config-next is a devDependency, nothing in the server bundle imports braces or micromatch, and no request reaches it.",
+      "waitingFor": "A braces release after 3.0.3 — every published version is affected, and @next/eslint-plugin-next pins fast-glob 3.3.1.",
+      "reviewBy": "2026-11-02"
     }
   ]
 }
