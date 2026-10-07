@@ -15,6 +15,14 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: site.locale,
     url: site.url,
+    images: [
+      {
+        url: "/images/field/hero-seedlings-drip-IMG_0553.jpg",
+        width: 2560,
+        height: 1707,
+        alt: "Seedlings in healthy soil — Humuson Complex",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

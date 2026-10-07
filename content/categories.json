@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Microbiological Fertilisers",
+    "slug": "microbiological",
+    "description": "Live bacteria and fungi that fix atmospheric nitrogen, release the phosphorus and potassium already locked in the soil, and turn crop residue back into humus.",
+    "note": "Replaces the old shop's Physio category, which held the same products as Organic and carried no description a grower could use."
+  },
+  {
+    "name": "Biostimulants",
+    "slug": "biostimulants",
+    "description": "Humic, amino-acid and seaweed formulations that help a crop hold its yield through cold, drought, waterlogging and transplant shock.",
+    "note": "On 28 Sep 2026 the owner placed Grow+ Top Dressing and CarboAmin Basal Dressing under this range only. The description gained humic substances, which is what those two carry (humified carbon; humic and fulvic acids) alongside A3's humics, and lost \"microbial\": no product in this range is a microbial formulation — Master and Bio NPK Powder S are, and they are filed under Microbiological Fertilisers."
+  },
+  {
+    "name": "Crop Nutrition",
+    "slug": "crop-nutrition",
+    "description": "The feeding programme itself — NPK, macro-nutrient and trace-element fertilisers fed through the leaf or the irrigation line, and the spray adjuvant that carries them.",
+    "note": "Replaces the old shop's Value category. On 28 Sep 2026 the owner folded Liquid Foliar Fertilisers into this range: its thirteen products are listed here and the separate range is gone, and ?category=liquid-fertilisers resolves to this range so older links keep working. In the same instruction Grow+ Top Dressing and CarboAmin Basal Dressing moved to Biostimulants only, which is why the description no longer leads on basal and top dressings. Membership is the products that supply nutrients directly, plus Perfect Stick, the spray adjuvant that came with the liquid range — a microbial product that makes existing nutrients available is filed under Microbiological Fertilisers instead."
+  },
+  {
+    "name": "Organic",
+    "slug": "organic",
+    "description": "Fertilisers whose nutrition and activity come from living or natural-origin matter — seaweed extract, amino acids, and the bacteria and fungi that release what the soil already holds.",
+    "note": "Membership was set by the owner on 25 Sep 2026: eMAXX Ultra, Ocean, Bio NPK Powder S and Master. Grow+ and CarboAmin moved out to Biostimulants in the same instruction, which is why the description no longer leads on humified carbon and humic acids — those belong to the two products that left."
+  }
+]

@@ -1,0 +1,13 @@
+import { chromium } from "@playwright/test";
+import { existsSync } from "node:fs";
+const exe = ["/opt/pw-browsers/chromium", "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"].find(existsSync);
+const browser = await chromium.launch(exe ? { executablePath: exe, args: ["--no-sandbox"] } : {});
+const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+await page.goto(process.argv[2], { waitUntil: "load" });
+await page.waitForTimeout(1200);
+const y = Number(process.argv[4]);
+await page.evaluate((top) => window.scrollTo({ top, behavior: "instant" }), y);
+await page.waitForTimeout(1300);
+await page.screenshot({ path: process.argv[3] });
+await browser.close();
+console.log("saved");

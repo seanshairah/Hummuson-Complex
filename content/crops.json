@@ -1,0 +1,397 @@
+[
+  {
+    "name": "cereals",
+    "slug": "cereals",
+    "aka": [
+      "cereal",
+      "grains",
+      "poaceae",
+      "cereal family",
+      "grasses"
+    ],
+    "familyName": "Poaceae",
+    "alsoIncludes": [
+      "rice",
+      "sorghum",
+      "millet",
+      "sugarcane"
+    ]
+  },
+  {
+    "name": "maize",
+    "slug": "maize",
+    "aka": [
+      "mealies",
+      "corn"
+    ],
+    "parentSlug": "cereals"
+  },
+  {
+    "name": "wheat",
+    "slug": "wheat",
+    "aka": [],
+    "parentSlug": "cereals"
+  },
+  {
+    "name": "brassicas",
+    "slug": "brassicas",
+    "aka": [
+      "brassica",
+      "brassicaceae",
+      "crucifers",
+      "cole crops",
+      "rape",
+      "kale",
+      "covo",
+      "rapeseed",
+      "rape seed",
+      "canola",
+      "radish",
+      "turnip",
+      "mustard"
+    ],
+    "familyName": "Brassicaceae",
+    "signature": "Four petals opening in a cross — the mark the family is named for.",
+    "notes": [
+      "Shallow roots.",
+      "Heavy feeders: they want plenty of nitrogen.",
+      "Watch for diamondback moth, cabbage aphids and cutworms."
+    ],
+    "alsoIncludes": [
+      "kale",
+      "rape",
+      "radish",
+      "turnip",
+      "mustard",
+      "Chinese cabbage"
+    ]
+  },
+  {
+    "name": "cabbage",
+    "slug": "cabbage",
+    "aka": [],
+    "parentSlug": "brassicas"
+  },
+  {
+    "name": "broccoli",
+    "slug": "broccoli",
+    "aka": [],
+    "parentSlug": "brassicas"
+  },
+  {
+    "name": "cauliflower",
+    "slug": "cauliflower",
+    "aka": [],
+    "parentSlug": "brassicas"
+  },
+  {
+    "name": "cucurbits",
+    "slug": "cucurbits",
+    "aka": [
+      "cucurbit",
+      "cucurbitaceae",
+      "pumpkin",
+      "pumpkins",
+      "squash",
+      "gem squash",
+      "zucchini",
+      "courgette",
+      "melon",
+      "melons"
+    ],
+    "familyName": "Cucurbitaceae",
+    "signature": "A creeping vine, a yellow flower, and a fruit full of seeds.",
+    "notes": [
+      "Deep roots, and a real thirst for water.",
+      "Watch for fruit flies, powdery mildew and red spider mite."
+    ],
+    "alsoIncludes": [
+      "pumpkin",
+      "squash",
+      "melon",
+      "zucchini",
+      "gem squash"
+    ]
+  },
+  {
+    "name": "cucumber",
+    "slug": "cucumber",
+    "aka": [
+      "cucumbers"
+    ],
+    "parentSlug": "cucurbits"
+  },
+  {
+    "name": "butternut",
+    "slug": "butternut",
+    "aka": [
+      "butternuts",
+      "butternut squash"
+    ],
+    "parentSlug": "cucurbits"
+  },
+  {
+    "name": "watermelon",
+    "slug": "watermelon",
+    "aka": [
+      "watermelons"
+    ],
+    "parentSlug": "cucurbits"
+  },
+  {
+    "name": "nightshades",
+    "slug": "solanaceous",
+    "aka": [
+      "nightshade",
+      "solanaceae",
+      "solanaceous",
+      "solanaceous crops",
+      "tomato family",
+      "pepper",
+      "peppers",
+      "chilli",
+      "chillies",
+      "eggplant",
+      "brinjal",
+      "tobacco"
+    ],
+    "familyName": "Solanaceae",
+    "notes": [
+      "Heavy feeders.",
+      "Watch for Tuta absoluta, blight and red spider."
+    ],
+    "alsoIncludes": [
+      "pepper",
+      "chilli",
+      "eggplant",
+      "tobacco"
+    ]
+  },
+  {
+    "name": "tomato",
+    "slug": "tomato",
+    "aka": [
+      "greenhouse tomato"
+    ],
+    "parentSlug": "solanaceous"
+  },
+  {
+    "name": "potatoes",
+    "slug": "potato",
+    "aka": [
+      "potatoes",
+      "potato",
+      "irish potato"
+    ],
+    "parentSlug": "solanaceous"
+  },
+  {
+    "name": "legumes",
+    "slug": "legumes",
+    "aka": [
+      "legume",
+      "fabaceae",
+      "legume family",
+      "pulses",
+      "soya",
+      "soyabean",
+      "soybean",
+      "groundnuts",
+      "groundnut",
+      "cowpeas",
+      "cowpea",
+      "peas and beans",
+      "pea and bean"
+    ],
+    "familyName": "Fabaceae",
+    "notes": [
+      "They fix nitrogen — a legume feeds the soil rather than only drawing on it.",
+      "The crop to plant before brassicas or cereals."
+    ],
+    "alsoIncludes": [
+      "soya",
+      "groundnuts",
+      "cowpeas"
+    ]
+  },
+  {
+    "name": "bean",
+    "slug": "bean",
+    "aka": [
+      "beans"
+    ],
+    "parentSlug": "legumes"
+  },
+  {
+    "name": "pea",
+    "slug": "pea",
+    "aka": [
+      "peas"
+    ],
+    "parentSlug": "legumes"
+  },
+  {
+    "name": "sugar bean",
+    "slug": "sugar-bean",
+    "aka": [
+      "sugar beans"
+    ],
+    "parentSlug": "legumes"
+  },
+  {
+    "name": "leafy vegetables",
+    "slug": "leafy-vegetables",
+    "aka": [
+      "leafy greens",
+      "greens",
+      "leafy family",
+      "amaranthaceae",
+      "asteraceae",
+      "spinach",
+      "lettuce",
+      "swiss chard",
+      "chard",
+      "amaranth",
+      "beetroot",
+      "beet",
+      "sugar beet",
+      "sugarbeet"
+    ],
+    "familyName": "Amaranthaceae & Asteraceae",
+    "alsoIncludes": [
+      "lettuce",
+      "spinach",
+      "beetroot",
+      "Swiss chard",
+      "amaranth"
+    ]
+  },
+  {
+    "name": "fruit crops",
+    "slug": "fruits",
+    "aka": [
+      "fruit",
+      "orchard"
+    ],
+    "notes": [
+      "Not one botanical family: these are grouped the way the product guidance lists them."
+    ]
+  },
+  {
+    "name": "fruit trees",
+    "slug": "fruit-trees",
+    "aka": [
+      "fruit tree",
+      "citrus",
+      "orchard",
+      "avocado",
+      "mango",
+      "apple"
+    ],
+    "parentSlug": "fruits"
+  },
+  {
+    "name": "berry bushes",
+    "slug": "berry-bushes",
+    "aka": [
+      "berry bush",
+      "berries"
+    ],
+    "parentSlug": "fruits"
+  },
+  {
+    "name": "oilseeds",
+    "slug": "oilseeds",
+    "aka": [
+      "oil seeds",
+      "oilseed",
+      "sunflower",
+      "sunflowers"
+    ],
+    "notes": [
+      "Rape is an oilseed too, and sits under brassicas — that is the family it belongs to."
+    ],
+    "alsoIncludes": [
+      "sunflower"
+    ]
+  },
+  {
+    "name": "ornamentals",
+    "slug": "ornamentals",
+    "aka": [
+      "ornamental plants",
+      "flowers"
+    ]
+  },
+  {
+    "name": "field crops",
+    "slug": "field-crops",
+    "aka": [
+      "field crop"
+    ],
+    "alsoIncludes": [
+      "sugar beet"
+    ]
+  },
+  {
+    "name": "alliums",
+    "slug": "alliums",
+    "aka": [
+      "allium",
+      "alliaceae",
+      "onion family",
+      "onion",
+      "onions",
+      "garlic",
+      "shallot",
+      "shallots",
+      "leek",
+      "leeks",
+      "spring onion",
+      "spring onions"
+    ],
+    "familyName": "Alliaceae",
+    "notes": [
+      "Natural pest repellents.",
+      "Worth planting among other crops for that reason."
+    ],
+    "alsoIncludes": [
+      "onion",
+      "garlic",
+      "shallot",
+      "leek",
+      "spring onion"
+    ]
+  },
+  {
+    "name": "carrot family",
+    "slug": "carrot-family",
+    "aka": [
+      "apiaceae",
+      "umbellifers",
+      "carrot",
+      "carrots",
+      "celery",
+      "parsley",
+      "coriander",
+      "dhania",
+      "fennel"
+    ],
+    "familyName": "Apiaceae",
+    "alsoIncludes": [
+      "carrot",
+      "celery",
+      "parsley",
+      "coriander (dhania)",
+      "fennel"
+    ]
+  },
+  {
+    "name": "sweet potatoes",
+    "slug": "sweet-potato",
+    "aka": [
+      "sweet potato",
+      "sweetpotato"
+    ]
+  }
+]
